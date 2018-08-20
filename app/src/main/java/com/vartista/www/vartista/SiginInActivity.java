@@ -37,6 +37,7 @@ public class SiginInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sigin_in);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+
         try {
             getLocationFromAddress("latifabad no 7");
         } catch (IOException e) {
@@ -81,6 +82,8 @@ public class SiginInActivity extends AppCompatActivity {
             }
         });
 
+        //FOR CHECKING GITHUB WORKING
+        Toast.makeText(this, "THIS IS SAAD COMMIT", Toast.LENGTH_LONG).show();
 
     }
 
