@@ -84,6 +84,7 @@ public class SiginInActivity extends AppCompatActivity {
 
         //FOR CHECKING GITHUB WORKING
         Toast.makeText(this, "THIS IS SAAD COMMIT AGAIN", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "THIS IS Xoni COMMIT ", Toast.LENGTH_LONG).show();
 
     }
 
