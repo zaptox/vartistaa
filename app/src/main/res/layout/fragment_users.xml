@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical"
+    tools:context=".fragments.UsersFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/buttonBeauty"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_weight="1"
+                android:shadowColor="#A8A8A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="                 Beauty"
+                android:textSize="30dp"
+                android:background="@drawable/beautydone"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"/>
+
+
+            <Button
+                android:id="@+id/buttonPlumber"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/plumberdone"
+                android:layout_weight="1"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:text="                   Plumber" />
+
+            <Button
+                android:id="@+id/buttonElectrican"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:background="@drawable/electriciandone"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="60dp"
+                android:layout_weight="1"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:text="              Electrican" />
+
+            <Button
+                android:id="@+id/buttonEducation"
+                android:layout_width="match_parent"
+                android:background="@drawable/educationdone"
+                android:layout_height="130dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="60dp"
+                android:layout_weight="1"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:text="              Education" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

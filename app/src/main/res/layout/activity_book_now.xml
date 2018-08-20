@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookNowActivity"
+    android:orientation="vertical">
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick up the Date"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20sp"
+        android:textSize="20sp"
+        />
+
+    <DatePicker
+        android:id="@+id/dp_datepicker"
+        android:layout_width="wrap_content"
+        android:layout_height="140dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="-30dp"
+        android:layout_marginRight="-30dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:scaleX="0.5"
+        android:scaleY="0.5" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick up the Time"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20sp"
+        android:textSize="20sp"
+        />
+
+    <TimePicker
+        android:id="@+id/timePicker1"
+        android:layout_width="wrap_content"
+        android:layout_height="99dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:timePickerMode="spinner"></TimePicker>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="30sp"
+        android:layout_marginRight="50sp"
+        android:layout_marginLeft="50sp"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/address"
+            android:hint="Address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeActionId="6"
+            android:imeActionLabel="Password"
+            android:imeOptions="actionUnspecified"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/buttonBook"
+        android:layout_marginTop="25dp"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="book Now"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+    </LinearLayout>
+</ScrollView>
+
+</LinearLayout>
