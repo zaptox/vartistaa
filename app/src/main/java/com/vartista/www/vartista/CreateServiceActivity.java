@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-public class CreateServiceActivity extends AppCompatActivity {
+public class  CreateServiceActivity extends AppCompatActivity {
     Button btnCreateSerivce;
     AutoCompleteTextView edTxtServicePrice,edtTxtSerivceTitle;
     EditText edDescription;
