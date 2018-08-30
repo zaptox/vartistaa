@@ -37,7 +37,8 @@
         <activity android:name=".ServiceProviderDetail" />
         <activity android:name=".GetAddressActivity" />
         <activity android:name=".BookNowActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Main2Activity"></activity>
     </application>
 
 </manifest>
