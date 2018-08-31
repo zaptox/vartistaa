@@ -37,6 +37,7 @@
         <activity android:name=".ServiceProviderDetail" />
         <activity android:name=".GetAddressActivity" />
         <activity android:name=".BookNowActivity" />
+        <activity android:name=".TestActivity"></activity>
     </application>
 
 </manifest>
