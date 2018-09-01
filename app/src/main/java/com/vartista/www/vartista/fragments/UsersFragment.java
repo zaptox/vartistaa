@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
-import beans.Category;
+import com.vartista.www.vartista.beans.Category;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.CategoriesListAdapter;

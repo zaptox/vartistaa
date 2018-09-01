@@ -9,7 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
-import beans.Service;
+import com.vartista.www.vartista.beans.Service;
 
 import java.util.List;
 

@@ -1,5 +1,5 @@
 
-package com.vartista.www.vartista;
+package com.vartista.www.vartista.modules.provider;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -10,6 +10,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyServicesListAdapter;
 
 import org.apache.http.HttpResponse;
@@ -29,7 +30,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import beans.Service;
+import com.vartista.www.vartista.beans.Service;
 
 public class MyServicesListActivity extends AppCompatActivity {
     RecyclerView listViewMyServices;

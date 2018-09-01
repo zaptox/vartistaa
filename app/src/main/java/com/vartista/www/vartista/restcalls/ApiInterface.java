@@ -1,10 +1,10 @@
 package com.vartista.www.vartista.restcalls;
 
-import com.vartista.www.vartista.CreateRequest;
+import com.vartista.www.vartista.modules.user.CreateRequest;
 
-import beans.Service;
-import beans.Services;
-import beans.User;
+import com.vartista.www.vartista.beans.Service;
+import com.vartista.www.vartista.beans.Services;
+import com.vartista.www.vartista.beans.User;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

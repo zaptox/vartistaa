@@ -1,4 +1,4 @@
-package com.vartista.www.vartista;
+package com.vartista.www.vartista.modules.general;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +16,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
 
-import beans.User;
+import com.vartista.www.vartista.beans.User;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -56,7 +57,7 @@ public class HomeActivity extends AppCompatActivity
         Intent intent= getIntent();
        User user= (User) intent.getSerializableExtra("user");
     u=user;
-        user_id=u.id;
+        user_id=u.getId();
       //  Toast.makeText(this, ""+user.id, Toast.LENGTH_SHORT).show();
         name.setText(user.getName());
         email.setText(user.getEmail());

@@ -1,7 +1,9 @@
-package com.vartista.www.vartista;
+package com.vartista.www.vartista.modules.provider;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.vartista.www.vartista.R;
 
 public class MyServiceRequests extends AppCompatActivity {
 

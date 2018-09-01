@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import beans.Category;
+import com.vartista.www.vartista.beans.Category;
 import com.vartista.www.vartista.R;
 
 import java.util.List;

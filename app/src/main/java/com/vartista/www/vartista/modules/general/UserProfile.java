@@ -1,4 +1,4 @@
-package com.vartista.www.vartista;
+package com.vartista.www.vartista.modules.general;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,10 +10,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 
-import beans.User;
+import com.vartista.www.vartista.beans.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
