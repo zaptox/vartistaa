@@ -10,10 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.vartista.www.vartista.restcalls.ApiClient;
+import com.vartista.www.vartista.restcalls.ApiInterface;
 
+import beans.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +38,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        apiInterface=ApiClient.getApiClient().create(ApiInterface.class);
+        apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
 //        sp_list= new ArrayList<>();
 
         create= findViewById(R.id.create);

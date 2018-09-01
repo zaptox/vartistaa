@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.vartista.www.vartista.restcalls.ApiClient;
+import com.vartista.www.vartista.restcalls.ApiInterface;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -31,6 +34,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import beans.Service;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

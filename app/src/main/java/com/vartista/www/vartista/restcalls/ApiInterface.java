@@ -1,7 +1,10 @@
-package com.vartista.www.vartista;
+package com.vartista.www.vartista.restcalls;
 
-import org.bouncycastle.ocsp.Req;
+import com.vartista.www.vartista.CreateRequest;
 
+import beans.Service;
+import beans.Services;
+import beans.User;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -41,11 +44,11 @@ public interface ApiInterface {
 
 
     @GET("createservices.php")
-    Call<Service> createService(@Query("service_title") String service_title,@Query("userid") int user_id,
+    Call<Service> createService(@Query("service_title") String service_title, @Query("userid") int user_id,
                                 @Query("service_description") String service_description,
-                                @Query("status") int status,@Query("price") double price
+                                @Query("status") int status, @Query("price") double price
                                 , @Query("category_id") int category_id, @Query("created_at")
-                                        String created_at,@Query("updated_at") String updated_at);
+                                        String created_at, @Query("updated_at") String updated_at);
 
 
 
@@ -54,7 +57,7 @@ public interface ApiInterface {
     Call<CreateRequest> createRequest(@Query("user_customer_id") int user_customer_id, @Query("user_service_id") int user_service_id,
                                       @Query("service_id") int service_id,
                                       @Query("date") String date, @Query("time") String  time
-            , @Query("location") String location,@Query("request_status") int request_status, @Query("service_cat_id") int service_cat_id);
+            , @Query("location") String location, @Query("request_status") int request_status, @Query("service_cat_id") int service_cat_id);
 
 
 

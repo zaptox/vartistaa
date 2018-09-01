@@ -2,8 +2,6 @@ package com.vartista.www.vartista;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -19,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vartista.www.vartista.adapters.PagerAdapter;
+
+import beans.User;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

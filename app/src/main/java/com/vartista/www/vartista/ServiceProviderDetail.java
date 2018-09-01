@@ -9,9 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
-import com.vartista.www.vartista.adapters.MyServicesListAdapter;
 import com.vartista.www.vartista.adapters.SpDetailsAdapter;
 
 import org.apache.http.HttpResponse;
@@ -30,6 +28,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+
+import beans.Service;
 
 public class ServiceProviderDetail extends AppCompatActivity {
     RecyclerView listViewSpDetials;

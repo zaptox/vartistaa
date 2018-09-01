@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.vartista.www.vartista.BookNowActivity;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.Service;
+import beans.Service;
 
 import java.util.List;
 

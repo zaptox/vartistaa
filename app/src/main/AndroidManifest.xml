@@ -33,7 +33,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CreateServiceActivity" />
         <activity android:name=".MyServicesListActivity" />
-        <activity android:name=".MapActivity" />
         <activity android:name=".ServiceProviderDetail" />
         <activity android:name=".GetAddressActivity" />
         <activity android:name=".BookNowActivity"></activity>

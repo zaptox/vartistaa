@@ -1,20 +1,14 @@
 package com.vartista.www.vartista;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.http.Query;
+import com.vartista.www.vartista.restcalls.ApiInterface;
 
 public class BookNowActivity extends AppCompatActivity {
     int provider_id, cat_id, user_id, service_id;
