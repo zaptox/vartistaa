@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.vartista.www.vartista.MyServiceRequests;
+import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.R;
 
 public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyRequestsServicesListAdapter.ViewHolder>{
