@@ -8,17 +8,28 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.vartista.www.vartista.ApiClient;
 import com.vartista.www.vartista.ApiInterface;
+import com.vartista.www.vartista.Category;
+import com.vartista.www.vartista.CreateServiceActivity;
 import com.vartista.www.vartista.GetServiceProviders;
 import com.vartista.www.vartista.MapActivity;
+import com.vartista.www.vartista.MyServicesListActivity;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.Service;
+import com.vartista.www.vartista.adapters.CategoriesListAdapter;
+import com.vartista.www.vartista.adapters.MyServicesListAdapter;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -35,6 +46,9 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.mapbox.mapboxsdk.Mapbox.getApplicationContext;
 
 
 /**
@@ -42,9 +56,10 @@ import java.util.ArrayList;
  */
 public class UsersFragment extends Fragment {
     int user_id;
-    Button btnMap;
     public static ApiInterface apiInterface;
-    ArrayList<GetServiceProviders> splist;
+    RecyclerView listViewMyCategories;
+    CategoriesListAdapter categoriesListAdapter;
+    List<Category> myCategoriesList;
     @SuppressLint("ValidFragment")
     public UsersFragment(int user_id) {
         // Required
@@ -61,29 +76,37 @@ public class UsersFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_users, container, false);
-        btnMap=view.findViewById(R.id.buttonBeauty);
-        splist=new ArrayList<GetServiceProviders>();
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        listViewMyCategories=(RecyclerView) view.findViewById(R.id.lvCategory);
+        listViewMyCategories.setHasFixedSize(true);
+        listViewMyCategories.setLayoutManager(new LinearLayoutManager(getContext()));
+        Context context = inflater.getContext();
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
+        listViewMyCategories.setLayoutManager(mLayoutManager);
 
-        btnMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Conncetion(getContext(),1).execute();
+        listViewMyCategories.setItemAnimator(new DefaultItemAnimator());
+
+        myCategoriesList=new ArrayList<>();
 
 
-            }
+        new UsersFragment.Conncetion(context).execute();
 
-        });
-   return  view; }
+
+        categoriesListAdapter=new CategoriesListAdapter(context,myCategoriesList);
+
+
+        return  view; }
 
 
     class Conncetion extends AsyncTask<String,String ,String > {
-        private int cat_id;
         private ProgressDialog dialog;
+        String categoriesArray[]=null;
+        Context context;
 
-        public  Conncetion(Context activity, int cat_id) {
+
+        public  Conncetion(Context activity) {
             dialog = new ProgressDialog(activity);
-            this.cat_id =cat_id;
+            context=activity;
         }
 
         @Override
@@ -98,7 +121,7 @@ public class UsersFragment extends Fragment {
 
             String result="";
 
-            final String BASE_URL="http://www.zaptox.com/mehdiTask/get_service_providers.php?cat_id="+ cat_id;
+            final String BASE_URL="http://vartista.com/vartista_app/fetch_categories.php";
             try {
                 HttpClient client=new DefaultHttpClient();
                 HttpGet request=new HttpGet();
@@ -129,7 +152,6 @@ public class UsersFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-            //  Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
@@ -137,58 +159,38 @@ public class UsersFragment extends Fragment {
                 JSONObject jsonResult=new JSONObject(result);
                 int success=jsonResult.getInt("success");
 
-                //    listViewMyServices.setAdapter(myServicesListAdapter);
+                listViewMyCategories.setAdapter(categoriesListAdapter);
 
 
                 if(success==1){
+                    //  Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
+                    JSONArray catogires=jsonResult.getJSONArray("category");
+                    for(int i=0;i<catogires.length();i++){
 
-                    JSONArray services=jsonResult.getJSONArray("services");
+                        JSONObject category=catogires.getJSONObject(i);
+                        int category_id=category.getInt("id");
+                        String category_name=category.getString("name");
 
-
-                    for(int j=0; j<services.length(); j++){
-
-                        JSONObject ser1=services.getJSONObject(j);
-                        int service_id=Integer.parseInt(ser1.getString("service_id"));
-                        int user_id=Integer.parseInt(ser1.getString("user_id"));
-                        int address_id=Integer.parseInt(ser1.getString("id"));
-                        int category_id=Integer.parseInt(ser1.getString("category_id"));
-                        String service_title=ser1.getString("service_title");
-
-                        String service_description=ser1.getString("service_description");
-                        double price=Double.parseDouble(ser1.getString("price"));
-
-                        double longitude=Double.parseDouble(ser1.getString("longitude"));
-                        double latitude=Double.parseDouble(ser1.getString("latitude"));
-                        splist.add(new GetServiceProviders(service_id,address_id,latitude,longitude,user_id,service_title,service_description,price,category_id));
-
-                       // Toast.makeText(getContext(), services.length()+"----"+longitude, Toast.LENGTH_SHORT).show();
-
-
+                        myCategoriesList.add(new Category(category_name,category_id));
 
                     }
 
 
-//                    Intent intent= new Intent(getContext(),MapActivity.class);
-                    Intent intent= new Intent(getContext(),MapActivity.class);
-
-                    intent.putParcelableArrayListExtra("service_providers",splist);
-                    intent.putExtra("user_id",user_id);
-                    startActivity(intent);
 
 
                 }
+
                 else{
-                    Toast.makeText(getContext(),"no data",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
-
-
-
         }
     }
+
 
 }
