@@ -83,7 +83,7 @@ public class MyServiceRequests extends AppCompatActivity {
 
             String result="";
 
-            final String BASE_URL="http://www.zaptox.com/mehdiTask/fetch_services.php?user_id="+userId;
+            final String BASE_URL="http://vartista.com/vartista_app/req_service.php?service_provider_id="+userId;
             try {
                 HttpClient client=new DefaultHttpClient();
                 HttpGet request=new HttpGet();
