@@ -1,4 +1,4 @@
-package com.vartista.www.vartista;
+package com.vartista.www.vartista.beans;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,4 +1,4 @@
-package com.vartista.www.vartista;
+package com.vartista.www.vartista.modules.general;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,6 +10,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.restcalls.ApiClient;
+import com.vartista.www.vartista.restcalls.ApiInterface;
+
+import com.vartista.www.vartista.beans.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,7 +32,7 @@ public class UserProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        apiInterface=ApiClient.getApiClient().create(ApiInterface.class);
+        apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
 
         name=findViewById(R.id.name1);
         email= findViewById(R.id.email1);

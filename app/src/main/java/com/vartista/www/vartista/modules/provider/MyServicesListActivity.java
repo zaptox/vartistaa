@@ -1,7 +1,7 @@
-package com.vartista.www.vartista;
+
+package com.vartista.www.vartista.modules.provider;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,10 +9,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
+import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyServicesListAdapter;
-import com.vartista.www.vartista.adapters.SpDetailsAdapter;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -31,50 +30,43 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceProviderDetail extends AppCompatActivity {
-    RecyclerView listViewSpDetials;
-    SpDetailsAdapter myServicesListAdapter;
-    List<Service> myservicesList;
-    int provider_id;
-    int cat_id;
-    int user_id;
+import com.vartista.www.vartista.beans.Service;
 
+public class MyServicesListActivity extends AppCompatActivity {
+    RecyclerView listViewMyServices;
+    MyServicesListAdapter myServicesListAdapter;
+    List<Service> myservicesList;
+    int user_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_service_provider_detail);
+        setContentView(R.layout.activity_my_services_list);
 
-
-        listViewSpDetials=(RecyclerView) findViewById(R.id.services_sp);
-        listViewSpDetials.setHasFixedSize(true);
-        listViewSpDetials.setLayoutManager(new LinearLayoutManager(this));
+        listViewMyServices=(RecyclerView) findViewById(R.id.lvServiceList);
+        listViewMyServices.setHasFixedSize(true);
+        listViewMyServices.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        listViewSpDetials.setLayoutManager(mLayoutManager);
-        listViewSpDetials.addItemDecoration(new
+        listViewMyServices.setLayoutManager(mLayoutManager);
+        listViewMyServices.addItemDecoration(new
                 DividerItemDecoration(getApplicationContext(),
                 DividerItemDecoration.VERTICAL));
-        listViewSpDetials.setItemAnimator(new DefaultItemAnimator());
+        listViewMyServices.setItemAnimator(new DefaultItemAnimator());
 
         myservicesList=new ArrayList<>();
-        Intent intent=getIntent();
-
-        provider_id=intent.getIntExtra("s_provider_id",0);
-        cat_id=intent.getIntExtra("cat_id",0);
-        user_id=intent.getIntExtra("user_id",0);
+        user_id=getIntent().getIntExtra("userId",0);
 
 
-        new Conncetion(ServiceProviderDetail.this,provider_id,cat_id).execute();
+        new Conncetion(MyServicesListActivity.this,user_id).execute();
 
 
-        myServicesListAdapter=new SpDetailsAdapter(getApplicationContext(),myservicesList,provider_id,cat_id,user_id);
-
+        myServicesListAdapter=new MyServicesListAdapter(getApplicationContext(),myservicesList);
 
     }
     class Conncetion extends AsyncTask<String,String ,String > {
         private ProgressDialog dialog;
         int userId;
 
-        public  Conncetion(ServiceProviderDetail activity,int user_id,int cat_id) {
+        public  Conncetion(MyServicesListActivity activity,int user_id) {
             dialog = new ProgressDialog(activity);
             userId=user_id;
         }
@@ -91,7 +83,7 @@ public class ServiceProviderDetail extends AppCompatActivity {
 
             String result="";
 
-            final String BASE_URL="http://www.zaptox.com/mehdiTask/fetch_services_by_user_id.php?user_id="+userId+"&cat_id="+cat_id;
+            final String BASE_URL="http://www.zaptox.com/mehdiTask/fetch_services.php?user_id="+userId;
             try {
                 HttpClient client=new DefaultHttpClient();
                 HttpGet request=new HttpGet();
@@ -129,11 +121,11 @@ public class ServiceProviderDetail extends AppCompatActivity {
                 JSONObject jsonResult=new JSONObject(result);
                 int success=jsonResult.getInt("success");
 
-                listViewSpDetials.setAdapter(myServicesListAdapter);
+                listViewMyServices.setAdapter(myServicesListAdapter);
 
 
                 if(success==1){
-                   // Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
+            //        Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
                     JSONArray services=jsonResult.getJSONArray("services");
                     for(int i=0;i<services.length();i++){
 
@@ -154,12 +146,12 @@ public class ServiceProviderDetail extends AppCompatActivity {
 
                 }
                 else{
-                  //  Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-              //  Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }

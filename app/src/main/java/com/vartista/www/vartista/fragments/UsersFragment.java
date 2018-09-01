@@ -4,32 +4,23 @@ package com.vartista.www.vartista.fragments;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.vartista.www.vartista.ApiClient;
-import com.vartista.www.vartista.ApiInterface;
-import com.vartista.www.vartista.Category;
-import com.vartista.www.vartista.CreateServiceActivity;
-import com.vartista.www.vartista.GetServiceProviders;
-import com.vartista.www.vartista.MapActivity;
-import com.vartista.www.vartista.MyServicesListActivity;
+import com.vartista.www.vartista.restcalls.ApiClient;
+import com.vartista.www.vartista.restcalls.ApiInterface;
+import com.vartista.www.vartista.beans.Category;
+
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.Service;
 import com.vartista.www.vartista.adapters.CategoriesListAdapter;
-import com.vartista.www.vartista.adapters.MyServicesListAdapter;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;

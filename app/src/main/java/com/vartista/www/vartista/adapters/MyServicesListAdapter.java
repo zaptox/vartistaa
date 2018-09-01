@@ -8,9 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.vartista.www.vartista.Category;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.Service;
+import com.vartista.www.vartista.beans.Service;
 
 import java.util.List;
 

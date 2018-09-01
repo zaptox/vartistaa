@@ -1,5 +1,4 @@
-
-package com.vartista.www.vartista;
+package com.vartista.www.vartista.modules.provider;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -30,41 +29,46 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyServicesListActivity extends AppCompatActivity {
-    RecyclerView listViewMyServices;
-    MyServicesListAdapter myServicesListAdapter;
-    List<Service> myservicesList;
+import com.vartista.www.vartista.R;
+
+public class MyServiceRequests extends AppCompatActivity {
+
+
+    RecyclerView listViewMyReqeustServices;
+    MyServicesListAdapter myRequestServicesListAdapter;
+    List<Service> myRqeuestservicesList;
     int user_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_services_list);
+        setContentView(R.layout.activity_my_service_requests);
 
-        listViewMyServices=(RecyclerView) findViewById(R.id.lvServiceList);
-        listViewMyServices.setHasFixedSize(true);
-        listViewMyServices.setLayoutManager(new LinearLayoutManager(this));
+        listViewMyReqeustServices=(RecyclerView) findViewById(R.id.lvServiceList);
+        listViewMyReqeustServices.setHasFixedSize(true);
+        listViewMyReqeustServices.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        listViewMyServices.setLayoutManager(mLayoutManager);
-        listViewMyServices.addItemDecoration(new
-                DividerItemDecoration(getApplicationContext(),
-                DividerItemDecoration.VERTICAL));
-        listViewMyServices.setItemAnimator(new DefaultItemAnimator());
+        listViewMyReqeustServices.setLayoutManager(mLayoutManager);
+        listViewMyReqeustServices.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+        listViewMyReqeustServices.setItemAnimator(new DefaultItemAnimator());
 
-        myservicesList=new ArrayList<>();
+        myRqeuestservicesList = new ArrayList<>();
+
         user_id=getIntent().getIntExtra("userId",0);
 
+        new MyServiceRequests.Conncetion(MyServiceRequests.this,user_id);
 
-        new Conncetion(MyServicesListActivity.this,user_id).execute();
 
 
-        myServicesListAdapter=new MyServicesListAdapter(getApplicationContext(),myservicesList);
 
     }
+
+
+
     class Conncetion extends AsyncTask<String,String ,String > {
         private ProgressDialog dialog;
         int userId;
 
-        public  Conncetion(MyServicesListActivity activity,int user_id) {
+        public  Conncetion(MyServiceRequests activity,int user_id) {
             dialog = new ProgressDialog(activity);
             userId=user_id;
         }
@@ -81,7 +85,7 @@ public class MyServicesListActivity extends AppCompatActivity {
 
             String result="";
 
-            final String BASE_URL="http://www.zaptox.com/mehdiTask/fetch_services.php?user_id="+userId;
+            final String BASE_URL="http://vartista.com/vartista_app/req_service.php?service_provider_id="+userId;
             try {
                 HttpClient client=new DefaultHttpClient();
                 HttpGet request=new HttpGet();
@@ -119,11 +123,11 @@ public class MyServicesListActivity extends AppCompatActivity {
                 JSONObject jsonResult=new JSONObject(result);
                 int success=jsonResult.getInt("success");
 
-                listViewMyServices.setAdapter(myServicesListAdapter);
+                listViewMyReqeustServices.setAdapter(myRequestServicesListAdapter);
 
 
                 if(success==1){
-            //        Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
+                    //        Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
                     JSONArray services=jsonResult.getJSONArray("services");
                     for(int i=0;i<services.length();i++){
 
@@ -138,20 +142,19 @@ public class MyServicesListActivity extends AppCompatActivity {
                         String service_description=service.getString("service_description");
                         String category_name=service.getString("name");
                         int user_id=service.getInt("user_id");
-                        myservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description,  status,  price,  category_id,  created_at,  updated_at));
+                        myRqeuestservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description,  status,  price,  category_id,  created_at,  updated_at));
 
                     }
 
                 }
                 else{
-                 //   Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                    //   Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-             //   Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }
-
 }

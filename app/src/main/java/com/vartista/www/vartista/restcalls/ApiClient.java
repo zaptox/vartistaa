@@ -1,4 +1,4 @@
-package com.vartista.www.vartista;
+package com.vartista.www.vartista.restcalls;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

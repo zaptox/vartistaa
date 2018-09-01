@@ -1,4 +1,4 @@
-package com.vartista.www.vartista;
+package com.vartista.www.vartista.modules.provider;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,6 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.restcalls.ApiClient;
+import com.vartista.www.vartista.restcalls.ApiInterface;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -31,6 +35,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import com.vartista.www.vartista.beans.Service;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
