@@ -1,6 +1,6 @@
 package com.vartista.www.vartista.restcalls;
 
-import com.vartista.www.vartista.modules.user.CreateRequest;
+import com.vartista.www.vartista.beans.CreateRequest;
 
 import com.vartista.www.vartista.beans.Service;
 import com.vartista.www.vartista.beans.Services;

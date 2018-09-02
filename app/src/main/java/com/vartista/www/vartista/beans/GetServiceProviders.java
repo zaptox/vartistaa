@@ -1,10 +1,8 @@
-package com.vartista.www.vartista;
+package com.vartista.www.vartista.beans;
 
-import android.annotation.SuppressLint;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
