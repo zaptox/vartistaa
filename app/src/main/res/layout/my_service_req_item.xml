@@ -28,7 +28,7 @@
 
 
         <TextView
-            android:id="@+id/textViewName"
+            android:id="@+id/textView_req_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/profile_image"
@@ -43,21 +43,21 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textViewName"
-            android:layout_below="@+id/textViewName"
+            android:layout_alignStart="@+id/textView_req_name"
+            android:layout_below="@+id/textView_req_name"
             android:layout_weight="1"
 
             android:text="Service:"
             android:textSize="12dp"
-            android:layout_alignLeft="@+id/textViewName" />
+            android:layout_alignLeft="@+id/textView_req_name" />
 
         <TextView
-            android:id="@+id/textViewService"
+            android:id="@+id/textView_req_service"
             android:layout_width="95dp"
             android:layout_height="wrap_content"
 
 
-            android:layout_below="@+id/textViewName"
+            android:layout_below="@+id/textView_req_name"
             android:layout_toEndOf="@+id/textView"
             android:layout_weight="1"
             android:text="Hair cutt $30"
@@ -105,7 +105,7 @@
             android:layout_toRightOf="@+id/profile_image" />
 
         <TextView
-            android:id="@+id/textViewDate"
+            android:id="@+id/textViewReq_Date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/profile_image"
@@ -128,7 +128,7 @@
 
 
         <TextView
-            android:id="@+id/textViewTime"
+            android:id="@+id/textViewReq_Time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/profile_image"

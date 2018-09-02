@@ -82,7 +82,7 @@ public class SpDetailsAdapter extends RecyclerView.Adapter<SpDetailsAdapter.View
             super(itemView);
             mView=itemView;
 
-            tvService=(TextView)mView.findViewById(R.id.textViewService);
+            tvService=(TextView)mView.findViewById(R.id.textView_req_service);
             tvPrice=(TextView)mView.findViewById(R .id.textViewPrice);
             btnBookNow=(Button)mView.findViewById(R.id.buttonBookNow);
         }

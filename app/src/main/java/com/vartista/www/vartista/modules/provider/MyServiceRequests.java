@@ -30,13 +30,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.beans.ServiceRequets;
 
 public class MyServiceRequests extends AppCompatActivity {
 
 
     RecyclerView listViewMyReqeustServices;
     MyServicesListAdapter myRequestServicesListAdapter;
-    List<Service> myRqeuestservicesList;
+    List<ServiceRequets> myRqeuestservicesList;
     int user_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,19 +131,21 @@ public class MyServiceRequests extends AppCompatActivity {
                     //        Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
                     JSONArray services=jsonResult.getJSONArray("services");
                     for(int i=0;i<services.length();i++){
-
                         JSONObject service=services.getJSONObject(i);
+                        int requestservice_id = service.getInt("requestservice_id");
+                        String user_name =  service.getString("username");
+                        int requests_status = service.getInt("requests_status");
+                        String date = service.getString("date");
+                        String time = service.getString("time");
+                        String location = service.getString("location");
+                        int user_customer_id=service.getInt("user_customer_id");
+                        int service_provider_id=service.getInt("service_provider_id");
                         int service_id=service.getInt("service_id");
+                        int service_cat_id = service.getInt("service_cat_id");
                         String service_title=service.getString("service_title");
-                        double price=service.getDouble("price");
-                        int status=service.getInt("status");
-                        String created_at=service.getString("created_at");
-                        String updated_at=service.getString("updated_at");
-                        int category_id=service.getInt("category_id");
-                        String service_description=service.getString("service_description");
-                        String category_name=service.getString("name");
-                        int user_id=service.getInt("user_id");
-                        myRqeuestservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description,  status,  price,  category_id,  created_at,  updated_at));
+                        String category_name=service.getString("catgname");
+                        myRqeuestservicesList.add(new ServiceRequets(requestservice_id,user_name, requests_status, date,time,location,user_customer_id,service_provider_id,service_id,service_cat_id,service_title,category_name));
+//                        myRqeuestservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description,  status,  price,  category_id,  created_at,  updated_at));
 
                     }
 
