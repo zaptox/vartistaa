@@ -20,6 +20,7 @@ import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
 
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -122,6 +123,8 @@ public class HomeActivity extends AppCompatActivity
 
 
         } else if (id == R.id.request) {
+            Intent intent = new Intent(HomeActivity.this, MyServiceRequests.class);
+            startActivity(intent);
             Toast.makeText(this, "request", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.appointments) {
