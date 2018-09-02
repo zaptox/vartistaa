@@ -44,7 +44,7 @@ public class MyServiceRequests extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_service_requests);
 
-        listViewMyReqeustServices=(RecyclerView) findViewById(R.id.lvServiceList);
+        listViewMyReqeustServices=(RecyclerView) findViewById(R.id.myreqeust_ServiceList);
         listViewMyReqeustServices.setHasFixedSize(true);
         listViewMyReqeustServices.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
