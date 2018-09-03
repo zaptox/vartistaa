@@ -39,7 +39,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mapbox.mapboxsdk.Mapbox.getApplicationContext;
 
 
 /**
@@ -178,7 +177,7 @@ public class UsersFragment extends Fragment {
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }

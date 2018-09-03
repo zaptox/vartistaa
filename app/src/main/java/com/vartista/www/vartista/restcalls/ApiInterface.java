@@ -2,6 +2,7 @@ package com.vartista.www.vartista.restcalls;
 
 import com.vartista.www.vartista.beans.CreateRequest;
 
+import com.vartista.www.vartista.beans.RequestService;
 import com.vartista.www.vartista.beans.Service;
 import com.vartista.www.vartista.beans.Services;
 import com.vartista.www.vartista.beans.User;
@@ -51,13 +52,18 @@ public interface ApiInterface {
                                         String created_at, @Query("updated_at") String updated_at);
 
 
-
-
     @GET("create_request.php")
-    Call<CreateRequest> createRequest(@Query("user_customer_id") int user_customer_id, @Query("user_service_id") int user_service_id,
-                                      @Query("service_id") int service_id,
-                                      @Query("date") String date, @Query("time") String  time
-            , @Query("location") String location, @Query("request_status") int request_status, @Query("service_cat_id") int service_cat_id);
+    Call<RequestService> createRequest(@Query("user_customer_id") int user_customer_id, @Query("service_provider_id") int service_provider_id,
+                                       @Query("service_id") int service_id,
+                                       @Query("date") String date, @Query("time") String time
+            , @Query("location") String location, @Query("city")
+                                        String city, @Query("request_status") int request_status, @Query("service_cat_id") int service_cat_id);
+
+
+
+
+
+
 
 
 
