@@ -17,7 +17,7 @@
         <activity
             android:name=".modules.general.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".modules.user.ServiceProviderDetail">
+        <activity android:name=".modules.general.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +35,7 @@
         <activity android:name=".modules.provider.MyServicesListActivity" />
         <activity android:name=".modules.user.BookNowActivity" />
         <activity android:name=".modules.provider.MyServiceRequests" />
-        <activity android:name=".modules.general.SplashActivity"></activity>
+        <activity android:name=".modules.user.ServiceProviderDetail"></activity>
     </application>
 
 </manifest>
