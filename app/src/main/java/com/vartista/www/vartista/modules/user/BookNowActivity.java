@@ -1,6 +1,9 @@
 package com.vartista.www.vartista.modules.user;
 
+import android.app.DatePickerDialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +16,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.SpDetailsAdapter;
+import com.vartista.www.vartista.beans.CreateRequest;
+import com.vartista.www.vartista.beans.RequestService;
+import com.vartista.www.vartista.fragments.DatePickerFragment;
+import com.vartista.www.vartista.fragments.TimePickerFragment;
+import com.vartista.www.vartista.modules.general.HomeActivity;
+import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
+import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
+import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 
 import org.apache.http.HttpResponse;
@@ -33,209 +48,132 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.vartista.www.vartista.beans.Service;
 
-public class BookNowActivity extends AppCompatActivity {
-    int provider_id, cat_id, user_id, service_id;
-    DatePicker dp_datepicker;
-    TimePicker timePicker1;
-    EditText editTextaddress;
-    Button buttonBook;
-    String sDate, sTime, address;
-    public static ApiInterface apiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class BookNowActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,TimePickerDialog.OnTimeSetListener {
+
+    EditText editTextaddress,editTextCity;
+    Button buttonBook;
+    ImageView imageViewDate,imageViewTime;
+    public static ApiInterface apiInterface;
+    RelativeLayout layoutDate,layoutTime;
+    TextView textViewReq_Date,textViewReq_Time;
+    int user_customer_id,service_provider_id,service_id,service_cat_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_now);
-        dp_datepicker = (DatePicker) findViewById(R.id.dp_datepicker);
-        timePicker1 = (TimePicker) findViewById(R.id.timePicker1);
-        editTextaddress = (EditText) findViewById(R.id.address);
-        buttonBook = (Button) findViewById(R.id.buttonBook);
-//        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-//
-//
-//        Intent intent = getIntent();
-//        provider_id = intent.getIntExtra("provider_id", 0);
-//        cat_id = intent.getIntExtra("cat_id", 0);
-//        user_id = intent.getIntExtra("user_id", 0);
-//        service_id = intent.getIntExtra("service_id", 0);
-//        address = editTextaddress.getText().toString();
-//        String a = "" + provider_id + "" + cat_id + "" + user_id + "" + service_id;
-    //    Toast.makeText(getApplicationContext(), a, Toast.LENGTH_LONG).show();
+        editTextaddress=(EditText)findViewById(R.id.address);
+        editTextCity=(EditText)findViewById(R.id.editTxtcity);
+        buttonBook=(Button)findViewById(R.id.buttonBook);
+        imageViewDate=(ImageView)findViewById(R.id.imageViewDate);
+        imageViewTime=(ImageView)findViewById(R.id.imageViewTime);
+        layoutDate=(RelativeLayout)findViewById(R.id.layoutDate);
+        layoutTime=(RelativeLayout)findViewById(R.id.layouttime);
+        textViewReq_Date=(TextView)findViewById(R.id.textViewReq_Date);
+        textViewReq_Time=(TextView)findViewById(R.id.textViewReq_time);
 
-        buttonBook.setOnClickListener(new View.OnClickListener() {
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+
+        Intent intent=getIntent();
+        user_customer_id=intent.getIntExtra("user_id",0);
+        service_provider_id=intent.getIntExtra("provider_id",0);
+        service_id=intent.getIntExtra("service_id",0);
+        service_cat_id=intent.getIntExtra("cat_id",0);
+
+
+        Calendar calendar=Calendar.getInstance();
+        int day=calendar.get(Calendar.DAY_OF_MONTH);
+        int month=calendar.get(Calendar.MONTH);
+        int year=calendar.get(Calendar.YEAR);
+
+        layoutDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-//
-//
-//                Call<CreateRequest> call = BookNowActivity.apiInterface.createRequest(
-//                       user_id,provider_id,service_id,"0000-00-00","00:00",address,1,1);
-//
-//                call.enqueue(new Callback<CreateRequest>() {
-//                    @Override
-//                    public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
-//                        if (response.body().equals("ok")) {
-//        //                    Toast.makeText(getApplicationContext(), "Registered"+user_id, Toast.LENGTH_SHORT).show();
-//
-//                        }
-//                        if (response.isSuccessful()) {
-//                            Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_SHORT).show();
-//
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<CreateRequest> call, Throwable t) {
-//                        Toast.makeText(getApplicationContext(), "registered ", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                });
-
-                // startActivity(new Intent(getApplicationContext(),HomeActivity.class));
-
+                DialogFragment datePicker=new DatePickerFragment();
+                datePicker.show(getFragmentManager(),"date picker");
             }
         });
 
+        layoutTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment timePicker=new TimePickerFragment();
+                timePicker.show(getFragmentManager(),"time picker");
+            }
+        });
+
+     buttonBook.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+             String address = editTextaddress.getText().toString();
+             String city = editTextCity.getText().toString();
+             String time = textViewReq_Time.getText().toString();
+             String date=textViewReq_Date.getText().toString();
+
+
+             Call<RequestService> call = BookNowActivity.apiInterface.createRequest(user_customer_id,service_provider_id,service_id,date,time,address,city,1,service_cat_id);
+
+             call.enqueue(new Callback<RequestService>() {
+                 @Override
+                 public void onResponse(Call<RequestService> call, Response<RequestService> response) {
+                     if (response.body().equals("ok")) {
+                         Toast.makeText(getApplicationContext(), "Request Send", Toast.LENGTH_SHORT).show();
+
+                     }
+                     if (response.isSuccessful()) {
+                         Toast.makeText(getApplicationContext(), "Request has been Send succesfully.", Toast.LENGTH_SHORT).show();
+//                         new SweetAlertDialog(getApplicationContext(), SweetAlertDialog.SUCCESS_TYPE)
+//                                 .setTitleText("Good job!")
+//                                 .setContentText("You clicked the button!")
+//                                 .show();
+                     }
+                 }
+
+                 @Override
+                 public void onFailure(Call<RequestService> call, Throwable t) {
+                     Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                 }
+
+             });
+
+             editTextaddress.setText("");
+             editTextCity.setText("");
+             textViewReq_Date.setText("00/00/0000");
+             textViewReq_Time.setText("00:00");
+//             Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+//             intent.putExtra("userId",user_customer_id);
+//             startActivity(intent);
+         }
+     });
+
+
     }
 
-    public static class ServiceProviderDetail extends AppCompatActivity {
-        RecyclerView listViewSpDetials;
-        SpDetailsAdapter myServicesListAdapter;
-        List<Service> myservicesList;
-        int provider_id;
-        int cat_id;
-        int user_id;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_service_provider_detail);
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar c=Calendar.getInstance();
+        c.set(Calendar.YEAR,year);
+        c.set(Calendar.MONTH,month);
+        c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+        String currentDate= DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+        textViewReq_Date.setText(currentDate);
+    }
 
-
-            listViewSpDetials=(RecyclerView) findViewById(R.id.services_sp);
-            listViewSpDetials.setHasFixedSize(true);
-            listViewSpDetials.setLayoutManager(new LinearLayoutManager(this));
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-            listViewSpDetials.setLayoutManager(mLayoutManager);
-            listViewSpDetials.addItemDecoration(new
-                    DividerItemDecoration(getApplicationContext(),
-                    DividerItemDecoration.VERTICAL));
-            listViewSpDetials.setItemAnimator(new DefaultItemAnimator());
-
-            myservicesList=new ArrayList<>();
-            Intent intent=getIntent();
-
-            provider_id=intent.getIntExtra("s_provider_id",0);
-            cat_id=intent.getIntExtra("cat_id",0);
-            user_id=intent.getIntExtra("user_id",0);
-
-
-//            new Conncetion(getApplication(),provider_id,cat_id).execute();
-
-
-            myServicesListAdapter=new SpDetailsAdapter(getApplicationContext(),myservicesList,provider_id,cat_id,user_id);
-
-
-        }
-        class Conncetion extends AsyncTask<String,String ,String > {
-            private ProgressDialog dialog;
-            int userId;
-
-            public  Conncetion(BookNowActivity activity, int user_id, int cat_id) {
-                dialog = new ProgressDialog(activity);
-                userId=user_id;
-            }
-
-            @Override
-            protected void onPreExecute() {
-                dialog.setMessage("Retriving data Please Wait..");
-                dialog.show();
-            }
-
-            @Override
-            protected String doInBackground(String... strings) {
-
-
-                String result="";
-
-                final String BASE_URL="http://www.zaptox.com/mehdiTask/fetch_services_by_user_id.php?user_id="+userId+"&cat_id="+cat_id;
-                try {
-                    HttpClient client=new DefaultHttpClient();
-                    HttpGet request=new HttpGet();
-
-                    request.setURI(new URI(BASE_URL));
-                    HttpResponse response=client.execute(request);
-                    BufferedReader reader=new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-                    StringBuffer stringBuffer=new StringBuffer();
-                    String line="";
-                    while((line=reader.readLine())!=null){
-                        stringBuffer.append(line);
-                        break;
-                    }
-                    reader.close();
-                    result=stringBuffer.toString();
-
-
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
-                    return new String("There is exception"+e.getMessage());
-                } catch (ClientProtocolException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return result;
-            }
-
-            @Override
-            protected void onPostExecute(String result) {
-                if (dialog.isShowing()) {
-                    dialog.dismiss();
-                }
-                try {
-                    JSONObject jsonResult=new JSONObject(result);
-                    int success=jsonResult.getInt("success");
-
-                    listViewSpDetials.setAdapter(myServicesListAdapter);
-
-
-                    if(success==1){
-                       // Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
-                        JSONArray services=jsonResult.getJSONArray("services");
-                        for(int i=0;i<services.length();i++){
-
-                            JSONObject service=services.getJSONObject(i);
-                            int service_id=service.getInt("service_id");
-                            String service_title=service.getString("service_title");
-                            double price=service.getDouble("price");
-                            int status=service.getInt("status");
-                            String created_at=service.getString("created_at");
-                            String updated_at=service.getString("updated_at");
-                            int category_id=service.getInt("category_id");
-                            String service_description=service.getString("service_description");
-                            String category_name=service.getString("name");
-                            int user_id=service.getInt("user_id");
-                            myservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description,  status,  price,  category_id,  created_at,  updated_at));
-
-                        }
-
-                    }
-                    else{
-                      //  Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                  //  Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        textViewReq_Time.setText(hourOfDay+":"+minute);
     }
 }

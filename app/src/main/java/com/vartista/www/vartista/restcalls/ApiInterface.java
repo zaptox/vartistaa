@@ -3,6 +3,7 @@ package com.vartista.www.vartista.restcalls;
 import com.vartista.www.vartista.modules.user.CreateRequest;
 
 import com.vartista.www.vartista.beans.Service;
+import com.vartista.www.vartista.beans.Services;
 import com.vartista.www.vartista.beans.User;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -35,37 +36,21 @@ public interface ApiInterface {
     @GET("get_user_by_id.php")
     Call<User> getUserById(@Query("id") int id);
 
-    /*@GET("get_service_by_id.php")
-    Call<Services> getServiceById(@Query("id") int id);*/
+    @GET("get_service_by_id.php")
+    Call<Services> getServiceById(@Query("id") int id);
 
     @GET("update_user.php")
     Call<User> updateUser(@Query("name") String name, @Query("email") String email, @Query("password") String password,@Query("id") int id);
 
 
-    @GET("CREATE_SERVICES/createservices.php")
+    @GET("createservices.php")
     Call<Service> createService(@Query("service_title") String service_title, @Query("userid") int user_id,
                                 @Query("service_description") String service_description,
-                                @Query("location") String location,
-                                @Query("status") int status,
-                                @Query("price") double price,
-                                @Query("category_id") int category_id,
-                                @Query("created_at") String created_at,
-                                @Query("updated_at") String updated_at);
+                                @Query("status") int status, @Query("price") double price
+                                , @Query("category_id") int category_id, @Query("created_at")
+                                        String created_at, @Query("updated_at") String updated_at);
 
-    @GET("CREATE_SERVICES/update.services.php")
-    Call<Service> updateService(@Query("service_title") String service_title,
-                                @Query("service_description") String service_description,
-                                @Query("location") String location,
-                                @Query("category_id") int category_id,
-                                @Query("price") double price,
-                                @Query("updated_at") String updated_at,
-                                @Query("service_id") int service_id);
 
-    @GET("CREATE_SERVICES/get.service.by.id.php")
-    Call<Service> getServiceById(@Query("id") int id);
-
-    @GET("CREATE_SERVICES/delete.service.php")
-    Call<Service> deleteService(@Query("service_id") int service_id);
 
 
     @GET("create_request.php")
