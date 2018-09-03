@@ -1,5 +1,6 @@
 package com.vartista.www.vartista.beans;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -8,10 +9,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class Service {
 
-    public Service(int service_id, String service_title, String service_description, int status, double price, int category_id, String created_at, String updated_at) {
+    public Service(int service_id, String service_title, String service_description,String location, int status, double price, int category_id, String created_at, String updated_at) {
         this.service_id = service_id;
         this.service_title = service_title;
         this.service_description = service_description;
+        this.location=location;
         this.status = status;
         this.price = price;
         this.category_id = category_id;
@@ -19,10 +21,27 @@ public class Service {
         this.updated_at = updated_at;
     }
 
-    public Service(int service_id,int user_id, String category_name, String service_title, String service_description, int status, double price, int category_id, String created_at, String updated_at) {
+
+
+    public Service(int service_id,int user_id, String category_name, String service_title, String service_description,int status, double price, int category_id, String created_at, String updated_at) {
         this.service_id = service_id;
         this.service_title = service_title;
         this.service_description = service_description;
+
+        this.status = status;
+        this.price = price;
+        this.category_id = category_id;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.category_name=category_name;
+        this.user_id=user_id;
+    }
+
+    public Service(int service_id,int user_id, String category_name, String service_title, String service_description,String location,int status, double price, int category_id, String created_at, String updated_at) {
+        this.service_id = service_id;
+        this.service_title = service_title;
+        this.service_description = service_description;
+        this.location=location;
         this.status = status;
         this.price = price;
         this.category_id = category_id;
@@ -68,11 +87,24 @@ public class Service {
     private String updated_at;
 
 
+    @SerializedName("location")
+    String location;
+
+
+
     public String getResponse(){
 
     return Response;
 
 }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public String getService_title() {
         return service_title;

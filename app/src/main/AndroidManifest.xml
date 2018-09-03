@@ -31,7 +31,9 @@
         <activity
             android:name=".modules.general.UserProfile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".modules.provider.CreateServiceActivity" />
+        <activity android:name=".modules.provider.CreateServiceActivity" >
+
+        </activity>
         <activity android:name=".modules.provider.MyServicesListActivity" />
         <activity android:name=".modules.user.BookNowActivity$ServiceProviderDetail" />
         <activity android:name=".modules.user.BookNowActivity"></activity>
