@@ -49,6 +49,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.vartista.www.vartista.beans.Service;
+import com.vartista.www.vartista.restcalls.ServiceApiInterface;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,7 +62,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
     EditText service_location;
     Button btnHome;
     //Spinner spinnerService;
-    public static ApiInterface apiInterface;
+    public static ServiceApiInterface apiInterface;
     ArrayList<String> cat;
     ArrayList<Integer> cat_id;
     int category_id;
@@ -81,7 +83,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
         cat=new ArrayList<>();
         cat_id=new ArrayList<>();
         myServicesList = new ArrayList<Service>();
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        apiInterface = ApiClient.getApiClient().create(ServiceApiInterface.class);
 
         service_location = (EditText)findViewById(R.id.service_location);
         btnCreateSerivce = (Button) findViewById(R.id.btnCreateService);
@@ -125,7 +127,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
 // Selection of the spinner
 
 // Application of the Array to the Spinner
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+       // apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         new Conncetion(CreateServiceActivity.this).execute();
 
@@ -197,6 +199,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
                     String price = edTxtServicePrice.getText().toString();
                     String description = edDescription.getText().toString();
                     String location = service_location.getText().toString();
+                    //int category_id=
                     //   Toast.makeText(CreateServiceActivity.this, ""+user_id, Toast.LENGTH_SHORT).show();
 //                                          //USER_ID comes from shared prefrences
                     user_id=10;
@@ -301,12 +304,13 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
 
                 if(success==1){
-                    //  Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
+
                     JSONArray catogires=jsonResult.getJSONArray("category");
                     for(int i=0;i<catogires.length();i++){
 
                         JSONObject category=catogires.getJSONObject(i);
                         int category_id=category.getInt("id");
+
                         String category_name=category.getString("name");
                         cat.add(category_name);
                         cat_id.add(category_id);
@@ -411,7 +415,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
                         int status = service.getInt("status");
                         String created_at = service.getString("created_at");
                         String updated_at = service.getString("updated_at");
-                        int category_id = service.getInt("category_id");
+                         category_id = service.getInt("category_id");
                         String service_description = service.getString("service_description");
                         String category_name = service.getString("name");
 
@@ -423,6 +427,8 @@ public class  CreateServiceActivity extends AppCompatActivity {
                         edTxtServicePrice.setText(""+price);
                         edDescription.setText(service_description);
                         service_location.setText(location);
+
+
 
 
                     }
