@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.adapters.MyServicesListAdapter;
 
 import org.apache.http.HttpResponse;
@@ -36,7 +37,7 @@ public class MyServiceRequests extends AppCompatActivity {
 
 
     RecyclerView listViewMyReqeustServices;
-    MyServicesListAdapter myRequestServicesListAdapter;
+    MyRequestsServicesListAdapter myRequestServicesListAdapter;
     List<ServiceRequets> myRqeuestservicesList;
     int user_id;
     @Override
@@ -54,9 +55,12 @@ public class MyServiceRequests extends AppCompatActivity {
 
         myRqeuestservicesList = new ArrayList<>();
 
-        user_id=getIntent().getIntExtra("userId",0);
 
-        new MyServiceRequests.Conncetion(MyServiceRequests.this,user_id);
+
+        user_id=getIntent().getIntExtra("user",0);
+//        Toast.makeText(this, ""+user_id, Toast.LENGTH_SHORT).show();
+
+        new MyServiceRequests.Conncetion(MyServiceRequests.this,user_id).execute();
 
 
 
@@ -123,35 +127,34 @@ public class MyServiceRequests extends AppCompatActivity {
             try {
                 JSONObject jsonResult=new JSONObject(result);
                 int success=jsonResult.getInt("success");
-
-                listViewMyReqeustServices.setAdapter(myRequestServicesListAdapter);
-
+                
 
                 if(success==1){
-                    //        Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
                     JSONArray services=jsonResult.getJSONArray("services");
+                    Toast.makeText(MyServiceRequests.this, ""+services.getJSONObject(0), Toast.LENGTH_SHORT).show();
                     for(int i=0;i<services.length();i++){
+                        Toast.makeText(MyServiceRequests.this, "for loop", Toast.LENGTH_SHORT).show();
                         JSONObject service=services.getJSONObject(i);
-                        int requestservice_id = service.getInt("requestservice_id");
-                        String user_name =  service.getString("username");
-                        int requests_status = service.getInt("requests_status");
-                        String date = service.getString("date");
-                        String time = service.getString("time");
-                        String location = service.getString("location");
-                        int user_customer_id=service.getInt("user_customer_id");
-                        int service_provider_id=service.getInt("service_provider_id");
-                        int service_id=service.getInt("service_id");
-                        int service_cat_id = service.getInt("service_cat_id");
-                        String service_title=service.getString("service_title");
-                        String category_name=service.getString("catgname");
-                        myRqeuestservicesList.add(new ServiceRequets(requestservice_id,user_name, requests_status, date,time,location,user_customer_id,service_provider_id,service_id,service_cat_id,service_title,category_name));
-//                        myRqeuestservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description,  status,  price,  category_id,  created_at,  updated_at));
 
+
+
+
+
+
+
+                        Toast.makeText(MyServiceRequests.this, "updatenow", Toast.LENGTH_SHORT).show();
                     }
+                    Toast.makeText(MyServiceRequests.this, ""+myRqeuestservicesList, Toast.LENGTH_SHORT).show();
+
+
+                    myRequestServicesListAdapter= new MyRequestsServicesListAdapter(MyServiceRequests.this,myRqeuestservicesList);
+                    listViewMyReqeustServices.setAdapter(myRequestServicesListAdapter);
+
 
                 }
                 else{
                     //   Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyServiceRequests.this, "no fatad", Toast.LENGTH_SHORT).show();
 
                 }
             } catch (JSONException e) {

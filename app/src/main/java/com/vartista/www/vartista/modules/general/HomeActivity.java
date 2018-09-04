@@ -124,6 +124,9 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.request) {
             Intent intent = new Intent(HomeActivity.this, MyServiceRequests.class);
+            Toast.makeText(this, ""+user_id, Toast.LENGTH_SHORT).show();
+            intent.putExtra("user",user_id);
+
             startActivity(intent);
             Toast.makeText(this, "request", Toast.LENGTH_SHORT).show();
 

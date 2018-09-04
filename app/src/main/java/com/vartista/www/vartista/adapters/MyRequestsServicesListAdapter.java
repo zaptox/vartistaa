@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.R;
@@ -22,6 +23,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
     public MyRequestsServicesListAdapter(Context context, List<ServiceRequets> myReqServicesList){
         this.myReqServicesList = myReqServicesList;
         this.context=context;
+        Toast.makeText(context, ""+myReqServicesList.size(), Toast.LENGTH_SHORT).show();
     }
 
 

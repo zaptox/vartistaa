@@ -61,9 +61,9 @@ public class ServiceRequets {
         this.catgname = catgname;
     }
 
-
-    public ServiceRequets() {
-    }
+//
+//    public ServiceRequets() {
+//    }
 
 
 
