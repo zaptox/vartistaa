@@ -171,8 +171,8 @@ public class FindServicesInList extends AppCompatActivity {
 
                         double longitude = Double.parseDouble(ser1.getString("longitude"));
                         double latitude = Double.parseDouble(ser1.getString("latitude"));
-                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id, service_title, service_description, price, category_id));
-
+                        String sp_name=ser1.getString("name");
+                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id, service_title, service_description, price, category_id,sp_name));
 
 
 

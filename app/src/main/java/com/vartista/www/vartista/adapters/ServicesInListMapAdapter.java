@@ -15,6 +15,8 @@ import com.vartista.www.vartista.beans.GetServiceProviders;
 import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.user.BookNowActivity;
+import com.vartista.www.vartista.modules.user.FindServicesInList;
+import com.vartista.www.vartista.modules.user.ServiceProviderDetail;
 
 import java.util.List;
 
@@ -45,8 +47,9 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
+
+        holder.service_p_name.setText("" + myServicesList.get(position).getSp_name());
         holder.service_name.setText("" + myServicesList.get(position).getService_title());
-        holder.service_p_name.setText("" + myServicesList.get(position).getService_description());
 
         final int abhipoition = position;
         final ViewHolder holder1 = holder;
@@ -62,12 +65,13 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
                 int cat_id= myServicesList.get(position).getCategory_id();
                 int user_id= HomeActivity.user_id;
 
-//                Intent intent=new Intent(view.getContext(),BookNowActivity.ServiceProviderDetail.class);
-//                intent.putExtra("s_provider_id",s_provider_id);
-//                intent.putExtra("cat_id",cat_id);
-//                intent.putExtra("user_id",user_id);
+                Intent intent=new Intent(view.getContext(),ServiceProviderDetail.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("s_provider_id",s_provider_id);
+                intent.putExtra("cat_id",cat_id);
+                intent.putExtra("user_id",user_id);
                 Toast.makeText(context, "service provider "+s_provider_id+", cat_id: "+cat_id+", user_id: "+user_id, Toast.LENGTH_SHORT).show();
-//                context.startActivity(intent);
+                context.startActivity(intent);
 
             }
         });
