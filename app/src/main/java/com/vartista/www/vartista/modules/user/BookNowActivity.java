@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.SpDetailsAdapter;
@@ -117,7 +118,7 @@ public class BookNowActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_service_provider_detail);
 
-
+            Toast.makeText(this, "In service detail wala", Toast.LENGTH_SHORT).show();
             listViewSpDetials=(RecyclerView) findViewById(R.id.services_sp);
             listViewSpDetials.setHasFixedSize(true);
             listViewSpDetials.setLayoutManager(new LinearLayoutManager(this));
