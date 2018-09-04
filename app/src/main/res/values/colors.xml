@@ -8,5 +8,7 @@
     <color name="color_splash">#ff0000</color>
     <color name="color_good">#FFFFFF</color>
 
+    <color name="color_danger">#ff0000</color>
+
 
 </resources>

@@ -41,7 +41,13 @@ public class Services {
     @Expose
     int category_id;
 
-    public Services(int id, String title, String description, int status, String created_at, String updated_at, int category_id) {
+    @SerializedName("location")
+    @Expose
+    String location;
+
+
+
+    public Services(int id, String title, String description,String location ,int status, String created_at, String updated_at, int category_id) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -49,6 +55,7 @@ public class Services {
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.category_id = category_id;
+        this.location=location;
     }
 
     public int getId() {
@@ -109,5 +116,9 @@ public class Services {
 
     public String getResponse() {
         return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
     }
 }

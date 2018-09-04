@@ -41,13 +41,13 @@ public class SpDetailsAdapter extends RecyclerView.Adapter<SpDetailsAdapter.View
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
     holder.tvService.setText(myServicesList.get(position).getService_title());
-    holder.tvPrice.setText(""+myServicesList.get(position).getPrice());
+    holder.tvPrice.setText("Rs: "+myServicesList.get(position).getPrice());
 
     holder.btnBookNow.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent=new Intent(v.getContext(), BookNowActivity.class);
-            intent.putExtra("provide_id",provider_id);
+            intent.putExtra("provider_id",provider_id);
             intent.putExtra("cat_id",cat_id);
             intent.putExtra("user_id",user_id);
             intent.putExtra("service_id",myServicesList.get(position).getService_id());

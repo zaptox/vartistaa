@@ -14,7 +14,7 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewTime"
         android:layout_marginTop="10dp"
         android:layout_width="75dp"
         android:layout_height="75dp"
