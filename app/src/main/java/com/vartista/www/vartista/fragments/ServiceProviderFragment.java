@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.vartista.www.vartista.CreateServiceActivity;
+import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
 import com.vartista.www.vartista.R;
 
 
