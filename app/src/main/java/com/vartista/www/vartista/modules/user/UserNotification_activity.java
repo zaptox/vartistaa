@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.UserNotificationlistadapter;
@@ -29,6 +30,7 @@ public class UserNotification_activity extends AppCompatActivity {
         view.setAdapter(listadapter);
         view.setHasFixedSize(true);
         view.setLayoutManager(layoutManager);
+        Toast.makeText(this, "Adapter set on its position", Toast.LENGTH_SHORT).show();
 
 
 
