@@ -4,6 +4,7 @@ package com.vartista.www.vartista.restcalls;
 
 import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.Service;
+import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.Services;
 import com.vartista.www.vartista.beans.User;
 import retrofit2.Call;
@@ -49,5 +50,6 @@ public interface ApiInterface {
             , @Query("location") String location, @Query("request_status") int request_status, @Query("service_cat_id") int service_cat_id);
 
 
-
+    @GET("request_serviceupdate.php")
+       Call<ServiceRequets> updateOnClickRequests(@Query("requestservice_status") int requestservice_status,@Query("requestservice_id") int requestservice_id);
 }

@@ -5,9 +5,26 @@ import com.google.gson.annotations.SerializedName;
 
 public class ServiceRequets {
 
-    @SerializedName("Responce")
+    @SerializedName("Response")
     @Expose
-    String Responce;
+    String Response;
+
+    public String getResponse() {
+        return Response;
+    }
+
+    public void setResponse(String response) {
+        Response = response;
+    }
+
+    public int getRequests_status() {
+        return requests_status;
+    }
+
+    public void setRequests_status(int requests_status) {
+        this.requests_status = requests_status;
+    }
+
     @SerializedName("reqservice_id")
     @Expose
     int reqservice_id;

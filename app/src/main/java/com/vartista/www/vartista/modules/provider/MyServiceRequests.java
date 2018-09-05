@@ -2,12 +2,16 @@ package com.vartista.www.vartista.modules.provider;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Toast;
 
 import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
@@ -33,12 +37,21 @@ import java.util.List;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.ServiceRequets;
 
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+import jp.wasabeef.recyclerview.animators.holder.AnimateViewHolder;
+
 public class MyServiceRequests extends AppCompatActivity {
 
 
     RecyclerView listViewMyReqeustServices;
     MyRequestsServicesListAdapter myRequestServicesListAdapter;
-    List<ServiceRequets> myRqeuestservicesList;
+    List<ServiceRequets> serviceRequestsList;
+
+
+
     int user_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,19 +59,23 @@ public class MyServiceRequests extends AppCompatActivity {
         setContentView(R.layout.activity_my_service_requests);
 
         listViewMyReqeustServices=(RecyclerView) findViewById(R.id.myreqeust_ServiceList);
+        listViewMyReqeustServices.setItemAnimator(new SlideInLeftAnimator());
         listViewMyReqeustServices.setHasFixedSize(true);
         listViewMyReqeustServices.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         listViewMyReqeustServices.setLayoutManager(mLayoutManager);
         listViewMyReqeustServices.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
-        listViewMyReqeustServices.setItemAnimator(new DefaultItemAnimator());
+//        SlideInUpAnimator animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
+        SlideInLeftAnimator animator = new SlideInLeftAnimator();
+        animator.setInterpolator(new OvershootInterpolator());
+        listViewMyReqeustServices.setItemAnimator(animator);
+        listViewMyReqeustServices.getItemAnimator().setRemoveDuration(1000);
 
-        myRqeuestservicesList = new ArrayList<>();
 
 
+        serviceRequestsList= new ArrayList<ServiceRequets>();
 
         user_id=getIntent().getIntExtra("user",0);
-//        Toast.makeText(this, ""+user_id, Toast.LENGTH_SHORT).show();
 
         new MyServiceRequests.Conncetion(MyServiceRequests.this,user_id).execute();
 
@@ -131,36 +148,90 @@ public class MyServiceRequests extends AppCompatActivity {
 
                 if(success==1){
                     JSONArray services=jsonResult.getJSONArray("services");
-                    Toast.makeText(MyServiceRequests.this, ""+services.getJSONObject(0), Toast.LENGTH_SHORT).show();
                     for(int i=0;i<services.length();i++){
-                        Toast.makeText(MyServiceRequests.this, "for loop", Toast.LENGTH_SHORT).show();
-                        JSONObject service=services.getJSONObject(i);
+
+                        JSONObject service = services.getJSONObject(i);
+
+                        int requestservice_id = (Integer.parseInt(service.getString("requestservice_id")));
+                        String user_name =  service.getString("username");
+                        int status = Integer.parseInt(service.getString("request_status"));
+
+                        String date = service.getString("date");
+                        String time = service.getString("time");
+                        String location = service.getString("location");
+                        int user_customer_id=(Integer.parseInt(service.getString("user_customer_id")));
+                        int service_provider_id= (Integer.parseInt(service.getString("service_provider_id")));
+                        int service_id= (Integer.parseInt(service.getString("service_id")));
+                        int service_cat_id =(Integer.parseInt(service.getString("service_cat_id")));
+                        String service_title=service.getString("service_title");
+                        String category_name=service.getString("catgname");
+
+                        serviceRequestsList.add(new ServiceRequets(requestservice_id,user_name,status,date,time,location,user_customer_id,
+                                service_provider_id,service_id,service_cat_id,service_title,category_name
+                                ));
 
 
 
 
 
-
-
-                        Toast.makeText(MyServiceRequests.this, "updatenow", Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(MyServiceRequests.this, ""+myRqeuestservicesList, Toast.LENGTH_SHORT).show();
 
 
-                    myRequestServicesListAdapter= new MyRequestsServicesListAdapter(MyServiceRequests.this,myRqeuestservicesList);
-                    listViewMyReqeustServices.setAdapter(myRequestServicesListAdapter);
+                    myRequestServicesListAdapter= new MyRequestsServicesListAdapter(MyServiceRequests.this,serviceRequestsList);
+                    AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(myRequestServicesListAdapter);
+                    alphaAdapter.setDuration(1000);
+                    alphaAdapter.setInterpolator(new OvershootInterpolator());
+                    listViewMyReqeustServices.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
+
 
 
                 }
                 else{
-                    //   Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
-                    Toast.makeText(MyServiceRequests.this, "no fatad", Toast.LENGTH_SHORT).show();
+                       Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                //   Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+
+    static class MyViewHolder extends RecyclerView.ViewHolder implements AnimateViewHolder {
+        public MyViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        public void preAnimateRemoveImpl(RecyclerView.ViewHolder holder) {
+
+        }
+
+        @Override
+        public void animateRemoveImpl(RecyclerView.ViewHolder holder, ViewPropertyAnimatorListener listener) {
+            ViewCompat.animate(itemView)
+                    .translationY(-itemView.getHeight() * 0.3f)
+                    .alpha(0)
+                    .setDuration(300)
+                    .setListener(listener)
+                    .start();
+        }
+
+        @Override
+        public void preAnimateAddImpl(RecyclerView.ViewHolder holder) {
+            ViewCompat.setTranslationY(itemView, -itemView.getHeight() * 0.3f);
+            ViewCompat.setAlpha(itemView, 0);
+        }
+
+        @Override
+        public void animateAddImpl(RecyclerView.ViewHolder holder, ViewPropertyAnimatorListener listener) {
+            ViewCompat.animate(itemView)
+                    .translationY(0)
+                    .alpha(1)
+                    .setDuration(300)
+                    .setListener(listener)
+                    .start();
         }
     }
 }
