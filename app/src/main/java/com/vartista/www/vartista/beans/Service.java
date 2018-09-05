@@ -90,6 +90,15 @@ public class Service {
     @SerializedName("location")
     String location;
 
+    @SerializedName("langitude")
+    double langitude;
+    @SerializedName("latitude")
+    double latitude;
+    @SerializedName("country")
+    String country;
+
+
+
 
 
     public String getResponse(){
