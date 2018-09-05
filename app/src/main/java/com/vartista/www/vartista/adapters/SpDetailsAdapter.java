@@ -10,9 +10,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.vartista.www.vartista.BookNowActivity;
+import com.vartista.www.vartista.modules.user.BookNowActivity;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.Service;
+import com.vartista.www.vartista.beans.Service;
 
 import java.util.List;
 
@@ -41,13 +41,13 @@ public class SpDetailsAdapter extends RecyclerView.Adapter<SpDetailsAdapter.View
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
     holder.tvService.setText(myServicesList.get(position).getService_title());
-    holder.tvPrice.setText(""+myServicesList.get(position).getPrice());
+    holder.tvPrice.setText("Rs: "+myServicesList.get(position).getPrice());
 
     holder.btnBookNow.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent=new Intent(v.getContext(), BookNowActivity.class);
-            intent.putExtra("provide_id",provider_id);
+            intent.putExtra("provider_id",provider_id);
             intent.putExtra("cat_id",cat_id);
             intent.putExtra("user_id",user_id);
             intent.putExtra("service_id",myServicesList.get(position).getService_id());
@@ -82,7 +82,7 @@ public class SpDetailsAdapter extends RecyclerView.Adapter<SpDetailsAdapter.View
             super(itemView);
             mView=itemView;
 
-            tvService=(TextView)mView.findViewById(R.id.textViewService);
+            tvService=(TextView)mView.findViewById(R.id.textView_req_service);
             tvPrice=(TextView)mView.findViewById(R .id.textViewPrice);
             btnBookNow=(Button)mView.findViewById(R.id.buttonBookNow);
         }

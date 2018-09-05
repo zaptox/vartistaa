@@ -12,12 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SiginInActivity"
+            android:name=".modules.general.SiginInActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".modules.general.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".modules.general.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,19 +25,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".modules.general.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".UserProfile"
+            android:name=".modules.general.UserProfile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CreateServiceActivity" />
-        <activity android:name=".MyServicesListActivity" />
-        <activity android:name=".MapActivity" />
-        <activity android:name=".ServiceProviderDetail" />
-        <activity android:name=".GetAddressActivity" />
-        <activity android:name=".BookNowActivity" />
-        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".modules.provider.CreateServiceActivity" />
+        <activity android:name=".modules.provider.MyServicesListActivity" />
+        <activity android:name=".modules.user.BookNowActivity" />
+        <activity android:name=".modules.provider.MyServiceRequests" />
+        <activity android:name=".modules.user.ServiceProviderDetail"></activity>
     </application>
 
 </manifest>

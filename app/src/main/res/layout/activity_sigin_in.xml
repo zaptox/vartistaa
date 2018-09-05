@@ -7,10 +7,10 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
 
-    tools:context=".SiginInActivity">
+    tools:context=".modules.general.SiginInActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageViewDate"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_alignParentTop="true"
