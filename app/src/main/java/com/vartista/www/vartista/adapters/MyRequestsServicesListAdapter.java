@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.Service;
@@ -65,8 +66,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
                                               if(response.body().getResponse().equals("ok")){
                                                   remove(position);
-
-                           Toast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
+                                                  MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
 
                        }
 
@@ -103,7 +103,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                    public void onResponse(Call<ServiceRequets> call, Response<ServiceRequets> response) {
                        if(response.body().getResponse().equals("ok")){
 
-                           Toast.makeText(view.getContext(),"Request Declined",Toast.LENGTH_SHORT).show();
+                           MDToast.makeText(view.getContext(),"Request Declined",Toast.LENGTH_SHORT).show();
                            remove(position);
 
                        }

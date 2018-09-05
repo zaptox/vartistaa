@@ -39,6 +39,8 @@ import com.vartista.www.vartista.beans.ServiceRequets;
 
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.FlipInLeftYAnimator;
+import jp.wasabeef.recyclerview.animators.FlipInRightYAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import jp.wasabeef.recyclerview.animators.holder.AnimateViewHolder;
@@ -66,7 +68,7 @@ public class MyServiceRequests extends AppCompatActivity {
         listViewMyReqeustServices.setLayoutManager(mLayoutManager);
         listViewMyReqeustServices.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
 //        SlideInUpAnimator animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
-        SlideInLeftAnimator animator = new SlideInLeftAnimator();
+    FlipInLeftYAnimator animator = new FlipInLeftYAnimator();
         animator.setInterpolator(new OvershootInterpolator());
         listViewMyReqeustServices.setItemAnimator(animator);
         listViewMyReqeustServices.getItemAnimator().setRemoveDuration(1000);
