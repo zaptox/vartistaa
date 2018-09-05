@@ -6,7 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.R;
@@ -34,12 +36,18 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         holder.tv_Title.setText(myReqServicesList.get(position).getUsername());
         holder.tv_Category.setText(myReqServicesList.get(position).getCatgname());
         holder.tv_date.setText(myReqServicesList.get(position).getDate());
         holder.tv_time.setText(myReqServicesList.get(position).getTime());
+        holder.Accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, ""+myReqServicesList.get(position).getUsername(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -52,7 +60,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
         View mView;
 
         public TextView tv_Title,tv_Category,tv_date,tv_time;
-
+        public Button Accept,Decline;
         public ViewHolder(View itemView) {
             super(itemView);
             mView=itemView;
@@ -61,6 +69,8 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
             tv_Category=(TextView)mView.findViewById(R.id.textView_req_service);
             tv_date=(TextView)mView.findViewById(R .id.textViewReq_Date);
             tv_time=(TextView)mView.findViewById(R .id.textViewReq_Time);
+            Accept = (Button)mView.findViewById(R .id.buttonAccept);
+            Decline = (Button)mView.findViewById(R .id.buttonReject);
 
         }
     }

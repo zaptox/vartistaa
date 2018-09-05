@@ -1,10 +1,11 @@
-package com.vartista.www.vartista;
+package com.vartista.www.vartista.modules.user;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.UserNotificationlistadapter;
 import com.vartista.www.vartista.beans.usernotificationitems;
 

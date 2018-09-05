@@ -35,7 +35,8 @@
         <activity android:name=".modules.provider.MyServicesListActivity" />
         <activity android:name=".modules.user.BookNowActivity" />
         <activity android:name=".modules.provider.MyServiceRequests" />
-        <activity android:name=".modules.user.ServiceProviderDetail"></activity>
+        <activity android:name=".modules.user.ServiceProviderDetail" />
+        <activity android:name=".modules.user.UserNotification_activity"></activity>
     </application>
 
 </manifest>
