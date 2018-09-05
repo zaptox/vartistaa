@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,10 +16,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.adapters.MyServicesListAdapter;
+import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.modules.general.SiginInActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 
+import org.angmarch.views.NiceSpinner;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -31,45 +39,79 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import com.vartista.www.vartista.beans.Service;
+import com.vartista.www.vartista.restcalls.ServiceApiInterface;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 public class  CreateServiceActivity extends AppCompatActivity {
+    public List<Service> myServicesList;
     Button btnCreateSerivce;
     AutoCompleteTextView edTxtServicePrice,edtTxtSerivceTitle;
     EditText edDescription;
+    EditText service_location;
     Button btnHome;
-    Spinner spinnerService;
-    public static ApiInterface apiInterface;
+    //Spinner spinnerService;
+    public static ServiceApiInterface apiInterface;
     ArrayList<String> cat;
     ArrayList<Integer> cat_id;
     int category_id;
+    //user_id comes from shared preferences
     static int user_id;
+    static int  edit_user_id;
+    NiceSpinner niceSpinner;
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_service);
+        niceSpinner = niceSpinner = (NiceSpinner) findViewById(R.id.nice_spinner);
+       // spinnerService=findViewById(R.id.spinnerService);
         cat=new ArrayList<>();
         cat_id=new ArrayList<>();
+        myServicesList = new ArrayList<Service>();
+        apiInterface = ApiClient.getApiClient().create(ServiceApiInterface.class);
+
+        service_location = (EditText)findViewById(R.id.service_location);
         btnCreateSerivce = (Button) findViewById(R.id.btnCreateService);
         edtTxtSerivceTitle = (AutoCompleteTextView) findViewById(R.id.edtTxtSerivceTitle);
         edTxtServicePrice = (AutoCompleteTextView) findViewById(R.id.edTxtServicePrice);
         edDescription = (EditText) findViewById(R.id.editTextDescription);
         btnHome = (Button) findViewById(R.id.btnHome);
-        spinnerService = (Spinner) findViewById(R.id.spinnerService);
-        //  Toast.makeText(getApplicationContext(),user_id,Toast.LENGTH_SHORT).show();
+ //       spinnerService = (Spinner) findViewById(R.id.spinnerService);
 
-        user_id=getIntent().getIntExtra("userId",0);
-      //  Toast.makeText(getApplicationContext(),""+user_id,Toast.LENGTH_SHORT).show();
+
+        edit_user_id=getIntent().getIntExtra("edit_user_id",0);
+
+
+
+        if (edit_user_id==0){
+            Toast.makeText(getApplicationContext(),"NO ID",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"Create Service Edit"+edit_user_id,Toast.LENGTH_SHORT).show();
+            new GetServiceConncetion(CreateServiceActivity.this,edit_user_id).execute();
+
+
+
+        }
+
+
 //
-        spinnerService.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        niceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 category_id=cat_id.get(position);
@@ -85,7 +127,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
 // Selection of the spinner
 
 // Application of the Array to the Spinner
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+       // apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         new Conncetion(CreateServiceActivity.this).execute();
 
@@ -94,7 +136,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent=new Intent(getApplicationContext(),MyServicesListActivity.class);
-                intent.putExtra("userId",user_id);
+                intent.putExtra("userId",10);
                 startActivity(intent);            }
         });
 
@@ -102,39 +144,97 @@ public class  CreateServiceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String title = edtTxtSerivceTitle.getText().toString();
-                String price = edTxtServicePrice.getText().toString();
-                String description = edDescription.getText().toString();
-             //   Toast.makeText(CreateServiceActivity.this, ""+user_id, Toast.LENGTH_SHORT).show();
-//
-                Call<Service> call = CreateServiceActivity.apiInterface.createService(title,user_id, description, 1, Double.parseDouble(price + ""), category_id, "2018-04-05", "2018,06,04");
+                if (btnCreateSerivce.getText().equals("Edit Service")) {
+                   // MDToast mdToast = MDToast.makeText(getApplicationContext(), "Your Service Edit Successfully"+edit_user_id, MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                    //mdToast.show();
+                    String title = edtTxtSerivceTitle.getText().toString();
+                    String price = edTxtServicePrice.getText().toString();
+                    String description = edDescription.getText().toString();
+                    String location = service_location.getText().toString();
+                    Date c = Calendar.getInstance().getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    String formattedDate = df.format(c);
+                    String update_at=formattedDate;
 
-                call.enqueue(new Callback<Service>() {
-                    @Override
-                    public void onResponse(Call<Service> call, Response<Service> response) {
-                        if (response.body().equals("ok")) {
-                            Toast.makeText(getApplicationContext(), "Registered"+user_id, Toast.LENGTH_SHORT).show();
 
+                    Call<Service> call = CreateServiceActivity.apiInterface.updateService(title,description, location,category_id, Double.parseDouble(price),update_at,edit_user_id);
+                    call.enqueue(new Callback<Service>() {
+                        @Override
+                        public void onResponse(Call<Service> call, Response<Service> response) {
+
+                            if (response.body().getResponse().equals("ok")) {
+                               // MDToast mdToast = MDToast.makeText(getApplicationContext(), "Your Service Edit Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                                MDToast mdToast = MDToast.makeText(getApplicationContext(), "Your Service Edit Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                                mdToast.show();
+
+                                edDescription.setText("");
+                                edtTxtSerivceTitle.setText("");
+                                edTxtServicePrice.setText("");
+                                service_location.setText("");
+                                btnCreateSerivce.setText("CREATE SERVICE");
+
+
+
+                            }
+                            if (response.isSuccessful()) {
+                                //for debugging
+
+                            }
                         }
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_SHORT).show();
 
+                        @Override
+                        public void onFailure(Call<Service> call, Throwable t) {
+                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Service> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                    });
 
-                });
 
-                edDescription.setText("");
-                edtTxtSerivceTitle.setText("");
-                edTxtServicePrice.setText("");
-                Intent intent=new Intent(getApplicationContext(),MyServicesListActivity.class);
-                intent.putExtra("userId",user_id);
-                startActivity(intent);
+
+
+
+                } else {
+
+                    String title = edtTxtSerivceTitle.getText().toString();
+                    String price = edTxtServicePrice.getText().toString();
+                    String description = edDescription.getText().toString();
+                    String location = service_location.getText().toString();
+                    //int category_id=
+                    //   Toast.makeText(CreateServiceActivity.this, ""+user_id, Toast.LENGTH_SHORT).show();
+//                                          //USER_ID comes from shared prefrences
+                    user_id=10;
+                    Call<Service> call = CreateServiceActivity.apiInterface.createService(title, user_id, description, location, 1, Double.parseDouble(price + ""), category_id, "2018-04-05", "2018,06,04");
+
+                    call.enqueue(new Callback<Service>() {
+                        @Override
+                        public void onResponse(Call<Service> call, Response<Service> response) {
+                            if (response.body().equals("ok")) {
+
+                                //for debugging
+
+                            }
+                            if (response.isSuccessful()) {
+                                MDToast mdToast = MDToast.makeText(getApplicationContext(), "Your Service Created Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                                mdToast.show();
+
+                            }
+                        }
+
+
+                        @Override
+                        public void onFailure(Call<Service> call, Throwable t) {
+                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    });
+
+                    edDescription.setText("");
+                    edtTxtSerivceTitle.setText("");
+                    edTxtServicePrice.setText("");
+                    Intent intent = new Intent(getApplicationContext(), MyServicesListActivity.class);
+                    intent.putExtra("userId", user_id);
+                    startActivity(intent);
+                }
             }
 
         });
@@ -163,7 +263,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
             String result="";
 
-            final String BASE_URL="http://www.zaptox.com/mehdiTask/fetch_categories.php";
+            final String BASE_URL="http://www.vartista.com/vartista_app/fetch_categories.php";
             try {
                 HttpClient client=new DefaultHttpClient();
                 HttpGet request=new HttpGet();
@@ -204,19 +304,23 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
 
                 if(success==1){
-                    //  Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
+
                     JSONArray catogires=jsonResult.getJSONArray("category");
                     for(int i=0;i<catogires.length();i++){
 
                         JSONObject category=catogires.getJSONObject(i);
                         int category_id=category.getInt("id");
+
                         String category_name=category.getString("name");
                         cat.add(category_name);
                         cat_id.add(category_id);
                     }
 
                     ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,cat);
-                    spinnerService.setAdapter(adapter);
+                //
+                    //    spinnerService.setAdapter(adapter);
+
+                    niceSpinner.attachDataSource(cat);
 
 
 
@@ -230,6 +334,116 @@ public class  CreateServiceActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+
+    class GetServiceConncetion extends AsyncTask<String,String ,String > {
+        private ProgressDialog dialog;
+        int service_id;
+
+        public  GetServiceConncetion(CreateServiceActivity activity,int service_id) {
+            dialog = new ProgressDialog(activity);
+           this.service_id=service_id;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage("Retriving data Please Wait..");
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+
+            String result="";
+
+            final String BASE_URL="http://www.vartista.com/vartista_app/CREATE_SERVICES/get.service.by.id.php?id="+service_id;
+            try {
+                HttpClient client=new DefaultHttpClient();
+                HttpGet request=new HttpGet();
+
+                request.setURI(new URI(BASE_URL));
+                HttpResponse response=client.execute(request);
+                BufferedReader reader=new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                StringBuffer stringBuffer=new StringBuffer();
+                String line="";
+                while((line=reader.readLine())!=null){
+                    stringBuffer.append(line);
+                    break;
+                }
+                reader.close();
+                result=stringBuffer.toString();
+
+
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+                return new String("There is exception"+e.getMessage());
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            try {
+                JSONObject jsonResult=new JSONObject(result);
+                int success=jsonResult.getInt("success");
+
+
+
+
+                if(success==1){
+                    //        Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
+                    JSONArray services=jsonResult.getJSONArray("services");
+                    for(int i=0;i<services.length();i++) {
+
+                        JSONObject service = services.getJSONObject(i);
+                        int service_id = service.getInt("service_id");
+                        String service_title = service.getString("service_title");
+                        double price = service.getDouble("price");
+                        String location= service.getString("location");
+                        int status = service.getInt("status");
+                        String created_at = service.getString("created_at");
+                        String updated_at = service.getString("updated_at");
+                         category_id = service.getInt("category_id");
+                        String service_description = service.getString("service_description");
+                        String category_name = service.getString("name");
+
+                        int user_id = service.getInt("user_id");
+                        // myservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description,  status,  price,  category_id,  created_at,  updated_at));
+
+
+                        edtTxtSerivceTitle.setText(service_title);
+                        edTxtServicePrice.setText(""+price);
+                        edDescription.setText(service_description);
+                        service_location.setText(location);
+
+
+
+
+                    }
+
+                    btnCreateSerivce.setText("Edit Service");
+
+
+                }
+                else{
+                    //   Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                //   Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }

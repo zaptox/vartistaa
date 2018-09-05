@@ -17,8 +17,7 @@ public class ServiceRequets {
     @SerializedName("requests_status")
     @Expose
     int requests_status;
-    @SerializedName("date")
-    @Expose
+    @SerializedName("date")    @Expose
     String date;
     @SerializedName("time")
     @Expose

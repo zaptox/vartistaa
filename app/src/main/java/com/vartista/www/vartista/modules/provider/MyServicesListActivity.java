@@ -9,7 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyServicesListAdapter;
@@ -54,7 +54,9 @@ public class MyServicesListActivity extends AppCompatActivity {
         listViewMyServices.setItemAnimator(new DefaultItemAnimator());
 
         myservicesList=new ArrayList<>();
-        user_id=getIntent().getIntExtra("userId",0);
+      //  user_id=getIntent().getIntExtra("userId",10);
+        //ye shared prefrences se aega
+        user_id=10;
 
 
         new Conncetion(MyServicesListActivity.this,user_id).execute();
@@ -84,7 +86,7 @@ public class MyServicesListActivity extends AppCompatActivity {
 
             String result="";
 
-            final String BASE_URL="http://www.zaptox.com/mehdiTask/fetch_services.php?user_id="+userId;
+            final String BASE_URL="http://www.vartista.com/vartista_app/CREATE_SERVICES/view.services.php?user_id="+userId;
             try {
                 HttpClient client=new DefaultHttpClient();
                 HttpGet request=new HttpGet();
@@ -139,13 +141,14 @@ public class MyServicesListActivity extends AppCompatActivity {
                         String updated_at=service.getString("updated_at");
                         int category_id=service.getInt("category_id");
                         String service_description=service.getString("service_description");
+                        String location=service.getString("location");
+
                         String category_name=service.getString("name");
                         int user_id=service.getInt("user_id");
-                        myservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description,  status,  price,  category_id,  created_at,  updated_at));
+                        myservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description, location, status,  price,  category_id,  created_at,  updated_at));
+
 
                     }
-
-
 
                 }
                 else{

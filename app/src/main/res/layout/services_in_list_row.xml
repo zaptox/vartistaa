@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +29,7 @@
 
 
         <TextView
-            android:id="@+id/textView_req_name"
+            android:id="@+id/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/profile_image"
@@ -43,21 +44,21 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textView_req_name"
-            android:layout_below="@+id/textView_req_name"
+            android:layout_alignStart="@+id/textViewName"
+            android:layout_below="@+id/textViewName"
             android:layout_weight="1"
 
             android:text="Service:"
             android:textSize="12dp"
-            android:layout_alignLeft="@+id/textView_req_name" />
+            android:layout_alignLeft="@+id/textViewName" />
 
         <TextView
-            android:id="@+id/textView_req_service"
+            android:id="@+id/textViewService"
             android:layout_width="95dp"
             android:layout_height="wrap_content"
 
 
-            android:layout_below="@+id/textView_req_name"
+            android:layout_below="@+id/textViewName"
             android:layout_toEndOf="@+id/textView"
             android:layout_weight="1"
             android:text="Hair cutt $30"
@@ -67,76 +68,53 @@
             android:layout_toRightOf="@+id/textView" />
 
 
-        <Button
-            android:id="@+id/buttonAccept"
-            android:layout_width="75dp"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="77dp"
-            android:layout_marginRight="77dp"
-            android:background="@drawable/accept_req_btn"
-            android:text="Accept"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="11dp" />
-
-        <Button
-            android:id="@+id/buttonReject"
-            android:layout_width="75dp"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/reject_req_btn"
-            android:text="Reject"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="11dp" />
-
         <ImageView
-            android:id="@+id/imageViewDate"
+            android:id="@+id/imageView2"
             android:layout_width="18dp"
             android:layout_height="18dp"
+            android:layout_below="@+id/textView"
             android:layout_alignBottom="@+id/profile_image"
             android:layout_toEndOf="@+id/profile_image"
-            app:srcCompat="@drawable/calendar"
+            app:srcCompat="@drawable/location_tick"
             android:layout_toRightOf="@+id/profile_image" />
 
         <TextView
-            android:id="@+id/textViewReq_Date"
+            android:id="@+id/textViewAddress"
             android:layout_width="wrap_content"
+            android:gravity="center_vertical"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/profile_image"
-            android:layout_toEndOf="@+id/imageViewDate"
+            android:layout_below="@+id/textView"
             android:layout_weight="1"
-            android:text="27/07/2018"
+            android:text="Hyderabad,Sindh"
             android:textSize="11dp"
-            android:layout_toRightOf="@+id/imageViewDate" />
+            android:layout_toRightOf="@+id/imageView2"
+            />
 
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_alignBottom="@+id/profile_image"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="172dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/clock" />
 
-
-        <TextView
-            android:id="@+id/textViewReq_Time"
+        <com.willy.ratingbar.ScaleRatingBar
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/simpleRatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/profile_image"
-            android:layout_toEndOf="@+id/imageView3"
-            android:layout_toRightOf="@+id/imageView3"
-            android:layout_weight="1"
-            android:text="07:30 AM"
-            android:textSize="11dp" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            app:srb_numStars="5"
+            app:srb_minimumStars="1"
+            app:srb_rating="2"
+            app:srb_starWidth="10dp"
+            app:srb_starHeight="10dp"
+            app:srb_starPadding="5dp"
+            app:srb_stepSize="0.5"
+            app:srb_isIndicator="false"
+            app:srb_clickable="true"
+            app:srb_scrollable="true"
+            app:srb_clearRatingEnabled="true"
+            app:srb_drawableEmpty="@drawable/empty"
+            app:srb_drawableFilled="@drawable/filled">
+        </com.willy.ratingbar.ScaleRatingBar>
+
     </RelativeLayout>
 
 

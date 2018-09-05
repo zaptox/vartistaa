@@ -1,10 +1,8 @@
-package com.vartista.www.vartista;
+package com.vartista.www.vartista.beans;
 
-import android.annotation.SuppressLint;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -18,7 +16,7 @@ public class GetServiceProviders implements Serializable,Parcelable{
 
 
 
-    public GetServiceProviders(int service_id, int address_id, double latitude, double longitude, int user_id, String service_title, String service_description, double price, int category_id) {
+    public GetServiceProviders(int service_id, int address_id, double latitude, double longitude, int user_id, String service_title, String service_description, double price, int category_id, String sp_name) {
         this.service_id = service_id;
         this.address_id = address_id;
         this.latitude = latitude;
@@ -26,9 +24,10 @@ public class GetServiceProviders implements Serializable,Parcelable{
         this.user_id = user_id;
         this.service_title = service_title;
         this.service_description = service_description;
-
         this.price = price;
         this.category_id = category_id;
+        this.sp_name=sp_name;
+
     }
 
     protected GetServiceProviders(Parcel in) {
@@ -51,6 +50,7 @@ public class GetServiceProviders implements Serializable,Parcelable{
         category_id = in.readInt();
         created_at = in.readString();
         updated_at = in.readString();
+        sp_name=in.readString();
     }
 
     public static final Creator<GetServiceProviders> CREATOR = new Creator<GetServiceProviders>() {
@@ -221,6 +221,14 @@ public class GetServiceProviders implements Serializable,Parcelable{
         this.longitude = longitude;
     }
 
+    public String getSp_name() {
+        return sp_name;
+    }
+
+    public void setSp_name(String sp_name) {
+        this.sp_name = sp_name;
+    }
+
     @SerializedName("name")
     private String category_name;
 
@@ -253,6 +261,8 @@ public class GetServiceProviders implements Serializable,Parcelable{
     @SerializedName("country")
     private String country;
 
+    @SerializedName("sp_name")
+    private String sp_name;
 
     @SerializedName("latitude")
     private double latitude;
@@ -312,5 +322,6 @@ public class GetServiceProviders implements Serializable,Parcelable{
         dest.writeInt(category_id);
         dest.writeString(created_at);
         dest.writeString(updated_at);
+        dest.writeString(sp_name);
     }
 }

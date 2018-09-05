@@ -47,10 +47,11 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
     @Override
     public int getItemCount() {
+
         return myReqServicesList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         View mView;
 
         public TextView tv_Title,tv_Category,tv_date,tv_time;

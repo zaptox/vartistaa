@@ -1,6 +1,7 @@
 package com.vartista.www.vartista.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import com.vartista.www.vartista.beans.Category;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.modules.user.BookNowActivity;
+import com.vartista.www.vartista.modules.user.FindServicesInList;
 
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
         return new ViewHolder(view);
     }
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         holder.tvCategoryName.setText(myCategoryList.get(position).getCategory_name());
 
@@ -48,6 +51,12 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
             @Override
             public void onClick(View view) {
                 Toast.makeText(context,"cat_id :"+cat_id,Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(view.getContext(), FindServicesInList.class);
+                intent.putExtra("cat_id",cat_id);
+
+                context.startActivity(intent);
+
+
             }
         });
 
