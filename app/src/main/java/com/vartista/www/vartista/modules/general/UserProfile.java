@@ -53,7 +53,7 @@ public class UserProfile extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String namechange=name.getText().toString();
+            final String  namechange=name.getText().toString();
                 final String emailchange=email.getText().toString();
                 final String passchange= password.getText().toString();
                 int id1=user.getId();

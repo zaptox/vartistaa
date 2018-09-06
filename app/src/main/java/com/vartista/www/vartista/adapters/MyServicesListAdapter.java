@@ -42,6 +42,7 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
    public MyServicesListAdapter(Context context, List<Service> myServicesList){
        this.myServicesList = myServicesList;
        this.context=context;
+
    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

@@ -39,6 +39,7 @@ public class MyServicesListActivity extends AppCompatActivity {
     RecyclerView listViewMyServices;
     MyServicesListAdapter myServicesListAdapter;
     List<Service> myservicesList;
+
     int user_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
