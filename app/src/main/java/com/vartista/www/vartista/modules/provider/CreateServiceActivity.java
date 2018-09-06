@@ -19,12 +19,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyServicesListAdapter;
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.general.SiginInActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
@@ -112,7 +111,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
 
         if (edit_user_id==0){
-            Toast.makeText(getApplicationContext(),"NO ID",Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(getApplicationContext(),"NO ID",Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText(getApplicationContext(),"Create Service Edit"+edit_user_id,Toast.LENGTH_SHORT).show();
@@ -147,9 +146,11 @@ public class  CreateServiceActivity extends AppCompatActivity {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                User loggedin= HomeActivity.user;
+              int user_id=loggedin.getId();
                 Intent intent=new Intent(getApplicationContext(),MyServicesListActivity.class);
-                intent.putExtra("userId",10);
+
+                intent.putExtra("userId",user_id);
                 startActivity(intent);            }
         });
 

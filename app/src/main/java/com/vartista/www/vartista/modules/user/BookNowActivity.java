@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.SpDetailsAdapter;
 import com.vartista.www.vartista.beans.CreateRequest;
@@ -122,22 +123,24 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
              String time = textViewReq_Time.getText().toString();
              String date=textViewReq_Date.getText().toString();
 
-             Call<CreateRequest> call = BookNowActivity.apiInterface.createRequest(user_customer_id,service_provider_id,service_id,date,time,address,1,1);
+             Call<CreateRequest> call = BookNowActivity.apiInterface.createRequest(user_customer_id,
+                     service_provider_id,
+                     service_id,date,time,address,city,0,service_cat_id);
 
              call.enqueue(new Callback<CreateRequest>() {
                  @Override
                  public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
-                     if (response.body().equals("ok")) {
-                         Toast.makeText(getApplicationContext(), "Request Send", Toast.LENGTH_SHORT).show();
+                     if (response.body().getResponse().equals("ok")) {
+                         Toast.makeText(getApplicationContext(), "Request has been Send succesfully.", Toast.LENGTH_SHORT).show();
+
+                          Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+                         intent.putExtra("user", HomeActivity.user);
+
+                         startActivity(intent);
 
                      }
-                     if (response.isSuccessful()) {
-                         Toast.makeText(getApplicationContext(), "Request has been Send succesfully.", Toast.LENGTH_SHORT).show();
-//                         new SweetAlertDialog(getApplicationContext(), SweetAlertDialog.SUCCESS_TYPE)
-//                                 .setTitleText("Good job!")
-//                                 .setContentText("You clicked the button!")
-//                                 .show();
-                     }
+
+
                  }
 
                  @Override
