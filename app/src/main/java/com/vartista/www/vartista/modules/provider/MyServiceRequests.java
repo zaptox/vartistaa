@@ -68,7 +68,7 @@ public class MyServiceRequests extends AppCompatActivity {
         listViewMyReqeustServices.setLayoutManager(mLayoutManager);
         listViewMyReqeustServices.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
 //        SlideInUpAnimator animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
-    FlipInLeftYAnimator animator = new FlipInLeftYAnimator();
+        SlideInLeftAnimator animator = new SlideInLeftAnimator();
         animator.setInterpolator(new OvershootInterpolator());
         listViewMyReqeustServices.setItemAnimator(animator);
         listViewMyReqeustServices.getItemAnimator().setRemoveDuration(1000);
