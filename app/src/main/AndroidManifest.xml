@@ -10,6 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".modules.general.SiginInActivity"
@@ -18,7 +19,6 @@
             android:name=".modules.general.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".modules.general.SplashActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,14 +32,15 @@
         <activity
             android:name=".modules.general.UserProfile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".modules.provider.CreateServiceActivity" />
+        <activity android:name=".modules.provider.CreateServiceActivity" >
+
+        </activity>
         <activity android:name=".modules.provider.MyServicesListActivity" />
         <activity android:name=".modules.user.BookNowActivity" />
         <activity android:name=".modules.provider.MyServiceRequests" />
-        <activity android:name=".modules.user.ServiceProviderDetail" />
-        <activity android:name=".modules.payment.PaymentActivity">
+        <activity android:name=".modules.user.FindServicesInList" />
 
-        </activity>
+        <activity android:name=".modules.user.ServiceProviderDetail"></activity>
     </application>
 
 </manifest>
