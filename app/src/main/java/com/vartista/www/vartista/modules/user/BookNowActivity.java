@@ -131,7 +131,9 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
                  @Override
                  public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
                      if (response.body().getResponse().equals("ok")) {
-                         Toast.makeText(getApplicationContext(), "Request has been Send succesfully.", Toast.LENGTH_SHORT).show();
+
+                         MDToast mdToast = MDToast.makeText(getApplicationContext(), "Request has been Send succesfully.", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                         mdToast.show();
 
                           Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
                          intent.putExtra("user", HomeActivity.user);
@@ -145,7 +147,8 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
 
                  @Override
                  public void onFailure(Call<CreateRequest> call, Throwable t) {
-                     Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                   //
+                     // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                  }
 
              });

@@ -30,7 +30,7 @@ public class UserNotification_activity extends AppCompatActivity {
         view.setAdapter(listadapter);
         view.setHasFixedSize(true);
         view.setLayoutManager(layoutManager);
-        Toast.makeText(this, "Adapter set on its position", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Adapter set on its position", Toast.LENGTH_SHORT).show();
 
 
 
