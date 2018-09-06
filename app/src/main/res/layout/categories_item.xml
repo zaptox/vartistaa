@@ -38,7 +38,7 @@
                     android:layout_marginLeft="18dp"
                     android:text="Category"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="35dp"
+                    android:textSize="22dp"
                     android:textStyle="bold" />
             </LinearLayout>
 

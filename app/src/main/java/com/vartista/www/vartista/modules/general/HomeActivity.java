@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity
     private TextView email,name;
     User u=null;
     public static int user_id;
-
+    public static  User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +57,7 @@ public class HomeActivity extends AppCompatActivity
         email = (TextView) headerView.findViewById(R.id.email);
 
         Intent intent= getIntent();
-       User user= (User) intent.getSerializableExtra("user");
+         user= (User) intent.getSerializableExtra("user");
     u=user;
         user_id=u.getId();
       //  Toast.makeText(this, ""+user.id, Toast.LENGTH_SHORT).show();

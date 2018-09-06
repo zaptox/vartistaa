@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.vartista.www.vartista.beans.Service;
+import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.modules.general.HomeActivity;
 
 public class MyServicesListActivity extends AppCompatActivity {
     RecyclerView listViewMyServices;
@@ -57,7 +59,9 @@ public class MyServicesListActivity extends AppCompatActivity {
         myservicesList=new ArrayList<>();
       //  user_id=getIntent().getIntExtra("userId",10);
         //ye shared prefrences se aega
-        user_id=10;
+        User u= HomeActivity.user;
+
+        user_id=u.getId();
 
 
         new Conncetion(MyServicesListActivity.this,user_id).execute();
