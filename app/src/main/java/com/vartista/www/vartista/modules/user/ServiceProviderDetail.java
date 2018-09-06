@@ -56,12 +56,12 @@ public class ServiceProviderDetail extends AppCompatActivity {
             myservicesList=new ArrayList<>();
             Intent intent=getIntent();
 
-//            provider_id=intent.getIntExtra("s_provider_id",0);
-//            cat_id=intent.getIntExtra("cat_id",0);
-//            user_id=intent.getIntExtra("user_id",0);
-            provider_id=17;
-            cat_id=1;
-            user_id=1;
+            provider_id=intent.getIntExtra("s_provider_id",0);
+            cat_id=intent.getIntExtra("cat_id",0);
+            user_id=intent.getIntExtra("user_id",0);
+//            provider_id=17;
+//            cat_id=1;
+//            user_id=1;
 
 
        new Conncetion(ServiceProviderDetail.this,provider_id,cat_id).execute();

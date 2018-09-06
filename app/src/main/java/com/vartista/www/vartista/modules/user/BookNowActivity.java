@@ -122,12 +122,11 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
              String time = textViewReq_Time.getText().toString();
              String date=textViewReq_Date.getText().toString();
 
+             Call<CreateRequest> call = BookNowActivity.apiInterface.createRequest(user_customer_id,service_provider_id,service_id,date,time,address,1,1);
 
-             Call<RequestService> call = BookNowActivity.apiInterface.createRequest(user_customer_id,service_provider_id,service_id,date,time,address,city,1,service_cat_id);
-
-             call.enqueue(new Callback<RequestService>() {
+             call.enqueue(new Callback<CreateRequest>() {
                  @Override
-                 public void onResponse(Call<RequestService> call, Response<RequestService> response) {
+                 public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
                      if (response.body().equals("ok")) {
                          Toast.makeText(getApplicationContext(), "Request Send", Toast.LENGTH_SHORT).show();
 
@@ -142,7 +141,7 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
                  }
 
                  @Override
-                 public void onFailure(Call<RequestService> call, Throwable t) {
+                 public void onFailure(Call<CreateRequest> call, Throwable t) {
                      Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                  }
 

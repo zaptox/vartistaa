@@ -28,7 +28,7 @@ public class HomeActivity extends AppCompatActivity
 
     private TextView email,name;
     User u=null;
-    public  int user_id;
+    public static int user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
