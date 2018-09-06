@@ -20,6 +20,7 @@ import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
 
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.modules.payment.PaymentActivity;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 
 public class HomeActivity extends AppCompatActivity
@@ -138,6 +139,12 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.logout) {
             Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+
+        }
+        else if (id == R.id.payment) {
+//            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+            Intent i= new Intent(HomeActivity.this, PaymentActivity.class);
+            startActivity(i);
 
         }
 
