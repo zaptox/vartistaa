@@ -60,6 +60,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
                                               if(response.body().getResponse().equals("ok")){
                                                   remove(position);
+                                                  notifyDataSetChanged();
                                                   MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
 
                        }
@@ -99,6 +100,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
                            MDToast.makeText(view.getContext(),"Request Declined",Toast.LENGTH_SHORT).show();
                            remove(position);
+                           notifyDataSetChanged();
 
                        }
 
