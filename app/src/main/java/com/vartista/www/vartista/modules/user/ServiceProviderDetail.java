@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.SpDetailsAdapter;
@@ -38,12 +39,15 @@ public class ServiceProviderDetail extends AppCompatActivity {
         int provider_id;
         int cat_id;
         int user_id;
+        String spname;
 
+        TextView SpnmeField;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_service_provider_detail);
 
+        SpnmeField=findViewById(R.id.header_name);
 
             listViewSpDetials=(RecyclerView) findViewById(R.id.services_sp);
             listViewSpDetials.setHasFixedSize(true);
@@ -59,10 +63,11 @@ public class ServiceProviderDetail extends AppCompatActivity {
             provider_id=intent.getIntExtra("s_provider_id",0);
             cat_id=intent.getIntExtra("cat_id",0);
             user_id=intent.getIntExtra("user_id",0);
+            spname=intent.getStringExtra("spname");
 //            provider_id=17;
 //            cat_id=1;
 //            user_id=1;
-
+            SpnmeField.setText(spname);
 
        new Conncetion(ServiceProviderDetail.this,provider_id,cat_id).execute();
 
