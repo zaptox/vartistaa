@@ -20,7 +20,9 @@ import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
 
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
+import com.vartista.www.vartista.modules.user.UserNotification_activity;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -127,7 +129,15 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
             Toast.makeText(this, "request", Toast.LENGTH_SHORT).show();
 
+        }
+        else if (id == R.id.notification) {
+            Intent intent = new Intent(HomeActivity.this, UserNotification_activity.class);
+            startActivity(intent);
+            Toast.makeText(this, "Notification", Toast.LENGTH_SHORT).show();
+
         } else if (id == R.id.appointments) {
+            Intent intent = new Intent(HomeActivity.this, MyAppointments.class);
+            startActivity(intent);
             Toast.makeText(this, "appointments", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.ratings) {

@@ -42,12 +42,6 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
         holder.tv_Category.setText(myReqServicesList.get(position).getCatgname());
         holder.tv_date.setText(myReqServicesList.get(position).getDate());
         holder.tv_time.setText(myReqServicesList.get(position).getTime());
-        holder.Accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, ""+myReqServicesList.get(position).getUsername(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
 
@@ -61,7 +55,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
         View mView;
 
         public TextView tv_Title,tv_Category,tv_date,tv_time;
-        public Button Accept,Decline;
+
         public ViewHolder(View itemView) {
             super(itemView);
             mView=itemView;
@@ -70,8 +64,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
             tv_Category=(TextView)mView.findViewById(R.id.textView_req_service);
             tv_date=(TextView)mView.findViewById(R .id.textViewReq_Date);
             tv_time=(TextView)mView.findViewById(R .id.textViewReq_Time);
-            Accept = (Button)mView.findViewById(R .id.buttonAccept);
-            Decline = (Button)mView.findViewById(R .id.buttonReject);
+
 
         }
     }

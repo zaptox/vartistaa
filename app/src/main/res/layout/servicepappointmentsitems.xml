@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="70dp"
+        android:layout_height="88dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/tom">
+
+    </de.hdodenhof.circleimageview.CircleImageView>
+
+    <TextView
+        android:id="@+id/textViewname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/profile_image"
+        android:layout_marginStart="18dp"
+        android:layout_toEndOf="@+id/profile_image"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textViewname"
+        android:layout_centerVertical="true"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/textViewdate"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/profile_image"
+        android:layout_alignEnd="@+id/textView10"
+        android:layout_toRightOf="@id/profile_image"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/servicedetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:layout_alignTop="@+id/textView10"
+        android:layout_marginStart="48dp"
+        android:layout_toEndOf="@+id/textView10"
+        android:text="TextView"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/textViewtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/textViewname"
+        android:layout_marginEnd="17dp"
+        android:text="TextView" />
+
+
+</RelativeLayout>
