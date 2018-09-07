@@ -3,6 +3,8 @@ package com.vartista.www.vartista.modules.provider;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,14 +16,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyServicesListAdapter;
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.general.SiginInActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
@@ -60,6 +62,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
     AutoCompleteTextView edTxtServicePrice,edtTxtSerivceTitle;
     EditText edDescription;
     EditText service_location;
+    TextView service_category;
     Button btnHome;
     //Spinner spinnerService;
     public static ServiceApiInterface apiInterface;
@@ -69,7 +72,13 @@ public class  CreateServiceActivity extends AppCompatActivity {
     //user_id comes from shared preferences
     static int user_id;
     static int  edit_user_id;
+    static double latitude;
+    static double longitude;
+    static String country;
+
+
     NiceSpinner niceSpinner;
+
 
 
 
@@ -84,6 +93,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
         cat_id=new ArrayList<>();
         myServicesList = new ArrayList<Service>();
         apiInterface = ApiClient.getApiClient().create(ServiceApiInterface.class);
+        service_category=(TextView)findViewById(R.id.service_category);
 
         service_location = (EditText)findViewById(R.id.service_location);
         btnCreateSerivce = (Button) findViewById(R.id.btnCreateService);
@@ -95,11 +105,13 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
 
         edit_user_id=getIntent().getIntExtra("edit_user_id",0);
+/*        MDToast mdToast = MDToast.makeText(getApplicationContext(), getLocationFromAddress("Hyderabad Sindh"), MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+        mdToast.show();*/
 
 
 
         if (edit_user_id==0){
-            Toast.makeText(getApplicationContext(),"NO ID",Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(getApplicationContext(),"NO ID",Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText(getApplicationContext(),"Create Service Edit"+edit_user_id,Toast.LENGTH_SHORT).show();
@@ -134,15 +146,18 @@ public class  CreateServiceActivity extends AppCompatActivity {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                User loggedin= HomeActivity.user;
+              int user_id=loggedin.getId();
                 Intent intent=new Intent(getApplicationContext(),MyServicesListActivity.class);
-                intent.putExtra("userId",10);
+
+                intent.putExtra("userId",user_id);
                 startActivity(intent);            }
         });
 
         btnCreateSerivce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //update Work here
 
                 if (btnCreateSerivce.getText().equals("Edit Service")) {
                    // MDToast mdToast = MDToast.makeText(getApplicationContext(), "Your Service Edit Successfully"+edit_user_id, MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
@@ -155,9 +170,10 @@ public class  CreateServiceActivity extends AppCompatActivity {
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     String formattedDate = df.format(c);
                     String update_at=formattedDate;
+                    getLocationFromAddress(location);
 
 
-                    Call<Service> call = CreateServiceActivity.apiInterface.updateService(title,description, location,category_id, Double.parseDouble(price),update_at,edit_user_id);
+                    Call<Service> call = CreateServiceActivity.apiInterface.updateService(title,description, location,latitude,longitude,country,category_id, Double.parseDouble(price),update_at,edit_user_id);
                     call.enqueue(new Callback<Service>() {
                         @Override
                         public void onResponse(Call<Service> call, Response<Service> response) {
@@ -199,11 +215,10 @@ public class  CreateServiceActivity extends AppCompatActivity {
                     String price = edTxtServicePrice.getText().toString();
                     String description = edDescription.getText().toString();
                     String location = service_location.getText().toString();
-                    //int category_id=
-                    //   Toast.makeText(CreateServiceActivity.this, ""+user_id, Toast.LENGTH_SHORT).show();
-//                                          //USER_ID comes from shared prefrences
+                    getLocationFromAddress(location);
+
                     user_id=10;
-                    Call<Service> call = CreateServiceActivity.apiInterface.createService(title, user_id, description, location, 1, Double.parseDouble(price + ""), category_id, "2018-04-05", "2018,06,04");
+                    Call<Service> call = CreateServiceActivity.apiInterface.createService(title, user_id, description, location,latitude,longitude,country, 1, Double.parseDouble(price + ""), category_id, "2018-04-05", "2018,06,04");
 
                     call.enqueue(new Callback<Service>() {
                         @Override
@@ -420,13 +435,17 @@ public class  CreateServiceActivity extends AppCompatActivity {
                         String category_name = service.getString("name");
 
                         int user_id = service.getInt("user_id");
-                        // myservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description,  status,  price,  category_id,  created_at,  updated_at));
+
 
 
                         edtTxtSerivceTitle.setText(service_title);
                         edTxtServicePrice.setText(""+price);
                         edDescription.setText(service_description);
                         service_location.setText(location);
+
+                        service_category.setText("Service Category: "+category_name);
+
+
 
 
 
@@ -449,6 +468,38 @@ public class  CreateServiceActivity extends AppCompatActivity {
     }
 
 
+    public String getLocationFromAddress(String strAddress) {
+
+        Geocoder coder = new Geocoder(this);
+        List<Address> address;
+
+        String add="";
+        try {
+            address = coder.getFromLocationName(strAddress, 2);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+            String country_name= address.get(0).getCountryName();
+            String country_code= address.get(0).getCountryCode();
+            latitude=(double) (location.getLatitude() );
+            longitude=(double) (location.getLongitude() );
+            country=country_name+" "+country_code;
+             add = "latitude: " + (double) (location.getLatitude() ) + "----" + "longitude: " + (double) (location.getLongitude())+"--"+country+"--"+country_code;
 
 
-}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return add;
+    }
+
+
+    }
+
+
+
+
+

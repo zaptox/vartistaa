@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,31 +69,37 @@
 
         <Button
             android:id="@+id/button_paynow"
-            android:layout_width="75dp"
+            android:layout_width="100dp"
             android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="77dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="0dp"
             android:layout_marginRight="77dp"
             android:background="@drawable/accept_req_btn"
-            android:text="Accept"
+            android:text="Pay now"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="11dp" />
 
-        <Button
-            android:id="@+id/buttonReject"
-            android:layout_width="75dp"
-            android:layout_height="35dp"
+        <TextView
+            android:id="@+id/appoint_item_status"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/reject_req_btn"
-            android:text="Reject"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="11dp" />
+            android:text="Status:"
+            android:layout_marginEnd="80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button_paynow"
+            />
+
+<TextView
+    android:layout_alignParentEnd="true"
+    android:text="Pending"
+    android:textColor="@color/color_danger"
+    android:layout_marginEnd="29dp"
+    android:layout_below="@id/button_paynow"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
 
         <ImageView
             android:id="@+id/imageViewDate"

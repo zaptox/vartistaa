@@ -4,6 +4,7 @@ package com.vartista.www.vartista.restcalls;
 
 import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.Service;
+import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.Services;
 import com.vartista.www.vartista.beans.User;
 import retrofit2.Call;
@@ -43,11 +44,12 @@ public interface ApiInterface {
     Call<User> updateUser(@Query("name") String name, @Query("email") String email, @Query("password") String password,@Query("id") int id);
 
     @GET("create_request.php")
-    Call<CreateRequest> createRequest(@Query("user_customer_id") int user_customer_id, @Query("user_service_id") int user_service_id,
+    Call<CreateRequest> createRequest(@Query("user_customer_id") int user_customer_id, @Query("service_provider_id") int service_provider_id,
                                       @Query("service_id") int service_id,
                                       @Query("date") String date, @Query("time") String  time
-            , @Query("location") String location, @Query("request_status") int request_status, @Query("service_cat_id") int service_cat_id);
+            , @Query("location") String location,@Query("city") String city, @Query("request_status") int request_status, @Query("service_cat_id") int service_cat_id);
 
 
-
+    @GET("request_serviceupdate.php")
+       Call<ServiceRequets> updateOnClickRequests(@Query("requestservice_status") int requestservice_status,@Query("requestservice_id") int requestservice_id);
 }

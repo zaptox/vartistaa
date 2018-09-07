@@ -25,10 +25,17 @@
             android:id="@+id/ratings"
             android:icon="@drawable/star"
             android:title="Ratings" />
+
+        <item
+            android:id="@+id/payment"
+            android:icon="@drawable/logout"
+            android:title="Payment" />
+
         <item
             android:id="@+id/logout"
             android:icon="@drawable/logout"
             android:title="Logout" />
+
 
     </group>
 
