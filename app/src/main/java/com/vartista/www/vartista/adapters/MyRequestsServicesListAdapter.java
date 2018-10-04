@@ -66,6 +66,10 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
                                               if(response.body().getResponse().equals("ok")){
                                                   remove(position);
+
+                                                  refreshadapter();
+
+                                                  //asd
                                                   MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
 
                        }
@@ -105,6 +109,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
                            MDToast.makeText(view.getContext(),"Request Declined",Toast.LENGTH_SHORT).show();
                            remove(position);
+                           refreshadapter();
 
                        }
 
@@ -181,6 +186,13 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
     public void remove(int position) {
         myReqServicesList.remove(position);
         notifyItemRemoved(position);
+
+
     }
+    public void  refreshadapter(){
+        notifyDataSetChanged();
+
+    }
+
 
 }
