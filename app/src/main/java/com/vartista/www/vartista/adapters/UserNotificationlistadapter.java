@@ -1,6 +1,7 @@
 package com.vartista.www.vartista.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,9 +38,26 @@ public class UserNotificationlistadapter extends RecyclerView.Adapter<UserNotifi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-             holder.username.setText(list.get(position).getName());
-             holder.requestdetail.setText(list.get(position).getRequest_status());
-             holder.timeduration.setText(list.get(position).getTime());
+        if(list.get(position).getRequest_status().equals("1")){
+            holder.username.setText(list.get(position).getName());
+            holder.requestdetail.setTextColor(Color.GREEN);
+            holder.requestdetail.setText("Request Accepted");
+            holder.timeduration.setText(list.get(position).getTime());
+        }
+        if(list.get(position).getRequest_status().equals("0")){
+            holder.username.setText(list.get(position).getName());
+            holder.requestdetail.setTextColor(Color.BLUE);
+            holder.requestdetail.setText("Request Pending");
+            holder.timeduration.setText(list.get(position).getTime());
+        }
+        if(list.get(position).getRequest_status().equals("-1")){
+            holder.username.setText(list.get(position).getName());
+            holder.requestdetail.setTextColor(Color.RED);
+            holder.requestdetail.setText("Request Rejected");
+            holder.timeduration.setText(list.get(position).getTime());
+
+        }
+
     }
 
     @Override
