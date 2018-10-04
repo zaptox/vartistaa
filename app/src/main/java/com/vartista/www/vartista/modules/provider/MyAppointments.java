@@ -1,4 +1,4 @@
-package com.vartista.www.vartista.modules.user;
+package com.vartista.www.vartista.modules.provider;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -11,8 +11,10 @@ import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.UserNotificationlistadapter;
-import com.vartista.www.vartista.beans.GetServiceProviders;
+import com.vartista.www.vartista.adapters.servicepappointmentsadapter;
+import com.vartista.www.vartista.beans.servicepaapointmentsitems;
 import com.vartista.www.vartista.beans.usernotificationitems;
+import com.vartista.www.vartista.modules.user.UserNotification_activity;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -30,35 +32,34 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-public class UserNotification_activity extends AppCompatActivity {
-    RecyclerView view;
+public class MyAppointments extends AppCompatActivity {
+
+    RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private UserNotificationlistadapter listadapter;
-    ArrayList<usernotificationitems> requestlist;
-    int customer_id;
+    private servicepappointmentsadapter listadapter;
+    ArrayList<servicepaapointmentsitems> myappointments;
+    int service_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_notification_activity);
-        view = (RecyclerView)findViewById(R.id.user_notificationlist);
-        requestlist=new ArrayList<usernotificationitems>();
+        setContentView(R.layout.activity_my_appointments);
+        recyclerView = (RecyclerView)findViewById(R.id.service_provider_appointments);
+        myappointments=new ArrayList<servicepaapointmentsitems>();
         layoutManager = new LinearLayoutManager(getApplicationContext());
-        view.setHasFixedSize(true);
-        view.setLayoutManager(layoutManager);
-        customer_id = 1;
-        new UserNotification_activity.Conncetion(UserNotification_activity.this,customer_id).execute();
-
-
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        service_id = 17;
+        new MyAppointments.Conncetion(MyAppointments.this,service_id).execute();
     }
 
 
     class Conncetion extends AsyncTask<String,String ,String > {
-        private int user_customer_id;
+        private int service_id;
         private ProgressDialog dialog;
 
-        public Conncetion(Context activity, int user_customer_id) {
+        public Conncetion(Context activity, int service_id) {
             dialog = new ProgressDialog(activity);
-            this.user_customer_id = user_customer_id;
+            this.service_id = service_id;
         }
 
         @Override
@@ -73,7 +74,7 @@ public class UserNotification_activity extends AppCompatActivity {
 
             String result = "";
 
-            final String BASE_URL = "http://vartista.com/vartista_app/usernotificationstatus.php?user_customer_id="+1;
+            final String BASE_URL = "http://vartista.com/vartista_app/servicepappointments.php?service_provider_id="+service_id;
             try {
                 HttpClient client = new DefaultHttpClient();
                 HttpGet request = new HttpGet();
@@ -105,7 +106,7 @@ public class UserNotification_activity extends AppCompatActivity {
                 dialog.dismiss();
             }
             try {
-                Toast.makeText(UserNotification_activity.this, "ok", Toast.LENGTH_SHORT).show();
+
 
                 JSONObject jsonResult = new JSONObject(result);
 
@@ -115,14 +116,30 @@ public class UserNotification_activity extends AppCompatActivity {
                     JSONArray services = jsonResult.getJSONArray("services");
                     for (int j = 0; j < services.length(); j++) {
                         JSONObject ser1 = services.getJSONObject(j);
+                        String requestservice_id = ser1.getString("requestservice_id");
+                        String user_customer_id = ser1.getString("user_customer_id");
+                        String service_provider_id = ser1.getString("service_provider_id");
                         String username = ser1.getString("username");
-                        String request_detail = ser1.getString("request_status");
+                        String service_description = ser1.getString("service_description");
+                        String location = ser1.getString("location");
+                        String request_status = ser1.getString("request_status");
+                        String date = ser1.getString("date");
+                        String service_title = ser1.getString("service_title");
+                        String price = ser1.getString("price");
+                        String name = ser1.getString("name");
                         String Time = ser1.getString("time");
-                        requestlist.add(new usernotificationitems(username,request_detail,Time));
+                        Toast.makeText(MyAppointments.this, "object added", Toast.LENGTH_SHORT).show();
+                        myappointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time));
+                        Toast.makeText(MyAppointments.this, ""+myappointments, Toast.LENGTH_SHORT).show();
                     }
-                    listadapter = new UserNotificationlistadapter(getApplicationContext(),requestlist);
-                    view.setAdapter(listadapter);
-                } else {
+
+
+                    listadapter = new servicepappointmentsadapter(getApplicationContext(),myappointments);
+                    recyclerView.setAdapter(listadapter);
+
+                }
+
+                else {
                     Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
@@ -132,5 +149,7 @@ public class UserNotification_activity extends AppCompatActivity {
         }
 
     }
+
+
 
 }
