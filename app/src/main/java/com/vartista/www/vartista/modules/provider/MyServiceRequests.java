@@ -169,10 +169,11 @@ public class MyServiceRequests extends AppCompatActivity {
                         int service_id= (Integer.parseInt(service.getString("service_id")));
                         int service_cat_id =(Integer.parseInt(service.getString("service_cat_id")));
                         String service_title=service.getString("service_title");
+                        double price = service.getDouble("price");
                         String category_name=service.getString("catgname");
                         Toast.makeText(MyServiceRequests.this, ""+category_name, Toast.LENGTH_SHORT).show();
                         serviceRequestsList.add(new ServiceRequets(requestservice_id,user_name,status,date,time,location,user_customer_id,
-                                service_provider_id,service_id,service_cat_id,service_title,category_name
+                                service_provider_id,service_id,service_cat_id,service_title,price,category_name
                                 ));
                     }
 
@@ -184,7 +185,7 @@ public class MyServiceRequests extends AppCompatActivity {
 
 
                     myRequestServicesListAdapter= new MyRequestsServicesListAdapter(MyServiceRequests.this,serviceRequestsList);
-                                        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(myRequestServicesListAdapter);
+                    AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(myRequestServicesListAdapter);
                     alphaAdapter.setDuration(1000);
                     alphaAdapter.setInterpolator(new OvershootInterpolator());
                     listViewMyReqeustServices.setAdapter(new ScaleInAnimationAdapter(alphaAdapter));
