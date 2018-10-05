@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
 
 
@@ -19,7 +20,7 @@ import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
  * A simple {@link Fragment} subclass.
  */
 public class ServiceProviderFragment extends Fragment {
-    Button btnCreateServices,service_btn;
+    Button btnCreateServices,service_btn,reqalert;
      static int user_id;
     @SuppressLint("ValidFragment")
     public ServiceProviderFragment(int user_id) {
@@ -36,9 +37,17 @@ public class ServiceProviderFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_service, container, false);
         btnCreateServices=(Button)view.findViewById(R.id.buttonCreateService);
+        reqalert=(Button)view.findViewById(R.id.reqalert);
         service_btn=(Button)view.findViewById(R.id.service_btn);
 
-
+        reqalert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(),MyServiceRequests.class);
+                intent.putExtra("userId",user_id);
+                startActivity(intent);
+            }
+        });
         service_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
