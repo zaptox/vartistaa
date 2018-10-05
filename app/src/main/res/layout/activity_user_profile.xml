@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
 android:gravity="center_horizontal"
-        android:background="@drawable/orangeback"
+        android:background="@drawable/gradient"
         android:orientation="vertical"
         android:layout_height="200dp">
 

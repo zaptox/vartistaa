@@ -29,7 +29,7 @@ public class SplashActivity extends AwesomeSplash {
 
         //Background
 
-        configSplash.setBackgroundColor(R.color.color_splash); //any color you want form colors.xml
+        configSplash.setBackgroundColor(R.color.colorPrimaryDark); //any color you want form colors.xml
 
         configSplash.setAnimCircularRevealDuration(1000); //int ms
         configSplash.setRevealFlagX(Flags.REVEAL_RIGHT);  //or Flags.REVEAL_LEFT
@@ -40,7 +40,7 @@ public class SplashActivity extends AwesomeSplash {
         //Choose LOGO OR PATH; if you don't provide String value for path it's logo by default
 
         //Customize Logo
-        configSplash.setLogoSplash(R.drawable.splashlogo); //or any other drawable
+        configSplash.setLogoSplash(R.drawable.logosplash); //or any other drawable
         configSplash.setAnimLogoSplashDuration(1000); //int ms
         configSplash.setAnimLogoSplashTechnique(Techniques.FadeIn); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
 
@@ -56,7 +56,7 @@ public class SplashActivity extends AwesomeSplash {
         configSplash.setPathSplashFillColor(R.color.color_splash); //path object filling color
 
         //Title
-        configSplash.setTitleSplash("Changing the way you live!");
+        configSplash.setTitleSplash("");
         configSplash.setTitleTextColor(R.color.color_good);
         configSplash.setTitleTextSize(20f); //float value
         configSplash.setAnimTitleDuration(500);

@@ -13,6 +13,10 @@
             android:icon="@drawable/requestadd"
             android:title="My Request" />
         <item
+            android:id="@+id/notification"
+            android:icon="@drawable/appointment"
+            android:title="My Notifications" />
+        <item
             android:id="@+id/appointments"
             android:icon="@drawable/appointment"
             android:title="My Appointments" />
@@ -21,10 +25,17 @@
             android:id="@+id/ratings"
             android:icon="@drawable/star"
             android:title="Ratings" />
+
+        <item
+            android:id="@+id/payment"
+            android:icon="@drawable/logout"
+            android:title="Payment" />
+
         <item
             android:id="@+id/logout"
             android:icon="@drawable/logout"
             android:title="Logout" />
+
 
     </group>
 

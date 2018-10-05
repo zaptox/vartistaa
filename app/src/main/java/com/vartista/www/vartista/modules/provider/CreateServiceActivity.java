@@ -19,12 +19,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyServicesListAdapter;
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.general.SiginInActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
@@ -81,7 +80,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
     NiceSpinner niceSpinner;
 
 
-
+    User loggedin;
 
 
     @Override
@@ -95,6 +94,8 @@ public class  CreateServiceActivity extends AppCompatActivity {
         myServicesList = new ArrayList<Service>();
         apiInterface = ApiClient.getApiClient().create(ServiceApiInterface.class);
         service_category=(TextView)findViewById(R.id.service_category);
+
+        loggedin= HomeActivity.user;
 
         service_location = (EditText)findViewById(R.id.service_location);
         btnCreateSerivce = (Button) findViewById(R.id.btnCreateService);
@@ -112,7 +113,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
 
         if (edit_user_id==0){
-            Toast.makeText(getApplicationContext(),"NO ID",Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(getApplicationContext(),"NO ID",Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText(getApplicationContext(),"Create Service Edit"+edit_user_id,Toast.LENGTH_SHORT).show();
@@ -148,8 +149,10 @@ public class  CreateServiceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+              user_id=loggedin.getId();
                 Intent intent=new Intent(getApplicationContext(),MyServicesListActivity.class);
-                intent.putExtra("userId",10);
+
+                intent.putExtra("userId",user_id);
                 startActivity(intent);            }
         });
 
@@ -216,7 +219,8 @@ public class  CreateServiceActivity extends AppCompatActivity {
                     String location = service_location.getText().toString();
                     getLocationFromAddress(location);
 
-                    user_id=10;
+                    user_id=loggedin.getId();
+
                     Call<Service> call = CreateServiceActivity.apiInterface.createService(title, user_id, description, location,latitude,longitude,country, 1, Double.parseDouble(price + ""), category_id, "2018-04-05", "2018,06,04");
 
                     call.enqueue(new Callback<Service>() {

@@ -40,7 +40,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textView_service11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/textViewName"
@@ -58,17 +58,17 @@
 
 
             android:layout_below="@+id/textViewName"
-            android:layout_toEndOf="@+id/textView"
+            android:layout_toEndOf="@+id/textView_service11"
             android:layout_weight="1"
             android:text="Hair cutt $30"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="12dp"
             android:textStyle="bold"
-            android:layout_toRightOf="@+id/textView" />
+            android:layout_toRightOf="@+id/textView_service11" />
 
 
         <Button
-            android:id="@+id/buttonAccept"
+            android:id="@+id/button_paynow"
             android:layout_width="75dp"
             android:layout_height="35dp"
             android:layout_alignParentEnd="true"

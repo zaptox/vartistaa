@@ -17,8 +17,8 @@ public class usernotificationitems  {
     @SerializedName("Time")
     private String Time;
 
-//    @SerializedName("response")
-//    private String Response;
+    @SerializedName("response")
+    private String Response;
 
     public usernotificationitems(String name, String request_status, String time) {
         Name = name;
@@ -51,13 +51,13 @@ public class usernotificationitems  {
         Time = time;
     }
 
-//    public String getResponse() {
-//        return Response;
-//    }
-//
-//    public void setResponse(String response) {
-//        Response = response;
-//    }
+    public String getResponse() {
+        return Response;
+    }
+
+    public void setResponse(String response) {
+        Response = response;
+    }
 
 
 }

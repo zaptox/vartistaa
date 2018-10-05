@@ -1,24 +1,18 @@
 package com.vartista.www.vartista.adapters;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
-import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.beans.Service;
 import com.vartista.www.vartista.beans.ServiceRequets;
-import com.vartista.www.vartista.modules.general.UserProfile;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 
@@ -66,10 +60,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
                                               if(response.body().getResponse().equals("ok")){
                                                   remove(position);
-
-                                                  refreshadapter();
-
-                                                  //asd
+                                                  notifyDataSetChanged();
                                                   MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
 
                        }
@@ -109,7 +100,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
                            MDToast.makeText(view.getContext(),"Request Declined",Toast.LENGTH_SHORT).show();
                            remove(position);
-                           refreshadapter();
+                           notifyDataSetChanged();
 
                        }
 
@@ -156,7 +147,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
             tv_Category=(TextView)mView.findViewById(R.id.textView_req_service);
             tv_date=(TextView)mView.findViewById(R .id.textViewReq_Date);
             tv_time=(TextView)mView.findViewById(R .id.textViewReq_Time);
-            accept = mView.findViewById(R.id.buttonAccept);
+            accept = mView.findViewById(R.id.button_paynow);
             decline = mView.findViewById(R.id.buttonReject);
             apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
 
@@ -186,13 +177,6 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
     public void remove(int position) {
         myReqServicesList.remove(position);
         notifyItemRemoved(position);
-
-
     }
-    public void  refreshadapter(){
-        notifyDataSetChanged();
-
-    }
-
 
 }
