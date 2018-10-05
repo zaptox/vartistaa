@@ -50,6 +50,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
 
         holder.service_p_name.setText("" + myServicesList.get(position).getSp_name());
         holder.service_name.setText("" + myServicesList.get(position).getService_title());
+        Toast.makeText(context, "name" +myServicesList.get(position).getSp_name()+" "+myServicesList.get(position).getUser_id() , Toast.LENGTH_SHORT).show();
 
         final int abhipoition = position;
         final ViewHolder holder1 = holder;

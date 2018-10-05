@@ -40,7 +40,6 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -120,12 +119,13 @@ public class HomeActivity extends AppCompatActivity
 
 //            Toast.makeText(this, "Account", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(HomeActivity.this, UserProfile.class);
-            intent.putExtra("user", u);
+            intent.putExtra("user", user_id);
             startActivity(intent);
 
 
         } else if (id == R.id.request) {
             Intent intent = new Intent(HomeActivity.this, MyServiceRequests.class);
+            intent.putExtra("user", user_id);
             startActivity(intent);
             Toast.makeText(this, "request", Toast.LENGTH_SHORT).show();
 
