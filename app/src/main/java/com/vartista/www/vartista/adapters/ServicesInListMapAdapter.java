@@ -65,11 +65,16 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
                 int cat_id= myServicesList.get(position).getCategory_id();
                 int user_id= HomeActivity.user_id;
 
+                String sp_name= myServicesList.get(position).getSp_name();
+
                 Intent intent=new Intent(view.getContext(),ServiceProviderDetail.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 intent.putExtra("s_provider_id",s_provider_id);
                 intent.putExtra("cat_id",cat_id);
                 intent.putExtra("user_id",user_id);
+                intent.putExtra("spname",sp_name);
+
                 Toast.makeText(context, "service provider "+s_provider_id+", cat_id: "+cat_id+", user_id: "+user_id, Toast.LENGTH_SHORT).show();
                 context.startActivity(intent);
 

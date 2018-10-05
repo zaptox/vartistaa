@@ -67,10 +67,10 @@ public class MyServiceRequests extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         listViewMyReqeustServices.setLayoutManager(mLayoutManager);
         listViewMyReqeustServices.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
-//        SlideInUpAnimator animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
-        SlideInLeftAnimator animator = new SlideInLeftAnimator();
-        animator.setInterpolator(new OvershootInterpolator());
-        listViewMyReqeustServices.setItemAnimator(animator);
+ //  SlideInUpAnimator animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
+  SlideInLeftAnimator animator = new SlideInLeftAnimator();
+ animator.setInterpolator(new OvershootInterpolator());
+ listViewMyReqeustServices.setItemAnimator(animator);
         listViewMyReqeustServices.getItemAnimator().setRemoveDuration(1000);
 
 
@@ -189,12 +189,12 @@ public class MyServiceRequests extends AppCompatActivity {
 
                 }
                 else{
-                       Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+//                       Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+  //              Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }

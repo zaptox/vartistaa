@@ -80,7 +80,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
     NiceSpinner niceSpinner;
 
 
-
+    User loggedin;
 
 
     @Override
@@ -94,6 +94,8 @@ public class  CreateServiceActivity extends AppCompatActivity {
         myServicesList = new ArrayList<Service>();
         apiInterface = ApiClient.getApiClient().create(ServiceApiInterface.class);
         service_category=(TextView)findViewById(R.id.service_category);
+
+        loggedin= HomeActivity.user;
 
         service_location = (EditText)findViewById(R.id.service_location);
         btnCreateSerivce = (Button) findViewById(R.id.btnCreateService);
@@ -146,8 +148,8 @@ public class  CreateServiceActivity extends AppCompatActivity {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User loggedin= HomeActivity.user;
-              int user_id=loggedin.getId();
+
+              user_id=loggedin.getId();
                 Intent intent=new Intent(getApplicationContext(),MyServicesListActivity.class);
 
                 intent.putExtra("userId",user_id);
@@ -217,7 +219,8 @@ public class  CreateServiceActivity extends AppCompatActivity {
                     String location = service_location.getText().toString();
                     getLocationFromAddress(location);
 
-                    user_id=10;
+                    user_id=loggedin.getId();
+
                     Call<Service> call = CreateServiceActivity.apiInterface.createService(title, user_id, description, location,latitude,longitude,country, 1, Double.parseDouble(price + ""), category_id, "2018-04-05", "2018,06,04");
 
                     call.enqueue(new Callback<Service>() {
