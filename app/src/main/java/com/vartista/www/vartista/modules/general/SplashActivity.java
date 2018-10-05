@@ -185,6 +185,7 @@ public class SplashActivity extends AwesomeSplash {
                         intent.putExtra("user", userLoggedIn);
 
                         startActivity(intent);
+                        finish();
                     }
 //
 //

@@ -150,6 +150,7 @@ public class SiginInActivity extends AppCompatActivity {
                     intent.putExtra("user", userLoggedIn);
 
                     startActivity(intent);
+                    finish();
 //
 //
                 } else if (response.body().getResponse().equals("failed")) {
