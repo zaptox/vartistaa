@@ -1,7 +1,9 @@
 package com.vartista.www.vartista.modules.general;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -76,6 +78,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
                 Call<User> call=SignUpActivity.apiInterface.performRegistration(user_name1,user_email1,user_password1,null,"1",user_contact1,null,null);
+                addtosharedpreference(user_email1,user_password1);
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call <User> call, Response<User> response) {
@@ -154,6 +157,24 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
     }
+
+
+    public void addtosharedpreference(String email,String Password){
+
+        SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferencespre.edit();
+        editor.putString("Email",email);
+        editor.putString("Password",Password);
+        editor.apply();
+        editor.commit();
+
+
+    }
+
+
+
+
+
 
 
 }

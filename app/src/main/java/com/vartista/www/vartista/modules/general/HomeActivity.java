@@ -1,6 +1,8 @@
 package com.vartista.www.vartista.modules.general;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -16,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.signin.SignIn;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
 
@@ -103,6 +106,16 @@ public class HomeActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
+
+            return true;
+        }
+
+        else if (id == R.id.logout) {
+            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+            SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
+            ob.edit().clear().commit();
+            startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
             return true;
         }
 
@@ -145,6 +158,9 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.logout) {
             Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+            SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
+            ob.edit().clear().commit();
+            startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
 
         }
 

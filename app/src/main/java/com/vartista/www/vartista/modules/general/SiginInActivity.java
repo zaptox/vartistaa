@@ -1,7 +1,9 @@
 package com.vartista.www.vartista.modules.general;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
@@ -68,7 +70,7 @@ public class SiginInActivity extends AppCompatActivity {
 
                 String email1 = email.getText().toString();
                 String password1 = password.getText().toString();
-
+                addtosharedpreference(email1,password1);
 
                 try {
 
@@ -216,5 +218,26 @@ public class SiginInActivity extends AppCompatActivity {
 
         return "";
     }
+
+    public void addtosharedpreference(String email,String Password){
+
+        SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferencespre.edit();
+        editor.putString("Email",email);
+        editor.putString("Password",Password);
+        editor.apply();
+        editor.commit();
+
+
+
+
+
+    }
+
+
+
+
+
+
 
 }
