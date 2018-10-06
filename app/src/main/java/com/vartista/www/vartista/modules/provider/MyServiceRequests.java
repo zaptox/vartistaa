@@ -67,10 +67,10 @@ public class MyServiceRequests extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         listViewMyReqeustServices.setLayoutManager(mLayoutManager);
         listViewMyReqeustServices.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
-//        SlideInUpAnimator animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
-        SlideInLeftAnimator animator = new SlideInLeftAnimator();
-        animator.setInterpolator(new OvershootInterpolator());
-        listViewMyReqeustServices.setItemAnimator(animator);
+ //  SlideInUpAnimator animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
+  SlideInLeftAnimator animator = new SlideInLeftAnimator();
+ animator.setInterpolator(new OvershootInterpolator());
+ listViewMyReqeustServices.setItemAnimator(animator);
         listViewMyReqeustServices.getItemAnimator().setRemoveDuration(1000);
 
 
@@ -79,9 +79,9 @@ public class MyServiceRequests extends AppCompatActivity {
 
         user_id=getIntent().getIntExtra("user",0);
 
+
+        Toast.makeText(this, ""+user_id, Toast.LENGTH_SHORT).show();
         new MyServiceRequests.Conncetion(MyServiceRequests.this,user_id).execute();
-
-
 
 
     }
@@ -95,6 +95,8 @@ public class MyServiceRequests extends AppCompatActivity {
         public  Conncetion(MyServiceRequests activity,int user_id) {
             dialog = new ProgressDialog(activity);
             userId=user_id;
+            Toast.makeText(getApplicationContext(),userId+" "+user_id,Toast.LENGTH_SHORT).show();
+
         }
 
         @Override
@@ -146,7 +148,8 @@ public class MyServiceRequests extends AppCompatActivity {
             try {
                 JSONObject jsonResult=new JSONObject(result);
                 int success=jsonResult.getInt("success");
-                
+
+                Toast.makeText(getApplicationContext(),jsonResult.toString(),Toast.LENGTH_SHORT).show();
 
                 if(success==1){
                     JSONArray services=jsonResult.getJSONArray("services");
@@ -166,17 +169,19 @@ public class MyServiceRequests extends AppCompatActivity {
                         int service_id= (Integer.parseInt(service.getString("service_id")));
                         int service_cat_id =(Integer.parseInt(service.getString("service_cat_id")));
                         String service_title=service.getString("service_title");
+                        double price = service.getDouble("price");
                         String category_name=service.getString("catgname");
-
+                        Toast.makeText(MyServiceRequests.this, ""+category_name, Toast.LENGTH_SHORT).show();
                         serviceRequestsList.add(new ServiceRequets(requestservice_id,user_name,status,date,time,location,user_customer_id,
-                                service_provider_id,service_id,service_cat_id,service_title,category_name
+                                service_provider_id,service_id,service_cat_id,service_title,price,category_name
                                 ));
-
-
-
-
-
                     }
+
+
+//                    myRequestServicesListAdapter= new MyRequestsServicesListAdapter(getApplicationContext(),serviceRequestsList);
+
+//                    listViewMyReqeustServices.setAdapter(myRequestServicesListAdapter);
+
 
 
                     myRequestServicesListAdapter= new MyRequestsServicesListAdapter(MyServiceRequests.this,serviceRequestsList);
@@ -189,12 +194,12 @@ public class MyServiceRequests extends AppCompatActivity {
 
                 }
                 else{
-                       Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+//                       Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+  //              Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }

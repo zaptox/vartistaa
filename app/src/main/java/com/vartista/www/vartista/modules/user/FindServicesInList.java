@@ -161,7 +161,7 @@ public class FindServicesInList extends AppCompatActivity {
 
                         JSONObject ser1 = services.getJSONObject(j);
                         int service_id = Integer.parseInt(ser1.getString("service_id"));
-                        int user_id = Integer.parseInt(ser1.getString("user_id"));
+                        int user_id2 = Integer.parseInt(ser1.getString("user_id"));
                         int address_id = Integer.parseInt(ser1.getString("id"));
                         int category_id = Integer.parseInt(ser1.getString("category_id"));
                         String service_title = ser1.getString("service_title");
@@ -173,7 +173,8 @@ public class FindServicesInList extends AppCompatActivity {
                         double latitude = Double.parseDouble(ser1.getString("latitude"));
                         String sp_name=ser1.getString("name");
 
-                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id, service_title, service_description, price, category_id,sp_name));
+                        Toast.makeText(FindServicesInList.this, ""+user_id2, Toast.LENGTH_SHORT).show();
+                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name));
 
 
 
@@ -189,12 +190,14 @@ public class FindServicesInList extends AppCompatActivity {
 
 
                 } else {
-                    Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                   //
+                    // Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+               //
+                // Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
 
 
