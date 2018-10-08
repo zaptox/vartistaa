@@ -70,7 +70,6 @@ public class SiginInActivity extends AppCompatActivity {
 
                 String email1 = email.getText().toString();
                 String password1 = password.getText().toString();
-                addtosharedpreference(email1,password1);
 
                 try {
 
@@ -143,6 +142,8 @@ public class SiginInActivity extends AppCompatActivity {
 
                     userLoggedIn = new User(id, name, email, password, image, status, contact, created_at, updated_at);
 //                    Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse() + "--name:" + name, Toast.LENGTH_SHORT).show();
+                    addtosharedpreference(userLoggedIn.getId(),userLoggedIn.getEmail(),userLoggedIn.getPassword());
+
                     setUIToWait(false);
 //                    Toast.makeText(SiginInActivity.this, ""+userLoggedIn, Toast.LENGTH_SHORT).show();
                     //
@@ -220,10 +221,11 @@ public class SiginInActivity extends AppCompatActivity {
         return "";
     }
 
-    public void addtosharedpreference(String email,String Password){
+    public void addtosharedpreference(int user_id,String email,String Password){
 
         SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferencespre.edit();
+        editor.putInt("user_id",user_id);
         editor.putString("Email",email);
         editor.putString("Password",Password);
         editor.apply();
