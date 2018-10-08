@@ -1,6 +1,8 @@
 package com.vartista.www.vartista.modules.general;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -16,11 +18,15 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.signin.SignIn;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
 
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.modules.payment.PaymentActivity;
+import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
+import com.vartista.www.vartista.modules.user.UserNotification_activity;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,14 +35,13 @@ public class HomeActivity extends AppCompatActivity
     private TextView email,name;
     User u=null;
     public static int user_id;
-
+    public static User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -56,7 +61,7 @@ public class HomeActivity extends AppCompatActivity
         email = (TextView) headerView.findViewById(R.id.email);
 
         Intent intent= getIntent();
-       User user= (User) intent.getSerializableExtra("user");
+        user= (User) intent.getSerializableExtra("user");
     u=user;
         user_id=u.getId();
       //  Toast.makeText(this, ""+user.id, Toast.LENGTH_SHORT).show();
@@ -101,6 +106,16 @@ public class HomeActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
+
+            return true;
+        }
+
+        else if (id == R.id.logout) {
+            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+            SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
+            ob.edit().clear().commit();
+            startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
             return true;
         }
 
@@ -118,23 +133,42 @@ public class HomeActivity extends AppCompatActivity
 
 //            Toast.makeText(this, "Account", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(HomeActivity.this, UserProfile.class);
-            intent.putExtra("user", u);
+            intent.putExtra("user", user_id);
             startActivity(intent);
 
 
         } else if (id == R.id.request) {
             Intent intent = new Intent(HomeActivity.this, MyServiceRequests.class);
+            intent.putExtra("user", user_id);
             startActivity(intent);
             Toast.makeText(this, "request", Toast.LENGTH_SHORT).show();
 
+        }
+        else if (id == R.id.notification) {
+            Intent intent = new Intent(HomeActivity.this, UserNotification_activity.class);
+            startActivity(intent);
+            Toast.makeText(this, "Notification", Toast.LENGTH_SHORT).show();
+
         } else if (id == R.id.appointments) {
+            Intent intent = new Intent(HomeActivity.this, MyAppointments.class);
+            startActivity(intent);
             Toast.makeText(this, "appointments", Toast.LENGTH_SHORT).show();
 
-        } else if (id == R.id.ratings) {
+        }
+        else if (id == R.id.ratings) {
             Toast.makeText(this, "raings", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.logout) {
             Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+            SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
+            ob.edit().clear().commit();
+            startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
+
+        }
+        else if (id == R.id.payment) {
+            Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
+            startActivity(intent);
+            Toast.makeText(this, "appointments", Toast.LENGTH_SHORT).show();
 
         }
 

@@ -14,8 +14,10 @@ import com.google.gson.Gson;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.Service;
+import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
 import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
+import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import java.util.List;
@@ -39,6 +41,7 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
    public MyServicesListAdapter(Context context, List<Service> myServicesList){
        this.myServicesList = myServicesList;
        this.context=context;
+
    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,13 +50,35 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
         return new ViewHolder(view);
     }
 @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
-    holder.tvTitle.setText(myServicesList.get(position).getService_title());
+
+       final int abhiwali= position;
+
+    if (myServicesList.get(position).getService_title().length()>20){
+        holder.tvTitle.setText(myServicesList.get(position).getService_title().substring(0,20)+"...");
+    }
+    else {
+        holder.tvTitle.setText(myServicesList.get(position).getService_title());
+    }
     holder.tvCategory.setText(""+myServicesList.get(position).getCategory_name());
-    holder.tvPrice.setText("Rs. "+myServicesList.get(position).getPrice());
-    holder.tvLocation.setText("Location: "+myServicesList.get(position).getLocation());
-    holder.tvDescription.setText(""+myServicesList.get(position).getService_description());
+    holder.tvPrice.setText(""+myServicesList.get(position).getPrice());
+    if (myServicesList.get(position).getLocation().length()>50){
+        holder.tvLocation.setText(" "+myServicesList.get(position).getLocation().substring(0,50)+"...");
+    }
+    else {
+        holder.tvLocation.setText(" "+myServicesList.get(position).getLocation());
+    }
+
+    if (myServicesList.get(position).getService_description().length()>120){
+        holder.tvDescription.setText("" + myServicesList.get(position).getService_description().substring(0,120)+"...");
+    }
+    else {
+        holder.tvDescription.setText("" + myServicesList.get(position).getService_description());
+    }
+    //Log.d("Description length",myServicesList.get(position).getService_description().length()+"");
+
+
 
     // holder.tv.setText(""+myServicesList.get(position).getPrice());
 
@@ -71,7 +96,7 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
             new LovelyStandardDialog(v.getContext(), LovelyStandardDialog.ButtonLayout.VERTICAL)
                     .setTopColorRes(R.color.color_danger)
                     .setButtonsColorRes(R.color.colorSuccess)
-                    .setIcon(R.drawable.logout)
+                    .setIcon(R.drawable.delete_small)
                     .setTitle("Delete")
                     .setMessage("Are you sure to delete your service?")
                     .setPositiveButton("Yes", new View.OnClickListener() {
@@ -135,13 +160,26 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
 //            Toast.makeText(context,"edit ID:"+user_id,Toast.LENGTH_SHORT).show();
         }
     });
+
     holder.mView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-        Toast.makeText(context,"requesr ID:"+user_id,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context,"requesr ID:"+user_id,Toast.LENGTH_SHORT).show();
+
+            new LovelyInfoDialog(view.getContext())
+                    .setTopColorRes(R.color.price_color)
+
+                    //This will add Don't show again checkbox to the dialog. You can pass any ID as argument
+
+                    .setTitle("Detail")
+
+                    .setMessage(""+    myServicesList.get(position).getService_description())
+                    .show();
+
 
         }
     });
+
 
     }
 

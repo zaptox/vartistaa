@@ -10,5 +10,7 @@
 
     <color name="color_danger">#ff0000</color>
 
+    <!-- Service List color SAAD -->
+    <color name="price_color">#f700d0ff</color>
 
 </resources>
