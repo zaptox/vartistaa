@@ -24,6 +24,7 @@ import com.vartista.www.vartista.adapters.PagerAdapter;
 
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.modules.payment.PaymentActivity;
+import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.user.UserNotification_activity;
@@ -171,6 +172,14 @@ public class HomeActivity extends AppCompatActivity
             Toast.makeText(this, "appointments", Toast.LENGTH_SHORT).show();
 
         }
+
+        else if (id == R.id.provider_doc_upload) {
+            Intent intent = new Intent(HomeActivity.this, DocumentUploadActivity.class);
+            startActivity(intent);
+
+        }
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
