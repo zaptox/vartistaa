@@ -103,7 +103,7 @@ public class SplashActivity extends AwesomeSplash {
 //            Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
 //            intent.putExtra("user", userLoggedIn);
 //            startActivity(intent);
-//            finish();
+//            finivnsh();
 //
 //            }
 //        else{
