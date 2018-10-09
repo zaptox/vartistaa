@@ -35,11 +35,8 @@ public class DocumentUploadActivity extends AppCompatActivity
     private static final int CNIC_FRONT_IMAGE_REQUEST_CODE = 3;
     private static final int CNIC_BACK_IMAGE_REQUEST_CODE = 7;
     private static final int BANK_DETAILS_IMAGE_REQUEST_CODE = 11;
-
-            private static final int STORAGE_PERMISSION_CODE = 123;
-    private ImageView imageView;
-    private EditText etCaption;
-    private TextView tvPath;
+    private static final int STORAGE_PERMISSION_CODE = 123;
+    private ImageView imageViewBankDetails,imageViewCnicFront,imageViewBackCinc;
     private Button btnUpload;
     private Bitmap bitmapCnicFront,bitmapCnicBack,bitmapBankDetails;
     private Uri filePathCnicFront,filePathCnicBack,filePathBankDetails;
@@ -57,26 +54,57 @@ public class DocumentUploadActivity extends AppCompatActivity
 
         SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
         requestStoragePermission();
+        imageViewBankDetails=(ImageView)findViewById(R.id.imageViewBankDetails);
+        imageViewCnicFront=(ImageView)findViewById(R.id.imageViewCnicFront);
+        imageViewBackCinc=(ImageView)findViewById(R.id.imageViewBackCinc);
 
-         user_id=ob.getInt("user_id",0);
+        user_id=ob.getInt("user_id",0);
+         btnUpload=(Button)findViewById(R.id.btnUpload);
+
+        imageViewBankDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"), BANK_DETAILS_IMAGE_REQUEST_CODE);
+            }
+        });
 
 
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(Intent.createChooser(intent, "Complete action using"), IMAGE_REQUEST_CODE);
-//            }
-//        });
-//        btnUpload.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                uploadMultipart();
-//
-//            }
-//        });
+
+        imageViewCnicFront.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"), CNIC_FRONT_IMAGE_REQUEST_CODE);
+            }
+        });
+
+        imageViewBankDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"), CNIC_BACK_IMAGE_REQUEST_CODE);
+            }
+        });
+
+
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadMultipart(bank_details_document_title,filePathBankDetails);
+//                uploadMultipart(cnic_front_document_title,filePathCnicFront);
+//                uploadMultipart(cnic_back_document_title,filePathCnicBack);
+
+
+            }
+        });
+
   }
 
 
@@ -86,8 +114,8 @@ public class DocumentUploadActivity extends AppCompatActivity
             filePathCnicFront = data.getData();
             try {
                 bitmapCnicFront = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathCnicFront);
-                bank_details_document_title="Path: ". concat(getPath(filePathCnicFront));
-                imageView.setImageBitmap(bitmapCnicFront);
+                cnic_front_document_title="Path: ". concat(getPath(filePathCnicFront));
+                imageViewCnicFront.setImageBitmap(bitmapCnicFront);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -97,8 +125,8 @@ public class DocumentUploadActivity extends AppCompatActivity
             filePathCnicBack = data.getData();
             try {
                 bitmapCnicFront = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathCnicBack);
-                bank_details_document_title="Path: ". concat(getPath(filePathCnicBack));
-                imageView.setImageBitmap(bitmapCnicBack);
+                cnic_back_document_title="Path: ". concat(getPath(filePathCnicBack));
+                imageViewBackCinc.setImageBitmap(bitmapCnicBack);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -109,7 +137,7 @@ public class DocumentUploadActivity extends AppCompatActivity
             try {
                 bitmapCnicFront = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathBankDetails);
                 bank_details_document_title="Path: ". concat(getPath(filePathBankDetails));
-                imageView.setImageBitmap(bitmapBankDetails);
+                imageViewBankDetails.setImageBitmap(bitmapBankDetails);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -140,7 +168,7 @@ public class DocumentUploadActivity extends AppCompatActivity
 //    }
 
 
-            public void uploadMultipart(String document_title,Uri filePath,String imageTitle ) {
+            public void uploadMultipart(String document_title,Uri filePath ) {
 
                 //getting the actual path of the image
                 String path = getPath(filePath);
@@ -152,7 +180,7 @@ public class DocumentUploadActivity extends AppCompatActivity
                     //Creating a multi part request
                     new MultipartUploadRequest(this, uploadId, UPLOAD_URL)
                             .addFileToUpload(path, "image") //Adding file
-                            .addParameter("document_title", imageTitle) //Adding text parameter to the request
+                            .addParameter("document_title", document_title) //Adding text parameter to the request
                             .addParameter("user_id",""+user_id)
                             .setNotificationConfig(new UploadNotificationConfig())
                             .setMaxRetries(2)
