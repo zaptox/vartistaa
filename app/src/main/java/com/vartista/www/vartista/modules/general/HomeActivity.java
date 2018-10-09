@@ -107,7 +107,7 @@ public class HomeActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
-
+            startActivity(new Intent(HomeActivity.this,SettingsActivity.class));
             return true;
         }
 

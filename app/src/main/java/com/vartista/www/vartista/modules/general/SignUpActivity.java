@@ -75,8 +75,6 @@ public class SignUpActivity extends AppCompatActivity {
 
                 setUIToWait(true);
                 progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
-
                 Call<User> call=SignUpActivity.apiInterface.performRegistration(user_name1,user_email1,user_password1,null,"1",user_contact1,null,null);
                 addtosharedpreference(user_email1,user_password1);
                 call.enqueue(new Callback<User>() {
