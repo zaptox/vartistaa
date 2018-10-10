@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.vartista.www.vartista.fragments.ConfigSettingsFragment;
 import com.vartista.www.vartista.fragments.ServiceProviderFragment;
 import com.vartista.www.vartista.fragments.UsersFragment;
 
@@ -14,10 +15,10 @@ import com.vartista.www.vartista.fragments.UsersFragment;
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
     static int user_id;
+
     public PagerAdapter(FragmentManager fm, int user_id) {
         super(fm);
         this.user_id=user_id;
-
     }
 String title[]=new String[]{"As a User","As a Service Providers"};
     @Override
@@ -28,19 +29,22 @@ String title[]=new String[]{"As a User","As a Service Providers"};
                 UsersFragment tab1 = new UsersFragment(user_id);
                 return tab1;
             case 1:
+
+
+//                ConfigSettingsFragment tab3= new ConfigSettingsFragment();
+
                 ServiceProviderFragment tab2 = new ServiceProviderFragment(user_id);
                 return tab2;
 
+//                return tab3;
             default:
                 return null;
         }
     }
-
     @Override
     public CharSequence getPageTitle(int position) {
         return title[position];
     }
-
     @Override
     public int getCount() {
         return title.length;
