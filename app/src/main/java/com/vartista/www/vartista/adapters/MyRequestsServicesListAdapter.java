@@ -46,6 +46,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
         holder.tv_Title.setText(myReqServicesList.get(position).getUsername());
         holder.tv_Service.setText(myReqServicesList.get(position).getService_title()+" "+myReqServicesList.get(position).getPrice());
+        holder.tv_address.setText(myReqServicesList.get(position).getLocation());
         holder.tv_date.setText(myReqServicesList.get(position).getDate());
         holder.tv_time.setText(myReqServicesList.get(position).getTime());
        holder.accept.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +138,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
     public static class ViewHolder extends RecyclerView.ViewHolder{
         View mView;
 
-        public TextView tv_Title,tv_Service,tv_date,tv_time;
+        public TextView tv_Title,tv_Service,tv_date,tv_time,tv_address;
         public Button accept , decline;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -145,6 +146,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
             tv_Title=(TextView)mView.findViewById(R.id.textView_req_name);
             tv_Service=(TextView)mView.findViewById(R.id.textView_req_service);
+            tv_address=(TextView)mView.findViewById(R.id.textview_address);
             tv_date=(TextView)mView.findViewById(R .id.textViewReq_Date);
             tv_time=(TextView)mView.findViewById(R .id.textViewReq_Time);
             accept = mView.findViewById(R.id.button_paynow);

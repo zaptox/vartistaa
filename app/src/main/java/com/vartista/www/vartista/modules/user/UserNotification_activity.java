@@ -30,6 +30,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import static com.vartista.www.vartista.modules.general.HomeActivity.user;
+import static com.vartista.www.vartista.modules.general.HomeActivity.user_id;
+
 public class UserNotification_activity extends AppCompatActivity {
     RecyclerView view;
     private RecyclerView.LayoutManager layoutManager;
@@ -45,7 +48,7 @@ public class UserNotification_activity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(getApplicationContext());
         view.setHasFixedSize(true);
         view.setLayoutManager(layoutManager);
-        customer_id = 1;
+        customer_id = user_id;
         new UserNotification_activity.Conncetion(UserNotification_activity.this,customer_id).execute();
 
 
@@ -73,7 +76,7 @@ public class UserNotification_activity extends AppCompatActivity {
 
             String result = "";
 
-            final String BASE_URL = "http://vartista.com/vartista_app/usernotificationstatus.php?user_customer_id="+1;
+            final String BASE_URL = "http://vartista.com/vartista_app/usernotificationstatus.php?user_customer_id="+customer_id;
             try {
                 HttpClient client = new DefaultHttpClient();
                 HttpGet request = new HttpGet();
@@ -118,7 +121,9 @@ public class UserNotification_activity extends AppCompatActivity {
                         String username = ser1.getString("username");
                         String request_detail = ser1.getString("request_status");
                         String Time = ser1.getString("time");
-                        requestlist.add(new usernotificationitems(username,request_detail,Time));
+                        String Service_title = ser1.getString("service_title");
+                        Double price = ser1.getDouble("price");
+                        requestlist.add(new usernotificationitems(username,request_detail,Time,Service_title,price));
                     }
                     listadapter = new UserNotificationlistadapter(getApplicationContext(),requestlist);
                     view.setAdapter(listadapter);

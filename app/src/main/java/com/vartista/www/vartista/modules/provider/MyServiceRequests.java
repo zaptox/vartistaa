@@ -95,7 +95,6 @@ public class MyServiceRequests extends AppCompatActivity {
         public  Conncetion(MyServiceRequests activity,int user_id) {
             dialog = new ProgressDialog(activity);
             userId=user_id;
-            Toast.makeText(getApplicationContext(),userId+" "+user_id,Toast.LENGTH_SHORT).show();
 
         }
 
