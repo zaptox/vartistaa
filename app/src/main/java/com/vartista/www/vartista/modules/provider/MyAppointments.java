@@ -2,6 +2,7 @@ package com.vartista.www.vartista.modules.provider;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,6 +49,12 @@ public class MyAppointments extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
+
+
+        SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+        service_id=ob.getInt("user_id",0);
+
         new MyAppointments.Conncetion(MyAppointments.this,service_id).execute();
     }
 
