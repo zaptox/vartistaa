@@ -31,12 +31,12 @@ String title[]=new String[]{"As a User","As a Service Providers"};
             case 1:
 
 
-                ConfigSettingsFragment tab3= new ConfigSettingsFragment();
+//                ConfigSettingsFragment tab3= new ConfigSettingsFragment();
 
-//                ServiceProviderFragment tab2 = new ServiceProviderFragment(user_id);
-//                return tab2;
+                ServiceProviderFragment tab2 = new ServiceProviderFragment(user_id);
+                return tab2;
 
-                return tab3;
+//                return tab3;
             default:
                 return null;
         }
