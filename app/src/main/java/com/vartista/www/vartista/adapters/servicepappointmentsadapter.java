@@ -38,7 +38,7 @@ public class servicepappointmentsadapter extends RecyclerView.Adapter<servicepap
 
     @Override
     public void onBindViewHolder(@NonNull servicepappointmentsadapter.ViewHolder holder, int position) {
-        holder.serviceprovidername.setText(list.get(position).getUsername());
+        holder.serviceprovidername.setText(list.get(position).getName());
         holder.servicecharges.setText(list.get(position).getService_title()+" "+list.get(position).getPrice());
 //        holder.Date.setText(list.get(position).getDate());
         holder.Time.setText(list.get(position).getTime());

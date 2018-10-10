@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,12 +13,31 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.beans.ServiceRequets;
+import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 
 import com.vartista.www.vartista.beans.User;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,7 +89,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String user_name1=user_name.getText().toString();
-                String user_email1= user_email.getText().toString();
+               final String user_email1= user_email.getText().toString();
                 String user_contact1= user_contact.getText().toString();
                 String user_password1= user_password.getText().toString();
 
@@ -83,10 +103,16 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call <User> call, Response<User> response) {
 
-                        if(response.body().getResponse().equals("ok")){
-                            setUIToWait(false);
+                        if(response.body().getResponse().equals("ok" +
+                                "")){
+//                            setUIToWait(false);
 
-                       //     Toast.makeText(SignUpActivity.this,"Registred Successfully..",Toast.LENGTH_SHORT).show();
+
+
+
+
+
+//                            Toast.makeText(SignUpActivity.this,"Registred Successfully..",Toast.LENGTH_SHORT).show();
 
                         }else if(response.body().getResponse().equals("exist")){
                             setUIToWait(false);
@@ -119,6 +145,7 @@ public class SignUpActivity extends AppCompatActivity {
                     create.setText(t.getMessage());
                     }
                 });
+
 
 
             }
@@ -170,11 +197,4 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
-
-
-
 }
