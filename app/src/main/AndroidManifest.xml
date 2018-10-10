@@ -33,6 +33,7 @@
         <activity
             android:name=".modules.general.UserProfile"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".modules.provider.CreateServiceActivity"></activity>
         <activity android:name=".modules.provider.MyServicesListActivity" />
         <activity android:name=".modules.user.BookNowActivity" />
@@ -42,7 +43,10 @@
         <activity android:name=".modules.user.UserNotification_activity" />
         <activity android:name=".modules.provider.MyAppointments" />
         <activity android:name=".modules.user.ServiceProviderDetail" />
-        <activity android:name=".modules.provider.DocumentUploadActivity"></activity>
+        <activity android:name=".modules.general.SettingsActivity" />
+        <activity android:name=".modules.provider.DocumentUploadActivity">
+
+        </activity>
     </application>
 
 </manifest>

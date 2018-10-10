@@ -14,7 +14,6 @@ import com.vartista.www.vartista.adapters.UserNotificationlistadapter;
 import com.vartista.www.vartista.adapters.servicepappointmentsadapter;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
 import com.vartista.www.vartista.beans.usernotificationitems;
-import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.user.UserNotification_activity;
 
 import org.apache.http.HttpResponse;
@@ -39,7 +38,7 @@ public class MyAppointments extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private servicepappointmentsadapter listadapter;
     ArrayList<servicepaapointmentsitems> myappointments;
-    int userid;
+    int service_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +48,7 @@ public class MyAppointments extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-        userid = HomeActivity.user_id;
-        new MyAppointments.Conncetion(MyAppointments.this,userid).execute();
+        new MyAppointments.Conncetion(MyAppointments.this,service_id).execute();
     }
 
 
@@ -75,7 +73,7 @@ public class MyAppointments extends AppCompatActivity {
 
             String result = "";
 
-            final String BASE_URL = "http://vartista.com/vartista_app/servicepappointments.php?service_provider_id="+userid;
+            final String BASE_URL = "http://vartista.com/vartista_app/servicepappointments.php?service_provider_id="+service_id;
             try {
                 HttpClient client = new DefaultHttpClient();
                 HttpGet request = new HttpGet();
