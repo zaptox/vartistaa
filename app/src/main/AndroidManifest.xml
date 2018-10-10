@@ -41,8 +41,11 @@
         <activity android:name=".modules.payment.PaymentActivity" />
         <activity android:name=".modules.user.UserNotification_activity" />
         <activity android:name=".modules.provider.MyAppointments" />
+
         <activity android:name=".modules.user.ServiceProviderDetail" />
+        <activity android:name=".modules.user.MyServiceMeetings" />
         <activity android:name=".modules.provider.DocumentUploadActivity"></activity>
+
     </application>
 
 </manifest>
