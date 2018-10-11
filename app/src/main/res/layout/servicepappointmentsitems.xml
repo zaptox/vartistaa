@@ -1,66 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        app:cardCornerRadius="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        app:cardPreventCornerOverlap="true">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            android:orientation="vertical">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/relative1"
+    >
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profile_image"
-        android:layout_width="70dp"
-        android:layout_height="88dp"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
+        android:layout_width="70sp"
+        android:layout_height="70sp"
         android:src="@drawable/tom">
 
     </de.hdodenhof.circleimageview.CircleImageView>
 
     <TextView
         android:id="@+id/textViewname"
-        android:layout_width="wrap_content"
+        android:layout_width="110sp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/profile_image"
-        android:layout_marginStart="18dp"
-        android:layout_toEndOf="@+id/profile_image"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textViewname"
-        android:layout_centerVertical="true"
-        android:text="" />
-
-    <TextView
-        android:id="@+id/textViewdate"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/profile_image"
-        android:layout_alignEnd="@+id/textView10"
+        android:layout_marginStart="15sp"
+        android:text="Mehdi Raza"
+        android:textStyle="bold"
+        android:textSize="17sp"
         android:layout_toRightOf="@id/profile_image"
-        android:text="" />
-
+        android:layout_marginTop="20sp"
+        />
     <TextView
         android:id="@+id/servicedetail"
-        android:layout_width="wrap_content"
+        android:layout_width="110sp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
-        android:layout_alignTop="@+id/textView10"
-        android:layout_marginStart="48dp"
-        android:layout_toEndOf="@+id/textView10"
-        android:text="TextView"
-        android:textSize="15dp" />
+        android:layout_marginStart="15sp"
+        android:text="Zaptox hair cutting"
+        android:layout_below="@id/textViewname"
+        android:layout_toRightOf="@id/profile_image"
+        />
 
-    <TextView
-        android:id="@+id/textViewtime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/textViewname"
-        android:layout_marginEnd="17dp"
-        android:text="TextView" />
+
+    <ImageView
+        android:layout_width="20sp"
+        android:id="@+id/clock"
+        android:layout_height="20sp"
+        android:src="@drawable/clock"
+        android:layout_marginTop="20sp"
+        android:layout_toLeftOf="@id/textViewtime"
+        />
+
+                <TextView
+                    android:id="@+id/textViewtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12:00 am"
+                    android:layout_marginTop="20sp"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="end"
+                    />
+
+
 
 
 </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_marginTop="4sp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+            <ImageView
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:src="@drawable/calendar"
+                />
+
+
+            <TextView
+                android:id="@+id/textViewdate"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="7sp"
+                android:layout_height="wrap_content"
+                android:text="2018-06-10" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_marginTop="4sp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:layout_width="20sp"
+                    android:layout_height="20sp"
+                    android:src="@drawable/loc"
+                    />
+
+
+                <TextView
+                    android:id="@+id/textViewloc"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="7sp"
+                    android:layout_height="wrap_content"
+                    android:text="2018-06-10" />
+            </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category:  "
+        android:textSize="14sp"
+
+        android:layout_marginTop="10sp"
+        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Education"
+            android:id="@+id/service_category"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginTop="10sp"
+            />
+
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/textView_service_description"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_height="wrap_content"
+        android:text="I am a Barber who can try his best to make you look perfectly good.." />
+
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

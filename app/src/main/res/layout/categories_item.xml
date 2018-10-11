@@ -10,6 +10,7 @@
         android:layout_marginRight="15dp"
         app:cardCornerRadius="34dp"
         android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
         app:cardPreventCornerOverlap="true">
 
 
