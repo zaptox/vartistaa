@@ -2,6 +2,7 @@ package com.vartista.www.vartista.modules.user;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,13 +30,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import static com.vartista.www.vartista.modules.general.HomeActivity.user_id;
+
 public class MyServiceMeetings extends AppCompatActivity {
 
     RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private servicepappointmentsadapter listadapter;
     ArrayList<servicepaapointmentsitems> myappointments;
-    int service_id;
+    int user_id1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,12 @@ public class MyServiceMeetings extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-        service_id = 17;
-        new MyServiceMeetings.Conncetion(MyServiceMeetings.this,service_id).execute();
+
+        SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
+        int  user_id1 = ob.getInt("user_id",0);
+        new MyServiceMeetings.Conncetion(MyServiceMeetings.this,user_id1).execute();
+
+
     }
 
 
@@ -75,7 +82,7 @@ public class MyServiceMeetings extends AppCompatActivity {
 
             String result = "";
 
-            final String BASE_URL = "http://vartista.com/vartista_app/servicepappointments.php?service_provider_id="+service_id;
+            final String BASE_URL = "http://vartista.com/vartista_app/service_appointments_for_user.php?user_customer_id="+user_id1;
             try {
                 HttpClient client = new DefaultHttpClient();
                 HttpGet request = new HttpGet();
