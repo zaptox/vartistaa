@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.restcalls.ApiClient;
+import com.vartista.www.vartista.restcalls.ApiInterface;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -34,21 +36,28 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class SettingsActivity extends AppCompatActivity {
 
-    EditText Name, DateOfBirth, CNIC, ContactNo,Email;
+    EditText Name, DateOfBirth, CNIC, ContactNo,Email,OldPassword,NewPassword,ConfirmNewPassword;
     Button changepassword,update,uploadimage;
     private static final int PICK_IMAGE=100;
     Uri imageUri;
     private ImageView image;
     User user;
+    private ProgressDialog progressDialog;
     int user_id = HomeActivity.user_id;
     Dialog changepassworddialog;
+    public static ApiInterface apiInterface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         int userid = HomeActivity.user_id;
+        apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
         Name = (EditText)findViewById(R.id.user_name);
         DateOfBirth = (EditText)findViewById(R.id.dateofbirth);
         CNIC = (EditText)findViewById(R.id.CNIC);
@@ -74,15 +83,21 @@ public class SettingsActivity extends AppCompatActivity {
                 changepassworddialog.setContentView(R.layout.changepassword_dialoguebox);
                 Button  savepassword = (Button)changepassworddialog.findViewById(R.id.savepassword);
                 Button  cancel = (Button)changepassworddialog.findViewById(R.id.cancelbutton);
-                final EditText oldpassword = (EditText)changepassworddialog.findViewById(R.id.oldPasswordedittext);
-                EditText newpassword = (EditText)changepassworddialog.findViewById(R.id.newpasswordedittext);
-                EditText confirmnewpassword = (EditText)changepassworddialog.findViewById(R.id.confirmpasswordedittext);
+                OldPassword = (EditText)changepassworddialog.findViewById(R.id.oldPasswordedittext);
+                NewPassword = (EditText)changepassworddialog.findViewById(R.id.newpasswordedittext);
+                ConfirmNewPassword = (EditText)changepassworddialog.findViewById(R.id.confirmpasswordedittext);
                 changepassworddialog.show();
 
                 savepassword.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                      String oldpassword = OldPassword.getText().toString();
+                      String newpassword = NewPassword.getText().toString();
+                      String confirmnewpassword = ConfirmNewPassword.getText().toString();
+                      if(newpassword.equals(confirmnewpassword)){
+                          updatedata(user.getId(),user.getName(),user.getEmail(),user.getContact(),confirmnewpassword);
+                          changepassworddialog.cancel();
+                      }
 
                     }
                 });
@@ -98,15 +113,16 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = Name.getText().toString();
-                String contact = ContactNo.getText().toString();
-                String email = Email.getText().toString();
-
-            }
-        });
+//        update.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String name = Name.getText().toString();
+//                String contact = ContactNo.getText().toString();
+//                String email = Email.getText().toString();
+//                int id = user.getId();
+//                updatedata(id,name,email,contact,user.getPassword());
+//            }
+//        });
 
 
 
@@ -214,8 +230,60 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
+    private void setUIToWait(boolean wait) {
 
+        if (wait) {
+            progressDialog = ProgressDialog.show(this, null, null, true, true);
+            progressDialog.setContentView(R.layout.loader);
 
+        } else {
+            progressDialog.dismiss();
+        }
+
+    }
+
+public void updatedata(int id,String name,String email,String contact,String password){
+    setUIToWait(true);
+    progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//    Call<User> call=SettingsActivity.apiInterface.updateUserSettings(id,name,email,password,user.getImage(),1,contact,0,0);
+    Call<User> call=SettingsActivity.apiInterface.updateUser(name, email, password, id);
+    call.enqueue(new Callback<User>() {
+        @Override
+        public void onResponse(Call <User> call, Response<User> response) {
+
+            if(response.body().getResponse().equals("ok")){
+                setUIToWait(false);
+
+                Toast.makeText(SettingsActivity.this,"Updated Successfully..",Toast.LENGTH_SHORT).show();
+
+            }else if(response.body().getResponse().equals("exist")){
+                setUIToWait(false);
+
+                Toast.makeText(SettingsActivity.this,"Same Data exists....",Toast.LENGTH_SHORT).show();
+
+            }
+            else if(response.body().getResponse().equals("error")){
+                setUIToWait(false);
+
+                Toast.makeText(SettingsActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+
+            }
+            else{
+                setUIToWait(false);
+
+                Toast.makeText(SettingsActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+        @Override
+        public void onFailure(Call <User> call, Throwable t) {
+            setUIToWait(false);
+            Toast.makeText(SettingsActivity.this,"Update Failed",Toast.LENGTH_SHORT).show();
+
+        }
+    });
+}
 
 
 
