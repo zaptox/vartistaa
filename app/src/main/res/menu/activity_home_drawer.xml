@@ -31,6 +31,12 @@
             android:icon="@drawable/logout"
             android:title="Payment" />
 
+
+        <item
+            android:id="@+id/provider_doc_upload"
+            android:icon="@drawable/logout"
+            android:title="Upload Document" />
+
         <item
             android:id="@+id/logout"
             android:icon="@drawable/logout"
