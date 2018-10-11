@@ -134,7 +134,11 @@ public class HomeActivity extends AppCompatActivity
 
 //            Toast.makeText(this, "Account", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(HomeActivity.this, UserProfile.class);
-            intent.putExtra("user", user_id);
+            SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+            user_id=ob.getInt("user_id",0);
+
+            intent.putExtra("user",u );
             startActivity(intent);
 
 
