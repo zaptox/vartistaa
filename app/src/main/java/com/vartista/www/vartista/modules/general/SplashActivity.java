@@ -81,23 +81,9 @@ public class SplashActivity extends AwesomeSplash {
 
     @Override
     public void animationsFinished() {
+        startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
+         finish();
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
-
-        String email=ob.getString("Email","");
-        String pass=ob.getString("Password","");
-        if(email.equals("")&&pass.equals("")){
-
-            startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
-            finish();
-        }
-        else {
-            Toast.makeText(this, " " + email + " " + pass, Toast.LENGTH_SHORT).show();
-            user = perfromLogin(email, pass);
-//            Toast.makeText(this, " " + user.getEmail() + " " + user.getPassword(), Toast.LENGTH_SHORT).show();
-        }
-
-
 //
 //        if((ob.getString("Email","").equals(user.getEmail()) && ob.getString("Password","").equals(user.getPassword()))){
 //            Intent intent = new Intent(SplashActivity.this, HomeActivity.class);

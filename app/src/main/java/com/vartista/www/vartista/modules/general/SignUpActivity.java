@@ -76,7 +76,6 @@ public class SignUpActivity extends AppCompatActivity {
                 setUIToWait(true);
                 progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 Call<User> call=SignUpActivity.apiInterface.performRegistration(user_name1,user_email1,user_password1,null,"1",user_contact1,null,null);
-                addtosharedpreference(user_email1,user_password1);
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call <User> call, Response<User> response) {
@@ -157,17 +156,6 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    public void addtosharedpreference(String email,String Password){
-
-        SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=sharedPreferencespre.edit();
-        editor.putString("Email",email);
-        editor.putString("Password",Password);
-        editor.apply();
-        editor.commit();
-
-
-    }
 
 
 

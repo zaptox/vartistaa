@@ -48,7 +48,6 @@ public class MyAppointments extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-        service_id = 17;
         new MyAppointments.Conncetion(MyAppointments.this,service_id).execute();
     }
 
