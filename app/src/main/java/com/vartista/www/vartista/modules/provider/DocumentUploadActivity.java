@@ -23,8 +23,8 @@ import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
 
-import net.gotev.uploadservice.MultipartUploadRequest;
-import net.gotev.uploadservice.UploadNotificationConfig;
+//import net.gotev.uploadservice.MultipartUploadRequest;
+//import net.gotev.uploadservice.UploadNotificationConfig;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -178,13 +178,13 @@ public class DocumentUploadActivity extends AppCompatActivity
                     String uploadId = UUID.randomUUID().toString();
 
                     //Creating a multi part request
-                    new MultipartUploadRequest(this, uploadId, UPLOAD_URL)
-                            .addFileToUpload(path, "image") //Adding file
-                            .addParameter("document_title", document_title) //Adding text parameter to the request
-                            .addParameter("user_id",""+user_id)
-                            .setNotificationConfig(new UploadNotificationConfig())
-                            .setMaxRetries(2)
-                            .startUpload(); //Starting the upload
+//                    new MultipartUploadRequest(this, uploadId, UPLOAD_URL)
+//                            .addFileToUpload(path, "image") //Adding file
+//                            .addParameter("document_title", document_title) //Adding text parameter to the request
+//                            .addParameter("user_id",""+user_id)
+//                            .setNotificationConfig(new UploadNotificationConfig())
+//                            .setMaxRetries(2)
+//                            .startUpload(); //Starting the upload
                 } catch (Exception exc) {
                     Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
                 }

@@ -2,8 +2,8 @@ package com.vartista.www.vartista.appconfig;
 
 import android.app.Application;
 
-import net.gotev.uploadservice.BuildConfig;
-import net.gotev.uploadservice.UploadService;
+//import net.gotev.uploadservice.BuildConfig;
+//import net.gotev.uploadservice.UploadService;
 
 public class App extends Application {
 
@@ -11,8 +11,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
-        // Or, you can define it manually.
-        UploadService.NAMESPACE = "com.vartista.www.vartista";
+//        UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
+//        // Or, you can define it manually.
+//        UploadService.NAMESPACE = "com.vartista.www.vartista";
     }
 }

@@ -38,6 +38,8 @@ public interface ApiInterface {
     @GET("get_user_by_id.php")
     Call<User> getUserById(@Query("id") int id);
 
+    @GET("get_latest_user_id")
+    Call<User>  getUserIdByEmail(@Query("email") String email);
 
 
     @GET("update_user.php")
