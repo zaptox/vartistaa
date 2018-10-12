@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity
 
         Intent intent= getIntent();
         user= (User) intent.getSerializableExtra("user");
-    u=user;
+        u=user;
         user_id=u.getId();
       //  Toast.makeText(this, ""+user.id, Toast.LENGTH_SHORT).show();
         name.setText(user.getName());
@@ -107,7 +107,7 @@ public class HomeActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
-
+            startActivity(new Intent(HomeActivity.this,SettingsActivity.class));
             return true;
         }
 
@@ -133,7 +133,11 @@ public class HomeActivity extends AppCompatActivity
 
 //            Toast.makeText(this, "Account", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(HomeActivity.this, UserProfile.class);
-            intent.putExtra("user", user_id);
+            SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+            user_id=ob.getInt("user_id",0);
+
+            intent.putExtra("user",u );
             startActivity(intent);
 
 

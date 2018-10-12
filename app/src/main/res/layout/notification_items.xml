@@ -20,7 +20,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="12dp"
         android:layout_toEndOf="@+id/profile_image"
-        android:text="textview For Name"
         android:paddingLeft="10dp"
         android:textSize="15dp"
         android:textColor="#000000"/>
@@ -31,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textViewname"
         android:layout_below="@+id/textViewname"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="3dp"
         android:paddingLeft="10dp"
         android:text="TextView for Request detail" />
 
@@ -40,9 +39,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/textViewname"
         android:layout_marginEnd="11dp"
-        android:text="textview For time duration" />
+        android:text="3h ago" />
 
 
 </RelativeLayout>

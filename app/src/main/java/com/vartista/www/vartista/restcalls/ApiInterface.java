@@ -38,10 +38,19 @@ public interface ApiInterface {
     @GET("get_user_by_id.php")
     Call<User> getUserById(@Query("id") int id);
 
+    @GET("get_latest_user_id")
+    Call<User>  getUserIdByEmail(@Query("email") String email);
 
 
     @GET("update_user.php")
     Call<User> updateUser(@Query("name") String name, @Query("email") String email, @Query("password") String password,@Query("id") int id);
+
+    @GET("Update_Settings.php")
+    Call<User> updateUserSettings(@Query("id") int id,@Query("name") String name,
+                                  @Query("email") String email, @Query("password") String password,
+                                  @Query("image") String image,@Query("status") int status,
+                                  @Query("contact") String contact,@Query("created_at") int created_at,
+                                  @Query("updated_at") int updated_at);
 
     @GET("create_request.php")
     Call<CreateRequest> createRequest(@Query("user_customer_id") int user_customer_id, @Query("service_provider_id") int service_provider_id,
