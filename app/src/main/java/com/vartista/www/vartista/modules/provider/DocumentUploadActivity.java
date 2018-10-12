@@ -2,6 +2,7 @@ package com.vartista.www.vartista.modules.provider;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -43,6 +44,7 @@ public class DocumentUploadActivity extends AppCompatActivity
    private  static String cnic_front_document_title="CNIC Front";
    private  static String cnic_back_document_title="CNIC Back";
    private  static String bank_details_document_title="Bank Details";
+   private  boolean cnic_front=false,cnic_back=false,bank_details=false;
 
             int user_id;
 
@@ -70,9 +72,9 @@ public class DocumentUploadActivity extends AppCompatActivity
                 startActivityForResult(Intent.createChooser(intent, "Complete action using"), BANK_DETAILS_IMAGE_REQUEST_CODE);
             }
         });
-
-
-
+//
+//
+//
         imageViewCnicFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,8 +84,8 @@ public class DocumentUploadActivity extends AppCompatActivity
                 startActivityForResult(Intent.createChooser(intent, "Complete action using"), CNIC_FRONT_IMAGE_REQUEST_CODE);
             }
         });
-
-        imageViewBankDetails.setOnClickListener(new View.OnClickListener() {
+//
+        imageViewBackCinc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -97,11 +99,23 @@ public class DocumentUploadActivity extends AppCompatActivity
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadMultipart(bank_details_document_title,filePathBankDetails);
-//                uploadMultipart(cnic_front_document_title,filePathCnicFront);
-//                uploadMultipart(cnic_back_document_title,filePathCnicBack);
+              if(cnic_front==true && cnic_back==true && bank_details==true) {
+                  uploadMultipart(bank_details_document_title, filePathBankDetails, "bank_details");
+                  uploadMultipart(cnic_front_document_title, filePathCnicFront, "cnic_front");
+                  uploadMultipart(cnic_back_document_title, filePathCnicBack, "cnic_back");
+              }
+              else if(bank_details==false){
+                    showCompletedDialog("error in uploading documents","Kindly provide Bank Details ");
+              }
+              else if(cnic_front==false){
+                  showCompletedDialog("error in uploading documents","Kindly provide CNIC front side image");
 
+              }
 
+              else if(cnic_back==false){
+                  showCompletedDialog("error in uploading documents","Kindly provide CNIC back side image");
+
+              }
             }
         });
 
@@ -116,6 +130,8 @@ public class DocumentUploadActivity extends AppCompatActivity
                 bitmapCnicFront = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathCnicFront);
                 cnic_front_document_title="Path: ". concat(getPath(filePathCnicFront));
                 imageViewCnicFront.setImageBitmap(bitmapCnicFront);
+                cnic_front=true;
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -124,9 +140,11 @@ public class DocumentUploadActivity extends AppCompatActivity
         else if (requestCode == CNIC_BACK_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePathCnicBack = data.getData();
             try {
-                bitmapCnicFront = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathCnicBack);
+                bitmapCnicBack = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathCnicBack);
                 cnic_back_document_title="Path: ". concat(getPath(filePathCnicBack));
                 imageViewBackCinc.setImageBitmap(bitmapCnicBack);
+                cnic_back=true;
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -135,40 +153,18 @@ public class DocumentUploadActivity extends AppCompatActivity
         else if (requestCode == BANK_DETAILS_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePathBankDetails = data.getData();
             try {
-                bitmapCnicFront = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathBankDetails);
+                bitmapBankDetails = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathBankDetails);
                 bank_details_document_title="Path: ". concat(getPath(filePathBankDetails));
                 imageViewBankDetails.setImageBitmap(bitmapBankDetails);
+                bank_details=true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-//    public void uploadMultipart() {
-//        String caption = etCaption.getText().toString().trim();
-//
-//        //getting the actual path of the image
-//        String path = getPath(filePath);
-//
-//        //Uploading code
-//        try {
-//            String uploadId = UUID.randomUUID().toString();
-//
-//            //Creating a multi part request
-//            new MultipartUploadRequest(this, uploadId, UPLOAD_URL)
-//                    .addFileToUpload(path, "image") //Adding file
-//                    .addParameter("document_title", caption) //Adding text parameter to the request
-//                    .addParameter("user_id",""+user_id)
-//                    .setNotificationConfig(new UploadNotificationConfig())
-//                    .setMaxRetries(2)
-//                    .startUpload(); //Starting the upload
-//        } catch (Exception exc) {
-//            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
-//        }
-//    }
 
-
-            public void uploadMultipart(String document_title,Uri filePath ) {
+            public void uploadMultipart(String document_title,Uri filePath,String title ) {
 
                 //getting the actual path of the image
                 String path = getPath(filePath);
@@ -180,12 +176,16 @@ public class DocumentUploadActivity extends AppCompatActivity
                     //Creating a multi part request
                     new MultipartUploadRequest(this, uploadId, UPLOAD_URL)
                             .addFileToUpload(path, "image") //Adding file
-                            .addParameter("document_title", document_title) //Adding text parameter to the request
                             .addParameter("user_id",""+user_id)
+                            .addParameter("document_title", document_title) //Adding text parameter to the request
+                            .addParameter("title", title)
                             .setNotificationConfig(new UploadNotificationConfig())
-                            .setMaxRetries(2)
+                            .setMaxRetries(3)
+
                             .startUpload(); //Starting the upload
+
                 } catch (Exception exc) {
+
                     Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -237,5 +237,27 @@ public class DocumentUploadActivity extends AppCompatActivity
             }
         }
     }
+
+            protected void showCompletedDialog(String title,String msg) {
+                android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(
+                        DocumentUploadActivity.this);
+
+                // set title
+                alertDialogBuilder.setTitle(title);
+                alertDialogBuilder
+                        .setMessage(msg)
+                        .setCancelable(true)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        });
+                android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+
+
+            }
 
 }
