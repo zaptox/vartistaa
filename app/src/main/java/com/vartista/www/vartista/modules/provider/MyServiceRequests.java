@@ -67,10 +67,10 @@ public class MyServiceRequests extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         listViewMyReqeustServices.setLayoutManager(mLayoutManager);
         listViewMyReqeustServices.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
- //  SlideInUpAnimator animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
-  SlideInLeftAnimator animator = new SlideInLeftAnimator();
- animator.setInterpolator(new OvershootInterpolator());
- listViewMyReqeustServices.setItemAnimator(animator);
+ //     SlideInUpAnimator animator = new SlideInUpAnimator(new OvershootInterpolator(1f));
+        SlideInLeftAnimator animator = new SlideInLeftAnimator();
+        animator.setInterpolator(new OvershootInterpolator());
+        listViewMyReqeustServices.setItemAnimator(animator);
         listViewMyReqeustServices.getItemAnimator().setRemoveDuration(1000);
 
 
@@ -169,10 +169,11 @@ public class MyServiceRequests extends AppCompatActivity {
                         int service_cat_id =(Integer.parseInt(service.getString("service_cat_id")));
                         String service_title=service.getString("service_title");
                         double price = service.getDouble("price");
+                        String service_description= service.getString("service_description");
                         String category_name=service.getString("catgname");
                         Toast.makeText(MyServiceRequests.this, ""+category_name, Toast.LENGTH_SHORT).show();
                         serviceRequestsList.add(new ServiceRequets(requestservice_id,user_name,status,date,time,location,user_customer_id,
-                                service_provider_id,service_id,service_cat_id,service_title,price,category_name
+                                service_provider_id,service_id,service_cat_id,service_title,price,service_description,category_name
                                 ));
                     }
 
