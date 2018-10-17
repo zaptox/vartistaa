@@ -49,6 +49,9 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
         holder.tv_address.setText(myReqServicesList.get(position).getLocation());
         holder.tv_date.setText(myReqServicesList.get(position).getDate());
         holder.tv_time.setText(myReqServicesList.get(position).getTime());
+        holder.tv_catogery.setText(myReqServicesList.get(position).getCatgname());
+        holder.tv_s_desc.setText(myReqServicesList.get(position).getService_description());
+
        holder.accept.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(final View view) {
@@ -138,7 +141,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
     public static class ViewHolder extends RecyclerView.ViewHolder{
         View mView;
 
-        public TextView tv_Title,tv_Service,tv_date,tv_time,tv_address;
+        public TextView tv_Title,tv_Service,tv_date,tv_time,tv_address,tv_s_desc,tv_catogery;
         public Button accept , decline;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -149,6 +152,8 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
             tv_address=(TextView)mView.findViewById(R.id.textview_address);
             tv_date=(TextView)mView.findViewById(R .id.textViewReq_Date);
             tv_time=(TextView)mView.findViewById(R .id.textViewReq_Time);
+            tv_s_desc=(TextView)mView.findViewById(R .id.textView_service_description);
+            tv_catogery=(TextView)mView.findViewById(R .id.service_category);
             accept = mView.findViewById(R.id.button_paynow);
             decline = mView.findViewById(R.id.buttonReject);
             apiInterface= ApiClient.getApiClient().create(ApiInterface.class);

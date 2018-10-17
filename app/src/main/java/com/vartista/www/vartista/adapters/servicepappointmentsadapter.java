@@ -43,6 +43,9 @@ public class servicepappointmentsadapter extends RecyclerView.Adapter<servicepap
         holder.serviceCat.setText(list.get(position).getName());
         holder.serviceDesc.setText(list.get(position).getService_description());
         holder.serviceLoc.setText(list.get(position).getLocation());
+        Toast.makeText(context, "Service Desc: "+list.get(position).getService_description(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Service cat: "+list.get(position).getName(), Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
