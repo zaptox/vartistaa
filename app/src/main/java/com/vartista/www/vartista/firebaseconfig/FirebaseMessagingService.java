@@ -10,17 +10,13 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 
-public class FirebaseMessagingService
-
-//        extends  com.google.firebase.messaging.FirebaseMessagingService
-
-
-{
-
+public class FirebaseMessagingService {
+//        extends  com.google.firebase.messaging.FirebaseMessagingService {
+//
 //    @Override
 //    public void onMessageReceived(RemoteMessage remoteMessage) {
 //
-//        showNotification(remoteMessage.getData().get("message"));
+////        showNotification(remoteMessage.getData().get("message"));
 //    }
 //
 //    private void showNotification(String message) {
@@ -38,6 +34,4 @@ public class FirebaseMessagingService
 //        notificationManager.notify(0,builder.build());
 //
 //    }
-
-
 }

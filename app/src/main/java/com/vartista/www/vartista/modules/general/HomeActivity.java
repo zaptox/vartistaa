@@ -88,10 +88,10 @@ public class HomeActivity extends AppCompatActivity
         viewpager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewpager);
 
-
-        FirebaseMessaging.getInstance().subscribeToTopic("Test");
-        FirebaseInstanceId.getInstance().getToken();
-
+//
+//        FirebaseMessaging.getInstance().subscribeToTopic("Test");
+//        FirebaseInstanceId.getInstance().getToken();
+//
 
     }
 
