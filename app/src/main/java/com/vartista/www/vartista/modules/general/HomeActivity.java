@@ -15,13 +15,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
 
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.firebaseconfig.FirebaseMessagingService;
 import com.vartista.www.vartista.modules.payment.PaymentActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
@@ -36,13 +41,13 @@ public class HomeActivity extends AppCompatActivity
     User u=null;
     public static int user_id;
     public static User user;
+    ImageView imageViewProfileDrawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -51,14 +56,14 @@ public class HomeActivity extends AppCompatActivity
         toggle.syncState();
 
 
-
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         View headerView = navigationView.getHeaderView(0);
         name = (TextView) headerView.findViewById(R.id.name);
         email = (TextView) headerView.findViewById(R.id.email);
+        imageViewProfileDrawer=(ImageView)headerView.findViewById(R.id.imageViewUserProfileDrawer);
+        imageViewProfileDrawer.setImageResource(R.drawable.profile);
 
         Intent intent= getIntent();
         user= (User) intent.getSerializableExtra("user");
@@ -68,6 +73,11 @@ public class HomeActivity extends AppCompatActivity
         name.setText(user.getName());
         email.setText(user.getEmail());
 
+        Picasso.get().load(user.getImage()).fit().centerCrop()
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.profile)
+                .into(imageViewProfileDrawer);
+
 
         // view pager
         TabLayout tabLayout=(TabLayout)findViewById(R.id.tabs);
@@ -76,6 +86,10 @@ public class HomeActivity extends AppCompatActivity
         PagerAdapter adapter=new PagerAdapter(getSupportFragmentManager(),user_id);
         viewpager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewpager);
+
+
+        FirebaseMessaging.getInstance().subscribeToTopic("Test");
+        FirebaseInstanceId.getInstance().getToken();
 
 
     }
