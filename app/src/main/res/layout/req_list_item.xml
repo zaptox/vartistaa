@@ -120,7 +120,6 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             <ImageView
                 android:layout_width="20sp"
                 android:layout_height="20sp"
-                android:src="@drawable/loc"
                 />
 
 
