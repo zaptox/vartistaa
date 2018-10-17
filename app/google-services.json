@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "396667100486",
+    "firebase_url": "https://vartista-c1850.firebaseio.com",
+    "project_id": "vartista-c1850",
+    "storage_bucket": "vartista-c1850.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396667100486:android:ea23d25df64efc5f",
+        "android_client_info": {
+          "package_name": "com.vartista.www.vartista"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396667100486-5ljbmqj8946mb1k2lbaadh91n23bcto5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vartista.www.vartista",
+            "certificate_hash": "e15faca60034dd75f93406b54de76ab722ab0542"
+          }
+        },
+        {
+          "client_id": "396667100486-b701q24hlpccr1nbirb9te758bg33ckk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrrq5lkv4ilNeie7HO-kbR14Ez6L7LoPo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396667100486-b701q24hlpccr1nbirb9te758bg33ckk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

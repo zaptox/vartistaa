@@ -10,32 +10,36 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
-    private static final String UPLOAD_URL = "http://vartista.com/vartista_app/registerToken.php";
+public class FirebaseInstanceIDService
 
-    @Override
-    public void onTokenRefresh() {
+//        extends FirebaseInstanceIdService
 
-        String token=FirebaseInstanceId.getInstance().getToken();
-        registerToken(token);
-    }
-
-    private void registerToken(String token) {
-
-        OkHttpClient client=new OkHttpClient();
-        RequestBody body=new FormBody.Builder()
-                .add("Token",token)
-                .build();
-        Request request=new Request.Builder()
-                .url(UPLOAD_URL)
-                .post(body)
-                .build();
-        try {
-            client.newCall(request).execute();
-        }catch (IOException i){
-
-        }
-
-    }
+{
+//    private static final String UPLOAD_URL = "http://vartista.com/vartista_app/registerToken.php";
+//
+//    @Override
+//    public void onTokenRefresh() {
+//
+//        String token=FirebaseInstanceId.getInstance().getToken();
+//        registerToken(token);
+//    }
+//
+//    private void registerToken(String token) {
+//
+//        OkHttpClient client=new OkHttpClient();
+//        RequestBody body=new FormBody.Builder()
+//                .add("Token",token)
+//                .build();
+//        Request request=new Request.Builder()
+//                .url(UPLOAD_URL)
+//                .post(body)
+//                .build();
+//        try {
+//            client.newCall(request).execute();
+//        }catch (IOException i){
+//
+//        }
+//
+//    }
 
 }
