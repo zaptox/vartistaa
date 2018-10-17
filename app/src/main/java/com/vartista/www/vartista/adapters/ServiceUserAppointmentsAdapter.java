@@ -28,13 +28,19 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
     @NonNull
     @Override
     public ServiceUserAppointmentsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.servicepappointmentsitems,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.meeting_items,parent,false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ServiceUserAppointmentsAdapter.ViewHolder holder, int position) {
-
+        holder.serviceprovidername.setText(list.get(position).getUsername());
+        holder.servicecharges.setText(list.get(position).getService_title()+" "+list.get(position).getPrice());
+        holder.Date.setText(list.get(position).getDate());
+        holder.Time.setText(list.get(position).getTime());
+        holder.serviceCat.setText(list.get(position).getName());
+        holder.serviceDesc.setText(list.get(position).getService_description());
+        holder.serviceLoc.setText(list.get(position).getLocation());
 
     }
 
@@ -45,16 +51,21 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
     public class ViewHolder extends RecyclerView.ViewHolder{
         View mView;
 
-        public TextView serviceprovidername,servicecharges,Date,Time;
+
+        public TextView serviceprovidername,servicecharges,Date,Time,serviceDesc,serviceCat,serviceLoc;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mView=itemView;
 
-            serviceprovidername=(TextView)mView.findViewById(R.id.textViewname);
-            servicecharges=(TextView)mView.findViewById(R.id.servicedetail);
-            Date=(TextView)mView.findViewById(R .id.textViewdate);
-            Time=(TextView)mView.findViewById(R .id.textViewtime);
+            serviceprovidername=(TextView)mView.findViewById(R.id.textViewname_user);
+            servicecharges=(TextView)mView.findViewById(R.id.servicedetail_user);
+            Date=(TextView)mView.findViewById(R .id.textViewdate_user);
+            Time=(TextView)mView.findViewById(R .id.textViewtime_user);
+            serviceCat=(TextView)mView.findViewById(R.id.service_category_user);
+            serviceDesc=(TextView)mView.findViewById(R.id.textView_service_description_user);
+            serviceLoc= (TextView)mView.findViewById(R.id.textViewloc_user);
+
 
         }
     }

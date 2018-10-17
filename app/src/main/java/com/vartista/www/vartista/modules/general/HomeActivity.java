@@ -27,6 +27,7 @@ import com.vartista.www.vartista.modules.payment.PaymentActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
+import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.UserNotification_activity;
 
 public class HomeActivity extends AppCompatActivity
@@ -158,6 +159,12 @@ public class HomeActivity extends AppCompatActivity
             Intent intent = new Intent(HomeActivity.this, MyAppointments.class);
             startActivity(intent);
             Toast.makeText(this, "appointments", Toast.LENGTH_SHORT).show();
+
+        }
+        else if (id == R.id.Userappointments) {
+            Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
+            startActivity(intent);
+            Toast.makeText(this, "Userappointments", Toast.LENGTH_SHORT).show();
 
         }
         else if (id == R.id.ratings) {

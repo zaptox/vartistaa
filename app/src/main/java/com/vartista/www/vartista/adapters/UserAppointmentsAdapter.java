@@ -54,10 +54,10 @@ public class UserAppointmentsAdapter extends RecyclerView.Adapter<UserAppointmen
             super(itemView);
             mView=itemView;
 
-            serviceprovidername=(TextView)mView.findViewById(R.id.textViewname);
-            servicecharges=(TextView)mView.findViewById(R.id.servicedetail);
-            Date=(TextView)mView.findViewById(R .id.textViewdate);
-            Time=(TextView)mView.findViewById(R .id.textViewtime);
+            serviceprovidername=(TextView)mView.findViewById(R.id.textViewname_user);
+            servicecharges=(TextView)mView.findViewById(R.id.servicedetail_user);
+            Date=(TextView)mView.findViewById(R .id.textViewdate_user);
+            Time=(TextView)mView.findViewById(R .id.textViewtime_user);
             location=(TextView) mView.findViewById(R.id.textViewlocation);
 
 
