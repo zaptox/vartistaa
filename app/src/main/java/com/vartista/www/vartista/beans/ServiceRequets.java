@@ -57,6 +57,10 @@ public class ServiceRequets {
     @SerializedName("service_title")
     @Expose
     String service_title;
+    @SerializedName("service_description")
+    @Expose
+    String service_description;
+
     @SerializedName("price")
     @Expose
     double price;
@@ -65,7 +69,7 @@ public class ServiceRequets {
     String catgname;
 
 
-    public ServiceRequets(int reqservice_id, String username, int requests_status, String date, String time, String location, int user_customer_id, int service_provider_id, int service_id, int service_cat_id, String service_title,double price, String catgname) {
+    public ServiceRequets(int reqservice_id, String username, int requests_status, String date, String time, String location, int user_customer_id, int service_provider_id, int service_id, int service_cat_id, String service_title,double price,String service_description, String catgname) {
         this.reqservice_id = reqservice_id;
         this.username = username;
         this.requests_status = requests_status;
@@ -78,6 +82,7 @@ public class ServiceRequets {
         this.service_cat_id = service_cat_id;
         this.service_title = service_title;
         this.price = price;
+        this.service_description= service_description;
         this.catgname = catgname;
 
     }
@@ -171,6 +176,14 @@ public class ServiceRequets {
     public double getPrice() { return price; }
 
     public void setPrice(double price) { this.price = price; }
+
+    public String getService_description() {
+        return service_description;
+    }
+
+    public void setService_description(String service_description) {
+        this.service_description = service_description;
+    }
 
     public String getCatgname() {
         return catgname;

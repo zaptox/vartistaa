@@ -76,7 +76,7 @@ public class  UserNotificationlistadapter extends RecyclerView.Adapter<UserNotif
             super(itemView);
             mView=itemView;
 
-            username=(TextView)mView.findViewById(R.id.textViewname);
+            username=(TextView)mView.findViewById(R.id.textViewname_user);
             requestdetail=(TextView)mView.findViewById(R.id.textViewrequestdetail);
             timeduration=(TextView)mView.findViewById(R .id.textViewtimeduration);
 

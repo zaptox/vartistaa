@@ -13,42 +13,46 @@ import com.vartista.www.vartista.beans.servicepaapointmentsitems;
 
 import java.util.List;
 
-/**
- * Created by Dell on 2018-10-10.
- */
+public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<ServiceUserAppointmentsAdapter.ViewHolder> {
 
-public class UserAppointmentsAdapter extends RecyclerView.Adapter<UserAppointmentsAdapter.ViewHolder> {
+
+
     Context context;
     List<servicepaapointmentsitems> list;
 
-    public UserAppointmentsAdapter(Context context, List<servicepaapointmentsitems> list) {
+    public ServiceUserAppointmentsAdapter(Context context, List<servicepaapointmentsitems> list) {
         this.context = context;
         this.list = list;
     }
 
-    public UserAppointmentsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_appointments_list,parent,false);
+    @NonNull
+    @Override
+    public ServiceUserAppointmentsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.meeting_items,parent,false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserAppointmentsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ServiceUserAppointmentsAdapter.ViewHolder holder, int position) {
         holder.serviceprovidername.setText(list.get(position).getUsername());
         holder.servicecharges.setText(list.get(position).getService_title()+" "+list.get(position).getPrice());
-//        holder.Date.setText(list.get(position).getDate());
+        holder.Date.setText(list.get(position).getDate());
         holder.Time.setText(list.get(position).getTime());
-        holder.location.setText(list.get(position).getLocation());
+        holder.serviceCat.setText(list.get(position).getName());
+        holder.serviceDesc.setText(list.get(position).getService_description());
+        holder.serviceLoc.setText(list.get(position).getLocation());
+
     }
 
     @Override
-    public int getItemCount() {
-        return list.size();
-    }
+    public int getItemCount() { return list.size(); }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         View mView;
 
-        public TextView serviceprovidername,servicecharges,Date,Time,location;
+
+        public TextView serviceprovidername,servicecharges,Date,Time,serviceDesc,serviceCat,serviceLoc;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -58,7 +62,9 @@ public class UserAppointmentsAdapter extends RecyclerView.Adapter<UserAppointmen
             servicecharges=(TextView)mView.findViewById(R.id.servicedetail_user);
             Date=(TextView)mView.findViewById(R .id.textViewdate_user);
             Time=(TextView)mView.findViewById(R .id.textViewtime_user);
-            location=(TextView) mView.findViewById(R.id.textViewlocation);
+            serviceCat=(TextView)mView.findViewById(R.id.service_category_user);
+            serviceDesc=(TextView)mView.findViewById(R.id.textView_service_description_user);
+            serviceLoc= (TextView)mView.findViewById(R.id.textViewloc_user);
 
 
         }
