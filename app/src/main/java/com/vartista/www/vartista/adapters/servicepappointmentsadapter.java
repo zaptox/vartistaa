@@ -38,11 +38,13 @@ public class servicepappointmentsadapter extends RecyclerView.Adapter<servicepap
 
     @Override
     public void onBindViewHolder(@NonNull servicepappointmentsadapter.ViewHolder holder, int position) {
-        holder.serviceprovidername.setText(list.get(position).getName());
+        holder.serviceprovidername.setText(list.get(position).getUsername());
         holder.servicecharges.setText(list.get(position).getService_title()+" "+list.get(position).getPrice());
-//        holder.Date.setText(list.get(position).getDate());
+        holder.Date.setText(list.get(position).getDate());
         holder.Time.setText(list.get(position).getTime());
-
+        holder.serviceCat.setText(list.get(position).getName());
+        holder.serviceDesc.setText(list.get(position).getService_description());
+        holder.serviceLoc.setText(list.get(position).getLocation());
     }
 
     @Override
@@ -53,7 +55,7 @@ public class servicepappointmentsadapter extends RecyclerView.Adapter<servicepap
     public class ViewHolder extends RecyclerView.ViewHolder{
         View mView;
 
-        public TextView serviceprovidername,servicecharges,Date,Time;
+        public TextView serviceprovidername,servicecharges,Date,Time,serviceDesc,serviceCat,serviceLoc;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -63,6 +65,9 @@ public class servicepappointmentsadapter extends RecyclerView.Adapter<servicepap
             servicecharges=(TextView)mView.findViewById(R.id.servicedetail);
             Date=(TextView)mView.findViewById(R .id.textViewdate);
             Time=(TextView)mView.findViewById(R .id.textViewtime);
+            serviceCat=(TextView)mView.findViewById(R.id.service_category);
+            serviceDesc=(TextView)mView.findViewById(R.id.textView_service_description);
+            serviceLoc= (TextView)mView.findViewById(R.id.textViewloc);
 
         }
     }
