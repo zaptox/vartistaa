@@ -55,16 +55,9 @@
                     app:srb_starWidth="10dp"
                     app:srb_starHeight="10dp"
                     app:srb_starPadding="5dp"
-                    app:srb_stepSize="0.5"
-                    app:srb_isIndicator="false"
-                    app:srb_clickable="true"
-                    app:srb_scrollable="true"
-                    app:srb_clearRatingEnabled="true"
-                    app:srb_drawableEmpty="@drawable/empty"
-                    app:srb_drawableFilled="@drawable/filled">
+                    app:srb_stepSize="0.5">
                 </com.willy.ratingbar.ScaleRatingBar>
-
-                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

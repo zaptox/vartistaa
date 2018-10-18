@@ -122,7 +122,7 @@ public class My_Rating_Reviews extends AppCompatActivity {
                     for (int j = 0; j < services.length(); j++) {
                         JSONObject ser1 = services.getJSONObject(j);
                         int id = Integer.parseInt(ser1.getString("id"));
-                        int stars = Integer.parseInt(ser1.getString("stars"));
+                        Float stars = Float.parseFloat(ser1.getString("stars"));
                         String UserName = ser1.getString("UserName");
                         String user_id = ser1.getString("user_id");
                         String SpName = ser1.getString("SpName");

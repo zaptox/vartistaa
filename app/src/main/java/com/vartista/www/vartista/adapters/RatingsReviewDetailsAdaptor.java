@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.vartista.www.vartista.R;
@@ -24,6 +25,7 @@ public class RatingsReviewDetailsAdaptor  extends RecyclerView.Adapter<RatingsRe
     public Context context;
     public TextView Username, ReviewDetail;
     ImageView imageView;
+    RatingBar simpleratingbar;
     public RatingsReviewDetailsAdaptor(Context context, List<RatingsReviewDetailBean> Ratingdetails){
         this.Ratingdetails = Ratingdetails;
         this.context=context;
@@ -42,7 +44,7 @@ public class RatingsReviewDetailsAdaptor  extends RecyclerView.Adapter<RatingsRe
 
         Username.setText(Ratingdetails.get(position).getUserName());
         ReviewDetail.setText(Ratingdetails.get(position).getUser_remarks());
-
+        simpleratingbar.setRating(Ratingdetails.get(position).getStars());
 
 
 
@@ -57,8 +59,6 @@ public class RatingsReviewDetailsAdaptor  extends RecyclerView.Adapter<RatingsRe
     public class ViewHolder extends RecyclerView.ViewHolder {
         View mView;
 
-
-
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
@@ -66,6 +66,8 @@ public class RatingsReviewDetailsAdaptor  extends RecyclerView.Adapter<RatingsRe
             Username = (TextView) mView.findViewById(R.id.UserName);
             ReviewDetail = (TextView) mView.findViewById(R.id.ReviewDetails);
             imageView = (ImageView) mView.findViewById(R.id.imageViewCategoryIcon);
+            simpleratingbar = (RatingBar)mView.findViewById(R.id.simpleRatingBar);
+
 
         }
 

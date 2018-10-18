@@ -16,7 +16,7 @@ public class RatingsReviewDetailBean {
     private int id;
 
     @SerializedName("Stars")
-    private int Stars;
+    private Float Stars;
 
     @SerializedName("UserName")
     private String UserName;
@@ -39,7 +39,7 @@ public class RatingsReviewDetailBean {
     @SerializedName("user_remarks")
     private String user_remarks;
 
-    public RatingsReviewDetailBean(int id, int stars, String userName, String user_id, String spName, int service_p_id, String service_id, String service_tittle, String user_remarks) {
+    public RatingsReviewDetailBean(int id, Float stars, String userName, String user_id, String spName, int service_p_id, String service_id, String service_tittle, String user_remarks) {
         this.id = id;
         Stars = stars;
         UserName = userName;
@@ -67,11 +67,11 @@ public class RatingsReviewDetailBean {
         this.id = id;
     }
 
-    public int getStars() {
+    public Float getStars() {
         return Stars;
     }
 
-    public void setStars(int stars) {
+    public void setStars(Float stars) {
         Stars = stars;
     }
 
