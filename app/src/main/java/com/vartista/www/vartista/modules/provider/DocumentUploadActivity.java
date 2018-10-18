@@ -41,9 +41,9 @@ public class DocumentUploadActivity extends AppCompatActivity
     private Button btnUpload;
     private Bitmap bitmapCnicFront,bitmapCnicBack,bitmapBankDetails;
     private Uri filePathCnicFront,filePathCnicBack,filePathBankDetails;
-   private  static String cnic_front_document_title="CNIC Front";
-   private  static String cnic_back_document_title="CNIC Back";
-   private  static String bank_details_document_title="Bank Details";
+   private  static String cnic_front_document_title="cnic_front";
+   private  static String cnic_back_document_title="cnic_back";
+   private  static String bank_details_document_title="bank_details";
    private  boolean cnic_front=false,cnic_back=false,bank_details=false;
 
             int user_id;
@@ -100,9 +100,12 @@ public class DocumentUploadActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
               if(cnic_front==true && cnic_back==true && bank_details==true) {
-                  uploadMultipart(bank_details_document_title, filePathBankDetails, "bank_details");
-                  uploadMultipart(cnic_front_document_title, filePathCnicFront, "cnic_front");
-                  uploadMultipart(cnic_back_document_title, filePathCnicBack, "cnic_back");
+
+                 try{ uploadMultipart( filePathBankDetails,bank_details_document_title);
+                  uploadMultipart( filePathCnicFront, cnic_front_document_title);
+                  uploadMultipart( filePathCnicBack, cnic_back_document_title);}catch (Exception e){
+                     Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                 }
               }
               else if(bank_details==false){
                     showCompletedDialog("error in uploading documents","Kindly provide Bank Details ");
@@ -128,7 +131,6 @@ public class DocumentUploadActivity extends AppCompatActivity
             filePathCnicFront = data.getData();
             try {
                 bitmapCnicFront = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathCnicFront);
-                cnic_front_document_title="Path: ". concat(getPath(filePathCnicFront));
                 imageViewCnicFront.setImageBitmap(bitmapCnicFront);
                 cnic_front=true;
 
@@ -141,7 +143,6 @@ public class DocumentUploadActivity extends AppCompatActivity
             filePathCnicBack = data.getData();
             try {
                 bitmapCnicBack = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathCnicBack);
-                cnic_back_document_title="Path: ". concat(getPath(filePathCnicBack));
                 imageViewBackCinc.setImageBitmap(bitmapCnicBack);
                 cnic_back=true;
 
@@ -154,7 +155,6 @@ public class DocumentUploadActivity extends AppCompatActivity
             filePathBankDetails = data.getData();
             try {
                 bitmapBankDetails = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathBankDetails);
-                bank_details_document_title="Path: ". concat(getPath(filePathBankDetails));
                 imageViewBankDetails.setImageBitmap(bitmapBankDetails);
                 bank_details=true;
             } catch (IOException e) {
@@ -164,7 +164,7 @@ public class DocumentUploadActivity extends AppCompatActivity
     }
 
 
-            public void uploadMultipart(String document_title,Uri filePath,String title ) {
+            public void uploadMultipart(Uri filePath,String title ) {
 
                 //getting the actual path of the image
                 String path = getPath(filePath);
@@ -177,7 +177,6 @@ public class DocumentUploadActivity extends AppCompatActivity
                     new MultipartUploadRequest(this, uploadId, UPLOAD_URL)
                             .addFileToUpload(path, "image") //Adding file
                             .addParameter("user_id",""+user_id)
-                            .addParameter("document_title", document_title) //Adding text parameter to the request
                             .addParameter("title", title)
                             .setNotificationConfig(new UploadNotificationConfig())
                             .setMaxRetries(3)

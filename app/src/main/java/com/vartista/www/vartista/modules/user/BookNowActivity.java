@@ -2,16 +2,10 @@ package com.vartista.www.vartista.modules.user;
 
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
-import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -20,41 +14,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.adapters.SpDetailsAdapter;
 import com.vartista.www.vartista.beans.CreateRequest;
-import com.vartista.www.vartista.beans.RequestService;
 import com.vartista.www.vartista.fragments.DatePickerFragment;
 import com.vartista.www.vartista.fragments.TimePickerFragment;
 import com.vartista.www.vartista.modules.general.HomeActivity;
-import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
-import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-
-import com.vartista.www.vartista.beans.Service;
 
 import retrofit2.Call;
 import retrofit2.Callback;
