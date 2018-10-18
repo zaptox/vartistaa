@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.RatingsReviewDetailBean;
+import com.willy.ratingbar.ScaleRatingBar;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class RatingsReviewDetailsAdaptor  extends RecyclerView.Adapter<RatingsRe
     public Context context;
     public TextView Username, ReviewDetail;
     ImageView imageView;
-    RatingBar simpleratingbar;
+    ScaleRatingBar ratingBar;
     public RatingsReviewDetailsAdaptor(Context context, List<RatingsReviewDetailBean> Ratingdetails){
         this.Ratingdetails = Ratingdetails;
         this.context=context;
@@ -44,7 +45,7 @@ public class RatingsReviewDetailsAdaptor  extends RecyclerView.Adapter<RatingsRe
 
         Username.setText(Ratingdetails.get(position).getUserName());
         ReviewDetail.setText(Ratingdetails.get(position).getUser_remarks());
-        simpleratingbar.setRating(Ratingdetails.get(position).getStars());
+        ratingBar.setRating(Ratingdetails.get(position).getStars());
 
 
 
@@ -66,7 +67,12 @@ public class RatingsReviewDetailsAdaptor  extends RecyclerView.Adapter<RatingsRe
             Username = (TextView) mView.findViewById(R.id.UserName);
             ReviewDetail = (TextView) mView.findViewById(R.id.ReviewDetails);
             imageView = (ImageView) mView.findViewById(R.id.imageViewCategoryIcon);
-            simpleratingbar = (RatingBar)mView.findViewById(R.id.simpleRatingBar);
+            ratingBar = mView.findViewById(R.id.simpleRatingBar);
+            ratingBar.setNumStars(5);
+            ratingBar.setMinimumStars(1);
+            ratingBar.setStarPadding(10);
+            ratingBar.setStepSize(0.5f);
+
 
 
         }
