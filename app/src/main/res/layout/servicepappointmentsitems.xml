@@ -37,7 +37,7 @@
     </de.hdodenhof.circleimageview.CircleImageView>
 
     <TextView
-        android:id="@+id/textViewname"
+        android:id="@+id/textViewname_user"
         android:layout_width="110sp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15sp"
@@ -48,27 +48,27 @@
         android:layout_marginTop="20sp"
         />
     <TextView
-        android:id="@+id/servicedetail"
+        android:id="@+id/servicedetail_user"
         android:layout_width="110sp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15sp"
         android:text="Zaptox hair cutting"
-        android:layout_below="@id/textViewname"
+        android:layout_below="@id/textViewname_user"
         android:layout_toRightOf="@id/profile_image"
         />
 
 
     <ImageView
         android:layout_width="20sp"
-        android:id="@+id/clock"
+        android:id="@+id/clock_user"
         android:layout_height="20sp"
         android:src="@drawable/clock"
         android:layout_marginTop="20sp"
-        android:layout_toLeftOf="@id/textViewtime"
+        android:layout_toLeftOf="@id/textViewtime_user"
         />
 
                 <TextView
-                    android:id="@+id/textViewtime"
+                    android:id="@+id/textViewtime_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="12:00 am"
@@ -102,7 +102,7 @@
 
 
             <TextView
-                android:id="@+id/textViewdate"
+                android:id="@+id/textViewdate_user"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="7sp"
                 android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
 
 
                 <TextView
-                    android:id="@+id/textViewloc"
+                    android:id="@+id/textViewloc_user"
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="7sp"
                     android:layout_height="wrap_content"

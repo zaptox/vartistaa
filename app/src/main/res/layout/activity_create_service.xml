@@ -75,7 +75,7 @@
         card_view:cardCornerRadius="4dp">
 
         <TextView
-            android:id="@+id/service_category"
+            android:id="@+id/service_category_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 

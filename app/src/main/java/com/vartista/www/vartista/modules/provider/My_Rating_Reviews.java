@@ -1,4 +1,4 @@
-package com.vartista.www.vartista.modules.user;
+package com.vartista.www.vartista.modules.provider;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,13 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.adapters.ServiceUserAppointmentsAdapter;
-import com.vartista.www.vartista.adapters.servicepappointmentsadapter;
-import com.vartista.www.vartista.beans.servicepaapointmentsitems;
-import com.vartista.www.vartista.modules.provider.MyAppointments;
+import com.vartista.www.vartista.adapters.RatingsReviewDetailsAdaptor;
+import com.vartista.www.vartista.adapters.UserNotificationlistadapter;
+import com.vartista.www.vartista.beans.RatingsReviewDetailBean;
+import com.vartista.www.vartista.beans.usernotificationitems;
+import com.vartista.www.vartista.modules.general.HomeActivity;
+import com.vartista.www.vartista.modules.user.UserNotification_activity;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -32,41 +35,35 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-import static com.vartista.www.vartista.modules.general.HomeActivity.user_id;
-
-public class MyServiceMeetings extends AppCompatActivity {
-
-    RecyclerView recyclerView;
+public class My_Rating_Reviews extends AppCompatActivity {
+    RecyclerView view;
+    TextView  headername;
     private RecyclerView.LayoutManager layoutManager;
-    private ServiceUserAppointmentsAdapter listadapter;
-    ArrayList<servicepaapointmentsitems> userAppointments;
-    int user_id1;
-
+    private RatingsReviewDetailsAdaptor listadapter;
+    ArrayList<RatingsReviewDetailBean> list;
+    int serviceproviderid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_service_meetings);
-
-        recyclerView = (RecyclerView)findViewById(R.id.Userappointment_recyclerView);
-        userAppointments=new ArrayList<servicepaapointmentsitems>();
-        layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
-
+        setContentView(R.layout.activity_my__rating__reviews);
+        view = (RecyclerView)findViewById(R.id.RatingsDetail);
+        list=new ArrayList<RatingsReviewDetailBean>();
+        headername = (TextView)findViewById(R.id.header_name);
         SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
-          user_id1 = ob.getInt("user_id",0);
-        new MyServiceMeetings.Conncetion(MyServiceMeetings.this,user_id1).execute();
+        layoutManager = new LinearLayoutManager(getApplicationContext());
+        view.setHasFixedSize(true);
+        view.setLayoutManager(layoutManager);
+        serviceproviderid= 7;
+        new My_Rating_Reviews.Conncetion(My_Rating_Reviews.this,serviceproviderid).execute();
+
     }
-
-
-
     class Conncetion extends AsyncTask<String,String ,String > {
-        private int user_id1;
+        private int user_customer_id;
         private ProgressDialog dialog;
 
-        public Conncetion(Context activity, int user_id1) {
+        public Conncetion(Context activity, int user_customer_id) {
             dialog = new ProgressDialog(activity);
-            this.user_id1 = user_id1;
+            this.user_customer_id = user_customer_id;
         }
 
         @Override
@@ -81,7 +78,8 @@ public class MyServiceMeetings extends AppCompatActivity {
 
             String result = "";
 
-            final String BASE_URL = "http://vartista.com/vartista_app/service_appointments_for_user.php?user_customer_id="+user_id1;
+//            Toast.makeText(My_Rating_Reviews.this, ""+serviceproviderid, Toast.LENGTH_SHORT).show();
+            final String BASE_URL = "http://vartista.com/vartista_app/My_Ratings_Review.php?service_provider_id=7";
             try {
                 HttpClient client = new DefaultHttpClient();
                 HttpGet request = new HttpGet();
@@ -113,47 +111,51 @@ public class MyServiceMeetings extends AppCompatActivity {
                 dialog.dismiss();
             }
             try {
-
+                Toast.makeText(My_Rating_Reviews.this, "ok", Toast.LENGTH_SHORT).show();
 
                 JSONObject jsonResult = new JSONObject(result);
 
                 int success = jsonResult.getInt("success");
-                Toast.makeText(MyServiceMeetings.this, "Resposne"+success, Toast.LENGTH_SHORT).show();
+
                 if (success == 1) {
                     JSONArray services = jsonResult.getJSONArray("services");
                     for (int j = 0; j < services.length(); j++) {
                         JSONObject ser1 = services.getJSONObject(j);
-                        String requestservice_id = ser1.getString("requestservice_id");
-                        String user_customer_id = ser1.getString("user_customer_id");
-                        String service_provider_id = ser1.getString("service_provider_id");
-                        String username = ser1.getString("username");
-                        String service_description = ser1.getString("service_description");
-                        String location = ser1.getString("location");
-                        String request_status = ser1.getString("request_status");
-                        String date = ser1.getString("date");
-                        String service_title = ser1.getString("service_title");
-                        String price = ser1.getString("price");
-                        String name = ser1.getString("name");
-                        String Time = ser1.getString("time");
-//                        Toast.makeText(MyAppointments.this, "object added", Toast.LENGTH_SHORT).show();
-                        userAppointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time));
-                        Toast.makeText(MyServiceMeetings.this, ""+userAppointments, Toast.LENGTH_SHORT).show();
+                        int id = Integer.parseInt(ser1.getString("id"));
+                        int stars = Integer.parseInt(ser1.getString("stars"));
+                        String UserName = ser1.getString("UserName");
+                        String user_id = ser1.getString("user_id");
+                        String SpName = ser1.getString("SpName");
+                        int service_p_id = Integer.parseInt(ser1.getString("service_p_id"));
+                        String service_id = ser1.getString("service_id");
+                        String service_tittle = ser1.getString("service_title");
+                        String user_remarks = ser1.getString("user_remarks");
+                        list.add(new RatingsReviewDetailBean(id,stars,UserName,user_id,SpName,service_p_id,service_id,service_tittle,user_remarks));
+
                     }
-
-
-                    listadapter = new ServiceUserAppointmentsAdapter(getApplicationContext(),userAppointments);
-                    recyclerView.setAdapter(listadapter);
-
-                }
-
-                else {
-                       Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                    listadapter = new RatingsReviewDetailsAdaptor(getApplicationContext(),list);
+                    view.setAdapter(listadapter);
+                    headername.setText(list.get(0).getSpName());
+                } else {
+                    Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                // Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
             }
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
 }

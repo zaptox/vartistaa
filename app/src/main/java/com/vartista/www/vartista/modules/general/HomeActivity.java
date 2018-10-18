@@ -31,6 +31,7 @@ import com.vartista.www.vartista.modules.payment.PaymentActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
+import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
 import com.vartista.www.vartista.modules.user.UserNotification_activity;
 
 public class HomeActivity extends AppCompatActivity
@@ -87,10 +88,10 @@ public class HomeActivity extends AppCompatActivity
         viewpager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewpager);
 
-
-        FirebaseMessaging.getInstance().subscribeToTopic("Test");
-        FirebaseInstanceId.getInstance().getToken();
-
+//
+//        FirebaseMessaging.getInstance().subscribeToTopic("Test");
+//        FirebaseInstanceId.getInstance().getToken();
+//
 
     }
 
@@ -175,6 +176,8 @@ public class HomeActivity extends AppCompatActivity
         }
         else if (id == R.id.ratings) {
             Toast.makeText(this, "raings", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(HomeActivity.this, My_Rating_Reviews.class);
+            startActivity(intent);
 
         } else if (id == R.id.logout) {
             Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();

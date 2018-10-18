@@ -6,4 +6,14 @@
     android:layout_height="match_parent"
     tools:context="com.vartista.www.vartista.modules.user.MyServiceMeetings">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/Userappointment_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:elevation="2dp"
+        android:scrollbars="vertical" />
+
+
 </android.support.constraint.ConstraintLayout>
