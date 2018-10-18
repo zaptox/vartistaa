@@ -2,13 +2,16 @@ package com.vartista.www.vartista.modules.user;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.adapters.ServiceUserAppointmentsAdapter;
 import com.vartista.www.vartista.adapters.servicepappointmentsadapter;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
@@ -29,38 +32,41 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import static com.vartista.www.vartista.modules.general.HomeActivity.user_id;
+
 public class MyServiceMeetings extends AppCompatActivity {
 
     RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private servicepappointmentsadapter listadapter;
-    ArrayList<servicepaapointmentsitems> myappointments;
-    int service_id;
+    private ServiceUserAppointmentsAdapter listadapter;
+    ArrayList<servicepaapointmentsitems> userAppointments;
+    int user_id1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_service_meetings);
 
-        recyclerView = (RecyclerView)findViewById(R.id.service_provider_appointments);
-        myappointments=new ArrayList<servicepaapointmentsitems>();
+        recyclerView = (RecyclerView)findViewById(R.id.Userappointment_recyclerView);
+        userAppointments=new ArrayList<servicepaapointmentsitems>();
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-        service_id = 17;
-        new MyServiceMeetings.Conncetion(MyServiceMeetings.this,service_id).execute();
+
+        SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
+          user_id1 = ob.getInt("user_id",0);
+        new MyServiceMeetings.Conncetion(MyServiceMeetings.this,user_id1).execute();
     }
 
 
 
-
     class Conncetion extends AsyncTask<String,String ,String > {
-        private int service_id;
+        private int user_id1;
         private ProgressDialog dialog;
 
-        public Conncetion(Context activity, int service_id) {
+        public Conncetion(Context activity, int user_id1) {
             dialog = new ProgressDialog(activity);
-            this.service_id = service_id;
+            this.user_id1 = user_id1;
         }
 
         @Override
@@ -75,7 +81,7 @@ public class MyServiceMeetings extends AppCompatActivity {
 
             String result = "";
 
-            final String BASE_URL = "http://vartista.com/vartista_app/servicepappointments.php?service_provider_id="+service_id;
+            final String BASE_URL = "http://vartista.com/vartista_app/service_appointments_for_user.php?user_customer_id="+user_id1;
             try {
                 HttpClient client = new DefaultHttpClient();
                 HttpGet request = new HttpGet();
@@ -112,7 +118,7 @@ public class MyServiceMeetings extends AppCompatActivity {
                 JSONObject jsonResult = new JSONObject(result);
 
                 int success = jsonResult.getInt("success");
-
+                Toast.makeText(MyServiceMeetings.this, "Resposne"+success, Toast.LENGTH_SHORT).show();
                 if (success == 1) {
                     JSONArray services = jsonResult.getJSONArray("services");
                     for (int j = 0; j < services.length(); j++) {
@@ -130,18 +136,18 @@ public class MyServiceMeetings extends AppCompatActivity {
                         String name = ser1.getString("name");
                         String Time = ser1.getString("time");
 //                        Toast.makeText(MyAppointments.this, "object added", Toast.LENGTH_SHORT).show();
-                        myappointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time));
-//                        Toast.makeText(MyAppointments.this, ""+myappointments, Toast.LENGTH_SHORT).show();
+                        userAppointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time));
+                        Toast.makeText(MyServiceMeetings.this, ""+userAppointments, Toast.LENGTH_SHORT).show();
                     }
 
 
-                    listadapter = new servicepappointmentsadapter(getApplicationContext(),myappointments);
+                    listadapter = new ServiceUserAppointmentsAdapter(getApplicationContext(),userAppointments);
                     recyclerView.setAdapter(listadapter);
 
                 }
 
                 else {
-                    //   Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                       Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

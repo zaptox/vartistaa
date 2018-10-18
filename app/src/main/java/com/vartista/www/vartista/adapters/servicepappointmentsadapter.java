@@ -7,11 +7,9 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
-import com.vartista.www.vartista.beans.usernotificationitems;
 
 import java.util.List;
 
@@ -64,13 +62,13 @@ public class servicepappointmentsadapter extends RecyclerView.Adapter<servicepap
             super(itemView);
             mView=itemView;
 
-            serviceprovidername=(TextView)mView.findViewById(R.id.textViewname);
-            servicecharges=(TextView)mView.findViewById(R.id.servicedetail);
-            Date=(TextView)mView.findViewById(R .id.textViewdate);
-            Time=(TextView)mView.findViewById(R .id.textViewtime);
+            serviceprovidername=(TextView)mView.findViewById(R.id.textViewname_user);
+            servicecharges=(TextView)mView.findViewById(R.id.servicedetail_user);
+            Date=(TextView)mView.findViewById(R .id.textViewdate_user);
+            Time=(TextView)mView.findViewById(R .id.textViewtime_user);
             serviceCat=(TextView)mView.findViewById(R.id.service_category);
             serviceDesc=(TextView)mView.findViewById(R.id.textView_service_description);
-            serviceLoc= (TextView)mView.findViewById(R.id.textViewloc);
+            serviceLoc= (TextView)mView.findViewById(R.id.textViewloc_user);
 
         }
     }
