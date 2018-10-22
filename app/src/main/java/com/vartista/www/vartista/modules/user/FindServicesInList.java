@@ -1,6 +1,7 @@
 package com.vartista.www.vartista.modules.user;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +12,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
@@ -43,12 +47,19 @@ import static java.security.AccessController.getContext;
 public class FindServicesInList extends AppCompatActivity {
 
 
-
     int user_id;
-    Button btnMap;
+
+    Button btnMap, btnFilter, btnApplyFilter;
+
     RecyclerView listViewMyServices;
+
     ServicesInListMapAdapter myServicesListAdapter;
+
     List<GetServiceProviders> myservicesList;
+
+    public String filterLocation, filterGender;
+
+    public int filterCost;
     
     public static ApiInterface apiInterface;
     ArrayList<GetServiceProviders> splist;
@@ -58,6 +69,9 @@ public class FindServicesInList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_services_in_list);
+
+        btnFilter = findViewById(R.id.filter_button);
+
         splist=new ArrayList<GetServiceProviders>();
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
@@ -78,12 +92,49 @@ public class FindServicesInList extends AppCompatActivity {
 
         myservicesList=new ArrayList<>();
 
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final Dialog dialog=new Dialog(FindServicesInList.this);
+                dialog.setContentView(R.layout.filter_dialog_box);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.setTitle("Filter Search");
+
+                final Spinner locationSpinner = dialog.findViewById(R.id.spinnerLocation);
+                final Spinner genderSpinner = dialog.findViewById(R.id.spinnerGender);
+                SeekBar costSeekBar = dialog.findViewById(R.id.seekBar);
+                btnApplyFilter = dialog.findViewById(R.id.applyFilterButton);
+
+
+                dialog.show();
+
+                btnApplyFilter.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        filterLocation = String.valueOf(locationSpinner.getSelectedItem());
+                        filterGender = String.valueOf(genderSpinner.getSelectedItem());
+                        filterCost = 0;
+
+                        dialog.dismiss();
+                        Toast.makeText(FindServicesInList.this, "Location: "+filterLocation+"\nGender: "+filterGender,Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
+
+            }
+        });
+
+
 
         new FindServicesInList.Conncetion(FindServicesInList.this,cat_id).execute();
 
 
-    }
 
+    }
 
 
 
@@ -175,11 +226,6 @@ public class FindServicesInList extends AppCompatActivity {
 
                         Toast.makeText(FindServicesInList.this, ""+user_id2, Toast.LENGTH_SHORT).show();
                         splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name));
-
-
-
-
-
 
                     }
 //                    Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
