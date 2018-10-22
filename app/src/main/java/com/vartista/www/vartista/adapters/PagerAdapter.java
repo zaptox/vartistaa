@@ -20,7 +20,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
         this.user_id=user_id;
     }
-String title[]=new String[]{"As a User","As a Service Providers"};
+String title[]=new String[]{"As a User","As a Service Provider"};
     @Override
     public Fragment getItem(int position) {
 
@@ -31,12 +31,12 @@ String title[]=new String[]{"As a User","As a Service Providers"};
             case 1:
 
 
-//                ConfigSettingsFragment tab3= new ConfigSettingsFragment();
+                ConfigSettingsFragment tab3= new ConfigSettingsFragment();
 
-                ServiceProviderFragment tab2 = new ServiceProviderFragment(user_id);
-                return tab2;
+//                ServiceProviderFragment tab2 = new ServiceProviderFragment(user_id);
+//                return tab2;
 
-//                return tab3;
+                return tab3;
             default:
                 return null;
         }

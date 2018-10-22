@@ -32,6 +32,7 @@ import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
+import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.UserNotification_activity;
 
 public class HomeActivity extends AppCompatActivity
@@ -199,6 +200,11 @@ public class HomeActivity extends AppCompatActivity
 
         }
 
+        else if (id == R.id.Userappointments) {
+            Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
+            startActivity(intent);
+
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
