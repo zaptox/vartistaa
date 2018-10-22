@@ -3,6 +3,7 @@
     package="com.vartista.www.vartista">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".appconfig.App"
@@ -26,16 +27,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service android:name=".firebaseconfig.FirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <service android:name="firebaseconfig.FirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
         <activity
             android:name=".modules.general.HomeActivity"
             android:label="@string/title_activity_home"
@@ -56,7 +59,9 @@
         <activity android:name=".modules.user.MyServiceMeetings" />
         <activity android:name=".modules.user.AssignRatings" />
         <activity android:name=".modules.provider.DocumentUploadActivity" />
-        <activity android:name=".modules.provider.My_Rating_Reviews"></activity>
+        <activity android:name=".modules.provider.My_Rating_Reviews" />
+        <activity android:name=".modules.provider.ServiceProviderPushNotify" />
+        <activity android:name=".modules.user.UserNotificationOnTime"></activity>
     </application>
 
 </manifest>
