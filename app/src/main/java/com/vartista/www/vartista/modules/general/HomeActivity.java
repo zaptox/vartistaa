@@ -193,6 +193,12 @@ public class HomeActivity extends AppCompatActivity
             Toast.makeText(this, "appointments", Toast.LENGTH_SHORT).show();
 
         }
+        else if (id == R.id.Userappointments) {
+            Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
+            startActivity(intent);
+            Toast.makeText(this, "User appointments", Toast.LENGTH_SHORT).show();
+
+        }
 
         else if (id == R.id.provider_doc_upload) {
             Intent intent = new Intent(HomeActivity.this, DocumentUploadActivity.class);

@@ -17,4 +17,21 @@
     <string name="settings">d</string>
     <string name="textwarn">ss</string>
 
+
+    <!--for locations-->
+
+    <string-array name="locations">
+        <item>Hyderabad</item>
+        <item>Latifabad</item>
+        <item>Qasimabad</item>
+        <item>Karachi</item>
+
+    </string-array>
+
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Any</item>
+    </string-array>
+
 </resources>
