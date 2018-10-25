@@ -69,6 +69,7 @@ dependencies {
     implementation 'com.wdullaer:materialdatetimepicker:3.6.3'
     implementation 'com.github.ome450901:SimpleRatingBar:1.4.2'
 //    implementation 'com.google.firebase:firebase-messaging:11.8.0'
+    implementation 'com.google.firebase:firebase-core:16.0.4'
 
     //stylish toost
     implementation 'com.valdesekamdem.library:md-toast:0.9.0'
@@ -79,7 +80,6 @@ dependencies {
     //stylish ListviewRemover
     implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
     implementation 'net.gotev:uploadservice:3.4.2'
-
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.google.firebase:firebase-core:16.0.4'
