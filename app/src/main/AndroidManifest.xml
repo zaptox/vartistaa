@@ -19,7 +19,7 @@
         <activity
             android:name=".modules.general.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".firebaseconfig.FCMActivity">
+        <activity android:name=".modules.general.SiginInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,7 +58,7 @@
         <activity android:name=".modules.user.AssignRatings" />
         <activity android:name=".modules.provider.DocumentUploadActivity" />
         <activity android:name=".modules.provider.My_Rating_Reviews" />
-        <activity android:name=".modules.general.SiginInActivity"></activity>
+        <activity android:name=".firebaseconfig.FCMActivity"></activity>
     </application>
 
 </manifest>
