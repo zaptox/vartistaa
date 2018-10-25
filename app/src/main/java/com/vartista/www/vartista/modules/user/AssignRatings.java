@@ -27,10 +27,10 @@ public class AssignRatings extends AppCompatActivity {
         ratingBar.setRating(3);
         ratingBar.setStarPadding(10);
         ratingBar.setStepSize(0.5f);
-
+        ratingBar.setEnabled(false);
         ratingBar.setIsIndicator(false);
-        ratingBar.setClickable(true);
-        ratingBar.setScrollable(true);
+        ratingBar.setClickable(false);
+        ratingBar.setScrollable(false);
         ratingBar.setClearRatingEnabled(true);
         ratingBar.setEmptyDrawableRes(R.drawable.empty);
         ratingBar.setFilledDrawableRes(R.drawable.filled);

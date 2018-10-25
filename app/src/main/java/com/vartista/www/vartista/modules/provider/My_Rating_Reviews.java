@@ -130,7 +130,9 @@ public class My_Rating_Reviews extends AppCompatActivity {
                         String service_id = ser1.getString("service_id");
                         String service_tittle = ser1.getString("service_title");
                         String user_remarks = ser1.getString("user_remarks");
-                        list.add(new RatingsReviewDetailBean(id,stars,UserName,user_id,SpName,service_p_id,service_id,service_tittle,user_remarks));
+                        String Date = ser1.getString("date");
+                        String Time = ser1.getString("time");
+                        list.add(new RatingsReviewDetailBean(id,stars,UserName,user_id,SpName,service_p_id,service_id,service_tittle,user_remarks,Date,Time));
 
                     }
                     listadapter = new RatingsReviewDetailsAdaptor(getApplicationContext(),list);
