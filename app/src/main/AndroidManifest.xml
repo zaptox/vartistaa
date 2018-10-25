@@ -3,7 +3,7 @@
     package="com.vartista.www.vartista">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <application
         android:name=".appconfig.App"
         android:allowBackup="true"
@@ -19,23 +19,13 @@
         <activity
             android:name=".modules.general.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".modules.general.SiginInActivity">
+        <activity android:name=".firebaseconfig.FCMActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<service android:name=".firebaseconfig.FirebaseMessagingService">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.google.firebase.MESSAGING_EVENT"/>-->
-            <!--</intent-filter>-->
-        <!--</service>-->
-        <!--<service android:name="firebaseconfig.FirebaseInstanceIDService">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>-->
-            <!--</intent-filter>-->
-        <!--</service>-->
         <activity
             android:name=".modules.general.HomeActivity"
             android:label="@string/title_activity_home"
@@ -43,6 +33,17 @@
         <activity
             android:name=".modules.general.UserProfile"
             android:theme="@style/AppTheme.NoActionBar" />
+        <service android:name=".firebaseconfig.MyFirebaseInstanceIDService">
+            <intent-filter>
+
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name=".firebaseconfig.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGE_EVENT"/>
+            </intent-filter>
+        </service>
         <activity android:name=".modules.provider.CreateServiceActivity" />
         <activity android:name=".modules.provider.MyServicesListActivity" />
         <activity android:name=".modules.user.BookNowActivity" />
@@ -56,7 +57,8 @@
         <activity android:name=".modules.user.MyServiceMeetings" />
         <activity android:name=".modules.user.AssignRatings" />
         <activity android:name=".modules.provider.DocumentUploadActivity" />
-        <activity android:name=".modules.provider.My_Rating_Reviews"></activity>
+        <activity android:name=".modules.provider.My_Rating_Reviews" />
+        <activity android:name=".modules.general.SiginInActivity"></activity>
     </application>
 
 </manifest>

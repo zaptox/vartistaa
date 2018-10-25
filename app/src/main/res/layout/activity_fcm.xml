@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".firebaseconfig.FCMActivity">
+
+    <EditText
+        android:layout_above="@+id/register"
+        android:hint="Enter email"
+        android:id="@+id/editTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_centerVertical="true"
+        android:text="Register Device"
+        android:id="@+id/register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+<Button
+    android:id="@+id/buttonGetToken"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Get token"/>
+
+</LinearLayout>
