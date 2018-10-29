@@ -19,19 +19,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
 
 import com.vartista.www.vartista.beans.User;
-import com.vartista.www.vartista.firebaseconfig.FirebaseMessagingService;
 import com.vartista.www.vartista.modules.payment.PaymentActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
+import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.UserNotification_activity;
 
 public class HomeActivity extends AppCompatActivity
@@ -88,7 +86,7 @@ public class HomeActivity extends AppCompatActivity
         viewpager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewpager);
 
-//
+
 //        FirebaseMessaging.getInstance().subscribeToTopic("Test");
 //        FirebaseInstanceId.getInstance().getToken();
 //
@@ -190,6 +188,12 @@ public class HomeActivity extends AppCompatActivity
             Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
             startActivity(intent);
             Toast.makeText(this, "appointments", Toast.LENGTH_SHORT).show();
+
+        }
+        else if (id == R.id.Userappointments) {
+            Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
+            startActivity(intent);
+            Toast.makeText(this, "User appointments", Toast.LENGTH_SHORT).show();
 
         }
 
