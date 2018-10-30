@@ -222,7 +222,10 @@ public class  CreateServiceActivity extends AppCompatActivity {
                     user_id=loggedin.getId();
 
 
-                    Call<Service> call = CreateServiceActivity.apiInterface.createService(title, user_id, description, location,latitude,longitude,country, 1, Double.parseDouble(price + ""), category_id, "2018-04-05", "2018,06,04");
+                    Call<Service> call = CreateServiceActivity.apiInterface.
+                            createService(title, user_id, description, location,latitude,longitude,country,
+                                    1, Double.parseDouble(price + ""), category_id, "2018-04-05",
+                                    "2018,06,04");
 
                     call.enqueue(new Callback<Service>() {
                         @Override
