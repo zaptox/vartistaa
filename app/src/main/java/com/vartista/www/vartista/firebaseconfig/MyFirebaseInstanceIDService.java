@@ -1,6 +1,5 @@
 package com.vartista.www.vartista.firebaseconfig;
 
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -23,7 +22,6 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     private void storeToken(String token) {
         //saving the token on shared preferences
-//        SharedPreferences.getInstance(getApplicationContext()).saveDeviceToken(token);
-
+      //  SharedPreference.getInstance(getApplicationContext()).saveDeviceToken(token);
     }
 }

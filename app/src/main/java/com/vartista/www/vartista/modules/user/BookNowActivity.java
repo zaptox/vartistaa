@@ -18,11 +18,13 @@ import android.widget.TimePicker;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.CreateRequest;
+import com.vartista.www.vartista.beans.NotificationsManager;
 import com.vartista.www.vartista.fragments.DatePickerFragment;
 import com.vartista.www.vartista.fragments.TimePickerFragment;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
+import com.vartista.www.vartista.restcalls.SendNotificationApiInterface;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -37,6 +39,8 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
     Button buttonBook;
     ImageView imageViewDate,imageViewTime;
     public static ApiInterface apiInterface;
+    public static SendNotificationApiInterface sendNotificationApiInterface;
+
     RelativeLayout layoutDate,layoutTime;
     TextView textViewReq_Date,textViewReq_Time;
     int user_customer_id,service_provider_id,service_id,service_cat_id;
@@ -56,6 +60,7 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
         textViewReq_Time=(TextView)findViewById(R.id.textViewReq_time);
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        sendNotificationApiInterface = ApiClient.getApiClient().create(SendNotificationApiInterface.class);
 
         Intent intent=getIntent();
         user_customer_id=intent.getIntExtra("user_id",0);
@@ -103,6 +108,22 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
                  public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
                      if (response.body().getResponse().equals("ok")) {
 
+                         Call<NotificationsManager> callNotification = BookNowActivity.sendNotificationApiInterface
+                                 .sendPushNotification(service_provider_id,"Send you request for appointment","Vartista");
+                         callNotification.enqueue(new Callback<NotificationsManager>() {
+                             @Override
+                             public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
+
+                             }
+
+                             @Override
+                             public void onFailure(Call<NotificationsManager> call, Throwable t) {
+
+                             }
+                         });
+
+
+
                          MDToast mdToast = MDToast.makeText(getApplicationContext(), "Request has been Send succesfully.", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                          mdToast.show();
 
@@ -131,6 +152,10 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
 //             Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
 //             intent.putExtra("userId",user_customer_id);
 //             startActivity(intent);
+
+
+
+
          }
      });
 

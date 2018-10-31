@@ -6,31 +6,44 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
 
+import com.vartista.www.vartista.beans.DeviceToken;
+import com.vartista.www.vartista.beans.Service;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.modules.payment.PaymentActivity;
+import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.UserNotification_activity;
+import com.vartista.www.vartista.restcalls.ApiClient;
+import com.vartista.www.vartista.restcalls.ServiceApiInterface;
+import com.vartista.www.vartista.restcalls.TokenApiInterface;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -41,19 +54,22 @@ public class HomeActivity extends AppCompatActivity
     public static int user_id;
     public static User user;
     ImageView imageViewProfileDrawer;
+    public static TokenApiInterface tokenApiInterface;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        tokenApiInterface = ApiClient.getApiClient().create(TokenApiInterface.class);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
+        Toast.makeText(getApplicationContext(),FirebaseInstanceId.getInstance().getToken(),Toast.LENGTH_SHORT).show();
+        Log.d("deviceToken",FirebaseInstanceId.getInstance().getToken());
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -72,11 +88,16 @@ public class HomeActivity extends AppCompatActivity
         name.setText(user.getName());
         email.setText(user.getEmail());
 
+
+        // save or update device token
+        storeDeviceToken();
+
         Picasso.get().load(user.getImage()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)
                 .into(imageViewProfileDrawer);
 
+         //device token add to server
 
         // view pager
         TabLayout tabLayout=(TabLayout)findViewById(R.id.tabs);
@@ -214,5 +235,32 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void storeDeviceToken(){
+
+
+        Call<DeviceToken> call = HomeActivity.tokenApiInterface.saveDeviceToken
+                (user_id,FirebaseInstanceId.getInstance().getToken());
+        call.enqueue(new Callback<DeviceToken>() {
+            @Override
+            public void onResponse(Call<DeviceToken> call, Response<DeviceToken> response) {
+
+                if (response.isSuccessful()) {
+                    //for debugging
+                    MDToast mdToast = MDToast.makeText(getApplicationContext(), "Token stored", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                    mdToast.show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DeviceToken> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("errorinstoredevicetoken",t.getMessage());
+            }
+
+        });
+
+
+
     }
 }
