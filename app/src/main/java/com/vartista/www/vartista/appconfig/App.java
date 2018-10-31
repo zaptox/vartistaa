@@ -15,5 +15,6 @@ public class App extends Application {
         UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
         // Or, you can define it manually.
         UploadService.NAMESPACE = "com.vartista.www.vartista";
+
     }
 }

@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,14 +19,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
 
 import com.vartista.www.vartista.beans.User;
-import com.vartista.www.vartista.firebaseconfig.FirebaseMessagingService;
 import com.vartista.www.vartista.modules.payment.PaymentActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
@@ -44,7 +40,6 @@ public class HomeActivity extends AppCompatActivity
     User u=null;
     public static int user_id;
     public static User user;
-
     ImageView imageViewProfileDrawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,40 +80,13 @@ public class HomeActivity extends AppCompatActivity
 
         // view pager
         TabLayout tabLayout=(TabLayout)findViewById(R.id.tabs);
-        final ViewPager viewpager =(ViewPager)findViewById(R.id.viewpager);
+        ViewPager viewpager =(ViewPager)findViewById(R.id.viewpager);
 
-        PagerAdapter adapter=new PagerAdapter(getSupportFragmentManager(),user_id,getApplicationContext());
+        PagerAdapter adapter=new PagerAdapter(getSupportFragmentManager(),user_id);
         viewpager.setAdapter(adapter);
-        viewpager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-
-
-        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == PagerAdapter.MANDATORY_PAGE_LOCATION && positionOffset > 0.5) {
-                    viewpager.setCurrentItem(PagerAdapter.MANDATORY_PAGE_LOCATION, false);
-                    Toast.makeText(HomeActivity.this, ""+PagerAdapter.MANDATORY_PAGE_LOCATION, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         tabLayout.setupWithViewPager(viewpager);
 
-//
+
 //        FirebaseMessaging.getInstance().subscribeToTopic("Test");
 //        FirebaseInstanceId.getInstance().getToken();
 //
@@ -152,7 +120,7 @@ public class HomeActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(HomeActivity.this,SettingsActivity.class));
+            startActivity(new Intent(HomeActivity.this,AppSettings.class));
             return true;
         }
 
@@ -240,6 +208,7 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
 
         }
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

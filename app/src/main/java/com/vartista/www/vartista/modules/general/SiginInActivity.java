@@ -140,15 +140,9 @@ public class SiginInActivity extends AppCompatActivity {
 
                     String updated_at = response.body().getUpdatedAt();
 
-                    String gender=response.body().getGender();
-
-                    String sp_status= response.body().getSp_status();
-
-
-                    userLoggedIn = new User(id, name, email, password, image, status, contact, created_at, updated_at,gender,sp_status);
+                    userLoggedIn = new User(id, name, email, password, image, status, contact, created_at, updated_at);
 //                    Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse() + "--name:" + name, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(SiginInActivity.this, ""+userLoggedIn.getId()+"... name: "+userLoggedIn.getName(), Toast.LENGTH_SHORT).show();
-                    addtosharedpreference(userLoggedIn.getId(),userLoggedIn.getEmail(),userLoggedIn.getPassword(),userLoggedIn.getName(),userLoggedIn.getGender(),userLoggedIn.getSp_status());
+                    addtosharedpreference(userLoggedIn.getId(),userLoggedIn.getEmail(),userLoggedIn.getPassword(),userLoggedIn.getName());
 
                     setUIToWait(false);
 //                    Toast.makeText(SiginInActivity.this, ""+userLoggedIn, Toast.LENGTH_SHORT).show();
@@ -227,7 +221,7 @@ public class SiginInActivity extends AppCompatActivity {
         return "";
     }
 
-    public void addtosharedpreference(int user_id,String email,String Password,String name, String gender, String sp_status){
+    public void addtosharedpreference(int user_id,String email,String Password,String name){
 
         SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferencespre.edit();
@@ -235,12 +229,9 @@ public class SiginInActivity extends AppCompatActivity {
         editor.putString("Email",email);
         editor.putString("Password",Password);
         editor.putString("name",name);
-        editor.putString("gender",gender);
-        editor.putString("sp_status",sp_status);
-
         editor.apply();
         editor.commit();
-
+        Toast.makeText(this, "Shared PReference are working "+user_id+"\n"+Password, Toast.LENGTH_SHORT).show();
 
 
 

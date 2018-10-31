@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.vartista.www.vartista.modules.general.AppSettings">
+
+    <TextView
+        android:id="@+id/Privacy"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Account Settings"
+        android:padding="15dp"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="42dp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/Privacy"
+        android:background="@color/gray"/>
+
+    <TextView
+        android:id="@+id/ChangePasswordappsetting"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textSize="20dp"
+        android:padding="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/Privacy"
+        android:text="Change Password"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="77dp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/ChangePasswordappsetting"
+        android:background="@color/gray"/>
+
+
+    <TextView
+        android:id="@+id/DeleteAccount"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Delete My Account"
+        android:textSize="20dp"
+        android:padding="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/ChangePasswordappsetting"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="112dp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/DeleteAccount"
+        android:background="@color/gray"/>
+
+    <TextView
+        android:id="@+id/Help"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Help"
+        android:textSize="20dp"
+        android:padding="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/DeleteAccount"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="151dp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/Help"
+        android:background="@color/gray"/>
+
+    <TextView
+        android:id="@+id/License"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="License"
+        android:textSize="20dp"
+        android:padding="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/Help"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="186dp" />
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/License"
+        android:background="@color/gray"/>
+
+    <TextView
+        android:id="@+id/About"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="About"
+        android:textSize="20dp"
+        android:padding="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/License"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="224dp" />
+</RelativeLayout>
