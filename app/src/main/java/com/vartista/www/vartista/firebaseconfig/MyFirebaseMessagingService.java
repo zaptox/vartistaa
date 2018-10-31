@@ -105,7 +105,9 @@ private  void sendNotification(String messageBody){
     notificationBuilder.setSound(soundURI);
     notificationBuilder.setLights(0xff00ff00, 300, 100);
     notificationBuilder.setSmallIcon(R.drawable.loggoo);
-    notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.loggoo));
+    notificationBuilder.setShowWhen(true);
+
+    notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.mehdi));
     notificationBuilder.setAutoCancel(true);
     Vibrator vibrator=(Vibrator)this.getSystemService(Context.VIBRATOR_SERVICE);
     vibrator.vibrate(1000);

@@ -36,6 +36,8 @@ import java.util.List;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.ServiceRequets;
+import com.vartista.www.vartista.restcalls.ApiClient;
+import com.vartista.www.vartista.restcalls.SendNotificationApiInterface;
 
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
@@ -51,6 +53,7 @@ public class MyServiceRequests extends AppCompatActivity {
     RecyclerView listViewMyReqeustServices;
     MyRequestsServicesListAdapter myRequestServicesListAdapter;
     List<ServiceRequets> serviceRequestsList;
+    public static SendNotificationApiInterface sendNotificationApiInterface;
 
 
 
