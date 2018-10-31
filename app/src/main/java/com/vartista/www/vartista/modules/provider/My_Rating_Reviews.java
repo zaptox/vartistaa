@@ -18,6 +18,7 @@ import com.vartista.www.vartista.beans.RatingsReviewDetailBean;
 import com.vartista.www.vartista.beans.usernotificationitems;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.user.UserNotification_activity;
+import com.willy.ratingbar.ScaleRatingBar;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -42,6 +43,8 @@ public class My_Rating_Reviews extends AppCompatActivity {
     private RatingsReviewDetailsAdaptor listadapter;
     ArrayList<RatingsReviewDetailBean> list;
     int serviceproviderid;
+    ScaleRatingBar ratingBar;
+    Float serviceProvierRating=0.0f;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +56,15 @@ public class My_Rating_Reviews extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(getApplicationContext());
         view.setHasFixedSize(true);
         view.setLayoutManager(layoutManager);
-        serviceproviderid= 7;
+        SharedPreferences object =getSharedPreferences("Login", Context.MODE_PRIVATE);
+        serviceproviderid= object.getInt("user_id",0);
         new My_Rating_Reviews.Conncetion(My_Rating_Reviews.this,serviceproviderid).execute();
-
+        ratingBar = findViewById(R.id.simpleRatingBar);
+        ratingBar.setNumStars(5);
+        ratingBar.setMinimumStars(1);
+        ratingBar.setStarPadding(10);
+        ratingBar.setStepSize(0.5f);
+        ratingBar.setEnabled(false);
     }
     class Conncetion extends AsyncTask<String,String ,String > {
         private int user_customer_id;
@@ -79,7 +88,7 @@ public class My_Rating_Reviews extends AppCompatActivity {
             String result = "";
 
 //            Toast.makeText(My_Rating_Reviews.this, ""+serviceproviderid, Toast.LENGTH_SHORT).show();
-            final String BASE_URL = "http://vartista.com/vartista_app/My_Ratings_Review.php?service_provider_id=7";
+            final String BASE_URL = "http://vartista.com/vartista_app/My_Ratings_Review.php?service_provider_id="+serviceproviderid;
             try {
                 HttpClient client = new DefaultHttpClient();
                 HttpGet request = new HttpGet();
@@ -107,6 +116,9 @@ public class My_Rating_Reviews extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
+
+            Double rating;
+
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
@@ -133,11 +145,17 @@ public class My_Rating_Reviews extends AppCompatActivity {
                         String Date = ser1.getString("date");
                         String Time = ser1.getString("time");
                         list.add(new RatingsReviewDetailBean(id,stars,UserName,user_id,SpName,service_p_id,service_id,service_tittle,user_remarks,Date,Time));
+                        serviceProvierRating+=list.get(j).getStars();
 
                     }
                     listadapter = new RatingsReviewDetailsAdaptor(getApplicationContext(),list);
                     view.setAdapter(listadapter);
                     headername.setText(list.get(0).getSpName());
+                    Float finalrating = (Float)serviceProvierRating/list.size()+1;
+                    Toast.makeText(My_Rating_Reviews.this, ""+serviceProvierRating, Toast.LENGTH_SHORT).show();
+                    ratingBar.setRating(finalrating);
+                    ratingBar.setIsIndicator(true);
+                    ratingBar.setFocusable(false);
                 } else {
                     Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
                 }

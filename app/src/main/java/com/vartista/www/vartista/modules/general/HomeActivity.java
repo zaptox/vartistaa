@@ -206,11 +206,11 @@ public class HomeActivity extends AppCompatActivity
 
         }
 
-//        else if (id == R.id.Userappointments) {
-//            Intent intent = new Intent(HomeActivity.this, User.class);
-//            startActivity(intent);
-//
-//        }
+        else if (id == R.id.Userappointments) {
+            Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
+            startActivity(intent);
+
+        }
 
 
 

@@ -14,12 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".modules.general.SplashActivity"
+            android:name=".modules.general.SiginInActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".modules.general.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".modules.general.SiginInActivity">
+        <activity android:name=".modules.general.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

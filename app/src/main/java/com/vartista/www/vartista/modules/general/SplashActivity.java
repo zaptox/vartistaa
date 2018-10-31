@@ -83,20 +83,22 @@ public class SplashActivity extends AwesomeSplash {
     public void animationsFinished() {
         startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
          finish();
+        Toast.makeText(this, "splash ended", Toast.LENGTH_SHORT).show();
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-//
-//        if((ob.getString("Email","").equals(user.getEmail()) && ob.getString("Password","").equals(user.getPassword()))){
-//            Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
-//            intent.putExtra("user", userLoggedIn);
-//            startActivity(intent);
-//            finivnsh();
+        SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
+        perfromLogin(ob.getString("Email",""),ob.getString("Password",""));
+//        if((ob.getString("Email","").equals("") && ob.getString("Password","").equals(""))){
+//            Toast.makeText(SplashActivity.this,""+ob.getString("Email",""),Toast.LENGTH_SHORT);
+//            startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
+//            finish();
 //
 //            }
 //        else{
-
-
-//            Toast.makeText(SplashActivity.this,""+ob.getString("Email",""),Toast.LENGTH_SHORT);
-//            startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
+//
+//            Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+//            intent.putExtra("user", userLoggedIn);
+//            startActivity(intent);
+////            Toast.makeText(this, "The Email is"+userLoggedIn.getEmail().toString(), Toast.LENGTH_SHORT).show();
 //            finish();
 //        }
 
@@ -161,7 +163,7 @@ public class SplashActivity extends AwesomeSplash {
                     String pass_shared=ob.getString("Password","");
 
                     if(email_shared.equals("") && pass_shared.equals("")){
-
+                        Toast.makeText(SplashActivity.this, "Shared Preference are empty", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
 
                     }
@@ -169,12 +171,12 @@ public class SplashActivity extends AwesomeSplash {
 
                         Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
                         intent.putExtra("user", userLoggedIn);
+                        Toast.makeText(SplashActivity.this, "Shared PReference are not empty", Toast.LENGTH_SHORT).show();
 
                         startActivity(intent);
                         finish();
                     }
-//
-//
+
                 } else if (response.body().getResponse().equals("failed")) {
                     //  Toast.makeText(SiginInActivity.this, "Login Failed.. Please try again", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(SiginInActivity.this, "", Toast.LENGTH_SHORT).show();
