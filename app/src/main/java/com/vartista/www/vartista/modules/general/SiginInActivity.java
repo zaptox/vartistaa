@@ -229,10 +229,9 @@ public class SiginInActivity extends AppCompatActivity {
         editor.putString("Email",email);
         editor.putString("Password",Password);
         editor.putString("name",name);
-
         editor.apply();
         editor.commit();
-
+        Toast.makeText(this, "Shared PReference are working "+user_id+"\n"+Password, Toast.LENGTH_SHORT).show();
 
 
 

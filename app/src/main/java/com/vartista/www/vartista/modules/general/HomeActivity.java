@@ -141,7 +141,7 @@ public class HomeActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(HomeActivity.this,SettingsActivity.class));
+            startActivity(new Intent(HomeActivity.this,AppSettings.class));
             return true;
         }
 
@@ -220,6 +220,12 @@ public class HomeActivity extends AppCompatActivity
 
         else if (id == R.id.provider_doc_upload) {
             Intent intent = new Intent(HomeActivity.this, DocumentUploadActivity.class);
+            startActivity(intent);
+
+        }
+
+        else if (id == R.id.Userappointments) {
+            Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
             startActivity(intent);
 
         }

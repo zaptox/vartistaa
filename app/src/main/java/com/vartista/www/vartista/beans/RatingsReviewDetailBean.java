@@ -16,7 +16,7 @@ public class RatingsReviewDetailBean {
     private int id;
 
     @SerializedName("Stars")
-    private int Stars;
+    private Float Stars;
 
     @SerializedName("UserName")
     private String UserName;
@@ -39,7 +39,13 @@ public class RatingsReviewDetailBean {
     @SerializedName("user_remarks")
     private String user_remarks;
 
-    public RatingsReviewDetailBean(int id, int stars, String userName, String user_id, String spName, int service_p_id, String service_id, String service_tittle, String user_remarks) {
+    @SerializedName("Date")
+    private String Date;
+
+    @SerializedName("Time")
+    private String Time;
+
+    public RatingsReviewDetailBean(int id, Float stars, String userName, String user_id, String spName, int service_p_id, String service_id, String service_tittle, String user_remarks, String date, String time) {
         this.id = id;
         Stars = stars;
         UserName = userName;
@@ -49,6 +55,8 @@ public class RatingsReviewDetailBean {
         this.service_id = service_id;
         this.service_tittle = service_tittle;
         this.user_remarks = user_remarks;
+        Date = date;
+        Time = time;
     }
 
     public String getResponse() {
@@ -67,11 +75,11 @@ public class RatingsReviewDetailBean {
         this.id = id;
     }
 
-    public int getStars() {
+    public Float getStars() {
         return Stars;
     }
 
-    public void setStars(int stars) {
+    public void setStars(Float stars) {
         Stars = stars;
     }
 
@@ -129,5 +137,21 @@ public class RatingsReviewDetailBean {
 
     public void setUser_remarks(String user_remarks) {
         this.user_remarks = user_remarks;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public String getTime() {
+        return Time;
+    }
+
+    public void setTime(String time) {
+        Time = time;
     }
 }

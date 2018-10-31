@@ -3,9 +3,7 @@ package com.vartista.www.vartista.restcalls;
 
 
 import com.vartista.www.vartista.beans.CreateRequest;
-import com.vartista.www.vartista.beans.Service;
 import com.vartista.www.vartista.beans.ServiceRequets;
-import com.vartista.www.vartista.beans.Services;
 import com.vartista.www.vartista.beans.User;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -61,4 +59,9 @@ public interface ApiInterface {
 
     @GET("request_serviceupdate.php")
        Call<ServiceRequets> updateOnClickRequests(@Query("requestservice_status") int requestservice_status,@Query("requestservice_id") int requestservice_id);
+
+   @GET("Assign_Ratings.php")
+   Call<CreateRequest> InsertRatings(@Query("id") int id,@Query("stars") double stars,@Query("user_id") int user_id,@Query("service_p_id") int service_p_id,@Query("service_id") int service_id,
+
+                            @Query("user_remarks") String user_remarks,@Query("date") String date,@Query("time") String time);
 }
