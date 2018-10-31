@@ -50,7 +50,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
 
         holder.service_p_name.setText("" + myServicesList.get(position).getSp_name());
         holder.service_name.setText("" + myServicesList.get(position).getService_title());
-        Toast.makeText(context, "name" +myServicesList.get(position).getSp_name()+" "+myServicesList.get(position).getUser_id() , Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "name" +myServicesList.get(position).getSp_name()+" "+myServicesList.get(position).getUser_id() , Toast.LENGTH_SHORT).show();
 
         final int abhipoition = position;
         final ViewHolder holder1 = holder;
@@ -60,7 +60,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "requesr ID:" + service_name, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "requesr ID:" + service_name, Toast.LENGTH_SHORT).show();
 
                 int s_provider_id= myServicesList.get(position).getUser_id();
                 int cat_id= myServicesList.get(position).getCategory_id();
@@ -76,7 +76,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
                 intent.putExtra("user_id",user_id);
                 intent.putExtra("spname",sp_name);
 
-                Toast.makeText(context, "service provider "+s_provider_id+", cat_id: "+cat_id+", user_id: "+user_id, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "service provider "+s_provider_id+", cat_id: "+cat_id+", user_id: "+user_id, Toast.LENGTH_SHORT).show();
                 context.startActivity(intent);
 
             }
