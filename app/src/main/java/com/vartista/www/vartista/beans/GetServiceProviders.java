@@ -30,6 +30,23 @@ public class GetServiceProviders implements Serializable,Parcelable{
 
     }
 
+
+    public GetServiceProviders(int service_id, int address_id, double latitude, double longitude, int user_id, String service_title, String service_description, double price, int category_id, String sp_name,int serv_count,String location) {
+        this.service_id = service_id;
+        this.address_id = address_id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.user_id = user_id;
+        this.service_title = service_title;
+        this.service_description = service_description;
+        this.price = price;
+        this.category_id = category_id;
+        this.sp_name=sp_name;
+        this.serv_count=serv_count;
+        this.location=location;
+    }
+
+
     protected GetServiceProviders(Parcel in) {
         Response = in.readString();
         category_name = in.readString();
@@ -229,8 +246,33 @@ public class GetServiceProviders implements Serializable,Parcelable{
         this.sp_name = sp_name;
     }
 
+    public int getServ_count() {
+        return serv_count;
+    }
+
+    public void setServ_count(int serv_count) {
+        this.serv_count = serv_count;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     @SerializedName("name")
     private String category_name;
+
+
+    @SerializedName("location")
+    private String location;
+
+
+
+    @SerializedName("serv_count")
+    private int serv_count;
 
     @SerializedName("service_id")
     private int service_id;

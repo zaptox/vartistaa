@@ -1,16 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F99F1B</color>
-    <color name="colorPrimaryDark">#FF1C6B</color>
-    <color name="colorAccent">#FF1C6B</color>
+
+    <color name="colorPrimary">#546b81</color>
+    <color name="colorPrimaryDark">#546b81</color>
+    <color name="colorAccent">#546b81</color>
 
 
-    <color name="color_splash">#ff0000</color>
+    <!--<color name="colorPrimary">#F99F1B</color>-->
+    <!--    <color name="colorPrimaryDark">#FF1C6B</color> -->
+<!--    <color name="colorAccent">#FF1C6B</color> -->
+
+    <!--<color name="color_splash">#ff0000</color>-->
+
+    <color name="color_splash">#546b81</color>
+
     <color name="color_good">#FFFFFF</color>
 
     <color name="color_danger">#ff0000</color>
 
+
+    <color name="grey2_for_design">#a8a8a8</color>
+    <color name="grey_for_design">#95afc0</color>
+
+    <color name="pink_for_design">#FF1C6B</color>
+    <color name="black_for_design">#000000</color>
+    <color name="green_for_design">#006400	</color>
+    <color name="blue_for_design">#000000</color>
+    <color name="blueky_for_design">#FFFFFF</color>
+    <color name="greyky_for_design">#26a1db</color>
+    <color name="zaptox_blue">#26a1db</color>
+    <color name="gray_client">#546b81</color>
+
+
+
+
     <!-- Service List color SAAD -->
+
     <color name="price_color">#f700d0ff</color>
 
 
@@ -23,7 +48,7 @@
     <color name="gray">#A9A9A9</color>
     <color name="light_gray">#BDBDBD</color>
     <color name="extra_light_gray">#ffdbdbdb</color>
-    <color name="white">#FFFFFF</color>
+    <color name="white">#26a1db</color>
 
     <!-- SoundCloud Shades of Gray-->
     <color name="grey_darker">#424242</color>

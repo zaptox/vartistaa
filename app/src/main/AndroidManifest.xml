@@ -15,16 +15,25 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".modules.general.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".modules.general.SignUpActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".modules.general.SiginInActivity">
+            android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+
+
+        <activity
+            android:name=".modules.general.SignUpActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".modules.general.SiginInActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+
+            >
+
         </activity>
         <!-- <service android:name=".firebaseconfig.FirebaseMessagingService"> -->
         <!-- <intent-filter> -->

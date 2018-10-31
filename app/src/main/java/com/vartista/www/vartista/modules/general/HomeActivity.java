@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -43,6 +44,7 @@ public class HomeActivity extends AppCompatActivity
     User u=null;
     public static int user_id;
     public static User user;
+
     ImageView imageViewProfileDrawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +85,37 @@ public class HomeActivity extends AppCompatActivity
 
         // view pager
         TabLayout tabLayout=(TabLayout)findViewById(R.id.tabs);
-        ViewPager viewpager =(ViewPager)findViewById(R.id.viewpager);
+        final ViewPager viewpager =(ViewPager)findViewById(R.id.viewpager);
 
-        PagerAdapter adapter=new PagerAdapter(getSupportFragmentManager(),user_id);
+        PagerAdapter adapter=new PagerAdapter(getSupportFragmentManager(),user_id,getApplicationContext());
         viewpager.setAdapter(adapter);
+        viewpager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+
+
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == PagerAdapter.MANDATORY_PAGE_LOCATION && positionOffset > 0.5) {
+                    viewpager.setCurrentItem(PagerAdapter.MANDATORY_PAGE_LOCATION, false);
+                    Toast.makeText(HomeActivity.this, ""+PagerAdapter.MANDATORY_PAGE_LOCATION, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         tabLayout.setupWithViewPager(viewpager);
 
 //

@@ -49,7 +49,9 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
 
 
         holder.service_p_name.setText("" + myServicesList.get(position).getSp_name());
-        holder.service_name.setText("" + myServicesList.get(position).getService_title());
+        holder.service_name.setText("" + myServicesList.get(position).getService_title()+"and "+myServicesList.get(position).getServ_count()+" more");
+        holder.service_address.setText(myServicesList.get(position).getLocation());
+
         Toast.makeText(context, "name" +myServicesList.get(position).getSp_name()+" "+myServicesList.get(position).getUser_id() , Toast.LENGTH_SHORT).show();
 
         final int abhipoition = position;
@@ -94,7 +96,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
         View mView;
 
 
-        public TextView service_p_name, service_name;
+        public TextView service_p_name, service_name, service_address;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -102,6 +104,9 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
 
             service_p_name = (TextView) mView.findViewById(R.id.textViewName);
             service_name = (TextView) mView.findViewById(R.id.textViewService);
+            service_address=(TextView) mView.findViewById(R.id.textViewAddress);
+
+
 
         }
     }

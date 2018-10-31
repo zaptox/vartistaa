@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
@@ -43,14 +44,10 @@ public class SignUpActivity extends AppCompatActivity {
     private static final int PICK_IMAGE=100;
     private Uri filePath;
     private Bitmap bitmap;
+    private RadioButton male_radio,female_radio;
     private ProgressDialog progressDialog;
     private static final String UPLOAD_URL = "http://vartista.com/vartista_app/upload_profile.php";
     private boolean select_profile=false;
-
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +63,8 @@ public class SignUpActivity extends AppCompatActivity {
         user_password= findViewById(R.id.user_password);
         upload= findViewById(R.id.upload);
         image= findViewById(R.id.profile_image);
+        male_radio=findViewById(R.id.male);
+        female_radio=findViewById(R.id.female);
 
         Intent  i = getIntent();
 //        sp_list=i.getParcelableArrayListExtra("service_providers");
@@ -87,12 +86,21 @@ public class SignUpActivity extends AppCompatActivity {
                 String user_email1= user_email.getText().toString();
                 String user_contact1= user_contact.getText().toString();
                 String user_password1= user_password.getText().toString();
+                String gender="";
+                if(male_radio.isChecked()){
 
+                    gender="male";
+                }
+                else if(female_radio.isChecked()){
+
+                    gender="female";
+
+                }
                 setUIToWait(true);
 
 ///*
                 progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                Call<User> call=SignUpActivity.apiInterface.performRegistration(user_name1,user_email1,user_password1,null,"1",user_contact1,null,null);
+                Call<User> call=SignUpActivity.apiInterface.performRegistration(user_name1,user_email1,user_password1,null,"1",user_contact1,null,null,gender);
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call <User> call, Response<User> response) {
