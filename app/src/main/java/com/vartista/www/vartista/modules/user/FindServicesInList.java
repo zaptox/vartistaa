@@ -59,7 +59,10 @@ public class FindServicesInList extends AppCompatActivity {
 
     public String filterLocation, filterGender;
 
+    public int cat_id2;
     public int filterCost;
+
+    public boolean filterApplied = false;
     
     public static ApiInterface apiInterface;
     ArrayList<GetServiceProviders> splist;
@@ -78,6 +81,7 @@ public class FindServicesInList extends AppCompatActivity {
         Intent intent=getIntent();
         int cat_id=intent.getIntExtra("cat_id",0);
 
+        cat_id2=cat_id;
 //                intent.putExtra("cat_id",cat_id);
 
         listViewMyServices=(RecyclerView) findViewById(R.id.lvFindServices);
@@ -117,8 +121,27 @@ public class FindServicesInList extends AppCompatActivity {
                         filterGender = String.valueOf(genderSpinner.getSelectedItem());
                         filterCost = 0;
 
+                        filterApplied = true;
+                        Toast.makeText(FindServicesInList.this, ""+filterLocation+""+filterGender, Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
-                        Toast.makeText(FindServicesInList.this, "Location: "+filterLocation+"\nGender: "+filterGender,Toast.LENGTH_SHORT).show();
+
+//                        Toast.makeText(FindServicesInList.this, "Filter: "+filterApplied+"\nLocation: "+filterLocation+"\nGender: "+filterGender,Toast.LENGTH_SHORT).show();
+
+
+                        if(filterApplied==true){
+
+                            Toast.makeText(FindServicesInList.this,"filter applied py click neechy query likhi hia"+ filterApplied,Toast.LENGTH_SHORT).show();
+
+                            new FindServicesInList.Conncetion(FindServicesInList.this,cat_id2,filterLocation,filterGender,filterCost).execute();
+
+
+                        }
+                        else {
+                            Toast.makeText(FindServicesInList.this,""+ filterApplied,Toast.LENGTH_SHORT).show();
+
+                        }
+
+
 
                     }
                 });
@@ -130,8 +153,7 @@ public class FindServicesInList extends AppCompatActivity {
 
 
 
-        new FindServicesInList.Conncetion(FindServicesInList.this,cat_id).execute();
-
+        new FindServicesInList.Conncetion(FindServicesInList.this, cat_id).execute();
 
 
     }
@@ -140,8 +162,15 @@ public class FindServicesInList extends AppCompatActivity {
 
 
 
+
+
+
+
     class Conncetion extends AsyncTask<String,String ,String > {
         private int cat_id;
+        private String filter_location;
+        private String filter_gender;
+        private int filter_cost;
         private ProgressDialog dialog;
 
         public Conncetion(Context activity, int cat_id) {
@@ -149,10 +178,22 @@ public class FindServicesInList extends AppCompatActivity {
             this.cat_id = cat_id;
         }
 
+        public Conncetion(Context activity, int cat_id,String filter_location,String filter_gender,int filter_cost) {
+            dialog = new ProgressDialog(activity);
+            this.cat_id = cat_id;
+            this.filter_location=filter_location;
+            this.filter_gender=filter_gender;
+            this.filter_cost=filter_cost;
+        }
+
+
+
+
         @Override
         protected void onPreExecute() {
-            dialog.setMessage("Retriving data Please Wait..");
-            dialog.show();
+//            dialog.setMessage("Retriving data Please Wait..");
+//            dialog.show();
+
         }
 
         @Override
@@ -161,33 +202,80 @@ public class FindServicesInList extends AppCompatActivity {
 
             String result = "";
 
-            final String BASE_URL = "http://vartista.com/vartista_app/get_service_providers.php?cat_id=" + cat_id;
-            try {
-                HttpClient client = new DefaultHttpClient();
-                HttpGet request = new HttpGet();
+            if(filterApplied == true)
+            {
+                splist= new ArrayList<GetServiceProviders>();
+                final String BASE_URL = "http://vartista.com/vartista_app/filter_get_service_providers.php?cat_id='3'&filterLocation='Karachi'&filterGender='Male'";
+//                //http://vartista.com/vartista_app/filter_get_service_providers.php?cat_id=" + cat_id+"&filterLocation="+ filter_location +"&filterGender"+ filter_gender
 
-                request.setURI(new URI(BASE_URL));
-                HttpResponse response = client.execute(request);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-                StringBuffer stringBuffer = new StringBuffer();
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuffer.append(line);
-                    break;
+//                Toast.makeText(getApplicationContext(), ""+filter_location+""+filter_gender, Toast.LENGTH_SHORT).show();
+
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(FindServicesInList.this, "link main chala gaya"+filter_location+""+filter_gender, Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                try {
+                    HttpClient client = new DefaultHttpClient();
+                    HttpGet request = new HttpGet();
+
+                    request.setURI(new URI(BASE_URL));
+                    HttpResponse response = client.execute(request);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                    StringBuffer stringBuffer = new StringBuffer();
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        stringBuffer.append(line);
+                        break;
+                    }
+                    reader.close();
+                    result = stringBuffer.toString();
+
+
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                    return new String("There is exception" + e.getMessage());
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                reader.close();
-                result = stringBuffer.toString();
+                return result;
 
-
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-                return new String("There is exception" + e.getMessage());
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-            return result;
+
+            else {
+
+                final String BASE_URL = "http://vartista.com/vartista_app/get_service_providers.php?cat_id=" + cat_id;
+                try {
+                    HttpClient client = new DefaultHttpClient();
+                    HttpGet request = new HttpGet();
+
+                    request.setURI(new URI(BASE_URL));
+                    HttpResponse response = client.execute(request);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                    StringBuffer stringBuffer = new StringBuffer();
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        stringBuffer.append(line);
+                        break;
+                    }
+                    reader.close();
+                    result = stringBuffer.toString();
+
+
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                    return new String("There is exception" + e.getMessage());
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return result;
+
+            }
         }
 
         @Override
@@ -223,13 +311,21 @@ public class FindServicesInList extends AppCompatActivity {
                         double longitude = Double.parseDouble(ser1.getString("longitude"));
                         double latitude = Double.parseDouble(ser1.getString("latitude"));
                         String sp_name=ser1.getString("name");
+//                        Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
 
-                        Toast.makeText(FindServicesInList.this, ""+user_id2, Toast.LENGTH_SHORT).show();
                         splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name));
 
-                    }
-//                    Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
 
+
+                    }
+
+                    if(filterApplied==true) {
+                    Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(FindServicesInList.this, "filter applied true nh hai purani data hai ye"+splist, Toast.LENGTH_SHORT).show();
+
+                    }
                     myServicesListAdapter=new ServicesInListMapAdapter(getApplicationContext(),splist);
                     listViewMyServices.setAdapter(myServicesListAdapter);
 
@@ -237,7 +333,7 @@ public class FindServicesInList extends AppCompatActivity {
 
                 } else {
                    //
-                    // Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                     Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
             } catch (JSONException e) {
