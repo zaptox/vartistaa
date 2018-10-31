@@ -5,8 +5,6 @@ import android.app.Application;
 import net.gotev.uploadservice.BuildConfig;
 import net.gotev.uploadservice.UploadService;
 
-//import net.gotev.uploadservice.BuildConfig;
-//import net.gotev.uploadservice.UploadService;
 
 public class App extends Application {
 
