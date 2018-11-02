@@ -57,7 +57,8 @@
         <activity android:name=".modules.user.AssignRatings" />
         <activity android:name=".modules.provider.DocumentUploadActivity" />
         <activity android:name=".modules.provider.My_Rating_Reviews" />
-        <activity android:name=".modules.general.AppSettings"></activity>
+        <activity android:name=".modules.general.AppSettings" />
+        <activity android:name=".modules.general.ForgotPasswordActivity"></activity>
     </application>
 
 </manifest>

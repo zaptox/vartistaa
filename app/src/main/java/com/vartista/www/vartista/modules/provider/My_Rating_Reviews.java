@@ -151,8 +151,10 @@ public class My_Rating_Reviews extends AppCompatActivity {
                     listadapter = new RatingsReviewDetailsAdaptor(getApplicationContext(),list);
                     view.setAdapter(listadapter);
                     headername.setText(list.get(0).getSpName());
-                    Float finalrating = (Float)serviceProvierRating/list.size()+1;
-                    Toast.makeText(My_Rating_Reviews.this, ""+serviceProvierRating, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(My_Rating_Reviews.this, " The total rating of service provider "+serviceProvierRating
+//                            +"\nThe size of the list is"+list.size(), Toast.LENGTH_SHORT).show();
+                    Float finalrating = (Float)serviceProvierRating/list.size();
+//                    Toast.makeText(My_Rating_Reviews.this, "This rating is after dividing with size"+finalrating, Toast.LENGTH_SHORT).show();
                     ratingBar.setRating(finalrating);
                     ratingBar.setIsIndicator(true);
                     ratingBar.setFocusable(false);

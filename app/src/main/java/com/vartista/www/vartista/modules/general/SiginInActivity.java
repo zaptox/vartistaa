@@ -31,6 +31,7 @@ public class SiginInActivity extends AppCompatActivity {
 
     private Button signin;
     private TextView signup;
+//    private TextView forgotpassword;
     private EditText email;
     private EditText password;
     private ProgressDialog progressDialog;
@@ -53,6 +54,7 @@ public class SiginInActivity extends AppCompatActivity {
         }
         signin = findViewById(R.id.sign_in_button);
         signup = findViewById(R.id.t_signUp);
+//        forgotpassword = findViewById(R.id.textView3);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
 
@@ -63,6 +65,18 @@ public class SiginInActivity extends AppCompatActivity {
                 startActivity(new Intent(SiginInActivity.this, SignUpActivity.class));
             }
         });
+
+//        forgotpassword.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(SiginInActivity.this, ForgotPasswordActivity.class));
+//            }
+//        });
+
+
+
+
+
 
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
