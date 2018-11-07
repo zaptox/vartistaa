@@ -105,7 +105,13 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 setUIToWait(true);
 
-///*
+
+                if(select_profile){
+
+
+
+
+
                 progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 Call<User> call=SignUpActivity.apiInterface.performRegistration(user_name1,user_email1,user_password1,null,"1",user_contact1,null,null,gender);
                 call.enqueue(new Callback<User>() {
@@ -118,13 +124,14 @@ public class SignUpActivity extends AppCompatActivity {
                            uploadMultipart(filePath,user_email.getText().toString(),user_password.getText().toString());
                            startActivity(new Intent(getApplicationContext(),SiginInActivity.class));
                               finish();}
+
                               else{
                               showCompletedDialog("Error","select the profile image!");
                           }
 
-                        }else if(response.body().getResponse().equals("exist")){
+                        }
+                        else if(response.body().getResponse().equals("exist")){
                             setUIToWait(false);
-
                              showCompletedDialog("Error","User Already Exist!");
                         }
                         else if(response.body().getResponse().equals("error")){
@@ -152,7 +159,13 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
 
+                }
 
+                else{
+
+                    showCompletedDialog("Error","select the profile image!");
+
+                }
             }
         });
 
