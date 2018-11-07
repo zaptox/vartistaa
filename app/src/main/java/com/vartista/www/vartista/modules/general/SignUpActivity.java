@@ -1,20 +1,26 @@
 package com.vartista.www.vartista.modules.general;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
@@ -43,14 +49,11 @@ public class SignUpActivity extends AppCompatActivity {
     private static final int PICK_IMAGE=100;
     private Uri filePath;
     private Bitmap bitmap;
+    private RadioButton male_radio,female_radio;
     private ProgressDialog progressDialog;
     private static final String UPLOAD_URL = "http://vartista.com/vartista_app/upload_profile.php";
     private boolean select_profile=false;
-
-
-
-
-
+    private static final int STORAGE_PERMISSION_CODE = 12443;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
         apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
 //        sp_list= new ArrayList<>();
+        requestStoragePermission();
 
         create= findViewById(R.id.create);
         user_name= findViewById(R.id.user_name);
@@ -66,6 +70,8 @@ public class SignUpActivity extends AppCompatActivity {
         user_password= findViewById(R.id.user_password);
         upload= findViewById(R.id.upload);
         image= findViewById(R.id.profile_image);
+        male_radio=findViewById(R.id.male);
+        female_radio=findViewById(R.id.female);
 
         Intent  i = getIntent();
 //        sp_list=i.getParcelableArrayListExtra("service_providers");
@@ -87,12 +93,21 @@ public class SignUpActivity extends AppCompatActivity {
                 String user_email1= user_email.getText().toString();
                 String user_contact1= user_contact.getText().toString();
                 String user_password1= user_password.getText().toString();
+                String gender="";
+                if(male_radio.isChecked()){
 
+                    gender="male";
+                }
+                else if(female_radio.isChecked()){
+
+                    gender="female";
+
+                }
                 setUIToWait(true);
 
 ///*
                 progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                Call<User> call=SignUpActivity.apiInterface.performRegistration(user_name1,user_email1,user_password1,null,"1",user_contact1,null,null);
+                Call<User> call=SignUpActivity.apiInterface.performRegistration(user_name1,user_email1,user_password1,null,"1",user_contact1,null,null,gender);
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call <User> call, Response<User> response) {
@@ -249,6 +264,37 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
+
+    private void requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return;
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+        //And finally ask for the permission
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+    }
+
+    //This method will be called when the user will tap on allow or deny
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        //Checking the request code of our request
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+
+            //If permission is granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Displaying a toast
+                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
+            } else {
+                //Displaying another toast if permission is not granted
+                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 
 
 }

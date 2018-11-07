@@ -22,8 +22,9 @@ public interface ApiInterface {
 
                                 @Query("status") String status, @Query("contact") String contact,
 
+                                @Query("created_at") String created_at, @Query("updated_at") String updated_at,
 
-                                @Query("created_at") String created_at, @Query("updated_at") String updated_at
+                                @Query("gender") String gender
 
                                 );
 

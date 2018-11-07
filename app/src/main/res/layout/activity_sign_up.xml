@@ -85,6 +85,46 @@
             android:inputType="phone"
             />
 
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gender:"
+                />
+            <RadioGroup
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:gravity="end"
+                android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/male"
+                android:textSize="18sp"
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male"
+                />
+            <RadioButton
+                android:id="@+id/female"
+                android:layout_width="wrap_content"
+                android:textSize="18sp"
+                android:layout_height="wrap_content"
+                android:text="Female"
+                android:layout_marginLeft="25sp"
+                />
+            </RadioGroup>
+
+
+        </LinearLayout>
+        
         <EditText
             android:layout_weight="0.5"
             android:textSize="17.5sp"
@@ -118,6 +158,7 @@
             android:background="@drawable/loginbtneffect"
             android:id="@+id/create"
             />
+        
         <!--</ScrollView>-->
     </LinearLayout>
 

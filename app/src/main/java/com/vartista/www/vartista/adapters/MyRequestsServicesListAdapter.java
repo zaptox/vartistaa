@@ -1,5 +1,6 @@
 package com.vartista.www.vartista.adapters;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +13,11 @@ import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.beans.NotificationsManager;
 import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
+import com.vartista.www.vartista.restcalls.SendNotificationApiInterface;
 
 import java.util.List;
 
@@ -26,6 +29,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
     public List<ServiceRequets> myReqServicesList;
     public Context context;
     public static ApiInterface apiInterface;
+    public static SendNotificationApiInterface sendNotificationApiInterface;
 
     public MyRequestsServicesListAdapter(Context context, List<ServiceRequets> myReqServicesList){
         this.myReqServicesList = myReqServicesList;
@@ -57,15 +61,19 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
            public void onClick(final View view) {
                int status = 1;
                int requestservice_id = myReqServicesList.get(position).getReqservice_id();
-                              Call<ServiceRequets> call = MyRequestsServicesListAdapter.apiInterface.updateOnClickRequests(status,requestservice_id);
+               Call<ServiceRequets> call = MyRequestsServicesListAdapter.apiInterface.updateOnClickRequests(status,requestservice_id);
                call.enqueue(new Callback<ServiceRequets>() {
                    @Override
                    public void onResponse(Call<ServiceRequets> call, Response<ServiceRequets> response) {
 
+//                            Toast.makeText(context,myReqServicesList.get(position).getService_provider_id(),Toast.LENGTH_SHORT).show();
                                               if(response.body().getResponse().equals("ok")){
                                                   remove(position);
                                                   notifyDataSetChanged();
                                                   MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
+
+
+
 
                        }
 
@@ -85,7 +93,24 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                        Toast.makeText(view.getContext(),"Update Failed",Toast.LENGTH_SHORT).show();
                    }
                });
-            }
+               Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
+                                                          .sendPushNotification(myReqServicesList.get(position).getService_provider_id(),
+                                                                  "Accept  you request for appointment","Vartista");
+                                                  callNotification.enqueue(new Callback<NotificationsManager>() {
+                                                      @Override
+                                                      public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
+
+                                                      }
+
+                                                      @Override
+                                                      public void onFailure(Call<NotificationsManager> call, Throwable t) {
+
+                                                      }
+                                                  });
+
+
+
+           }
        });
 
 
@@ -157,6 +182,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
             accept = mView.findViewById(R.id.button_paynow);
             decline = mView.findViewById(R.id.buttonReject);
             apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
+            sendNotificationApiInterface = ApiClient.getApiClient().create(SendNotificationApiInterface.class);
 
         }
     }

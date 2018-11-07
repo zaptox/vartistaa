@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
+import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
 import com.vartista.www.vartista.modules.user.AssignRatings;
@@ -44,11 +45,11 @@ public class ConfigSettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent=new Intent(getContext(),AssignRatings.class);
+                Intent intent=new Intent(getContext(),DocumentUploadActivity.class);
                 intent.putExtra("userId",user_id);
                 startActivity(intent);
 
-                Toast.makeText(getContext(), " Now you are a service provider", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), " Now you are a service provider", Toast.LENGTH_SHORT).show();
 
             }
         });

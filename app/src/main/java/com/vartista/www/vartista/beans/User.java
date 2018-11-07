@@ -54,6 +54,16 @@ public class User implements Serializable{
     @Expose
     String updatedAt;
 
+    @SerializedName("gender")
+    @Expose
+    String gender;
+
+    @SerializedName("sp_status")
+    @Expose
+    String sp_status;
+
+
+
     public User(int id, String name, String email, String password, String image, String status, String contact, String createdAt, String updatedAt) {
         this.id = id;
         this.name = name;
@@ -64,6 +74,21 @@ public class User implements Serializable{
         this.contact = contact;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public User( int id, String name, String email, String password, String image, String status, String contact, String createdAt, String updatedAt, String gender, String sp_status) {
+
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.image = image;
+        this.status = status;
+        this.contact = contact;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.gender = gender;
+        this.sp_status = sp_status;
     }
 
     public String getResponse() {
@@ -145,5 +170,21 @@ public class User implements Serializable{
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getSp_status() {
+        return sp_status;
+    }
+
+    public void setSp_status(String sp_status) {
+        this.sp_status = sp_status;
     }
 }

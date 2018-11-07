@@ -15,6 +15,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -94,7 +95,7 @@ private  void sendNotification(String messageBody){
         else if(type.equals("message")){
             message=messageBody;
         }
-        Intent intent=new Intent(this,FCMActivity.class);
+        Intent intent=new Intent(this,MyServiceRequests.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
     NotificationCompat.Builder notificationBuilder=new NotificationCompat.Builder(this);
@@ -102,8 +103,11 @@ private  void sendNotification(String messageBody){
     notificationBuilder.setContentText(message);
     Uri soundURI= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     notificationBuilder.setSound(soundURI);
-    notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
-    notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.mipmap.ic_launcher));
+    notificationBuilder.setLights(0xff00ff00, 300, 100);
+    notificationBuilder.setSmallIcon(R.drawable.loggoo);
+    notificationBuilder.setShowWhen(true);
+
+    notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.mehdi));
     notificationBuilder.setAutoCancel(true);
     Vibrator vibrator=(Vibrator)this.getSystemService(Context.VIBRATOR_SERVICE);
     vibrator.vibrate(1000);
