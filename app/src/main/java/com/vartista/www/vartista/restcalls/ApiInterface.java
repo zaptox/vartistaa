@@ -5,6 +5,8 @@ package com.vartista.www.vartista.restcalls;
 import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.beans.forgotpassword;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -65,4 +67,18 @@ public interface ApiInterface {
    Call<CreateRequest> InsertRatings(@Query("id") int id,@Query("stars") double stars,@Query("user_id") int user_id,@Query("service_p_id") int service_p_id,@Query("service_id") int service_id,
 
                             @Query("user_remarks") String user_remarks,@Query("date") String date,@Query("time") String time);
+
+    @GET("forget_password.php")
+    Call<forgotpassword> User_Verification_Email(@Query("email") String email);
+
+
+
+
+
+
+
+
+
+
+
 }
