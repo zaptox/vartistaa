@@ -7,35 +7,39 @@
     <application
         android:name=".appconfig.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/loggoo"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/loggoo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".modules.general.SiginInActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".modules.general.SignUpActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".modules.general.SplashActivity">
+            android:name=".modules.general.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- <service android:name=".firebaseconfig.FirebaseMessagingService"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="com.google.firebase.MESSAGING_EVENT"/> -->
-        <!-- </intent-filter> -->
-        <!-- </service> -->
-        <!-- <service android:name="firebaseconfig.FirebaseInstanceIDService"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/> -->
-        <!-- </intent-filter> -->
-        <!-- </service> -->
+        <activity
+            android:name=".modules.general.SignUpActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".modules.general.SiginInActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <service android:name=".firebaseconfig.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".firebaseconfig.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".modules.general.HomeActivity"
             android:label="@string/title_activity_home"
@@ -57,8 +61,7 @@
         <activity android:name=".modules.user.AssignRatings" />
         <activity android:name=".modules.provider.DocumentUploadActivity" />
         <activity android:name=".modules.provider.My_Rating_Reviews" />
-        <activity android:name=".modules.general.AppSettings" />
-        <activity android:name=".modules.general.ForgotPasswordActivity"></activity>
+        <activity android:name=".modules.provider.AddressSetActivity"></activity>
     </application>
 
 </manifest>

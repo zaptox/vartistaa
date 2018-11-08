@@ -6,6 +6,7 @@ import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.beans.forgotpassword;
+import com.vartista.www.vartista.beans.UserAddressBean;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -68,17 +69,16 @@ public interface ApiInterface {
 
                             @Query("user_remarks") String user_remarks,@Query("date") String date,@Query("time") String time);
 
+
+    @GET("insert_user_address.php")
+    Call<UserAddressBean> insertUserAddress(@Query("work_address") String work_address, @Query("permanent_address") String permanent_address,
+                                            @Query("city") String city,
+                                            @Query("province") String province, @Query("zipcode") String  zipcode
+            , @Query("country") String country, @Query("user_id") int user_id);
+
+
     @GET("forget_password.php")
     Call<forgotpassword> User_Verification_Email(@Query("email") String email);
 
-
-
-
-
-
-
-
-
-
-
 }
+

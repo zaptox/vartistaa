@@ -37,11 +37,33 @@
             android:layout_gravity="center_horizontal"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/dark_gray"
-            android:padding="10sp"
+            android:textColor="@color/light_gray"
+            android:padding="30sp"
             android:layout_marginTop="12sp"
             android:text="By uploading your documents , you agree to become a service provider. Your documents will be checked and verified by Admin. A notification will be sent to you within 6 hours."
             />
+
+        <View
+            android:layout_marginTop="2sp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/set_address_required"
+            android:layout_marginTop="7sp"
+            android:background="@drawable/buttonshape"
+            android:text="Set your Address (Required)"
+            />
+        <View
+            android:layout_marginTop="7sp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
 
         <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
