@@ -38,7 +38,7 @@ public class DocumentUploadActivity extends AppCompatActivity
     private static final int BANK_DETAILS_IMAGE_REQUEST_CODE = 11;
     private static final int STORAGE_PERMISSION_CODE = 123;
     private ImageView imageViewBankDetails,imageViewCnicFront,imageViewBackCinc;
-    private Button btnUpload;
+    private Button btnUpload, btnSetAddress;
     private Bitmap bitmapCnicFront,bitmapCnicBack,bitmapBankDetails;
     private Uri filePathCnicFront,filePathCnicBack,filePathBankDetails;
    private  static String cnic_front_document_title="cnic_front";
@@ -59,9 +59,17 @@ public class DocumentUploadActivity extends AppCompatActivity
         imageViewBankDetails=(ImageView)findViewById(R.id.imageViewBankDetails);
         imageViewCnicFront=(ImageView)findViewById(R.id.imageViewCnicFront);
         imageViewBackCinc=(ImageView)findViewById(R.id.imageViewBackCinc);
-
+        btnSetAddress= findViewById(R.id.set_address_required);
         user_id=ob.getInt("user_id",0);
          btnUpload=(Button)findViewById(R.id.btnUpload);
+
+          btnSetAddress.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  startActivity(new Intent(DocumentUploadActivity.this,AddressSetActivity.class));
+              }
+          });
+
 
         imageViewBankDetails.setOnClickListener(new View.OnClickListener() {
             @Override

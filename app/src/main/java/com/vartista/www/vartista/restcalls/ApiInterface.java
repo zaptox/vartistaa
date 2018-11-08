@@ -5,6 +5,8 @@ package com.vartista.www.vartista.restcalls;
 import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.beans.UserAddressBean;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -22,8 +24,9 @@ public interface ApiInterface {
 
                                 @Query("status") String status, @Query("contact") String contact,
 
+                                @Query("created_at") String created_at, @Query("updated_at") String updated_at,
 
-                                @Query("created_at") String created_at, @Query("updated_at") String updated_at
+                                @Query("gender") String gender
 
                                 );
 
@@ -64,4 +67,18 @@ public interface ApiInterface {
    Call<CreateRequest> InsertRatings(@Query("id") int id,@Query("stars") double stars,@Query("user_id") int user_id,@Query("service_p_id") int service_p_id,@Query("service_id") int service_id,
 
                             @Query("user_remarks") String user_remarks,@Query("date") String date,@Query("time") String time);
+
+
+    @GET("insert_user_address.php")
+    Call<UserAddressBean> insertUserAddress(@Query("work_address") String work_address, @Query("permanent_address") String permanent_address,
+                                            @Query("city") String city,
+                                            @Query("province") String province, @Query("zipcode") String  zipcode
+            , @Query("country") String country, @Query("user_id") int user_id);
+
+
+
+
+
 }
+
+

@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
@@ -48,15 +49,11 @@ public class SignUpActivity extends AppCompatActivity {
     private static final int PICK_IMAGE=100;
     private Uri filePath;
     private Bitmap bitmap;
+    private RadioButton male_radio,female_radio;
     private ProgressDialog progressDialog;
     private static final String UPLOAD_URL = "http://vartista.com/vartista_app/upload_profile.php";
     private boolean select_profile=false;
     private static final int STORAGE_PERMISSION_CODE = 12443;
-
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +70,8 @@ public class SignUpActivity extends AppCompatActivity {
         user_password= findViewById(R.id.user_password);
         upload= findViewById(R.id.upload);
         image= findViewById(R.id.profile_image);
+        male_radio=findViewById(R.id.male);
+        female_radio=findViewById(R.id.female);
 
         Intent  i = getIntent();
 //        sp_list=i.getParcelableArrayListExtra("service_providers");
@@ -94,12 +93,27 @@ public class SignUpActivity extends AppCompatActivity {
                 String user_email1= user_email.getText().toString();
                 String user_contact1= user_contact.getText().toString();
                 String user_password1= user_password.getText().toString();
+                String gender="";
+                if(male_radio.isChecked()){
 
+                    gender="male";
+                }
+                else if(female_radio.isChecked()){
+
+                    gender="female";
+
+                }
                 setUIToWait(true);
 
-///*
+
+                if(select_profile){
+
+
+
+
+
                 progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                Call<User> call=SignUpActivity.apiInterface.performRegistration(user_name1,user_email1,user_password1,null,"1",user_contact1,null,null);
+                Call<User> call=SignUpActivity.apiInterface.performRegistration(user_name1,user_email1,user_password1,null,"1",user_contact1,null,null,gender);
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call <User> call, Response<User> response) {
@@ -110,13 +124,14 @@ public class SignUpActivity extends AppCompatActivity {
                            uploadMultipart(filePath,user_email.getText().toString(),user_password.getText().toString());
                            startActivity(new Intent(getApplicationContext(),SiginInActivity.class));
                               finish();}
+
                               else{
                               showCompletedDialog("Error","select the profile image!");
                           }
 
-                        }else if(response.body().getResponse().equals("exist")){
+                        }
+                        else if(response.body().getResponse().equals("exist")){
                             setUIToWait(false);
-
                              showCompletedDialog("Error","User Already Exist!");
                         }
                         else if(response.body().getResponse().equals("error")){
@@ -144,7 +159,13 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
 
+                }
 
+                else{
+
+                    showCompletedDialog("Error","select the profile image!");
+
+                }
             }
         });
 
