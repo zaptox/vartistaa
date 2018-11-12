@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.kennyc.bottomsheet.BottomSheet;
+import com.kennyc.bottomsheet.BottomSheetListener;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.usernotificationitems;
 
@@ -38,7 +40,7 @@ public class  UserNotificationlistadapter extends RecyclerView.Adapter<UserNotif
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         if(list.get(position).getRequest_status().equals("1")){
             holder.username.setText(list.get(position).getName());
             holder.requestdetail.setTextColor(Color.GREEN);
@@ -59,6 +61,17 @@ public class  UserNotificationlistadapter extends RecyclerView.Adapter<UserNotif
             holder.timeduration.setText(list.get(position).getTime());
 
         }
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new BottomSheet.Builder(v.getContext())
+                        .setTitle("Title")
+                        .setMessage("Message")
+                        .setIcon(v.getContext().getDrawable(R.drawable.ic_menu_send))
+                        .show();
+            }
+        });
 
     }
 
