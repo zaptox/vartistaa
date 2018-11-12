@@ -70,12 +70,29 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                                               if(response.body().getResponse().equals("ok")){
                                                   remove(position);
                                                   notifyDataSetChanged();
-                                                  MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
+
+                                                  Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
+                                                          .sendPushNotification(myReqServicesList.get(position).getService_provider_id(),
+                                                                  "Accept  you request for appointment","Vartista");
+                                                  callNotification.enqueue(new Callback<NotificationsManager>() {
+                                                      @Override
+                                                      public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
+
+                                                          if(response.isSuccessful())
+                                                              MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
+
+                                                      }
+
+                                                      @Override
+                                                      public void onFailure(Call<NotificationsManager> call, Throwable t) {
+
+                                                      }
+                                                  });
 
 
 
 
-                       }
+                                              }
 
                        else if(response.body().getResponse().equals("error")){
 
@@ -93,21 +110,6 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                        Toast.makeText(view.getContext(),"Update Failed",Toast.LENGTH_SHORT).show();
                    }
                });
-               Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
-                                                          .sendPushNotification(myReqServicesList.get(position).getService_provider_id(),
-                                                                  "Accept  you request for appointment","Vartista");
-                                                  callNotification.enqueue(new Callback<NotificationsManager>() {
-                                                      @Override
-                                                      public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
-
-                                                      }
-
-                                                      @Override
-                                                      public void onFailure(Call<NotificationsManager> call, Throwable t) {
-
-                                                      }
-                                                  });
-
 
 
            }
