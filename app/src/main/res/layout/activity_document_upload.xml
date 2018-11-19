@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_client"
     android:orientation="vertical"
     tools:context=".modules.provider.DocumentUploadActivity">
 
@@ -13,7 +14,7 @@
         android:layout_gravity="center_horizontal"
         android:textSize="24dp"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/text_color_client"
         android:layout_marginTop="20dp"
         android:text="Upload Required Document"
         />
@@ -55,6 +56,7 @@
             android:layout_gravity="center"
             android:id="@+id/set_address_required"
             android:layout_marginTop="7sp"
+            android:textColor="@color/text_color_client"
             android:background="@drawable/buttonshape"
             android:text="Set your Address (Required)"
             />
@@ -105,7 +107,7 @@
                 android:layout_centerVertical="true"
                 android:padding="20dp"
                 android:text="Click to add Bank Details"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color_client"
                 android:textSize="14dp"
                 android:textStyle="bold" />
 
@@ -153,9 +155,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:padding="20dp"
                 android:text="Click to add CNIC Front Image"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color_client"
                 android:textSize="14dp"
                 android:textStyle="bold" />
 
@@ -203,8 +204,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:padding="20dp"
-                android:text="Click to CNIC back Image"
-                android:textColor="@color/white"
+                android:text="Click to add CNIC back Image"
+                android:textColor="@color/text_color_client"
                 android:textSize="14dp"
                 android:textStyle="bold" />
 
@@ -222,7 +223,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp"
-        android:textColor="@color/white"
+        android:textColor="@color/text_color_client"
         android:background="@drawable/buttonshape"
         android:text="Upload"
         />

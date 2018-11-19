@@ -89,8 +89,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.4'
 
     //    implementation 'com.onesignal:OneSignal:[3.9.1, 3.99.99]'
-     // bottom sheet
+    // bottom sheet
     implementation 'com.github.Kennyc1012:BottomSheet:2.4.1'
+    compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
