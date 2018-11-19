@@ -2,11 +2,14 @@ package com.vartista.www.vartista.firebaseconfig;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
 import android.media.RingtoneManager;
+import android.media.ToneGenerator;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
@@ -31,16 +34,73 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+//        if (remoteMessage.getData().size() > 0) {
+//            Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
+//            try {
+//                type="json";
+//                JSONObject json = new JSONObject(remoteMessage.getData().toString());
+//                   sendNotification(remoteMessage.getNotification().getBody());
+//
+//             } catch (Exception e) {
+//                Log.e(TAG, "Exception: " + e.getMessage());
+//            }
+//        }
+
+        Log.d(TAG, "onMessageReceived: " + remoteMessage.getData().get("message"));
+
         if (remoteMessage.getData().size() > 0) {
-            Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
-            try {
-                type="json";
-                JSONObject json = new JSONObject(remoteMessage.getData().toString());
-                   sendNotification(remoteMessage.getNotification().getBody());
-             } catch (Exception e) {
-                Log.e(TAG, "Exception: " + e.getMessage());
-            }
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
         }
+
+        // Check if message contains a notification payload.
+        if (remoteMessage.getNotification() != null) {
+            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+        }
+        String title = remoteMessage.getData().get("body");
+        String message = remoteMessage.getData().get("message");
+        showNotification(title, message);
+    }
+
+
+    protected void showNotification(String title, String message) {
+        ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 200);
+        toneGen1.startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT, 15000);
+//        myTask = new Runnable() {
+//            public void run() {
+//                Log.d(TAG, "Thread Started");
+//
+//                if (Looper.myLooper() == null)
+//                {
+//                    Looper.prepare();
+//                }
+//            }
+//        };
+//        this.handler = new android.os.Handler();
+//        handler.post(myTask);
+//
+//
+
+
+//
+        Intent i = null;
+            i = new Intent(this, MyServiceRequests.class);
+
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntentWithParentStack(i);
+// Get the PendingIntent containing the entire back stack
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setAutoCancel(true)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setSmallIcon(R.drawable.loggoo)
+                .setContentIntent(resultPendingIntent);
+
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        manager.notify(0, builder.build());
     }
 
     //this method will display the notification
@@ -80,41 +140,41 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //            Log.e(TAG, "Exception: " + e.getMessage());
 //        }
 //    }
-private  void sendNotification(String messageBody){
-        String id="",message="",title="";
-        if(type.equals("json")){
-            try{
-                JSONObject jsonObject=new JSONObject(messageBody);
-                id=jsonObject.getString("id");
-                message=jsonObject.getString("message");
-                title=jsonObject.getString("title");
-
-
-            }catch (Exception  e){}
-        }
-        else if(type.equals("message")){
-            message=messageBody;
-        }
-        Intent intent=new Intent(this,MyServiceRequests.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
-    NotificationCompat.Builder notificationBuilder=new NotificationCompat.Builder(this);
-    notificationBuilder.setContentTitle(getString(R.string.app_name));
-    notificationBuilder.setContentText(message);
-    Uri soundURI= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-    notificationBuilder.setSound(soundURI);
-    notificationBuilder.setLights(0xff00ff00, 300, 100);
-    notificationBuilder.setSmallIcon(R.drawable.loggoo);
-    notificationBuilder.setShowWhen(true);
-
-    notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.mehdi));
-    notificationBuilder.setAutoCancel(true);
-    Vibrator vibrator=(Vibrator)this.getSystemService(Context.VIBRATOR_SERVICE);
-    vibrator.vibrate(1000);
-    notificationBuilder.setContentIntent(pendingIntent);
-    NotificationManager notificationManager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-    notificationManager.notify(0,notificationBuilder.build());
-
-
-}
+//private  void sendNotification(String messageBody){
+//        String id="",message="",title="";
+//        if(type.equals("json")){
+//            try{
+//                JSONObject jsonObject=new JSONObject(messageBody);
+//                id=jsonObject.getString("id");
+//                message=jsonObject.getString("message");
+//                title=jsonObject.getString("title");
+//
+//
+//            }catch (Exception  e){}
+//        }
+//        else if(type.equals("message")){
+//            message=messageBody;
+//        }
+//        Intent intent=new Intent(this,MyServiceRequests.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
+//    NotificationCompat.Builder notificationBuilder=new NotificationCompat.Builder(this);
+//    notificationBuilder.setContentTitle(getString(R.string.app_name));
+//    notificationBuilder.setContentText(message);
+//    Uri soundURI= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//    notificationBuilder.setSound(soundURI);
+//    notificationBuilder.setLights(0xff00ff00, 300, 100);
+//    notificationBuilder.setSmallIcon(R.drawable.loggoo);
+//    notificationBuilder.setShowWhen(true);
+//
+//    notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.mehdi));
+//    notificationBuilder.setAutoCancel(true);
+//    Vibrator vibrator=(Vibrator)this.getSystemService(Context.VIBRATOR_SERVICE);
+//    vibrator.vibrate(1000);
+//    notificationBuilder.setContentIntent(pendingIntent);
+//    NotificationManager notificationManager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+//    notificationManager.notify(0,notificationBuilder.build());
+//
+//
+//}
 }
