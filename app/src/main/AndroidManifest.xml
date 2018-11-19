@@ -27,7 +27,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".modules.general.SiginInActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <service android:name=".firebaseconfig.MyFirebaseMessagingService">
             <intent-filter>
@@ -61,8 +61,11 @@
         <activity android:name=".modules.user.AssignRatings" />
         <activity android:name=".modules.provider.DocumentUploadActivity" />
         <activity android:name=".modules.provider.My_Rating_Reviews" />
-        <activity android:name=".modules.provider.AddressSetActivity" />
-        <activity android:name=".modules.general.CheckActivity"></activity>
+
+        <service
+            android:name=".Offline_user_status_service"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
