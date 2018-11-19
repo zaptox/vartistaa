@@ -81,6 +81,8 @@
     <color name="notification_background">@color/grey_darker</color>
     <color name="simple_sound_cloud_notification_title">#ffffff</color>
     <color name="simple_sound_cloud_notification_subtitle">#979797</color>
+    <color name="colorOnlineGreen">#b2ff59</color>
+    <color name="colorOfflineYellow">#fff176</color>
 
 
 </resources>
