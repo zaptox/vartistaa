@@ -25,13 +25,13 @@ import retrofit2.Response;
 
 public class AssignRatings extends AppCompatActivity {
 
-   TextView   Username,time,Date,location,service;
+   TextView   Username,time,Date,location,service,ratingtext;
    EditText user_remarks;
    Button done;
    double rating;
     Intent intent;
     public static ApiInterface apiInterface;
-    int service_id,service_p_id,user_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,28 +46,25 @@ public class AssignRatings extends AppCompatActivity {
         ratingBar.setFilledDrawableRes(R.drawable.filled);
         user_remarks = (EditText)findViewById(R.id.user_remarks);
         service = (TextView)findViewById(R.id.Service_tittle);
+        ratingtext = (TextView)findViewById(R.id.ratingtext);
         time = (TextView)findViewById(R.id.time);
         Date = (TextView)findViewById(R.id.date);
         location = (TextView)findViewById(R.id.location);
         Username= (TextView)findViewById(R.id.header_name);
         done = (Button)findViewById(R.id.done);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-         intent = getIntent();
-        service.setText("Service :-  "+intent.getStringExtra("Service_Tittle"));
-        time.setText("Time :-  "+intent.getStringExtra("Time"));
-        Date.setText("Date :-  "+intent.getStringExtra("Date"));
-        location.setText("Location :-  "+intent.getStringExtra("location"));
-        Username.setText(intent.getStringExtra("UserName"));
-        service_id = Integer.parseInt(intent.getStringExtra("Requestservice_id"));
-        service_p_id = Integer.parseInt(intent.getStringExtra("Service_p_id"));
-        user_id = Integer.parseInt(intent.getStringExtra("user_id"));
+        service.setText("Service :-  HairCut");
+        time.setText("Time :-  19:45");
+        Date.setText("Date :-  07/11/2018");
+        location.setText("Location :-  Hyderabad");
+        Username.setText("Masood");
         rating = 0.0;
         ratingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
             @Override
             public void onRatingChange(BaseRatingBar baseRatingBar, float v) {
 
                 rating = (double)v;
-                Toast.makeText(AssignRatings.this, ""+rating, Toast.LENGTH_SHORT).show();
+                ratingtext.setText("Rating :-  "+rating+" Stars");
 
             }
 
@@ -77,18 +74,18 @@ public class AssignRatings extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String servicetittle = intent.getStringExtra("Service_Tittle");
+                String servicetittle = "HairCut";
                 String Remarks = user_remarks.getText().toString();
-                String time = intent.getStringExtra("Time");
-                String date = intent.getStringExtra("Date");
-                Call<CreateRequest> call = AssignRatings.apiInterface.InsertRatings(0,rating,user_id,service_p_id,service_id,Remarks,date,time);
+                String time = "19:45";
+                String date = "07/11/2018";
+                Call<CreateRequest> call = AssignRatings.apiInterface.InsertRatings(0,rating,70,68,10,Remarks,date,time);
 
                 call.enqueue(new Callback<CreateRequest>() {
                     @Override
                     public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
                         if (response.body().getResponse().equals("ok")) {
 
-                            MDToast mdToast = MDToast.makeText(getApplicationContext(), "Request has been Send succesfully.", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                            MDToast mdToast = MDToast.makeText(getApplicationContext(), "Your Ratings are Assigned", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                             mdToast.show();
 
                             Intent intent=new Intent(getApplicationContext(),HomeActivity.class);

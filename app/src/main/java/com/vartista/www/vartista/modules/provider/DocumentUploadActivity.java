@@ -53,7 +53,6 @@ public class DocumentUploadActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_document_upload);
-
         SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
         requestStoragePermission();
         imageViewBankDetails=(ImageView)findViewById(R.id.imageViewBankDetails);

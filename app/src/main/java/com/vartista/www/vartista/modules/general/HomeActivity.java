@@ -182,8 +182,10 @@ public class HomeActivity extends AppCompatActivity
             startActivity(new Intent(HomeActivity.this, AppSettings.class));
             return true;
         } else if (id == R.id.logout) {
-            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+            user_id = ob.getInt("user_id", 0);
+            new Connection(user_id, 0).execute();
+            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
             ob.edit().clear().commit();
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
             return true;

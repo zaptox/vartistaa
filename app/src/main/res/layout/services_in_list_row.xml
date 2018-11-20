@@ -31,6 +31,7 @@
             android:layout_marginStart="5dp"
             >
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_profile_img"
                 android:layout_width="match_parent"
                 android:layout_height="88dp" />
 
@@ -50,6 +51,7 @@
             android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/user_status"
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:layout_alignBottom="@+id/simpleRatingBar"
@@ -125,8 +127,8 @@
             app:srb_starHeight="10dp"
             app:srb_starPadding="5dp"
             app:srb_stepSize="0.5"
-            app:srb_isIndicator="false"
-            app:srb_clickable="true"
+            app:srb_isIndicator="true"
+            app:srb_clickable="false"
             app:srb_scrollable="true"
             app:srb_clearRatingEnabled="true"
             app:srb_drawableEmpty="@drawable/empty"
