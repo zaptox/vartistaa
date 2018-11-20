@@ -27,6 +27,7 @@ import com.squareup.picasso.Picasso;
 import com.valdesekamdem.library.mdtoast.MDToast;
 //import com.vartista.www.vartista.Offline_user_status_service;
 
+import com.vartista.www.vartista.Offline_user_status_service;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
 
@@ -290,9 +291,9 @@ public class HomeActivity extends AppCompatActivity
 
     private void startOfflineService() {
         Log.d("HomeActivity", "onPauseCalled");
-//        Intent intent = new Intent(HomeActivity.this, Offline_user_status_service.class);
-//        intent.putExtra("user_id",user_id);
-//        startService(intent);
+        Intent intent = new Intent(HomeActivity.this, Offline_user_status_service.class);
+        intent.putExtra("user_id",user_id);
+        startService(intent);
         Log.d("HomeActivity", "serviceStarted");
     }
     class Connection extends AsyncTask<String, String, String> {
