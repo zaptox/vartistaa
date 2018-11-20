@@ -3,8 +3,10 @@ package com.vartista.www.vartista.restcalls;
 
 
 import com.vartista.www.vartista.beans.CreateRequest;
+import com.vartista.www.vartista.beans.Doument_Upload_Nil;
 import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.beans.forgotpassword;
 import com.vartista.www.vartista.beans.UserAddressBean;
 
 import retrofit2.Call;
@@ -76,9 +78,26 @@ public interface ApiInterface {
             , @Query("country") String country, @Query("user_id") int user_id);
 
 
+    @GET("forget_password.php")
+    Call<forgotpassword> User_Verification_Email(@Query("email") String email);
+
+    @GET("GettinguserId.php")
+    Call<Doument_Upload_Nil> document_upload_nil(@Query("name") String name,
+                                                 @Query("password") String password,
+                                                 @Query("contact") String contacno
+                                                 );
+
+
+    @GET("updateuserstatus.php")
+    Call<User> UpdateUserStatus(@Query("user_id") int user_id);
+
+
+
+
+
+
 
 
 
 }
-
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,15 +15,35 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.beans.CreateRequest;
+import com.vartista.www.vartista.beans.Doument_Upload_Nil;
+import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
+import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import com.vartista.www.vartista.beans.User;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,8 +52,10 @@ public class SiginInActivity extends AppCompatActivity {
 
     private Button signin;
     private TextView signup;
+    private TextView forgotpassword;
     private EditText email;
     private EditText password;
+    ArrayList<User> list;
     private ProgressDialog progressDialog;
 
     //    public static PrefConfig prefConfig;
@@ -51,8 +74,10 @@ public class SiginInActivity extends AppCompatActivity {
 //            e.printStackTrace();
             Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+        list=new ArrayList<User>();
         signin = findViewById(R.id.sign_in_button);
         signup = findViewById(R.id.t_signUp);
+        forgotpassword = findViewById(R.id.textView3);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
 
@@ -63,6 +88,18 @@ public class SiginInActivity extends AppCompatActivity {
                 startActivity(new Intent(SiginInActivity.this, SignUpActivity.class));
             }
         });
+
+        forgotpassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SiginInActivity.this, ForgotPasswordActivity.class));
+            }
+        });
+
+
+
+
+
 
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,8 +184,12 @@ public class SiginInActivity extends AppCompatActivity {
 
                     userLoggedIn = new User(id, name, email, password, image, status, contact, created_at, updated_at,gender,sp_status);
 //                    Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse() + "--name:" + name, Toast.LENGTH_SHORT).show();
-                    addtosharedpreference(userLoggedIn.getId(),userLoggedIn.getEmail(),userLoggedIn.getPassword(),userLoggedIn.getName(),userLoggedIn.getGender(),userLoggedIn.getSp_status());
-
+                    addtosharedpreference(userLoggedIn.getId(),userLoggedIn.getEmail(),userLoggedIn.getPassword(),
+                            userLoggedIn.getName(),userLoggedIn.getGender(),userLoggedIn.getSp_status(),
+                            userLoggedIn.getContact());
+//                    Toast.makeText(SiginInActivity.this, "The User Id is :- "+userLoggedIn.getId()
+//                            +"\n"+"The Name is "+userLoggedIn.getName()
+//                            +"\n"+"The password is "+userLoggedIn.getPassword(), Toast.LENGTH_SHORT).show();
                     setUIToWait(false);
 //                    Toast.makeText(SiginInActivity.this, ""+userLoggedIn, Toast.LENGTH_SHORT).show();
                     //
@@ -226,11 +267,12 @@ public class SiginInActivity extends AppCompatActivity {
         return "";
     }
 
-    public void addtosharedpreference(int user_id,String email,String Password,String name,String gender, String sp_status){
+    public void addtosharedpreference(int user_id,String email,String Password,String name,String gender, String sp_status,String contact){
 
         SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferencespre.edit();
         editor.putInt("user_id",user_id);
+        editor.putString("contact",contact);
         editor.putString("Email",email);
         editor.putString("Password",Password);
         editor.putString("name",name);
@@ -245,7 +287,6 @@ public class SiginInActivity extends AppCompatActivity {
 
 
     }
-
 
 
 

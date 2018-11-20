@@ -7,7 +7,7 @@
     tools:context="com.vartista.www.vartista.modules.general.AppSettings">
 
     <TextView
-        android:id="@+id/Privacy"
+        android:id="@+id/AccountSetting"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="Account Settings"
@@ -21,7 +21,7 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="2dp"
-        android:layout_below="@+id/Privacy"
+        android:layout_below="@+id/AccountSetting"
         android:background="@color/gray"/>
 
     <TextView
@@ -32,7 +32,7 @@
         android:padding="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_below="@+id/Privacy"
+        android:layout_below="@+id/AccountSetting"
         android:text="Change Password"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="77dp" />
