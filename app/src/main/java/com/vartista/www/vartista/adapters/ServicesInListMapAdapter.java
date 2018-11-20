@@ -17,6 +17,7 @@ import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.user.BookNowActivity;
 import com.vartista.www.vartista.modules.user.FindServicesInList;
 import com.vartista.www.vartista.modules.user.ServiceProviderDetail;
+import com.willy.ratingbar.ScaleRatingBar;
 
 import java.util.List;
 
@@ -50,7 +51,8 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
 
         holder.service_p_name.setText("" + myServicesList.get(position).getSp_name());
         holder.service_name.setText("" + myServicesList.get(position).getService_title());
-//        Toast.makeText(context, "name" +myServicesList.get(position).getSp_name()+" "+myServicesList.get(position).getUser_id() , Toast.LENGTH_SHORT).show();
+        holder.ratingBar.setRating((float) (myServicesList.get(position).getRatings()));
+
 
         final int abhipoition = position;
         final ViewHolder holder1 = holder;
@@ -60,7 +62,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(context, "requesr ID:" + service_name, Toast.LENGTH_SHORT).show();
+
 
                 int s_provider_id= myServicesList.get(position).getUser_id();
                 int cat_id= myServicesList.get(position).getCategory_id();
@@ -95,6 +97,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
 
 
         public TextView service_p_name, service_name;
+        public ScaleRatingBar ratingBar;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -102,6 +105,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
 
             service_p_name = (TextView) mView.findViewById(R.id.textViewName);
             service_name = (TextView) mView.findViewById(R.id.textViewService);
+            ratingBar = mView.findViewById(R.id.simpleRatingBar);
 
         }
     }
