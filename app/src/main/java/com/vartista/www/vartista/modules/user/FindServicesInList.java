@@ -392,11 +392,11 @@ public class FindServicesInList extends AppCompatActivity {
                         double latitude = Double.parseDouble(ser1.getString("latitude"));
                         String sp_name=ser1.getString("name");
                         double stars = Double.parseDouble(ser1.getString("avg_stars"));
+                        int user_status = Integer.parseInt(ser1.getString("user_status"));
+                        String image = ser1.getString("image");
 //                        Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
 
-                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name,stars));
-
-
+                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name,stars, user_status, image));
 
                     }
 
