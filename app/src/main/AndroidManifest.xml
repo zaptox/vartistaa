@@ -27,7 +27,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".modules.general.SiginInActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".firebaseconfig.MyFirebaseMessagingService">
             <intent-filter>
@@ -56,12 +56,15 @@
         <activity android:name=".modules.user.UserNotification_activity" />
         <activity android:name=".modules.provider.MyAppointments" />
         <activity android:name=".modules.general.SettingsActivity" />
+        <activity android:name=".modules.general.AppSettings" />
         <activity android:name=".modules.user.ServiceProviderDetail" />
         <activity android:name=".modules.user.MyServiceMeetings" />
         <activity android:name=".modules.user.AssignRatings" />
         <activity android:name=".modules.provider.DocumentUploadActivity" />
         <activity android:name=".modules.provider.My_Rating_Reviews" />
-        <activity android:name=".modules.provider.AddressSetActivity"></activity>
+        <activity android:name=".modules.general.ForgotPasswordActivity" />
+        <activity android:name=".modules.provider.AddressSetActivity" />
+        <activity android:name=".modules.general.DeleteMyAccount" android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

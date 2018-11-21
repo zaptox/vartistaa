@@ -76,43 +76,43 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
         new SettingsActivity.Conncetion(SettingsActivity.this,userid).execute();
-        changepassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changepassworddialog = new Dialog(SettingsActivity.this);
-                changepassworddialog.setContentView(R.layout.changepassword_dialoguebox);
-                Button  savepassword = (Button)changepassworddialog.findViewById(R.id.savepassword);
-                Button  cancel = (Button)changepassworddialog.findViewById(R.id.cancelbutton);
-                OldPassword = (EditText)changepassworddialog.findViewById(R.id.oldPasswordedittext);
-                NewPassword = (EditText)changepassworddialog.findViewById(R.id.newpasswordedittext);
-                ConfirmNewPassword = (EditText)changepassworddialog.findViewById(R.id.confirmpasswordedittext);
-                changepassworddialog.show();
-
-                savepassword.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                      String oldpassword = OldPassword.getText().toString();
-                      String newpassword = NewPassword.getText().toString();
-                      String confirmnewpassword = ConfirmNewPassword.getText().toString();
-                      if(newpassword.equals(confirmnewpassword)){
-                          updatedata(user.getId(),user.getName(),user.getEmail(),user.getContact(),confirmnewpassword);
-                          changepassworddialog.cancel();
-                      }
-
-                    }
-                });
-
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        changepassworddialog.cancel();
-                    }
-                });
-
-
-
-            }
-        });
+//        changepassword.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                changepassworddialog = new Dialog(SettingsActivity.this);
+//                changepassworddialog.setContentView(R.layout.changepassword_dialoguebox);
+//                Button  savepassword = (Button)changepassworddialog.findViewById(R.id.savepassword);
+//                Button  cancel = (Button)changepassworddialog.findViewById(R.id.cancelbutton);
+//                OldPassword = (EditText)changepassworddialog.findViewById(R.id.oldPasswordedittext);
+//                NewPassword = (EditText)changepassworddialog.findViewById(R.id.newpasswordedittext);
+//                ConfirmNewPassword = (EditText)changepassworddialog.findViewById(R.id.confirmpasswordedittext);
+//                changepassworddialog.show();
+//
+//                savepassword.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                      String oldpassword = OldPassword.getText().toString();
+//                      String newpassword = NewPassword.getText().toString();
+//                      String confirmnewpassword = ConfirmNewPassword.getText().toString();
+//                      if(newpassword.equals(confirmnewpassword)){
+//                          updatedata(user.getId(),user.getName(),user.getEmail(),user.getContact(),confirmnewpassword);
+//                          changepassworddialog.cancel();
+//                      }
+//
+//                    }
+//                });
+//
+//                cancel.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        changepassworddialog.cancel();
+//                    }
+//                });
+//
+//
+//
+//            }
+//        });
 //        update.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
