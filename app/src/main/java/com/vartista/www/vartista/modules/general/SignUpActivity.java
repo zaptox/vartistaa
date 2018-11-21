@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -24,15 +23,8 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.adapters.RatingsReviewDetailsAdaptor;
-import com.vartista.www.vartista.beans.CreateRequest;
-import com.vartista.www.vartista.beans.Doument_Upload_Nil;
-import com.vartista.www.vartista.beans.RatingsReviewDetailBean;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
-import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
-import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 
@@ -41,21 +33,7 @@ import com.vartista.www.vartista.beans.User;
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -70,9 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
     public static ApiInterface apiInterface;
     private static final int PICK_IMAGE=100;
     private Uri filePath;
-    ArrayList<User> list;
     private Bitmap bitmap;
-
     private RadioButton male_radio,female_radio;
     private ProgressDialog progressDialog;
     private static final String UPLOAD_URL = "http://vartista.com/vartista_app/upload_profile.php";
@@ -113,10 +89,10 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final String user_name1=user_name.getText().toString();
-                final String user_email1= user_email.getText().toString();
-                final String user_contact1= user_contact.getText().toString();
-                final String user_password1= user_password.getText().toString();
+                String user_name1=user_name.getText().toString();
+                String user_email1= user_email.getText().toString();
+                String user_contact1= user_contact.getText().toString();
+                String user_password1= user_password.getText().toString();
                 String gender="";
                 if(male_radio.isChecked()){
 
@@ -127,10 +103,15 @@ public class SignUpActivity extends AppCompatActivity {
                     gender="female";
 
                 }
-
                 setUIToWait(true);
 
-///*
+
+                if(select_profile){
+
+
+
+
+
                 progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 Call<User> call=SignUpActivity.apiInterface.performRegistration(user_name1,user_email1,user_password1,null,"1",user_contact1,null,null,gender);
                 call.enqueue(new Callback<User>() {
@@ -141,33 +122,16 @@ public class SignUpActivity extends AppCompatActivity {
                             setUIToWait(false);
                           if(select_profile){
                            uploadMultipart(filePath,user_email.getText().toString(),user_password.getText().toString());
-//                           Toast.makeText(SignUpActivity.this, "The user_id is "+user_id, Toast.LENGTH_SHORT).show();
-                              insertdocumentnil(user_name1,user_password1,user_contact1);
-                              Toast.makeText(SignUpActivity.this, "UserName :- "+user_name1
-                                      +"\nPassword :- "+user_password1+"\ncontact"+user_contact1, Toast.LENGTH_SHORT).show();
+                           startActivity(new Intent(getApplicationContext(),SiginInActivity.class));
+                              finish();}
 
-                              //                              Toast.makeText(SignUpActivity.this, "Code ran for inserting documents", Toast.LENGTH_SHORT).show();
-//
-                          //id get kar
-                              //plus main
-//                              Toast.makeText(SignUpActivity.this, "name"+user_name1+" pass:"+user_password1, Toast.LENGTH_SHORT).show();
-//
-//
-//                              Toast.makeText(SignUpActivity.this, ""+user_id, Toast.LENGTH_SHORT).show();
-
-
-                              startActivity(new Intent(getApplicationContext(),SiginInActivity.class));
-                              finish();
-
-
-                          }
                               else{
                               showCompletedDialog("Error","select the profile image!");
                           }
 
-                        }else if(response.body().getResponse().equals("exist")){
+                        }
+                        else if(response.body().getResponse().equals("exist")){
                             setUIToWait(false);
-
                              showCompletedDialog("Error","User Already Exist!");
                         }
                         else if(response.body().getResponse().equals("error")){
@@ -195,7 +159,13 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
 
+                }
 
+                else{
+
+                    showCompletedDialog("Error","select the profile image!");
+
+                }
             }
         });
 
@@ -258,8 +228,11 @@ public class SignUpActivity extends AppCompatActivity {
                     .addParameter("password", password)
                     .setNotificationConfig(new UploadNotificationConfig())
                     .setMaxRetries(3)
+
                     .startUpload(); //Starting the upload
+
         } catch (Exception exc) {
+
             Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
@@ -335,47 +308,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
         }
     }
-
-
-
-    public void insertdocumentnil(String UserName ,String Password,String ContactNo){
-
-        Call<Doument_Upload_Nil> call = SignUpActivity.apiInterface.document_upload_nil(UserName,Password,ContactNo);
-
-        call.enqueue(new Callback<Doument_Upload_Nil>() {
-            @Override
-            public void onResponse(Call<Doument_Upload_Nil> call, Response<Doument_Upload_Nil> response) {
-                if (response.body().getResponse().equals("ok")) {
-                    MDToast mdToast = MDToast.makeText(getApplicationContext(), "User Inserted: "+response, MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                    mdToast.show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Doument_Upload_Nil> call, Throwable t) {
-
-                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-
-        });
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

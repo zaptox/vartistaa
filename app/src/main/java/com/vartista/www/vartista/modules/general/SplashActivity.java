@@ -109,6 +109,7 @@ public class SplashActivity extends AwesomeSplash {
         if(email_shared.equals("") && pass_shared.equals("")){
 
             startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
+//            startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
 
         }
         else {
@@ -202,6 +203,8 @@ public class SplashActivity extends AwesomeSplash {
 
 
                     Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+//                    Intent intent = new Intent(SplashActivity.this, CheckActivity.class);
+
                     intent.putExtra("user", userLoggedIn);
 
 
