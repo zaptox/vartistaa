@@ -61,6 +61,10 @@
         <activity android:name=".modules.user.AssignRatings" />
         <activity android:name=".modules.provider.DocumentUploadActivity" />
         <activity android:name=".modules.provider.My_Rating_Reviews" />
+        <activity android:name=".modules.provider.AddressSetActivity" />
+        <activity android:name=".modules.general.ForgotPasswordActivity" />
+        <activity android:name=".modules.general.DeleteMyAccount" />
+        <activity android:name=".modules.general.AppSettings" />
 
         <service
             android:name=".Offline_user_status_service"

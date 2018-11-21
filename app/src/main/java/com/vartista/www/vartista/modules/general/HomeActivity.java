@@ -40,6 +40,7 @@ import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
+import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.UserNotification_activity;
 import com.vartista.www.vartista.restcalls.ApiClient;
@@ -179,7 +180,11 @@ public class HomeActivity extends AppCompatActivity
             Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(HomeActivity.this, AppSettings.class));
             return true;
-        } else if (id == R.id.logout) {
+        }
+        else if(id==R.id.Assign_ratings){
+            startActivity(new Intent(HomeActivity.this, AssignRatings.class));
+        }
+        else if (id == R.id.logout) {
             Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
             ob.edit().clear().commit();
