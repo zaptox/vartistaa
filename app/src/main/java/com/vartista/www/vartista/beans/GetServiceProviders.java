@@ -46,6 +46,35 @@ public class GetServiceProviders implements Serializable,Parcelable{
         this.location=location;
     }
 
+    public GetServiceProviders(int service_id, int address_id, double latitude, double longitude, int user_id, String service_title, String service_description, double price, int category_id, String sp_name, double ratings) {
+        this.service_id = service_id;
+        this.address_id = address_id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.user_id = user_id;
+        this.service_title = service_title;
+        this.service_description = service_description;
+        this.price = price;
+        this.category_id = category_id;
+        this.sp_name=sp_name;
+        this.ratings = ratings;
+    }
+
+    public GetServiceProviders(int service_id, int address_id, double latitude, double longitude, int user_id, String service_title, String service_description, double price, int category_id, String sp_name, double ratings, int user_status, String image) {
+        this.service_id = service_id;
+        this.address_id = address_id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.user_id = user_id;
+        this.service_title = service_title;
+        this.service_description = service_description;
+        this.price = price;
+        this.category_id = category_id;
+        this.sp_name=sp_name;
+        this.ratings = ratings;
+        this.user_status = user_status;
+        this.image = image;
+    }
 
     protected GetServiceProviders(Parcel in) {
         Response = in.readString();
@@ -262,6 +291,30 @@ public class GetServiceProviders implements Serializable,Parcelable{
         this.location = location;
     }
 
+    public double getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(double ratings) {
+        this.ratings = ratings;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public int getUser_status() {
+        return user_status;
+    }
+
+    public void setUser_status(int user_status) {
+        this.user_status = user_status;
+    }
+
     @SerializedName("name")
     private String category_name;
 
@@ -337,6 +390,14 @@ public class GetServiceProviders implements Serializable,Parcelable{
     @SerializedName("updated_at")
     private String updated_at;
 
+    @SerializedName("ratings")
+    private double ratings;
+
+    @SerializedName("user_status")
+    private int user_status;
+
+    @SerializedName("image")
+    private String image;
 
     @Override
     public int describeContents() {

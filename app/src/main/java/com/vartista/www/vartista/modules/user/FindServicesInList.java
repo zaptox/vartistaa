@@ -12,16 +12,19 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.ServicesInListMapAdapter;
 import com.vartista.www.vartista.beans.GetServiceProviders;
-import com.vartista.www.vartista.fragments.UsersFragment;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 
@@ -42,16 +45,15 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.security.AccessController.getContext;
-
 public class FindServicesInList extends AppCompatActivity {
 
 
     int user_id;
 
-    Button btnMap, btnFilter, btnApplyFilter;
-
+    // Views Declarations
+    Button btnMap, btnFilter, btnApplyFilter, filter_btn_option;
     RecyclerView listViewMyServices;
+    EditText filter_on_text;
 
     ServicesInListMapAdapter myServicesListAdapter;
 
@@ -61,6 +63,9 @@ public class FindServicesInList extends AppCompatActivity {
 
     public int cat_id2;
     public int filterCost;
+    //By default search will be done on user name
+    public static String typeOfFilter = "u.name";
+
 
     public boolean filterApplied = false;
     
@@ -74,12 +79,14 @@ public class FindServicesInList extends AppCompatActivity {
         setContentView(R.layout.activity_services_in_list);
 
         btnFilter = findViewById(R.id.filter_button);
+        filter_btn_option = findViewById(R.id.filter_option_btn);
+        filter_on_text = findViewById(R.id.filter_txt);
 
         splist=new ArrayList<GetServiceProviders>();
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         Intent intent=getIntent();
-        int cat_id=intent.getIntExtra("cat_id",0);
+        final int cat_id=intent.getIntExtra("cat_id",0);
 
         cat_id2=cat_id;
 //                intent.putExtra("cat_id",cat_id);
@@ -105,9 +112,9 @@ public class FindServicesInList extends AppCompatActivity {
                 dialog.setCanceledOnTouchOutside(true);
                 dialog.setTitle("Filter Search");
 
-                final Spinner locationSpinner = dialog.findViewById(R.id.spinnerLocation);
-                final Spinner genderSpinner = dialog.findViewById(R.id.spinnerGender);
-                SeekBar costSeekBar = dialog.findViewById(R.id.seekBar);
+                final EditText locationEditText = dialog.findViewById(R.id.editTxt_location);
+                final EditText genderEditText = dialog.findViewById(R.id.editTxt_gender);
+                final SeekBar costSeekBar = dialog.findViewById(R.id.seekBar);
                 btnApplyFilter = dialog.findViewById(R.id.applyFilterButton);
 
 
@@ -117,9 +124,9 @@ public class FindServicesInList extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        filterLocation = String.valueOf(locationSpinner.getSelectedItem());
-                        filterGender = String.valueOf(genderSpinner.getSelectedItem());
-                        filterCost = 0;
+                        filterLocation = locationEditText.getText().toString();
+                        filterGender = genderEditText.getText().toString();
+                        filterCost = costSeekBar.getProgress()*100;
 
                         filterApplied = true;
                         Toast.makeText(FindServicesInList.this, ""+filterLocation+""+filterGender, Toast.LENGTH_SHORT).show();
@@ -132,7 +139,7 @@ public class FindServicesInList extends AppCompatActivity {
 
                             Toast.makeText(FindServicesInList.this,"filter applied py click neechy query likhi hia"+ filterApplied,Toast.LENGTH_SHORT).show();
 
-                            new FindServicesInList.Conncetion(FindServicesInList.this,cat_id2,filterLocation,filterGender,filterCost).execute();
+                            new Connection(FindServicesInList.this,cat_id2,filterLocation,filterGender,filterCost).execute();
 
 
                         }
@@ -140,51 +147,123 @@ public class FindServicesInList extends AppCompatActivity {
                             Toast.makeText(FindServicesInList.this,""+ filterApplied,Toast.LENGTH_SHORT).show();
 
                         }
-
-
-
                     }
                 });
+
+
+            }
+        });
+
+        filter_on_text.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence c, int i, int i1, int i2) {
+                if(!c.equals(""))
+                    {
+
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+               String filter_text =  filter_on_text.getText().toString();
+
+               if(filterApplied)
+               {
+                   new Connection2(FindServicesInList.this,cat_id,filterLocation,filterGender,filterCost, typeOfFilter,filter_text).execute();
+               }
+
+               else
+               {
+                   new Connection2(FindServicesInList.this,cat_id, typeOfFilter,filter_text).execute();
+                   Log.d("TextField1" ,filter_text);
+               }
+
 
 
 
             }
         });
 
+        filter_btn_option.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final Dialog dialog=new Dialog(FindServicesInList.this);
+                dialog.setContentView(R.layout.filter_dialog_option);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.setTitle("Filter Opiton");
+
+                final RadioGroup rgFilter_option = dialog.findViewById(R.id.radio_group_filter);
+
+                rgFilter_option.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+
+                        switch (checkedId)
+                        {
+                            case R.id.filter_by_name:
+                                typeOfFilter = "u.name";
+                                filter_on_text.setHint("Service provider name");
+                              break;
+                            case R.id.filter_by_service :
+                                typeOfFilter = "ser.service_title";
+                                filter_on_text.setHint("Service Title");
+                              break;
+
+                        }
+
+                    }
+                });
 
 
-        new FindServicesInList.Conncetion(FindServicesInList.this, cat_id).execute();
+                dialog.show();
+
+            }
+        });
+
+
+
+
+
+
+
+
+        new Connection(FindServicesInList.this, cat_id).execute();
 
 
     }
 
+    private void sendFilterQuery(CharSequence c) {
+
+    }
 
 
-
-
-
-
-
-
-    class Conncetion extends AsyncTask<String,String ,String > {
+    class Connection extends AsyncTask<String,String ,String > {
         private int cat_id;
         private String filter_location;
         private String filter_gender;
         private int filter_cost;
         private ProgressDialog dialog;
 
-        public Conncetion(Context activity, int cat_id) {
+        public Connection(Context activity, int cat_id) {
             dialog = new ProgressDialog(activity);
             this.cat_id = cat_id;
         }
 
-        public Conncetion(Context activity, int cat_id,String filter_location,String filter_gender,int filter_cost) {
+        public Connection(Context activity, int cat_id, String filter_location, String filter_gender, int filter_cost) {
             dialog = new ProgressDialog(activity);
             this.cat_id = cat_id;
             this.filter_location=filter_location;
             this.filter_gender=filter_gender;
             this.filter_cost=filter_cost;
         }
+
 
 
 
@@ -205,14 +284,15 @@ public class FindServicesInList extends AppCompatActivity {
             if(filterApplied == true)
             {
                 splist= new ArrayList<GetServiceProviders>();
-                final String BASE_URL = "http://vartista.com/vartista_app/filter_get_service_providers.php?cat_id='3'&filterLocation='Karachi'&filterGender='Male'";
-//                //http://vartista.com/vartista_app/filter_get_service_providers.php?cat_id=" + cat_id+"&filterLocation="+ filter_location +"&filterGender"+ filter_gender
+                // ' ' necessary for gender
+                final String BASE_URL = "http://vartista.com/vartista_app/filter_get_service_providers.php?cat_id="+cat_id+"&filterLocation="+filter_location+"&filterGender='"+filterGender+"'&filtercost="+filter_cost;
+//http://vartista.com/vartista_app/filter_get_service_providers.php?cat_id=" + cat_id+"&filterLocation="+ filter_location +"&filterGender"+ filter_gender
 
 //                Toast.makeText(getApplicationContext(), ""+filter_location+""+filter_gender, Toast.LENGTH_SHORT).show();
 
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(FindServicesInList.this, "link main chala gaya"+filter_location+""+filter_gender, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FindServicesInList.this, "link main chala gaya "+filter_location+", "+filter_gender+", "+filter_cost, Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -311,11 +391,12 @@ public class FindServicesInList extends AppCompatActivity {
                         double longitude = Double.parseDouble(ser1.getString("longitude"));
                         double latitude = Double.parseDouble(ser1.getString("latitude"));
                         String sp_name=ser1.getString("name");
+                        double stars = Double.parseDouble(ser1.getString("avg_stars"));
+                        int user_status = Integer.parseInt(ser1.getString("user_status"));
+                        String image = ser1.getString("image");
 //                        Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
 
-                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name));
-
-
+                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name,stars, user_status, image));
 
                     }
 
@@ -334,6 +415,10 @@ public class FindServicesInList extends AppCompatActivity {
                 } else {
                    //
                      Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                     splist= new ArrayList<GetServiceProviders>();
+                    myServicesListAdapter=new ServicesInListMapAdapter(getApplicationContext(),splist);
+                     listViewMyServices.setAdapter(myServicesListAdapter);
+
 
                 }
             } catch (JSONException e) {
@@ -346,5 +431,172 @@ public class FindServicesInList extends AppCompatActivity {
         }
 
     }
+
+    class Connection2 extends AsyncTask<String,String ,String > {
+        private int cat_id;
+        private String filter_location;
+        private String filter_gender;
+        private int filter_cost;
+        private String filter_type;
+        private String filter_text;
+
+        private ProgressDialog dialog;
+
+        public Connection2(Context activity, int cat_id) {
+            dialog = new ProgressDialog(activity);
+            this.cat_id = cat_id;
+        }
+
+        public Connection2(Context activity, int cat_id, String filter_location, String filter_gender, int filter_cost) {
+            dialog = new ProgressDialog(activity);
+            this.cat_id = cat_id;
+            this.filter_location=filter_location;
+            this.filter_gender=filter_gender;
+            this.filter_cost=filter_cost;
+
+        }
+
+        public Connection2(Context activity,int cat_id, String filter_location, String filter_gender, int filter_cost, String filter_type, String filter_text) {
+            this.cat_id = cat_id;
+            this.filter_location = filter_location;
+            this.filter_gender = filter_gender;
+            this.filter_cost = filter_cost;
+            this.filter_type = filter_type;
+            this.filter_text = filter_text;
+            dialog = new ProgressDialog(activity);
+        }
+
+        public Connection2(Context activity,int cat_id, String filter_type, String filter_text) {
+            this.cat_id = cat_id;
+            this.filter_type = filter_type;
+            this.filter_text = filter_text;
+            dialog = new ProgressDialog(activity);
+        }
+
+        @Override
+        protected void onPreExecute() {
+//            dialog.setMessage("Retriving data Please Wait..");
+//            dialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+
+            String result = "";
+            String BASE_URL = "";
+
+            if(filterApplied)
+            {
+                BASE_URL = "http://www.vartista.com/vartista_app/filter_get_serv_provider_by_name_or_serv.php?cat_id="+cat_id+"&filterLocation="+filter_location+"&filterGender="+filter_gender+"&filtercost="+filter_cost+"&search_type="+filter_type+"&search_text="+filter_text;
+            }
+            else
+            {
+                BASE_URL = "http://www.vartista.com/vartista_app/filter_get_serv_provider_by_name_or_serv.php?cat_id="+cat_id+"&search_type="+filter_type+"&search_text="+filter_text;
+            }
+
+
+
+
+                try {
+                    HttpClient client = new DefaultHttpClient();
+                    HttpGet request = new HttpGet();
+
+                    request.setURI(new URI(BASE_URL));
+                    HttpResponse response = client.execute(request);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                    StringBuffer stringBuffer = new StringBuffer();
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        stringBuffer.append(line);
+                        break;
+                    }
+                    reader.close();
+                    result = stringBuffer.toString();
+
+
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                    return new String("There is exception" + e.getMessage());
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return result;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //  Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            try {
+                JSONObject jsonResult = new JSONObject(result);
+                int success = jsonResult.getInt("success");
+
+                //    listViewMyServices.setAdapter(myServicesListAdapter);
+
+
+                if (success == 1) {
+
+
+                    splist.clear();
+                    JSONArray services = jsonResult.getJSONArray("services");
+                    for (int j = 0; j < services.length(); j++) {
+
+                        JSONObject ser1 = services.getJSONObject(j);
+                        int service_id = Integer.parseInt(ser1.getString("service_id"));
+                        int user_id2 = Integer.parseInt(ser1.getString("user_id"));
+                        int address_id = Integer.parseInt(ser1.getString("id"));
+                        int category_id = Integer.parseInt(ser1.getString("category_id"));
+                        String service_title = ser1.getString("service_title");
+
+                        String service_description = ser1.getString("service_description");
+                        double price = Double.parseDouble(ser1.getString("price"));
+
+                        double longitude = Double.parseDouble(ser1.getString("longitude"));
+                        double latitude = Double.parseDouble(ser1.getString("latitude"));
+                        String sp_name=ser1.getString("name");
+//                        Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
+
+                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name));
+
+                    }
+//
+//                    if(filterApplied==true) {
+//                        Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
+//                    }
+//                    else{
+//                        Toast.makeText(FindServicesInList.this, "filter applied true nh hai purani data hai ye"+splist, Toast.LENGTH_SHORT).show();
+//
+//                    }
+                    myServicesListAdapter=new ServicesInListMapAdapter(getApplicationContext(),splist);
+                    listViewMyServices.setAdapter(myServicesListAdapter);
+
+                } else {
+                    //
+                    Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                    splist= new ArrayList<GetServiceProviders>();
+                    myServicesListAdapter=new ServicesInListMapAdapter(getApplicationContext(),splist);
+                    listViewMyServices.setAdapter(myServicesListAdapter);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+
+                // Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+
+
+        }
+
+    }
+
+
+
 }
 

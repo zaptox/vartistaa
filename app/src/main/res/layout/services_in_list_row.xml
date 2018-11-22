@@ -14,7 +14,13 @@
         android:paddingTop="25dp">
 
 
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <!--<de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"-->
+            <!--android:id="@+id/profile_image"-->
+            <!---->
+            <!--android:src="@drawable/tom">-->
+
+        <!--</de.hdodenhof.circleimageview.CircleImageView>-->
+        <RelativeLayout
             android:id="@+id/profile_image"
             android:layout_width="70dp"
             android:layout_height="88dp"
@@ -23,9 +29,13 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="5dp"
-            android:src="@drawable/tom">
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_profile_img"
+                android:layout_width="match_parent"
+                android:layout_height="88dp" />
 
-        </de.hdodenhof.circleimageview.CircleImageView>
+        </RelativeLayout>
 
 
         <TextView
@@ -39,6 +49,16 @@
             android:textColor="@android:color/background_dark"
             android:textSize="20dp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/user_status"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_alignBottom="@+id/simpleRatingBar"
+            android:layout_toEndOf="@+id/textViewName"
+            android:background="@drawable/yellow_circle"
+            android:layout_marginLeft="7dp"
+            />
 
         <TextView
             android:id="@+id/textView_service11"
@@ -107,8 +127,8 @@
             app:srb_starHeight="10dp"
             app:srb_starPadding="5dp"
             app:srb_stepSize="0.5"
-            app:srb_isIndicator="false"
-            app:srb_clickable="true"
+            app:srb_isIndicator="true"
+            app:srb_clickable="false"
             app:srb_scrollable="true"
             app:srb_clearRatingEnabled="true"
             app:srb_drawableEmpty="@drawable/empty"

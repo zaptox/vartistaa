@@ -43,24 +43,7 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
         holder.serviceDesc.setText(list.get(position).getService_description());
         holder.serviceLoc.setText(list.get(position).getLocation());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),AssignRatings.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("UserName",list.get(position).getUsername());
-                intent.putExtra("Requestservice_id",list.get(position).getRequestservice_id());
-                intent.putExtra("Date",list.get(position).getDate());
-                intent.putExtra("Time",list.get(position).getTime());
-                intent.putExtra("location",list.get(position).getLocation());
-                intent.putExtra("user_id",list.get(position).getUser_customer_id());
-                intent.putExtra("Service_Tittle",list.get(position).getService_title());
-                intent.putExtra("Service_p_id",list.get(position).getService_provider_id());
-                context.startActivity(intent);
-                Toast.makeText(context, "intent working", Toast.LENGTH_SHORT).show();
 
-            }
-        });
 
     }
 
