@@ -13,6 +13,19 @@
         android:roundIcon="@drawable/loggoo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+
+        <activity android:name=".modules.provider.MyServiceRequests"
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:excludeFromRecents="true"
+            >
+            <intent-filter>
+                <action android:name="modules.provider.MyServiceRequests"></action>
+                <category android:name="android.intent.category.DEFAULT"></category>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".modules.general.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -20,6 +33,10 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="modules.provider.MyServiceRequests"></action>
+                <category android:name="android.intent.category.DEFAULT"></category>
             </intent-filter>
         </activity>
         <activity
@@ -50,7 +67,7 @@
         <activity android:name=".modules.provider.CreateServiceActivity" />
         <activity android:name=".modules.provider.MyServicesListActivity" />
         <activity android:name=".modules.user.BookNowActivity" />
-        <activity android:name=".modules.provider.MyServiceRequests" />
+
         <activity android:name=".modules.user.FindServicesInList" />
         <activity android:name=".modules.payment.PaymentActivity" />
         <activity android:name=".modules.user.UserNotification_activity" />
