@@ -18,6 +18,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.beans.RequestService;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 
 import org.json.JSONException;
@@ -63,6 +64,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
     protected void showNotification(String title, String message) {
+
         ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 200);
         toneGen1.startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT, 15000);
 //        myTask = new Runnable() {
@@ -84,6 +86,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //
         Intent i = null;
             i = new Intent(this, MyServiceRequests.class);
+             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+             PendingIntent pendingIntent=PendingIntent.getActivity(this,0,i,PendingIntent.FLAG_ONE_SHOT);
+
+             Uri uri=RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
@@ -95,12 +101,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setContentTitle(title)
                 .setContentText(message)
+                .setSound(uri)
+                .setWhen(System.currentTimeMillis())
+                .setOngoing(true)
                 .setSmallIcon(R.drawable.loggoo)
                 .setContentIntent(resultPendingIntent);
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         manager.notify(0, builder.build());
+
+        Intent intent=new Intent(getApplicationContext(), RequestService.class);
+        startActivity(intent);
     }
 
     //this method will display the notification
