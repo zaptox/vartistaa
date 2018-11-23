@@ -74,6 +74,7 @@ public class AddressSetActivity extends AppCompatActivity {
         user_id = ob.getInt("user_id", 0);
 
         new AddressSetActivity.Conncetion(AddressSetActivity.this,user_id).execute();
+        Toast.makeText(this, "Procced", Toast.LENGTH_SHORT).show();
 
 
         set_address.setOnClickListener(new View.OnClickListener() {
