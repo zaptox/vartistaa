@@ -14,6 +14,9 @@ public class usernotificationitems  {
     @SerializedName("request_status")
     private String request_status;
 
+    @SerializedName("sp_status")
+    private String sp_status;
+
     @SerializedName("Time")
     private String Time;
 
@@ -23,8 +26,21 @@ public class usernotificationitems  {
     @SerializedName("price")
     private double price;
 
+
+    @SerializedName("msg")
+    private String msg;
+
+    @SerializedName("notificationid")
+    private String notificationid;
+
+    @SerializedName("created_at")
+    private String created_at;
+
+
     @SerializedName("response")
     private String Response;
+
+
 
     public usernotificationitems(String name, String request_status, String time , String service_title ,double price) {
         Name = name;
@@ -33,7 +49,53 @@ public class usernotificationitems  {
         this.service_title = service_title;
         this.price = price;
     }
+    public usernotificationitems(String notificationid,String name, String msg, String created_at ,String sp_status) {
+        notificationid=notificationid;
+        Name = name;
+        msg = msg;
+        this.sp_status = sp_status;
+        created_at = created_at;
+    }
 
+    public String getSp_status() {
+        return sp_status;
+    }
+
+    public void setSp_status(String sp_status) {
+        this.sp_status = sp_status;
+    }
+
+    public String getService_title() {
+        return service_title;
+    }
+
+    public void setService_title(String service_title) {
+        this.service_title = service_title;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String getNotificationid() {
+        return notificationid;
+    }
+
+    public void setNotificationid(String notificationid) {
+        this.notificationid = notificationid;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
 
     public String getName() {
         return Name;

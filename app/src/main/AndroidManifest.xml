@@ -27,7 +27,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".modules.general.SiginInActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".firebaseconfig.MyFirebaseMessagingService">
             <intent-filter>
@@ -65,7 +65,9 @@
         <service
             android:name=".Offline_user_status_service"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".modules.general.Asynctask_MultipleUrl"></activity>
     </application>
 
 </manifest>
