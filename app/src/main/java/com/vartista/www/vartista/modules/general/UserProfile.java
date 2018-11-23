@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
@@ -24,6 +26,7 @@ public class UserProfile extends AppCompatActivity {
     private TextView header_name;
     private EditText name,email,password;
     private Button update;
+    private ImageView profileimage;
     private ProgressDialog progressDialog;
     public static ApiInterface apiInterface;
 
@@ -39,7 +42,7 @@ public class UserProfile extends AppCompatActivity {
         password= findViewById(R.id.password1);
         update= findViewById(R.id.update);
         header_name=findViewById(R.id.header_name);
-
+        profileimage = (ImageView)findViewById(R.id.profile_image);
 
 
         Intent intent= getIntent();
@@ -49,6 +52,10 @@ public class UserProfile extends AppCompatActivity {
         email.setText(user.getEmail());
         password.setText(user.getPassword());
         header_name.setText(user.getName());
+        Picasso.get().load(user.getImage()).fit().centerCrop()
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.profile)
+                .into(profileimage);
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override

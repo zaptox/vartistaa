@@ -7,9 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.GetServiceProviders;
 import com.vartista.www.vartista.beans.ServiceRequets;
@@ -97,6 +99,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
 
 
         public TextView service_p_name, service_name;
+
         public ScaleRatingBar ratingBar;
 
         public ViewHolder(View itemView) {

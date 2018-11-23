@@ -113,7 +113,7 @@ public class HomeActivity extends AppCompatActivity
 
         // save or update device token
         storeDeviceToken();
-
+        Toast.makeText(this, ""+user.getImage(), Toast.LENGTH_SHORT).show();
         Picasso.get().load(user.getImage()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)

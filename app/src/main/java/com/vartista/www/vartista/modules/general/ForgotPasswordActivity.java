@@ -1,12 +1,14 @@
 package com.vartista.www.vartista.modules.general;
 
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
@@ -25,8 +27,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     EditText emaiverifyedittext,verificationcode,newpassword,confirmnewpassword;
     Button submitemail,submitcode,savepassword;
+    TextView countdown;
     LinearLayout layoutforcode,layoutforemail,layoutforpasswords;
     public static ApiInterface apiInterface;
+    CountDownTimer cTimer = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +48,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         layoutforcode.setVisibility(View.GONE);
         layoutforpasswords.setVisibility(View.GONE);
-
+        countdown = (TextView)findViewById(R.id.time);
+        startTimer();
         submitemail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,4 +93,35 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
 
     }
+
+
+
+
+    //start timer function
+    void startTimer() {
+        cTimer = new CountDownTimer(120000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                countdown.setText(""+millisUntilFinished/1000);
+            }
+            public void onFinish() {
+            }
+        };
+        cTimer.start();
+    }
+
+
+    //cancel timer
+    void cancelTimer() {
+        if(cTimer!=null)
+            cTimer.cancel();
+    }
+
+
+
+
+
+
+
+
+
 }
