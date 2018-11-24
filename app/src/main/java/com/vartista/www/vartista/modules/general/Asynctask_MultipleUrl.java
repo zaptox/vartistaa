@@ -2,6 +2,7 @@ package com.vartista.www.vartista.modules.general;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,7 +43,7 @@ public class Asynctask_MultipleUrl extends AppCompatActivity {
     private TwoListInRecyclerView listadapter;
     ArrayList<usernotificationitems> requestlist;
     ArrayList<usernotificationitems> notificationlist;
-    int customer_id;
+    int user_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +54,10 @@ public class Asynctask_MultipleUrl extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(getApplicationContext());
         view.setHasFixedSize(true);
         view.setLayoutManager(layoutManager);
-        customer_id = user_id;
-        new Asynctask_MultipleUrl.Conncetion(Asynctask_MultipleUrl.this,customer_id).execute();
+        SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+        user_id = ob.getInt("user_id", 0);
+        new Asynctask_MultipleUrl.Conncetion(Asynctask_MultipleUrl.this,user_id).execute();
     }
 
 
@@ -81,8 +84,8 @@ public class Asynctask_MultipleUrl extends AppCompatActivity {
 
             String result = "";
 
-            final String BASE_URL = "http://vartista.com/vartista_app/usernotificationstatus.php?user_customer_id="+customer_id;
-            final String BASE_URL2 = "http://vartista.com/vartista_app/fetch_notificationmsg.php";
+            final String BASE_URL = "http://vartista.com/vartista_app/usernotificationstatus.php?user_customer_id="+user_id;
+            final String BASE_URL2 = "http://vartista.com/vartista_app/fetch_notificationmsg.php?user_id="+user_id;
             String[] ob = new String[2];
             ob[0] = getjsonfromurl(BASE_URL);
             ob[1] = getjsonfromurl(BASE_URL2);
@@ -112,7 +115,6 @@ public class Asynctask_MultipleUrl extends AppCompatActivity {
                         String Time = ser1.getString("time");
                         String Service_title = ser1.getString("service_title");
                         Double price = ser1.getDouble("price");
-                        Toast.makeText(Asynctask_MultipleUrl.this, ""+username, Toast.LENGTH_SHORT).show();
                         requestlist.add(new usernotificationitems(username,request_detail,Time,Service_title,price));
                     }
                 } else {
@@ -124,11 +126,11 @@ public class Asynctask_MultipleUrl extends AppCompatActivity {
                         JSONObject serv2 = services2.getJSONObject(i);
                         String notificationid =  serv2.getString("id");
                         String username = serv2.getString("name");
+                        String title = serv2.getString("title");
                         String msg = serv2.getString("msg");
                         String created_at = serv2.getString("created_at");
                         String sp_status = serv2.getString("sp_status");
-                        notificationlist.add(new usernotificationitems(notificationid,username,msg,created_at,sp_status));
-                        Toast.makeText(Asynctask_MultipleUrl.this, ""+msg, Toast.LENGTH_SHORT).show();
+                        notificationlist.add(new usernotificationitems(notificationid,username,title,msg,created_at,sp_status));
                     }
                 } else {
                    Toast.makeText(getApplicationContext(),"no data in 2 ",Toast.LENGTH_SHORT).show();

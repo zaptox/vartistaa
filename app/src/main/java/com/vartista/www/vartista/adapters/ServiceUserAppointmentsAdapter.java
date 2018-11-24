@@ -43,6 +43,13 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
         holder.serviceDesc.setText(list.get(position).getService_description());
         holder.serviceLoc.setText(list.get(position).getLocation());
 
+         holder.mView.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+
+             }
+         });
+
 
 
     }
