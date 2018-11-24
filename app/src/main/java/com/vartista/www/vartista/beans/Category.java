@@ -20,12 +20,30 @@ public class Category {
     private int cat_id;
 
 
+    @SerializedName("image")
+    private String image;
+
     public Category(String category_name, int cat_id) {
         this.category_name = category_name;
         this.cat_id = cat_id;
     }
 
+    public Category(String category_name, int cat_id, String image) {
+        this.category_name = category_name;
+        this.cat_id = cat_id;
+        this.image = image;
+    }
+
     public Category() {
+    }
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getResponse(){
