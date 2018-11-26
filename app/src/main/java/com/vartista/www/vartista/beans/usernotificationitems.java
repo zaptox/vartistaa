@@ -26,6 +26,8 @@ public class usernotificationitems  {
     @SerializedName("price")
     private double price;
 
+    @SerializedName("title")
+    private String title;
 
     @SerializedName("msg")
     private String msg;
@@ -49,17 +51,25 @@ public class usernotificationitems  {
         this.service_title = service_title;
         this.price = price;
     }
-    public usernotificationitems(String notificationid,String name, String msg, String created_at ,String sp_status) {
-        notificationid=notificationid;
+    public usernotificationitems(String notificationid,String name,String title, String msg, String created_at ,String sp_status) {
+        this.notificationid = notificationid;
         Name = name;
-        msg = msg;
+        this.title = title;
+        this.msg = msg;
+        this.created_at = created_at;
         this.sp_status = sp_status;
-        created_at = created_at;
     }
 
-    public String getSp_status() {
-        return sp_status;
+
+    public String getTitle() {
+        return title;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getSp_status() { return sp_status; }
 
     public void setSp_status(String sp_status) {
         this.sp_status = sp_status;

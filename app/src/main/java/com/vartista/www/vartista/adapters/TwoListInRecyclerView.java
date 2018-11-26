@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kennyc.bottomsheet.BottomSheet;
 import com.vartista.www.vartista.R;
@@ -115,9 +116,9 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
                 @Override
                 public void onClick(View v) {
                     new BottomSheet.Builder(v.getContext())
-                            .setTitle("Title")
-                            .setMessage("Message")
-                            .setIcon(v.getContext().getDrawable(R.drawable.ic_menu_send))
+//                            .setTitle(ob.get)
+                            .setMessage("PLease Check Your Appointments For Further Details")
+//                            .setIcon(v.getContext().getDrawable(R.drawable.ic_menu_send))
                             .show();
                 }
             });
@@ -138,8 +139,9 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
         }
 
         public void populate(usernotificationitems ob){
+            Toast.makeText(itemView.getContext(), ""+ob.getMsg(), Toast.LENGTH_SHORT).show();
                   username.setText(Html.fromHtml("Hello Mr : "+"<b>"+ob.getName()+"<b>"));
-                  adminmsg.setText(Html.fromHtml("From Admin : "+ob.getMsg()));
+                  adminmsg.setText(Html.fromHtml("<b>"+ob.getTitle()+"<b> <br> "+ob.getMsg()));
     }
     }
 

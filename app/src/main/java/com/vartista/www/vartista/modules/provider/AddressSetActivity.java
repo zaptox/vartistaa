@@ -46,6 +46,8 @@ import retrofit2.Response;
 
 public class AddressSetActivity extends AppCompatActivity {
 
+
+
     private EditText country,province, city, zipcode, w_address,p_address;
     private Button set_address;
     private ProgressDialog progressDialog;
@@ -75,8 +77,12 @@ public class AddressSetActivity extends AppCompatActivity {
         Toast.makeText(this, "Procced", Toast.LENGTH_SHORT).show();
 
 
+
+
         set_address.setOnClickListener(new View.OnClickListener() {
             @Override
+
+
             public void onClick(View v) {
 
                 setUIToWait(true);
@@ -88,52 +94,90 @@ public class AddressSetActivity extends AppCompatActivity {
                 String w_address_got= w_address.getText().toString();
                 String p_address_got= p_address.getText().toString();
 
-                SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
-                int user_id=ob.getInt("user_id",0);
 
 
+                if(set_address.getText().toString().equalsIgnoreCase("Update Address")){
+                    Call<UserAddressBean> call = AddressSetActivity.apiInterface.UpdateUserAddress(w_address_got, p_address_got, city_got, province_got, zipcode_got, country_got, user_id);
+                    call.enqueue(new Callback<UserAddressBean>() {
+                        @Override
+                        public void onResponse(Call<UserAddressBean> call, Response<UserAddressBean> response) {
+
+                            if (response.body().getResponse().equals("ok")) {
+
+
+                                setUIToWait(false);
+
+                                startActivity(new Intent(AddressSetActivity.this, DocumentUploadActivity.class));
+
+                            } else if (response.body().getResponse().equals("exist")) {
+                                setUIToWait(false);
+
+                            } else if (response.body().getResponse().equals("error")) {
+                                setUIToWait(false);
+
+                                Toast.makeText(AddressSetActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                setUIToWait(false);
+
+                                Toast.makeText(AddressSetActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<UserAddressBean> call, Throwable t) {
+                            setUIToWait(false);
+                            Toast.makeText(AddressSetActivity.this, "Signup Failed", Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    });
+                }
+                else {
 
 ///*
-                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                Call<UserAddressBean> call= AddressSetActivity.apiInterface.insertUserAddress(w_address_got,p_address_got,city_got,province_got,zipcode_got,country_got,user_id);
-                call.enqueue(new Callback<UserAddressBean>() {
-                    @Override
-                    public void onResponse(Call <UserAddressBean> call, Response<UserAddressBean> response) {
-                        if(response.body().getResponse().equals("ok")){
-                            setUIToWait(false);
+                    progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    Call<UserAddressBean> call = AddressSetActivity.apiInterface.insertUserAddress(w_address_got, p_address_got, city_got, province_got, zipcode_got, country_got, user_id);
+                    call.enqueue(new Callback<UserAddressBean>() {
+                        @Override
+                        public void onResponse(Call<UserAddressBean> call, Response<UserAddressBean> response) {
 
-                            startActivity(new Intent(AddressSetActivity.this,DocumentUploadActivity.class));
+                            if (response.body().getResponse().equals("ok")) {
 
-                        }else if(response.body().getResponse().equals("exist")){
-                            setUIToWait(false);
+
+                                setUIToWait(false);
+
+                                startActivity(new Intent(AddressSetActivity.this, DocumentUploadActivity.class));
+
+                            } else if (response.body().getResponse().equals("exist")) {
+                                setUIToWait(false);
+
+                            } else if (response.body().getResponse().equals("error")) {
+                                setUIToWait(false);
+
+                                Toast.makeText(AddressSetActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                setUIToWait(false);
+
+                                Toast.makeText(AddressSetActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
+
+                            }
 
                         }
-                        else if(response.body().getResponse().equals("error")){
-                            setUIToWait(false);
 
-                            Toast.makeText(AddressSetActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(Call<UserAddressBean> call, Throwable t) {
+                            setUIToWait(false);
+                            Toast.makeText(AddressSetActivity.this, "Signup Failed", Toast.LENGTH_SHORT).show();
+
 
                         }
+                    });
 
-                        else{
-                            setUIToWait(false);
-
-                            Toast.makeText(AddressSetActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call <UserAddressBean> call, Throwable t) {
-                        setUIToWait(false);
-                        Toast.makeText(AddressSetActivity.this,"Signup Failed",Toast.LENGTH_SHORT).show();
-
-
-                    }
-                });
-
-
+                }
             }
         });
 
@@ -150,6 +194,7 @@ public class AddressSetActivity extends AppCompatActivity {
         public  Conncetion(AddressSetActivity activity,int user_id) {
             dialog = new ProgressDialog(activity);
             userId=user_id;
+
         }
 
         @Override
@@ -160,6 +205,7 @@ public class AddressSetActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
+
 
             String result="";
 
@@ -213,6 +259,7 @@ public class AddressSetActivity extends AppCompatActivity {
                     province.setText(service.getString("province"));
                     zipcode.setText(service.getString("zipcode"));
                     country.setText(service.getString("country"));
+                    set_address.setText("Update Address");
 
 
                 }
