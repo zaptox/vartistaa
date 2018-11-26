@@ -48,8 +48,8 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
          holder.mView.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Intent intent = new Intent(context, MyServiceMeetings.class);
-                 context.startActivity(intent);
+                 Intent intent = new Intent(v.getContext(), MyServiceMeetings.class);
+                 v.getContext().startActivity(intent);
              }
          });
 
