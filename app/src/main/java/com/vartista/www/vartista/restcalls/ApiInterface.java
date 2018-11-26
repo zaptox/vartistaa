@@ -92,6 +92,8 @@ public interface ApiInterface {
     Call<User> UpdateUserStatus(@Query("user_id") int user_id);
 
 
+    @GET("update_sp_status.php")
+    Call<User> UpdateSpStatus(@Query("user_id") int user_id);
 
 
 

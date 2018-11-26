@@ -46,8 +46,6 @@ import retrofit2.Response;
 
 public class AddressSetActivity extends AppCompatActivity {
 
-
-
     private EditText country,province, city, zipcode, w_address,p_address;
     private Button set_address;
     private ProgressDialog progressDialog;
@@ -101,10 +99,7 @@ public class AddressSetActivity extends AppCompatActivity {
                 call.enqueue(new Callback<UserAddressBean>() {
                     @Override
                     public void onResponse(Call <UserAddressBean> call, Response<UserAddressBean> response) {
-
                         if(response.body().getResponse().equals("ok")){
-
-
                             setUIToWait(false);
 
                             startActivity(new Intent(AddressSetActivity.this,DocumentUploadActivity.class));
@@ -155,7 +150,6 @@ public class AddressSetActivity extends AppCompatActivity {
         public  Conncetion(AddressSetActivity activity,int user_id) {
             dialog = new ProgressDialog(activity);
             userId=user_id;
-
         }
 
         @Override
@@ -166,7 +160,6 @@ public class AddressSetActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-
 
             String result="";
 

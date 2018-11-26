@@ -1,6 +1,7 @@
 package com.vartista.www.vartista.modules.provider;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,13 +23,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.restcalls.ApiClient;
+import com.vartista.www.vartista.restcalls.ApiInterface;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
 
 import java.io.IOException;
 import java.util.UUID;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DocumentUploadActivity extends AppCompatActivity
         {
@@ -45,8 +54,9 @@ public class DocumentUploadActivity extends AppCompatActivity
    private  static String cnic_back_document_title="cnic_back";
    private  static String bank_details_document_title="bank_details";
    private  boolean cnic_front=false,cnic_back=false,bank_details=false;
-
-            int user_id;
+            private ProgressDialog progressDialog;
+   int user_id;
+            public static ApiInterface apiInterface;
 
 
     @Override
@@ -60,7 +70,9 @@ public class DocumentUploadActivity extends AppCompatActivity
         imageViewBackCinc=(ImageView)findViewById(R.id.imageViewBackCinc);
         btnSetAddress= findViewById(R.id.set_address_required);
         user_id=ob.getInt("user_id",0);
-         btnUpload=(Button)findViewById(R.id.btnUpload);
+        apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
+
+        btnUpload=(Button)findViewById(R.id.btnUpload);
 
           btnSetAddress.setOnClickListener(new View.OnClickListener() {
               @Override
@@ -68,7 +80,6 @@ public class DocumentUploadActivity extends AppCompatActivity
                   startActivity(new Intent(DocumentUploadActivity.this,AddressSetActivity.class));
               }
           });
-
 
         imageViewBankDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,10 +137,83 @@ public class DocumentUploadActivity extends AppCompatActivity
                   showCompletedDialog("error in uploading documents","Kindly provide CNIC back side image");
 
               }
+
+
+                setUIToWait(true);
+                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+
+
+                Call<User> call= DocumentUploadActivity.apiInterface.UpdateSpStatus(user_id);
+                try {
+                    call.enqueue(new Callback<User>() {
+                        @Override
+                        public void onResponse(Call<User> call, Response<User> response) {
+
+                            if (response.body().getResponse().equals("ok")) {
+                                setUIToWait(false);
+
+                                Toast.makeText(DocumentUploadActivity.this, "Updated Successfully..", Toast.LENGTH_SHORT).show();
+
+                            } else if (response.body().getResponse().equals("exist")) {
+                                setUIToWait(false);
+
+                                Toast.makeText(DocumentUploadActivity.this, "Same Data exists....", Toast.LENGTH_SHORT).show();
+
+                            } else if (response.body().getResponse().equals("error")) {
+                                setUIToWait(false);
+
+                                Toast.makeText(DocumentUploadActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                setUIToWait(false);
+
+                                Toast.makeText(DocumentUploadActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
+
+                            }
+
+
+//                        user_name.setText("response ");
+                            Toast.makeText(DocumentUploadActivity.this, "Request sent to admin", Toast.LENGTH_SHORT).show();
+
+//                            finish();
+                        }
+
+                        @Override
+                        public void onFailure(Call<User> call, Throwable t) {
+                            setUIToWait(false);
+                            Toast.makeText(DocumentUploadActivity.this, "Update Failed", Toast.LENGTH_SHORT).show();
+
+//                        create.setText(t.getMessage());
+                        }
+                    });
+                }
+                catch(Exception e){
+                    MDToast mdToast = MDToast.makeText(getApplicationContext(), ""+e.getMessage(), MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                    mdToast.show();
+
+                }
+
+
+
             }
         });
 
   }
+
+
+            private void setUIToWait(boolean wait) {
+
+                if (wait) {
+                    progressDialog = ProgressDialog.show(this, null, null, true, true);
+//            progressDialog.setContentView(new ProgressBar(this));
+                    progressDialog.setContentView(R.layout.loader);
+
+                } else {
+                    progressDialog.dismiss();
+                }
+
+            }
 
 
     @Override

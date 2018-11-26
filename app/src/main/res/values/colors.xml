@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--dark gray-->
+    <!--<color name="colorPrimary">#546b81</color>-->
+    <!--<color name="colorPrimaryDark">#546b81</color>-->
+    <!--<color name="colorAccent">#546b81</color>-->
 
-    <color name="colorPrimary">#546b81</color>
-    <color name="colorPrimaryDark">#546b81</color>
-    <color name="colorAccent">#546b81</color>
+
+    <!--light gray-->
+    <color name="colorPrimary">#a8a8a8</color>
+    <color name="colorPrimaryDark">#a8a8a8</color>
+    <color name="colorAccent">#a8a8a8</color>
+
 
 
     <!--<color name="colorPrimary">#F99F1B</color>-->
@@ -29,8 +36,10 @@
     <color name="greyky_for_design">#26a1db</color>
     <color name="zaptox_blue">#26a1db</color>
 
-    <color name="gray_client">#546b81</color>
-    <color name="text_color_client">#FFFFFF</color>
+    <!--<color name="gray_client">#546b81</color>-->
+    <color name="gray_client">#FFFFFF</color>
+    <!--<color name="text_color_client">#FFFFFF</color>-->
+    <color name="text_color_client">#000000</color>
     <color name="grey2_for_design">#a8a8a8</color>
 
 
