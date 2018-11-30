@@ -31,7 +31,7 @@
             android:layout_marginStart="5dp"
             >
             <de.hdodenhof.circleimageview.CircleImageView
-               android:id="@+id/user_image1"
+                android:id="@+id/user_profile_img"
                 android:layout_width="match_parent"
                 android:layout_height="88dp" />
 
@@ -51,7 +51,7 @@
             android:textStyle="bold" />
 
         <ImageView
-
+            android:id="@+id/user_status"
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:layout_alignBottom="@+id/simpleRatingBar"

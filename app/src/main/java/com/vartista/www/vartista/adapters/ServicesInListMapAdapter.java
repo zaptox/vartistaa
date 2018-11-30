@@ -54,6 +54,18 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
         holder.service_p_name.setText("" + myServicesList.get(position).getSp_name());
         holder.service_name.setText("" + myServicesList.get(position).getService_title());
         holder.ratingBar.setRating((float) (myServicesList.get(position).getRatings()));
+        if(myServicesList.get(position).getUser_status() == 1){
+            holder.user_status.setImageResource(R.drawable.green_circle);
+        }
+        else {
+            holder.user_status.setImageResource(R.drawable.yellow_circle);
+
+        }
+        Picasso.get().load(myServicesList.get(position).getImage()).fit().centerCrop()
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.profile)
+                .into(holder.user_profile_img);
+
 
 
         final int abhipoition = position;
@@ -101,6 +113,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
         public TextView service_p_name, service_name;
 
         public ScaleRatingBar ratingBar;
+        public ImageView user_status, user_profile_img;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -109,6 +122,8 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
             service_p_name = (TextView) mView.findViewById(R.id.textViewName);
             service_name = (TextView) mView.findViewById(R.id.textViewService);
             ratingBar = mView.findViewById(R.id.simpleRatingBar);
+            user_status = mView.findViewById(R.id.user_status);
+            user_profile_img = mView.findViewById(R.id.user_profile_img);
 
         }
     }
