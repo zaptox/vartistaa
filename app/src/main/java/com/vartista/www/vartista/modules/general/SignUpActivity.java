@@ -322,9 +322,6 @@ public class SignUpActivity extends AppCompatActivity {
 
                     MDToast mdToast = MDToast.makeText(getApplicationContext(), " "+response.body().getResponse(), MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                     mdToast.show();
-
-
-
 //                    MDToast mdToast = MDToast.makeText(getApplicationContext(), "User Inserted: "+response, MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
 //                    mdToast.show();
                 }

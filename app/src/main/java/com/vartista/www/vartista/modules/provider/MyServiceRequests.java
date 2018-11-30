@@ -174,7 +174,7 @@ public class MyServiceRequests extends AppCompatActivity {
                         double price = service.getDouble("price");
                         String service_description= service.getString("service_description");
                         String category_name=service.getString("catgname");
-                        Toast.makeText(MyServiceRequests.this, ""+category_name, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyServiceRequests.this, "The data is coming from database"+service_title, Toast.LENGTH_SHORT).show();
                         serviceRequestsList.add(new ServiceRequets(requestservice_id,user_name,status,date,time,location,user_customer_id,
                                 service_provider_id,service_id,service_cat_id,service_title,price,service_description,category_name
                                 ));

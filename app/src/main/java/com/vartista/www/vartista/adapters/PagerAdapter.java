@@ -1,10 +1,14 @@
 package com.vartista.www.vartista.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.content.SharedPreferences;
+import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.vartista.www.vartista.fragments.ConfigSettingsFragment;
@@ -17,6 +21,7 @@ import com.vartista.www.vartista.modules.general.HomeActivity;
  */
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
+
     int mNumOfTabs;
     static int user_id;
     public static int MANDATORY_PAGE_LOCATION;
@@ -64,6 +69,10 @@ String title[]=new String[]{"As a User","As a Service Provider"};
                 return null;
         }
     }
+
+
+
+
     @Override
     public CharSequence getPageTitle(int position) {
         return title[position];
@@ -73,9 +82,10 @@ String title[]=new String[]{"As a User","As a Service Provider"};
         return title.length;
     }
 
-
-
-
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
+    }
 
 
 }

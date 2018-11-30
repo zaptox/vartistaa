@@ -15,8 +15,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -123,10 +125,10 @@ public class HomeActivity extends AppCompatActivity
 
         // view pager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
+        final ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
 
-        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), user_id, getApplicationContext());
-        viewpager.setAdapter(adapter);
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),user_id,getApplicationContext());
+         viewpager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewpager);
 
         //making user online
