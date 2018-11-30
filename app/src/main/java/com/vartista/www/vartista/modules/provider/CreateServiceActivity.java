@@ -161,6 +161,10 @@ public class  CreateServiceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //update Work here
 
+                if(category_id==0){
+                    category_id=1;
+                }
+
                 if (btnCreateSerivce.getText().equals("Edit Service")) {
                    // MDToast mdToast = MDToast.makeText(getApplicationContext(), "Your Service Edit Successfully"+edit_user_id, MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                     //mdToast.show();
@@ -172,8 +176,12 @@ public class  CreateServiceActivity extends AppCompatActivity {
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     String formattedDate = df.format(c);
                     String update_at=formattedDate;
-                    getLocationFromAddress(location);
+                   try {
+                       getLocationFromAddress(location);
+                   }
+                   catch (Exception e){
 
+                   }
 
                     Call<Service> call = CreateServiceActivity.apiInterface.updateService(title,description, location,latitude,longitude,country,category_id, Double.parseDouble(price),update_at,edit_user_id);
                     call.enqueue(new Callback<Service>() {
@@ -217,7 +225,13 @@ public class  CreateServiceActivity extends AppCompatActivity {
                     String price = edTxtServicePrice.getText().toString();
                     String description = edDescription.getText().toString();
                     String location = service_location.getText().toString();
-                    getLocationFromAddress(location);
+                    String add="";
+                    try {
+                        add = getLocationFromAddress(location);
+                    }
+                    catch(Exception e){
+
+                    }
 
                     user_id=loggedin.getId();
 
@@ -322,9 +336,6 @@ public class  CreateServiceActivity extends AppCompatActivity {
             try {
                 JSONObject jsonResult=new JSONObject(result);
                 int success=jsonResult.getInt("success");
-
-
-
                 if(success==1){
 
                     JSONArray catogires=jsonResult.getJSONArray("category");
@@ -332,7 +343,6 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
                         JSONObject category=catogires.getJSONObject(i);
                         int category_id=category.getInt("id");
-
                         String category_name=category.getString("name");
                         cat.add(category_name);
                         cat_id.add(category_id);

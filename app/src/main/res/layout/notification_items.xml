@@ -14,7 +14,8 @@
     </de.hdodenhof.circleimageview.CircleImageView>
 
     <TextView
-        android:id="@+id/textViewname_user"
+        android:id="@+id/textViewname_user_noti"
+        android:text="Hello Mr : "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -25,17 +26,18 @@
         android:textColor="#000000"/>
 
     <TextView
-        android:id="@+id/textViewrequestdetail"
+        android:id="@+id/textViewrequestdetail_noti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textViewname_user"
-        android:layout_below="@+id/textViewname_user"
-        android:layout_marginTop="3dp"
+         android:layout_alignStart="@+id/profile_image"
+        android:layout_below="@+id/textViewname_user_noti"
+        android:layout_marginTop="4dp"
         android:paddingLeft="10dp"
-        android:text="TextView for Request detail" />
+        android:layout_marginLeft="68dp"
+        android:text="Message From Admin" />
 
     <TextView
-        android:id="@+id/textViewtimeduration"
+        android:id="@+id/textViewtimeduration_noti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

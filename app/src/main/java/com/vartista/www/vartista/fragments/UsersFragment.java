@@ -160,8 +160,8 @@ public class UsersFragment extends Fragment {
                         JSONObject category=catogires.getJSONObject(i);
                         int category_id=category.getInt("id");
                         String category_name=category.getString("name");
-
-                        myCategoriesList.add(new Category(category_name,category_id));
+                        String image=category.getString("image");
+                        myCategoriesList.add(new Category(category_name,category_id,image));
 
                     }
 
