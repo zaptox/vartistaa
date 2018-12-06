@@ -3,7 +3,6 @@
     package="com.vartista.www.vartista">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".appconfig.App"
@@ -16,20 +15,11 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".modules.general.SplashActivity"
-
             android:theme="@style/AppTheme.NoActionBar">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="modules.provider.MyServiceRequests"></action> -->
-            <!-- <category android:name="android.intent.category.DEFAULT"></category> -->
-            <!-- </intent-filter> --> <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
             <intent-filter>
-                <action android:name=".MainActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -39,34 +29,12 @@
             android:name=".modules.general.SiginInActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <!--&lt;!&ndash; [START fcm_default_icon] &ndash;&gt;-->
-        <!--<meta-data-->
-            <!--android:name="com.google.firebase.messaging.default_notification_icon"-->
-            <!--android:resource="@drawable/loggoo" />-->
-
-        <!--<meta-data-->
-            <!--android:name="com.google.firebase.messaging.default_notification_color"-->
-            <!--android:resource="@color/white" />-->
-        <!--&lt;!&ndash; [END fcm_default_icon] &ndash;&gt;-->
-        <!--&lt;!&ndash; [START fcm_default_channel] &ndash;&gt;-->
-        <!--<meta-data-->
-            <!--android:name="com.google.firebase.messaging.default_notification_channel_id"-->
-            <!--android:value="81"/>-->
-        <!-- [END fcm_default_channel] -->
-
-        <activity
-            android:name=".modules.provider.MyServiceRequests">
-        </activity>
-        <service android:name=".firebaseconfig.FirebaseMsgService"
-            android:enabled="true"
-            android:exported="true">
+        <service android:name=".firebaseconfig.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".firebaseconfig.MyFirebaseInstanceIDService"
-            android:enabled="true"
-            android:exported="true">
+        <service android:name=".firebaseconfig.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -82,6 +50,7 @@
         <activity android:name=".modules.provider.CreateServiceActivity" />
         <activity android:name=".modules.provider.MyServicesListActivity" />
         <activity android:name=".modules.user.BookNowActivity" />
+        <activity android:name=".modules.provider.MyServiceRequests" />
         <activity android:name=".modules.user.FindServicesInList" />
         <activity android:name=".modules.payment.PaymentActivity" />
         <activity android:name=".modules.user.UserNotification_activity" />
@@ -92,15 +61,14 @@
         <activity android:name=".modules.user.AssignRatings" />
         <activity android:name=".modules.provider.DocumentUploadActivity" />
         <activity android:name=".modules.provider.My_Rating_Reviews" />
+        <activity android:name=".modules.provider.AddressSetActivity" />
 
         <service
             android:name=".Offline_user_status_service"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".Main2Activity">
-
-        </activity>
+        <activity android:name=".modules.general.Asynctask_MultipleUrl"></activity>
     </application>
 
 </manifest>

@@ -25,6 +25,8 @@ import android.widget.Toast;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 import com.valdesekamdem.library.mdtoast.MDToast;
+//import com.vartista.www.vartista.Offline_user_status_service;
+
 import com.vartista.www.vartista.Offline_user_status_service;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
@@ -218,7 +220,7 @@ public class HomeActivity extends AppCompatActivity
             Toast.makeText(this, "request", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.notification) {
-            Intent intent = new Intent(HomeActivity.this, UserNotification_activity.class);
+            Intent intent = new Intent(HomeActivity.this, Asynctask_MultipleUrl.class);
             startActivity(intent);
             Toast.makeText(this, "Notification", Toast.LENGTH_SHORT).show();
 

@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
+import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.user.AssignRatings;
+import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ServiceUserAppointmentsAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ServiceUserAppointmentsAdapter.ViewHolder holder, final int position) {
         holder.serviceprovidername.setText(list.get(position).getUsername());
         holder.servicecharges.setText(list.get(position).getService_title()+" "+list.get(position).getPrice());
         holder.Date.setText(list.get(position).getDate());
@@ -42,6 +44,14 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
         holder.serviceCat.setText(list.get(position).getName());
         holder.serviceDesc.setText(list.get(position).getService_description());
         holder.serviceLoc.setText(list.get(position).getLocation());
+
+         holder.mView.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent intent = new Intent(v.getContext(), MyServiceMeetings.class);
+                 v.getContext().startActivity(intent);
+             }
+         });
 
 
 

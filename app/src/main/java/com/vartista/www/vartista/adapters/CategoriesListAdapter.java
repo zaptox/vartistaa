@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.beans.Category;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.modules.user.BookNowActivity;
@@ -35,17 +36,31 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
 
         holder.tvCategoryName.setText(myCategoryList.get(position).getCategory_name());
 
-        if(myCategoryList.get(position).getCategory_name().equalsIgnoreCase("Beautician")){
-            holder.imageView.setImageResource(R.drawable.beautican);
+//        if(myCategoryList.get(position).getCategory_name().equalsIgnoreCase("Beautician")){
+//            holder.imageView.setImageResource(R.drawable.beautican);
+//
+//        }
+//        else if(myCategoryList.get(position).getCategory_name().equalsIgnoreCase("Plumber")){
+//            holder.imageView.setImageResource(R.drawable.plumber);
+//
+//        }
+//        else {
+//            holder.imageView.setImageResource(R.drawable.ele);
+//        }
 
-        }
-        else if(myCategoryList.get(position).getCategory_name().equalsIgnoreCase("Plumber")){
-            holder.imageView.setImageResource(R.drawable.plumber);
-
-        }
+    if(myCategoryList.get(position).getImage().equals("") || myCategoryList.get(position).getImage()==null ){
+        holder.imageView.setImageResource(R.drawable.ele);
+    }
         else {
-            holder.imageView.setImageResource(R.drawable.ele);
-        }
+        Picasso.get().load(myCategoryList.get(position).getImage()).fit().centerCrop()
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.profile)
+                .into(holder.imageView);
+    }
+
+//        holder.imageView.setImageResource(R.drawable.ele);
+
+
         final int cat_id= myCategoryList.get(position).getCat_id();
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
