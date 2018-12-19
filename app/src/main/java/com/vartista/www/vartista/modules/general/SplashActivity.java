@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -33,6 +34,16 @@ public class SplashActivity extends AwesomeSplash {
 
     @Override
     public void initSplash(ConfigSplash configSplash) {
+
+
+
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            Toast.makeText(getApplicationContext(),"body: "+bundle.get("body")+"  title:  "+bundle.get("title")
+                    +"  Xoni  "+bundle.get("Xoni"),Toast.LENGTH_SHORT).show();
+        }
+
 
 
         ActionBar actionBar= getSupportActionBar();
