@@ -11,10 +11,14 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 import com.vartista.www.vartista.beans.Category;
@@ -56,11 +60,9 @@ public class UsersFragment extends Fragment {
         // public constructor
         this.user_id=user_id;
     }
-
     public UsersFragment() {
         // Required empty public constructor
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,7 +87,12 @@ public class UsersFragment extends Fragment {
         categoriesListAdapter=new CategoriesListAdapter(context,myCategoriesList);
 
 
+
+
         return  view; }
+
+
+
 
 
     class Conncetion extends AsyncTask<String,String ,String > {
@@ -162,6 +169,8 @@ public class UsersFragment extends Fragment {
                         String category_name=category.getString("name");
                         String image=category.getString("image");
                         myCategoriesList.add(new Category(category_name,category_id,image));
+
+
 
                     }
 

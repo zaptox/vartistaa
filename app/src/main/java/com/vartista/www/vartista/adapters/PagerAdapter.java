@@ -5,8 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.content.SharedPreferences;
+import android.view.Menu;
 import android.widget.Toast;
 
+import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.fragments.ConfigSettingsFragment;
 import com.vartista.www.vartista.fragments.ServiceProviderFragment;
 import com.vartista.www.vartista.fragments.UsersFragment;
@@ -38,6 +40,7 @@ String title[]=new String[]{"As a User","As a Service Provider"};
             case 0:
                 UsersFragment tab1 = new UsersFragment(user_id);
                 MANDATORY_PAGE_LOCATION=0;
+
                 return tab1;
             case 1:
                  SharedPreferences ob =context.getSharedPreferences("Login", Context.MODE_PRIVATE);
@@ -51,10 +54,8 @@ String title[]=new String[]{"As a User","As a Service Provider"};
                     return tab3;
                 }
                 else{
-
                 ServiceProviderFragment tab2 = new ServiceProviderFragment(user_id);
                 return tab2;
-
                 }
 
             default:

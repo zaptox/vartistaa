@@ -128,6 +128,8 @@ public class HomeActivity extends AppCompatActivity
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), user_id, getApplicationContext());
         viewpager.setAdapter(adapter);
+
+//        Toast.makeText(this, "current fragment"+   viewpager.getCurrentItem(), Toast.LENGTH_SHORT).show();
         tabLayout.setupWithViewPager(viewpager);
 
         //making user online
@@ -290,7 +292,6 @@ public class HomeActivity extends AppCompatActivity
 
         });
     }
-
     private void startOfflineService() {
         Log.d("HomeActivity", "onPauseCalled");
         Intent intent = new Intent(HomeActivity.this, Offline_user_status_service.class);
@@ -301,8 +302,6 @@ public class HomeActivity extends AppCompatActivity
     class Connection extends AsyncTask<String, String, String> {
         private int user_id;
         private int user_status;
-
-
 
         public Connection(int user_id, int user_status) {
             this.user_id = user_id;
@@ -355,8 +354,6 @@ public class HomeActivity extends AppCompatActivity
                 e.printStackTrace();
             }
             return result;
-
-
         }
 
         @Override
