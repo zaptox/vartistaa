@@ -53,7 +53,7 @@
     <color name="btnGray">#ffdbdbdb</color>
 
     <!-- Regular colors -->
-    <color name="black">#546b81</color>
+    <color name="black">#000000</color>
     <color name="dark_gray">#292929</color>
     <color name="dim_gray">#696969</color>
     <color name="gray">#A9A9A9</color>

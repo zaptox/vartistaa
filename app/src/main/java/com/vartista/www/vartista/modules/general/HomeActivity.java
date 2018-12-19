@@ -1,11 +1,14 @@
 package com.vartista.www.vartista.modules.general;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
@@ -17,8 +20,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TabHost;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,10 +38,13 @@ import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
 
 import com.vartista.www.vartista.adapters.ServicesInListMapAdapter;
+import com.vartista.www.vartista.adapters.ViewPagerAdapter;
 import com.vartista.www.vartista.beans.DeviceToken;
 import com.vartista.www.vartista.beans.GetServiceProviders;
 import com.vartista.www.vartista.beans.Service;
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.fragments.ServiceProviderFragment;
+import com.vartista.www.vartista.fragments.UsersFragment;
 import com.vartista.www.vartista.modules.payment.PaymentActivity;
 import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
@@ -63,13 +72,14 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener  {
 
 
     private TextView email, name;
@@ -78,30 +88,47 @@ public class HomeActivity extends AppCompatActivity
     public static User user;
     ImageView imageViewProfileDrawer;
     public static TokenApiInterface tokenApiInterface;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    DrawerLayout drawer;
+    DrawerLayout serviceProvider_Drawer;
+    Toolbar toolbar;
+    NavigationView navigationView;
+    ActionBarDrawerToggle toggle;
+    private int[] tabIcons = {
+            R.drawable.ic_tab,
+            R.drawable.ic_tab,
 
+    };
+    Boolean check = true;
+
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         tokenApiInterface = ApiClient.getApiClient().create(TokenApiInterface.class);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        Toast.makeText(getApplicationContext(), FirebaseInstanceId.getInstance().getToken(), Toast.LENGTH_SHORT).show();
-        Log.d("deviceToken", FirebaseInstanceId.getInstance().getToken());
+//        Toast.makeText(getApplicationContext(), FirebaseInstanceId.getInstance().getToken(), Toast.LENGTH_SHORT).show();
+//        Log.d("deviceToken", FirebaseInstanceId.getInstance().getToken());
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
 
         View headerView = navigationView.getHeaderView(0);
         name = (TextView) headerView.findViewById(R.id.name);
         email = (TextView) headerView.findViewById(R.id.email);
         imageViewProfileDrawer = (ImageView) headerView.findViewById(R.id.imageViewUserProfileDrawer);
         imageViewProfileDrawer.setImageResource(R.drawable.profile);
+
+
 
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("user");
@@ -123,13 +150,91 @@ public class HomeActivity extends AppCompatActivity
         //device token add to server
 
         // view pager
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
 
-        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), user_id, getApplicationContext());
-        viewpager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewpager);
 
+        viewPager = (SlideOffViewPager) findViewById(R.id.viewpager);
+        //        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), user_id, getApplicationContext());
+        ((SlideOffViewPager) viewPager).setPagingEnabled(false);
+          setupViewPager(viewPager);
+
+
+//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @SuppressLint("ResourceType")
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                Toast.makeText(getApplicationContext(),"dddsss",Toast.LENGTH_SHORT).show();
+//                if(position==1) {
+//                    Toast.makeText(HomeActivity.this, ""+position, Toast.LENGTH_SHORT).show();
+//                    drawer = findViewById(R.id.drawer_layout_serviceprovider);
+//                    toggle = new ActionBarDrawerToggle(
+//                            HomeActivity.this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                    drawer.addDrawerListener(toggle);
+                    toggle.syncState();
+
+
+
+
+//                }
+//                else if(position==0){
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
+//
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+                         public void onTabSelected(TabLayout.Tab tab) {
+
+                if(tab.getPosition()==1) {
+                    Toast.makeText(HomeActivity.this, ""+1, Toast.LENGTH_SHORT).show();
+                              NavigationDrawerUser(true);
+                             if (check == true) {
+                                 NavigationDrawer_ServiceProvider(false);
+                             check = false;
+                             }
+
+                }
+                else if (tab.getPosition()==0){
+                     NavigationDrawerUser(false);
+                     if (check==false){
+                         NavigationDrawer_ServiceProvider(true);
+                         check=true;
+                     }
+
+
+                }
+            }
+
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
+
+
+        tabLayout.setupWithViewPager(viewPager);
+        setupTabIcons();
         //making user online
 
         SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
@@ -145,10 +250,8 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -182,7 +285,7 @@ public class HomeActivity extends AppCompatActivity
             startActivity(new Intent(HomeActivity.this, AppSettings.class));
             return true;
         } else if (id == R.id.logout) {
-            SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
             user_id = ob.getInt("user_id", 0);
             new Connection(user_id, 0).execute();
             Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
@@ -261,7 +364,7 @@ public class HomeActivity extends AppCompatActivity
         }
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -294,14 +397,14 @@ public class HomeActivity extends AppCompatActivity
     private void startOfflineService() {
         Log.d("HomeActivity", "onPauseCalled");
         Intent intent = new Intent(HomeActivity.this, Offline_user_status_service.class);
-        intent.putExtra("user_id",user_id);
+        intent.putExtra("user_id", user_id);
         startService(intent);
         Log.d("HomeActivity", "serviceStarted");
     }
+
     class Connection extends AsyncTask<String, String, String> {
         private int user_id;
         private int user_status;
-
 
 
         public Connection(int user_id, int user_status) {
@@ -310,7 +413,6 @@ public class HomeActivity extends AppCompatActivity
         }
 
         private ProgressDialog dialog;
-
 
 
         @Override
@@ -327,7 +429,7 @@ public class HomeActivity extends AppCompatActivity
             String result = "";
             String BASE_URL = "";
 
-            BASE_URL = "http://www.vartista.com/vartista_app/update_user_online_status.php?user_id="+user_id+"&user_status="+user_status;
+            BASE_URL = "http://www.vartista.com/vartista_app/update_user_online_status.php?user_id=" + user_id + "&user_status=" + user_status;
 
             try {
                 HttpClient client = new DefaultHttpClient();
@@ -380,4 +482,31 @@ public class HomeActivity extends AppCompatActivity
         }
 
     }
+
+
+
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFrag(new UsersFragment(), "As a User");
+        adapter.addFrag(new ServiceProviderFragment(), "As a Service Provider");
+        viewPager.setAdapter(adapter);
+    }
+
+    private void setupTabIcons() {
+        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+
+
+    }
+
+    private void NavigationDrawerUser(Boolean boo){
+        navigationView.getMenu().getItem(3).setVisible(boo);
+        navigationView.getMenu().getItem(4).setVisible(boo);
+        navigationView.getMenu().getItem(5).setVisible(boo);
+
+    }
+    private void NavigationDrawer_ServiceProvider(Boolean boo){
+        navigationView.getMenu().getItem(2).setVisible(boo);
+    }
+
 }

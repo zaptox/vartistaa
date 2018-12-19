@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabItem;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,6 +68,7 @@ public class UsersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_users, container, false);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+
         listViewMyCategories=(RecyclerView) view.findViewById(R.id.lvCategory);
         listViewMyCategories.setHasFixedSize(true);
         listViewMyCategories.setLayoutManager(new LinearLayoutManager(getContext()));
