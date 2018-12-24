@@ -1,6 +1,7 @@
 package com.vartista.www.vartista.modules.general;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -158,40 +160,12 @@ public class HomeActivity extends AppCompatActivity
         ((SlideOffViewPager) viewPager).setPagingEnabled(false);
           setupViewPager(viewPager);
 
-
-//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @SuppressLint("ResourceType")
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                Toast.makeText(getApplicationContext(),"dddsss",Toast.LENGTH_SHORT).show();
-//                if(position==1) {
-//                    Toast.makeText(HomeActivity.this, ""+position, Toast.LENGTH_SHORT).show();
-//                    drawer = findViewById(R.id.drawer_layout_serviceprovider);
-//                    toggle = new ActionBarDrawerToggle(
-//                            HomeActivity.this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
                     drawer.addDrawerListener(toggle);
                     toggle.syncState();
 
 
 
 
-//                }
-//                else if(position==0){
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
-//
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -245,6 +219,8 @@ public class HomeActivity extends AppCompatActivity
         //a service to make user offline
 
         startOfflineService();
+        simplenotification();
+
 
 
     }
@@ -508,5 +484,18 @@ public class HomeActivity extends AppCompatActivity
     private void NavigationDrawer_ServiceProvider(Boolean boo){
         navigationView.getMenu().getItem(2).setVisible(boo);
     }
+
+     public void simplenotification(){
+         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+         builder.setContentTitle("BasicNotifications Sample");
+         builder.setContentText("Time to learn about notifications!");
+
+
+
+         NotificationManager notificationManager = (NotificationManager) getSystemService(
+                 NOTIFICATION_SERVICE);
+         notificationManager.notify(1, builder.build());
+     }
+
 
 }
