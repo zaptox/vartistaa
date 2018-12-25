@@ -405,7 +405,8 @@ public class FindServicesInList extends AppCompatActivity {
                     }
                     else{
                         Toast.makeText(FindServicesInList.this, "filter applied true nh hai purani data hai ye"+splist, Toast.LENGTH_SHORT).show();
-}
+
+                    }
                     myServicesListAdapter=new ServicesInListMapAdapter(getApplicationContext(),splist);
                     listViewMyServices.setAdapter(myServicesListAdapter);
 

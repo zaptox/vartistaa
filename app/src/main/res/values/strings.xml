@@ -29,9 +29,8 @@
     </string-array>
 
     <string-array name="gender">
-        <item>Male</item>
-        <item>Female</item>
-        <item>Any</item>
+        <item>male</item>
+        <item>female</item>
     </string-array>
 
 </resources>
