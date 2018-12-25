@@ -30,7 +30,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData().get("body"));
-            sendNotifcation(remoteMessage.getData().get("title"),remoteMessage.getData().get("body"));
+            sendNotifcation(remoteMessage.getData().get("title"),remoteMessage.getData().get("body"),remoteMessage.getData().get("activity"));
 
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
@@ -43,9 +43,10 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
 
-            Log.d("if not null", "Message Notification Body: " + remoteMessage.getNotification().getBody());
+        Log.d("if not null", "Message Notification Body: " + remoteMessage.getNotification().getBody());
+        sendNotifcation("Xoni Developers","This is a msg send from firebase server","HomeActivity");
 
-        sendNotifcation("Xoni Developers","This is a msg send from firebase server");        }
+        }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
@@ -53,7 +54,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
 
 
-    private void sendNotifcation(String title,String body) {
+    private void sendNotifcation(String title,String body, String activity) {
         NotificationHelper notificationHelper;
         NotificationManagerCompat notificationManager;
 
@@ -68,23 +69,24 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
         // other than android O
         else {
-            Intent resultIntent = new Intent(getApplicationContext() , MyServiceRequests.class);
-            resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
-                    0 /* Request code */, resultIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
+            if(activity.equals("MyServiceRequests")) {
+                Intent resultIntent = new Intent(getApplicationContext(), MyServiceRequests.class);
+                resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
+                        0 /* Request code */, resultIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+                Notification notification = new NotificationCompat.Builder(getApplicationContext(), NotificationHelper.CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_launcher_background)
+                        .setContentText(title)
+                        .setContentTitle(body)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                        .setContentIntent(resultPendingIntent)
+                        .build();
 
-            Notification notification = new NotificationCompat.Builder(getApplicationContext(), NotificationHelper.CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setContentText(title)
-                    .setContentTitle(body)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                    .setContentIntent(resultPendingIntent)
-                    .build();
-
-            notificationManager.notify(1, notification);
+                notificationManager.notify(1, notification);
+            }
 
         }
 

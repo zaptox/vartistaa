@@ -70,18 +70,16 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                                               if(response.body().getResponse().equals("ok")){
                                                   remove(position);
                                                   notifyDataSetChanged();
-
                                                   Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
                                                           .sendPushNotification(myReqServicesList.get(position).getService_provider_id(),
-                                                                  "Accept  you request for appointment","Vartista");
+                                                                  "Accept  you request for appointment","Vartista","");
                                                   callNotification.enqueue(new Callback<NotificationsManager>() {
                                                       @Override
                                                       public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
-
-                                                          if(response.isSuccessful())
+                                                        if(response.isSuccessful())
                                                               MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
+                                                          }
 
-                                                      }
 
                                                       @Override
                                                       public void onFailure(Call<NotificationsManager> call, Throwable t) {

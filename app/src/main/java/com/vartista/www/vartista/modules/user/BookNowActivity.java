@@ -58,31 +58,24 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
         layoutTime=(RelativeLayout)findViewById(R.id.layouttime);
         textViewReq_Date=(TextView)findViewById(R.id.textViewReq_Date);
         textViewReq_Time=(TextView)findViewById(R.id.textViewReq_time);
-
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         sendNotificationApiInterface = ApiClient.getApiClient().create(SendNotificationApiInterface.class);
-
         Intent intent=getIntent();
         user_customer_id=intent.getIntExtra("user_id",0);
         service_provider_id=intent.getIntExtra("provider_id",0);
         service_id=intent.getIntExtra("service_id",0);
         service_cat_id=intent.getIntExtra("cat_id",0);
-
-
         Calendar calendar=Calendar.getInstance();
         int day=calendar.get(Calendar.DAY_OF_MONTH);
         int month=calendar.get(Calendar.MONTH);
         int year=calendar.get(Calendar.YEAR);
-
         layoutDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 DialogFragment datePicker=new DatePickerFragment();
                 datePicker.show(getFragmentManager(),"date picker");
             }
         });
-
         layoutTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,10 +100,10 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
                  @Override
                  public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
                      if (response.body().getResponse().equals("ok")) {
-
                          Call<NotificationsManager> callNotification = BookNowActivity.sendNotificationApiInterface
-                                 .sendPushNotification(service_provider_id,"Send you request for appointment","Vartista");
+                                 .sendPushNotification(service_provider_id,"Send you request for appointment","Vartista","MyServiceRequests");
                          callNotification.enqueue(new Callback<NotificationsManager>() {
+
                              @Override
                              public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
 
