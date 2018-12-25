@@ -81,6 +81,7 @@ public class HomeActivity extends AppCompatActivity
     public static User user;
     ImageView imageViewProfileDrawer;
     public static TokenApiInterface tokenApiInterface;
+    public static NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,16 +91,15 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         tokenApiInterface = ApiClient.getApiClient().create(TokenApiInterface.class);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         Toast.makeText(getApplicationContext(), FirebaseInstanceId.getInstance().getToken(), Toast.LENGTH_SHORT).show();
         Log.d("deviceToken", FirebaseInstanceId.getInstance().getToken());
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         View headerView = navigationView.getHeaderView(0);
         name = (TextView) headerView.findViewById(R.id.name);
         email = (TextView) headerView.findViewById(R.id.email);

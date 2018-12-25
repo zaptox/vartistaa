@@ -36,17 +36,18 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
 
 String title[]=new String[]{"As a User","As a Service Provider"};
+
     @Override
     public Fragment getItem(int position) {
 
         switch (position) {
             case 0:
                 UsersFragment tab1 = new UsersFragment(user_id);
+
                 MANDATORY_PAGE_LOCATION=0;
                 return tab1;
             case 1:
-                 SharedPreferences ob =context.getSharedPreferences("Login", Context.MODE_PRIVATE);
-
+                SharedPreferences ob =context.getSharedPreferences("Login", Context.MODE_PRIVATE);
                 String sp_status=ob.getString("sp_status","0");
                 MANDATORY_PAGE_LOCATION=1;
                 Toast.makeText(context, ""+sp_status, Toast.LENGTH_SHORT).show();
@@ -58,6 +59,7 @@ String title[]=new String[]{"As a User","As a Service Provider"};
                 else{
 
                 ServiceProviderFragment tab2 = new ServiceProviderFragment(user_id);
+
                 return tab2;
 
                 }

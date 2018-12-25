@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
@@ -31,6 +32,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     LinearLayout layoutforcode,layoutforemail,layoutforpasswords;
     public static ApiInterface apiInterface;
     CountDownTimer cTimer = null;
+//    User userLoggedIn = null;
+//    String userinputemail2;
+//    boolean check;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,18 +58,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String email = emaiverifyedittext.getText().toString();
-
                 Call<forgotpassword> call = ForgotPasswordActivity.apiInterface.User_Verification_Email(email);
-
                 call.enqueue(new Callback<forgotpassword>() {
                     @Override
                     public void onResponse(Call<forgotpassword> call, Response<forgotpassword> response) {
-                        if (response.body().getResponse().equals("ok")) {
 
                             MDToast mdToast = MDToast.makeText(getApplicationContext(), "Request has been Send succesfully.", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                             mdToast.show();
 
-                        }
 
 
                     }
@@ -120,8 +120,73 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
 
 
-
-
-
+//public boolean checkemail(String userinputemail){
+//
+//    userinputemail2 = userinputemail;
+//    check = false;
+//
+//    String password = "";
+//
+//    Call<User> call = SiginInActivity.apiInterface.performUserLogin(userinputemail, password);
+//    call.enqueue(new Callback<User>() {
+//
+//        public void onResponse(Call<User> call, Response<User> response) {
+//
+////
+//            if (response.isSuccessful()) {
+////                   // Toast.makeText(SiginInActivity.this, "In response", Toast.LENGTH_SHORT).show();
+//
+//            }
+////
+//
+//            if (response.body().getResponse().equals("ok")) {
+//                int id = response.body().getId();
+//
+//                String name = response.body().getName();
+//
+//                String email = response.body().getEmail();
+//
+//                String password = response.body().getPassword();
+//
+//                String image = response.body().getImage();
+//
+//                String status = response.body().getStatus();
+//
+//                String contact = response.body().getContact();
+//
+//                String created_at = response.body().getCreatedAt();
+//
+//                String updated_at = response.body().getUpdatedAt();
+//
+//                String gender= response.body().getGender();
+//
+//                String sp_status= response.body().getSp_status();
+//
+//
+//                userLoggedIn = new User(id, name, email, password, image, status, contact, created_at, updated_at,gender,sp_status);
+//                if(userLoggedIn.getEmail().equals(userinputemail2)){
+//                    check=true;
+//                }
+//
+//            }
+//            else if (response.body().getResponse().equals("failed")) {
+//                  Toast.makeText(ForgotPasswordActivity.this, "Login Failed.. Please try again", Toast.LENGTH_SHORT).show();
+////                    Toast.makeText(SiginInActivity.this, "", Toast.LENGTH_SHORT).show();
+//
+//}
+////
+//            else {
+//                //  Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse(), Toast.LENGTH_SHORT).show();
+//            }
+////                Toast.makeText(SiginInActivity.this, "In response's last line", Toast.LENGTH_SHORT).show();
+// }
+//
+//        @Override
+//        public void onFailure(Call<User> call, Throwable t) {
+//            Toast.makeText(ForgotPasswordActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+//        }
+//    });
+//    return check;
+//}
 
 }

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 import com.vartista.www.vartista.beans.Category;
@@ -73,7 +74,8 @@ public class UsersFragment extends Fragment {
         Context context = inflater.getContext();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         listViewMyCategories.setLayoutManager(mLayoutManager);
-
+        HomeActivity.navigationView.getMenu().getItem(3).setVisible(false);
+        HomeActivity.navigationView.getMenu().getItem(2).setVisible(true);
         listViewMyCategories.setItemAnimator(new DefaultItemAnimator());
 
         myCategoriesList=new ArrayList<>();
