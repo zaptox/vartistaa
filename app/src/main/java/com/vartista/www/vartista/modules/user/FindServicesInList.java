@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
@@ -113,7 +114,7 @@ public class FindServicesInList extends AppCompatActivity {
                 dialog.setTitle("Filter Search");
 
                 final EditText locationEditText = dialog.findViewById(R.id.editTxt_location);
-                final EditText genderEditText = dialog.findViewById(R.id.editTxt_gender);
+                final Spinner genderEditText = dialog.findViewById(R.id.editTxt_gender);
                 final SeekBar costSeekBar = dialog.findViewById(R.id.seekBar);
                 btnApplyFilter = dialog.findViewById(R.id.applyFilterButton);
 
@@ -125,7 +126,7 @@ public class FindServicesInList extends AppCompatActivity {
                     public void onClick(View view) {
 
                         filterLocation = locationEditText.getText().toString();
-                        filterGender = genderEditText.getText().toString();
+                        filterGender = genderEditText.getSelectedItem().toString();
                         filterCost = costSeekBar.getProgress()*100;
 
                         filterApplied = true;
