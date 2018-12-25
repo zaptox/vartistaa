@@ -93,14 +93,6 @@ dependencies {
     // bottom sheet
     implementation 'com.github.Kennyc1012:BottomSheet:2.4.1'
     compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
-
-    //implementing loading dialog in
-    implementation 'com.victor:lib:1.0.4'
-
-    //implementing empty state view
-    implementation 'com.github.medyo:state-views:0.2'
-
-
 }
 
 apply plugin: 'com.google.gms.google-services'

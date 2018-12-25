@@ -76,7 +76,11 @@ public interface ApiInterface {
                                             @Query("city") String city,
                                             @Query("province") String province, @Query("zipcode") String  zipcode
             , @Query("country") String country, @Query("user_id") int user_id);
-
+    @GET("update_address.php")
+    Call<UserAddressBean> UpdateUserAddress(@Query("work_address") String work_address, @Query("permanent_address") String permanent_address,
+                                            @Query("city") String city,
+                                            @Query("province") String province, @Query("zipcode") String  zipcode
+            , @Query("country") String country, @Query("user_id") int user_id);
 
     @GET("forget_password.php")
     Call<forgotpassword> User_Verification_Email(@Query("email") String email);
@@ -92,6 +96,8 @@ public interface ApiInterface {
     Call<User> UpdateUserStatus(@Query("user_id") int user_id);
 
 
+    @GET("update_sp_status.php")
+    Call<User> UpdateSpStatus(@Query("user_id") int user_id);
 
 
 
