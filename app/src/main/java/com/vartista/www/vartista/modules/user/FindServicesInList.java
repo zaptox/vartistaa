@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +20,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
@@ -27,6 +31,7 @@ import com.vartista.www.vartista.adapters.ServicesInListMapAdapter;
 import com.vartista.www.vartista.beans.GetServiceProviders;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
+import com.victor.loading.rotate.RotateLoading;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -45,6 +50,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class FindServicesInList extends AppCompatActivity {
 
 
@@ -55,6 +61,7 @@ public class FindServicesInList extends AppCompatActivity {
     RecyclerView listViewMyServices;
     EditText filter_on_text;
 
+
     ServicesInListMapAdapter myServicesListAdapter;
 
     List<GetServiceProviders> myservicesList;
@@ -64,7 +71,7 @@ public class FindServicesInList extends AppCompatActivity {
     public int cat_id2;
     public int filterCost;
     //By default search will be done on user name
-    public static String typeOfFilter = "u.name";
+    public static String typeOfFilter = "ser.service_title";
 
 
     public boolean filterApplied = false;
@@ -87,9 +94,12 @@ public class FindServicesInList extends AppCompatActivity {
 
         Intent intent=getIntent();
         final int cat_id=intent.getIntExtra("cat_id",0);
-
         cat_id2=cat_id;
 //                intent.putExtra("cat_id",cat_id);
+
+        //Getting user id from HomeAcitivty
+        SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        user_id = ob.getInt("user_id", 0);
 
         listViewMyServices=(RecyclerView) findViewById(R.id.lvFindServices);
         listViewMyServices.setHasFixedSize(true);
@@ -112,20 +122,38 @@ public class FindServicesInList extends AppCompatActivity {
                 dialog.setCanceledOnTouchOutside(true);
                 dialog.setTitle("Filter Search");
 
+                final TextView maxCost = dialog.findViewById(R.id.maxCost);
                 final EditText locationEditText = dialog.findViewById(R.id.editTxt_location);
-                final EditText genderEditText = dialog.findViewById(R.id.editTxt_gender);
+                final Spinner genderEditText = dialog.findViewById(R.id.editTxt_gender);
                 final SeekBar costSeekBar = dialog.findViewById(R.id.seekBar);
                 btnApplyFilter = dialog.findViewById(R.id.applyFilterButton);
 
 
                 dialog.show();
 
+                costSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                        maxCost.setText("Rs. "+(i*100));
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                });
+
                 btnApplyFilter.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
                         filterLocation = locationEditText.getText().toString();
-                        filterGender = genderEditText.getText().toString();
+                        filterGender = genderEditText.getSelectedItem().toString();
                         filterCost = costSeekBar.getProgress()*100;
 
                         filterApplied = true;
@@ -137,14 +165,14 @@ public class FindServicesInList extends AppCompatActivity {
 
                         if(filterApplied==true){
 
-                            Toast.makeText(FindServicesInList.this,"filter applied py click neechy query likhi hia"+ filterApplied,Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(FindServicesInList.this,"filter applied py click neechy query likhi hia"+ filterApplied,Toast.LENGTH_SHORT).show();
 
                             new Connection(FindServicesInList.this,cat_id2,filterLocation,filterGender,filterCost).execute();
 
 
                         }
                         else {
-                            Toast.makeText(FindServicesInList.this,""+ filterApplied,Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(FindServicesInList.this,""+ filterApplied,Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -162,32 +190,26 @@ public class FindServicesInList extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence c, int i, int i1, int i2) {
-                if(!c.equals(""))
-                    {
-
-                    }
-                }
+            }
 
                 @Override
                 public void afterTextChanged(Editable editable) {
+                    String filter_text =  filter_on_text.getText().toString();
 
-               String filter_text =  filter_on_text.getText().toString();
+                    if(filterApplied)
+                    {
+                        new Connection2(FindServicesInList.this,cat_id,filterLocation,filterGender,filterCost, typeOfFilter,filter_text).execute();
+                    }
 
-               if(filterApplied)
-               {
-                   new Connection2(FindServicesInList.this,cat_id,filterLocation,filterGender,filterCost, typeOfFilter,filter_text).execute();
-               }
-
-               else
-               {
-                   new Connection2(FindServicesInList.this,cat_id, typeOfFilter,filter_text).execute();
-                   Log.d("TextField1" ,filter_text);
-               }
-
+                    else
+                    {
+                        new Connection2(FindServicesInList.this,cat_id, typeOfFilter,filter_text).execute();
+                        Log.d("TextField1" ,filter_text);
+                    }
 
 
 
-            }
+                }
         });
 
         filter_btn_option.setOnClickListener(new View.OnClickListener() {
@@ -227,13 +249,6 @@ public class FindServicesInList extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
         new Connection(FindServicesInList.this, cat_id).execute();
 
 
@@ -250,6 +265,8 @@ public class FindServicesInList extends AppCompatActivity {
         private String filter_gender;
         private int filter_cost;
         private ProgressDialog dialog;
+        RotateLoading rotateLoading ;
+        RelativeLayout relativeLayout;
 
         public Connection(Context activity, int cat_id) {
             dialog = new ProgressDialog(activity);
@@ -264,15 +281,12 @@ public class FindServicesInList extends AppCompatActivity {
             this.filter_cost=filter_cost;
         }
 
-
-
-
-
         @Override
         protected void onPreExecute() {
-//            dialog.setMessage("Retriving data Please Wait..");
-//            dialog.show();
-
+            relativeLayout = findViewById(R.id.layout_loadinganimation);
+            rotateLoading = findViewById(R.id.loadinganimation);
+            rotateLoading.start();
+            relativeLayout.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -284,18 +298,15 @@ public class FindServicesInList extends AppCompatActivity {
             if(filterApplied == true)
             {
                 splist= new ArrayList<GetServiceProviders>();
-                // ' ' necessary for gender
-                final String BASE_URL = "http://vartista.com/vartista_app/filter_get_service_providers.php?cat_id="+cat_id+"&filterLocation="+filter_location+"&filterGender='"+filterGender+"'&filtercost="+filter_cost;
-//http://vartista.com/vartista_app/filter_get_service_providers.php?cat_id=" + cat_id+"&filterLocation="+ filter_location +"&filterGender"+ filter_gender
 
-//                Toast.makeText(getApplicationContext(), ""+filter_location+""+filter_gender, Toast.LENGTH_SHORT).show();
+                final String BASE_URL = "http://vartista.com/vartista_app/filter_get_service_providers.php?cat_id="+cat_id+"&filterLocation="+filter_location+"&filterGender='"+filterGender+"'&filtercost="+filter_cost+"&user_id="+user_id;
 
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        Toast.makeText(FindServicesInList.this, "link main chala gaya "+filter_location+", "+filter_gender+", "+filter_cost, Toast.LENGTH_SHORT).show();
-
-                    }
-                });
+//                runOnUiThread(new Runnable() {
+//                    public void run() {
+//                        Toast.makeText(FindServicesInList.this, "link main chala gaya "+filter_location+", "+filter_gender+", "+filter_cost, Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                });
                 try {
                     HttpClient client = new DefaultHttpClient();
                     HttpGet request = new HttpGet();
@@ -327,7 +338,7 @@ public class FindServicesInList extends AppCompatActivity {
 
             else {
 
-                final String BASE_URL = "http://vartista.com/vartista_app/get_service_providers.php?cat_id=" + cat_id;
+                final String BASE_URL = "http://vartista.com/vartista_app/get_service_providers.php?cat_id=" + cat_id+"&user_id="+user_id;
                 try {
                     HttpClient client = new DefaultHttpClient();
                     HttpGet request = new HttpGet();
@@ -360,16 +371,13 @@ public class FindServicesInList extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            //  Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
+            rotateLoading.stop();
+            relativeLayout.setVisibility(View.GONE);
+
+
             try {
                 JSONObject jsonResult = new JSONObject(result);
                 int success = jsonResult.getInt("success");
-
-                //    listViewMyServices.setAdapter(myServicesListAdapter);
-
 
                 if (success == 1) {
 
@@ -400,30 +408,28 @@ public class FindServicesInList extends AppCompatActivity {
 
                     }
 
-                    if(filterApplied==true) {
-                    Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        Toast.makeText(FindServicesInList.this, "filter applied true nh hai purani data hai ye"+splist, Toast.LENGTH_SHORT).show();
-}
+//                    if(filterApplied==true) {
+//                    Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
+//                    }
+//                    else{
+//                        Toast.makeText(FindServicesInList.this, "filter applied true nh hai purani data hai ye"+splist, Toast.LENGTH_SHORT).show();
+//
+//                    }
                     myServicesListAdapter=new ServicesInListMapAdapter(getApplicationContext(),splist);
                     listViewMyServices.setAdapter(myServicesListAdapter);
 
 
 
                 } else {
-                   //
-                     Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
                      splist= new ArrayList<GetServiceProviders>();
-                    myServicesListAdapter=new ServicesInListMapAdapter(getApplicationContext(),splist);
+                     myServicesListAdapter=new ServicesInListMapAdapter(getApplicationContext(),splist);
                      listViewMyServices.setAdapter(myServicesListAdapter);
+                    Toast.makeText(FindServicesInList.this, "oops", Toast.LENGTH_SHORT).show();
 
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-               //
-                // Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
 
 
@@ -438,16 +444,19 @@ public class FindServicesInList extends AppCompatActivity {
         private int filter_cost;
         private String filter_type;
         private String filter_text;
+        RotateLoading rotateLoading ;
+        RelativeLayout relativeLayout;
+        private int request_faliure_count = 0;
 
-        private ProgressDialog dialog;
+
 
         public Connection2(Context activity, int cat_id) {
-            dialog = new ProgressDialog(activity);
+
             this.cat_id = cat_id;
         }
 
         public Connection2(Context activity, int cat_id, String filter_location, String filter_gender, int filter_cost) {
-            dialog = new ProgressDialog(activity);
+
             this.cat_id = cat_id;
             this.filter_location=filter_location;
             this.filter_gender=filter_gender;
@@ -462,41 +471,38 @@ public class FindServicesInList extends AppCompatActivity {
             this.filter_cost = filter_cost;
             this.filter_type = filter_type;
             this.filter_text = filter_text;
-            dialog = new ProgressDialog(activity);
+
         }
 
         public Connection2(Context activity,int cat_id, String filter_type, String filter_text) {
             this.cat_id = cat_id;
             this.filter_type = filter_type;
             this.filter_text = filter_text;
-            dialog = new ProgressDialog(activity);
+
         }
 
         @Override
         protected void onPreExecute() {
-//            dialog.setMessage("Retriving data Please Wait..");
-//            dialog.show();
+            relativeLayout = findViewById(R.id.layout_loadinganimation);
+            rotateLoading = findViewById(R.id.loadinganimation);
+            relativeLayout.setVisibility(View.VISIBLE);
+            rotateLoading.start();
 
         }
 
         @Override
         protected String doInBackground(String... strings) {
-
-
             String result = "";
             String BASE_URL = "";
 
             if(filterApplied)
             {
-                BASE_URL = "http://www.vartista.com/vartista_app/filter_get_serv_provider_by_name_or_serv.php?cat_id="+cat_id+"&filterLocation="+filter_location+"&filterGender="+filter_gender+"&filtercost="+filter_cost+"&search_type="+filter_type+"&search_text="+filter_text;
+                BASE_URL = "http://www.vartista.com/vartista_app/filter_get_serv_provider_by_name_or_serv.php?cat_id="+cat_id+"&filterLocation="+filter_location+"&filterGender="+filter_gender+"&filtercost="+filter_cost+"&search_type="+filter_type+"&search_text="+filter_text+"&user_id="+user_id;
             }
             else
             {
-                BASE_URL = "http://www.vartista.com/vartista_app/filter_get_serv_provider_by_name_or_serv.php?cat_id="+cat_id+"&search_type="+filter_type+"&search_text="+filter_text;
+                BASE_URL = "http://www.vartista.com/vartista_app/filter_get_serv_provider_by_name_or_serv.php?cat_id="+cat_id+"&search_type="+filter_type+"&search_text="+filter_text+"&user_id="+user_id;
             }
-
-
-
 
                 try {
                     HttpClient client = new DefaultHttpClient();
@@ -525,24 +531,19 @@ public class FindServicesInList extends AppCompatActivity {
                 }
                 return result;
 
-
         }
 
         @Override
         protected void onPostExecute(String result) {
-            //  Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
+
             try {
                 JSONObject jsonResult = new JSONObject(result);
                 int success = jsonResult.getInt("success");
-
-                //    listViewMyServices.setAdapter(myServicesListAdapter);
-
-
                 if (success == 1) {
+                    //hide empty state view if present
 
+                    rotateLoading.stop();
+                    relativeLayout.setVisibility(View.GONE);
 
                     splist.clear();
                     JSONArray services = jsonResult.getJSONArray("services");
@@ -554,16 +555,18 @@ public class FindServicesInList extends AppCompatActivity {
                         int address_id = Integer.parseInt(ser1.getString("id"));
                         int category_id = Integer.parseInt(ser1.getString("category_id"));
                         String service_title = ser1.getString("service_title");
-
                         String service_description = ser1.getString("service_description");
                         double price = Double.parseDouble(ser1.getString("price"));
 
                         double longitude = Double.parseDouble(ser1.getString("longitude"));
                         double latitude = Double.parseDouble(ser1.getString("latitude"));
                         String sp_name=ser1.getString("name");
+                        double stars = Double.parseDouble(ser1.getString("avg_stars"));
+                        int user_status = Integer.parseInt(ser1.getString("user_status"));
+                        String image = ser1.getString("image");
 //                        Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
 
-                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name));
+                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name,stars,user_status,image));
 
                     }
 //
@@ -578,8 +581,10 @@ public class FindServicesInList extends AppCompatActivity {
                     listViewMyServices.setAdapter(myServicesListAdapter);
 
                 } else {
-                    //
                     Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+
+
+
                     splist= new ArrayList<GetServiceProviders>();
                     myServicesListAdapter=new ServicesInListMapAdapter(getApplicationContext(),splist);
                     listViewMyServices.setAdapter(myServicesListAdapter);
@@ -589,8 +594,6 @@ public class FindServicesInList extends AppCompatActivity {
 
                 // Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
-
-
         }
 
     }
