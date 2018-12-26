@@ -131,7 +131,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         cTimer = new CountDownTimer(120000, 1000) {
             public void onTick(long millisUntilFinished) {
                 countdown.setText(""+millisUntilFinished/1000);
-            }
+                }
             public void onFinish() {
             }
         };
