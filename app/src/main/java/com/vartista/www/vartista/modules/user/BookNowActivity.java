@@ -3,7 +3,9 @@ package com.vartista.www.vartista.modules.user;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -92,6 +94,10 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
              String time = textViewReq_Time.getText().toString();
              String date=textViewReq_Date.getText().toString();
 
+             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+             final String name_user = ob.getString("name","");
+
              Call<CreateRequest> call = BookNowActivity.apiInterface.createRequest(user_customer_id,
                      service_provider_id,
                      service_id,date,time,address,city,0,service_cat_id);
@@ -101,7 +107,7 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
                  public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
                      if (response.body().getResponse().equals("ok")) {
                          Call<NotificationsManager> callNotification = BookNowActivity.sendNotificationApiInterface
-                                 .sendPushNotification(service_provider_id,"Send you request for appointment","Vartista","MyServiceRequests");
+                                 .sendPushNotification(service_provider_id,name_user+" Sent you request","Vartista-Request");
                          callNotification.enqueue(new Callback<NotificationsManager>() {
 
                              @Override
@@ -117,7 +123,7 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
 
 
 
-                         MDToast mdToast = MDToast.makeText(getApplicationContext(), "Request has been Send succesfully.", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                         MDToast mdToast = MDToast.makeText(getApplicationContext(), "Request has been Sent succesfully.", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                          mdToast.show();
 
                           Intent intent=new Intent(getApplicationContext(),HomeActivity.class);

@@ -161,8 +161,8 @@ public class MyServiceRequests extends AppCompatActivity {
 
                         int requestservice_id = (Integer.parseInt(service.getString("requestservice_id")));
                         String user_name =  service.getString("username");
+                        String image=service.getString("image");
                         int status = Integer.parseInt(service.getString("request_status"));
-
                         String date = service.getString("date");
                         String time = service.getString("time");
                         String location = service.getString("location");
@@ -176,7 +176,7 @@ public class MyServiceRequests extends AppCompatActivity {
                         String category_name=service.getString("catgname");
                         Toast.makeText(MyServiceRequests.this, ""+category_name, Toast.LENGTH_SHORT).show();
                         serviceRequestsList.add(new ServiceRequets(requestservice_id,user_name,status,date,time,location,user_customer_id,
-                                service_provider_id,service_id,service_cat_id,service_title,price,service_description,category_name
+                                service_provider_id,service_id,service_cat_id,service_title,price,service_description,category_name,image
                                 ));
                     }
 

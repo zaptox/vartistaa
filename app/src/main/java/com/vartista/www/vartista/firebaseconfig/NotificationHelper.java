@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
@@ -14,11 +15,13 @@ import android.support.v4.content.ContextCompat;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.RequestService;
+import com.vartista.www.vartista.modules.general.Asynctask_MultipleUrl;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.general.SiginInActivity;
 import com.vartista.www.vartista.modules.general.SignUpActivity;
 import com.vartista.www.vartista.modules.general.SplashActivity;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
+import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 
 public class NotificationHelper extends ContextWrapper {
     public static  final String CHANNEL_ID="com.zaptoxlbgfg.xffffonflppppppkp[pdfdixzvsgdsvsddsvdfss";
@@ -57,14 +60,42 @@ public class NotificationHelper extends ContextWrapper {
 
     public Notification.Builder getChannelNotiifcation(String title, String body){
         Notification.Builder builder=null;
-        Intent resultIntent = new Intent(getApplicationContext() , MyServiceRequests.class);
-        resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        Intent resultIntent = null;
+
+        SharedPreferences obj = getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+        int user_id = obj.getInt("user_id", 0);
+
+        if(title.contains("Accept")){
+
+            resultIntent = new Intent(getApplicationContext(), MyServiceMeetings.class);
+            resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        }
+        else if(title.contains("Request")){
+
+            resultIntent = new Intent(getApplicationContext(), MyServiceRequests.class);
+            resultIntent.putExtra("user", user_id);
+            resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        }
+        else if(title.contains("Decline")){
+
+            resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
+            resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        }
+
 
         PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                 0 /* Request code */, resultIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
          if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
+
+
+
              builder= new Notification.Builder(getApplicationContext(), CHANNEL_ID)
                     .setContentText(body)
                     .setContentTitle(title)
@@ -77,6 +108,17 @@ public class NotificationHelper extends ContextWrapper {
 
                     .setAutoCancel(true);
         }
+
+
+
+
+
+        {
+
+
+         }
+
+
 
    return builder;
     }

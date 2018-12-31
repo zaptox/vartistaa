@@ -16,7 +16,7 @@ public interface SendNotificationApiInterface {
 
 
     @GET("fcm/sendNotification.php")
-    Call<NotificationsManager> sendPushNotification(@Query("user_id") int user_id, @Query("body") String body, @Query("title") String title,@Query("activity") String activity);
+    Call<NotificationsManager> sendPushNotification(@Query("user_id") int user_id, @Query("body") String body, @Query("title") String title);
 //    Call<User> performUserLogin();
 
 }

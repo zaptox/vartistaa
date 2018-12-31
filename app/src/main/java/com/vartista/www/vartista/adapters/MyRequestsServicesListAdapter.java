@@ -2,15 +2,18 @@ package com.vartista.www.vartista.adapters;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.NotificationsManager;
@@ -56,6 +59,11 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
         holder.tv_catogery.setText(myReqServicesList.get(position).getCatgname());
         holder.tv_s_desc.setText(myReqServicesList.get(position).getService_description());
 
+        Picasso.get().load(myReqServicesList.get(position).getUser_image()).fit().centerCrop()
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.profile)
+                .into(holder.profile_image);
+
        holder.accept.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(final View view) {
@@ -66,13 +74,18 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                    @Override
                    public void onResponse(Call<ServiceRequets> call, Response<ServiceRequets> response) {
 
+                       SharedPreferences ob = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+                       final String name_user = ob.getString("name","");
+
+
 //                            Toast.makeText(context,myReqServicesList.get(position).getService_provider_id(),Toast.LENGTH_SHORT).show();
                                               if(response.body().getResponse().equals("ok")){
                                                   remove(position);
                                                   notifyDataSetChanged();
                                                   Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
-                                                          .sendPushNotification(myReqServicesList.get(position).getService_provider_id(),
-                                                                  "Accept  you request for appointment","Vartista","");
+                                                          .sendPushNotification(myReqServicesList.get(position).getUser_customer_id(),
+                                                                  name_user+ " Accepted  your request","Vartista-Accept");
                                                   callNotification.enqueue(new Callback<NotificationsManager>() {
                                                       @Override
                                                       public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
@@ -131,6 +144,36 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                            remove(position);
                            notifyDataSetChanged();
 
+
+                           SharedPreferences ob = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+                           final String name_user = ob.getString("name","");
+
+
+
+                           Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
+                                   .sendPushNotification(myReqServicesList.get(position).getUser_customer_id(),
+                                           name_user+ " has Declined your request","Vartista-Decline");
+                           callNotification.enqueue(new Callback<NotificationsManager>() {
+                               @Override
+                               public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
+                                   if(response.isSuccessful())
+                                       MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
+                               }
+
+
+                               @Override
+                               public void onFailure(Call<NotificationsManager> call, Throwable t) {
+
+                               }
+                           });
+
+
+
+
+
+
+
                        }
 
                        else if(response.body().getResponse().equals("error")){
@@ -168,10 +211,13 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
         public TextView tv_Title,tv_Service,tv_date,tv_time,tv_address,tv_s_desc,tv_catogery;
         public Button accept , decline;
+        public ImageView profile_image;
+
         public ViewHolder(View itemView) {
             super(itemView);
             mView=itemView;
 
+            profile_image=mView.findViewById(R.id.profile_image);
             tv_Title=(TextView)mView.findViewById(R.id.textView_req_name);
             tv_Service=(TextView)mView.findViewById(R.id.textView_req_service);
             tv_address=(TextView)mView.findViewById(R.id.textview_address);
