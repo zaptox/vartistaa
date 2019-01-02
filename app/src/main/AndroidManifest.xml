@@ -69,6 +69,11 @@
             android:exported="true" />
 
         <activity android:name=".modules.general.Asynctask_MultipleUrl"></activity>
+        <receiver android:name=".notifications.NotificationCompat.MyReceiver">
+            <intent-filter>
+                <action android:name="alarm" />
+            </intent-filter>s
+        </receiver>
     </application>
 
 </manifest>

@@ -92,7 +92,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
                 intent.putExtra("user_id",user_id);
                 intent.putExtra("spname",sp_name);
 
-//                Toast.makeText(context, "service provider "+s_provider_id+", cat_id: "+cat_id+", user_id: "+user_id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "service provider "+s_provider_id+", cat_id: "+cat_id+", user_id: "+user_id, Toast.LENGTH_SHORT).show();
                 context.startActivity(intent);
 
             }
