@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    >
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/account"
+            android:icon="@drawable/person"
+            android:title="My Account" />
+
+        <item
+            android:id="@+id/notification"
+            android:icon="@drawable/appointment"
+            android:title="My Notifications" />
+
+
+        <item android:title="As a Service Provider"
+            android:icon="@drawable/requestadd" >
+            <menu>
+                <item
+                    android:id="@+id/request"
+                    android:icon="@drawable/requestadd"
+                    android:title="My Request" />
+
+                <item
+                    android:id="@+id/appointments"
+                    android:icon="@drawable/appointment"
+                    android:title="My Appointments" />
+
+                <item
+                    android:id="@+id/ratings"
+                    android:icon="@drawable/star"
+                    android:title="Ratings" />
+
+            </menu>
+        </item>
+
+
+
+        <item
+            android:id="@+id/payment"
+            android:icon="@drawable/logout"
+            android:title="Payment" />
+
+
+        <item
+            android:id="@+id/provider_doc_upload"
+            android:icon="@drawable/logout"
+            android:title="Upload Document" />
+
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/logout"
+            android:title="Logout" />
+
+
+    </group>
+
+
+
+</menu>
