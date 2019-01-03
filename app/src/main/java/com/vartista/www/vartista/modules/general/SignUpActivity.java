@@ -23,7 +23,9 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.beans.Doument_Upload_Nil;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
@@ -122,6 +124,7 @@ public class SignUpActivity extends AppCompatActivity {
                             setUIToWait(false);
                           if(select_profile){
                            uploadMultipart(filePath,user_email.getText().toString(),user_password.getText().toString());
+                              insertdocumentnil(user_email.getText().toString(),user_password.getText().toString(),user_contact.getText().toString());
                            startActivity(new Intent(getApplicationContext(),SiginInActivity.class));
                               finish();}
 
@@ -308,6 +311,31 @@ public class SignUpActivity extends AppCompatActivity {
             }
         }
     }
+    public void insertdocumentnil(String UserName ,String Password,String ContactNo){
 
+        Call<Doument_Upload_Nil> call = SignUpActivity.apiInterface.document_upload_nil(UserName,Password,ContactNo);
+
+        call.enqueue(new Callback<Doument_Upload_Nil>() {
+            @Override
+            public void onResponse(Call<Doument_Upload_Nil> call, Response<Doument_Upload_Nil> response) {
+                if (response.isSuccessful()) {
+
+                    MDToast mdToast = MDToast.makeText(getApplicationContext(), " "+response.body().getResponse(), MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                    mdToast.show();
+//                    MDToast mdToast = MDToast.makeText(getApplicationContext(), "User Inserted: "+response, MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+//                    mdToast.show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Doument_Upload_Nil> call, Throwable t) {
+
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+
+    }
 
 }

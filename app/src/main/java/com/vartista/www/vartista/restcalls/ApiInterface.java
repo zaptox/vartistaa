@@ -85,6 +85,9 @@ public interface ApiInterface {
     @GET("forget_password.php")
     Call<forgotpassword> User_Verification_Email(@Query("email") String email);
 
+    @GET("forget_password.php")
+    Call<forgotpassword> User_Verification_Code(@Query("email") String code);
+
     @GET("GettinguserId.php")
     Call<Doument_Upload_Nil> document_upload_nil(@Query("name") String name,
                                                  @Query("password") String password,

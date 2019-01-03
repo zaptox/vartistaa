@@ -2,6 +2,7 @@ package com.vartista.www.vartista.adapters;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,8 +17,11 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.NotificationsManager;
 import com.vartista.www.vartista.beans.ServiceRequets;
+import com.vartista.www.vartista.modules.general.HomeActivity;
+import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 import com.vartista.www.vartista.restcalls.SendNotificationApiInterface;
@@ -80,26 +84,25 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
 
 //                            Toast.makeText(context,myReqServicesList.get(position).getService_provider_id(),Toast.LENGTH_SHORT).show();
-                                              if(response.body().getResponse().equals("ok")){
-                                                  remove(position);
-                                                  notifyDataSetChanged();
-                                                  Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
-                                                          .sendPushNotification(myReqServicesList.get(position).getUser_customer_id(),
-                                                                  name_user+ " Accepted  your request","Vartista-Accept");
-                                                  callNotification.enqueue(new Callback<NotificationsManager>() {
-                                                      @Override
-                                                      public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
-                                                        if(response.isSuccessful())
-                                                              MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
-                                                          }
+                       if(response.body().getResponse().equals("ok")){
+                           remove(position);
+                           notifyDataSetChanged();
+                           Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
+                                   .sendPushNotification(myReqServicesList.get(position).getUser_customer_id(),
+                                           name_user+ " Accepted  your request","Vartista-Accept");
+                           callNotification.enqueue(new Callback<NotificationsManager>() {
+                               @Override
+                               public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
+                                   if(response.isSuccessful())
+                                       MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
+                               }
 
 
-                                                      @Override
-                                                      public void onFailure(Call<NotificationsManager> call, Throwable t) {
+                               @Override
+                               public void onFailure(Call<NotificationsManager> call, Throwable t) {
 
-                                                      }
-                                                  });
-
+                               }
+                           });
 
 
 
@@ -257,5 +260,44 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
         myReqServicesList.remove(position);
         notifyItemRemoved(position);
     }
+
+    public void insertreviewnil(int user_id,int service_p_id,int service_id){
+        String servicetittle = "";
+        String Remarks = "";
+        String time = "";
+        String date = "";
+        Call<CreateRequest> call2 = MyRequestsServicesListAdapter.apiInterface.InsertRatings(0,0.0,user_id,service_p_id,service_id,Remarks,date,time);
+
+        call2.enqueue(new Callback<CreateRequest>() {
+            @Override
+            public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
+                if (response.body().getResponse().equals("ok")) {
+
+                    MDToast mdToast = MDToast.makeText(context, "Your Ratings are inserted", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                    mdToast.show();
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<CreateRequest> call, Throwable t) {
+                //
+                // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+
+    }
+
+
+
+
+
+
+
 
 }

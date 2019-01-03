@@ -15,8 +15,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,6 +44,7 @@ import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
+import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.UserNotification_activity;
 import com.vartista.www.vartista.restcalls.ApiClient;
@@ -78,6 +81,7 @@ public class HomeActivity extends AppCompatActivity
     public static User user;
     ImageView imageViewProfileDrawer;
     public static TokenApiInterface tokenApiInterface;
+    public static NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,16 +91,15 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         tokenApiInterface = ApiClient.getApiClient().create(TokenApiInterface.class);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         Toast.makeText(getApplicationContext(), FirebaseInstanceId.getInstance().getToken(), Toast.LENGTH_SHORT).show();
-        Log.d("deviceToken", FirebaseInstanceId.getInstance().getToken());
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        Log.d("deviceToken", FirebaseInstanceId.getInstance().getToken());
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         View headerView = navigationView.getHeaderView(0);
         name = (TextView) headerView.findViewById(R.id.name);
         email = (TextView) headerView.findViewById(R.id.email);
@@ -114,7 +117,7 @@ public class HomeActivity extends AppCompatActivity
 
         // save or update device token
         storeDeviceToken();
-
+        Toast.makeText(this, ""+user.getImage(), Toast.LENGTH_SHORT).show();
         Picasso.get().load(user.getImage()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)
@@ -124,12 +127,10 @@ public class HomeActivity extends AppCompatActivity
 
         // view pager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
+        final ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
 
-        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), user_id, getApplicationContext());
-        viewpager.setAdapter(adapter);
-
-//        Toast.makeText(this, "current fragment"+   viewpager.getCurrentItem(), Toast.LENGTH_SHORT).show();
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),user_id,getApplicationContext());
+         viewpager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewpager);
 
         //making user online
@@ -183,11 +184,13 @@ public class HomeActivity extends AppCompatActivity
             Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(HomeActivity.this, AppSettings.class));
             return true;
-        } else if (id == R.id.logout) {
-            SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
-            user_id = ob.getInt("user_id", 0);
-            new Connection(user_id, 0).execute();
+        }
+        else if(id==R.id.Assign_ratings){
+            startActivity(new Intent(HomeActivity.this, AssignRatings.class));
+        }
+        else if (id == R.id.logout) {
             Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+            SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
             ob.edit().clear().commit();
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
             return true;
@@ -292,6 +295,7 @@ public class HomeActivity extends AppCompatActivity
 
         });
     }
+
     private void startOfflineService() {
         Log.d("HomeActivity", "onPauseCalled");
         Intent intent = new Intent(HomeActivity.this, Offline_user_status_service.class);
@@ -302,6 +306,8 @@ public class HomeActivity extends AppCompatActivity
     class Connection extends AsyncTask<String, String, String> {
         private int user_id;
         private int user_status;
+
+
 
         public Connection(int user_id, int user_status) {
             this.user_id = user_id;
@@ -354,6 +360,8 @@ public class HomeActivity extends AppCompatActivity
                 e.printStackTrace();
             }
             return result;
+
+
         }
 
         @Override

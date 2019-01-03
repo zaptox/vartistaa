@@ -108,6 +108,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
 
 
         public TextView service_p_name, service_name;
+
         public ScaleRatingBar ratingBar;
         public ImageView user_status, user_profile_img;
 
