@@ -219,7 +219,7 @@ public class HomeActivity extends AppCompatActivity
         //a service to make user offline
 
         startOfflineService();
-        simplenotification();
+
 
 
 
@@ -485,17 +485,7 @@ public class HomeActivity extends AppCompatActivity
         navigationView.getMenu().getItem(2).setVisible(boo);
     }
 
-     public void simplenotification(){
-         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-         builder.setContentTitle("BasicNotifications Sample");
-         builder.setContentText("Time to learn about notifications!");
 
-
-
-         NotificationManager notificationManager = (NotificationManager) getSystemService(
-                 NOTIFICATION_SERVICE);
-         notificationManager.notify(1, builder.build());
-     }
 
 
 }

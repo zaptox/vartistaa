@@ -1,9 +1,13 @@
 package com.vartista.www.vartista.adapters;
 
+import android.app.AlarmManager;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +23,25 @@ import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 import com.vartista.www.vartista.restcalls.SendNotificationApiInterface;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.ALARM_SERVICE;
+
 public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyRequestsServicesListAdapter.ViewHolder>{
     public List<ServiceRequets> myReqServicesList;
     public Context context;
     public static ApiInterface apiInterface;
     public static SendNotificationApiInterface sendNotificationApiInterface;
+    public static int REQUEST_CODE_SP = 100;
+    String date,time,name;
 
     public MyRequestsServicesListAdapter(Context context, List<ServiceRequets> myReqServicesList){
         this.myReqServicesList = myReqServicesList;
@@ -47,30 +59,34 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        date = myReqServicesList.get(position).getDate();
+        time = myReqServicesList.get(position).getTime();
+        name = myReqServicesList.get(position).getUsername();
 
-        holder.tv_Title.setText(myReqServicesList.get(position).getUsername());
+
+
+        holder.tv_Title.setText(name);
         holder.tv_Service.setText(myReqServicesList.get(position).getService_title()+" "+myReqServicesList.get(position).getPrice());
         holder.tv_address.setText(myReqServicesList.get(position).getLocation());
-        holder.tv_date.setText(myReqServicesList.get(position).getDate());
-        holder.tv_time.setText(myReqServicesList.get(position).getTime());
+        holder.tv_date.setText(date);
+        holder.tv_time.setText(time);
         holder.tv_catogery.setText(myReqServicesList.get(position).getCatgname());
         holder.tv_s_desc.setText(myReqServicesList.get(position).getService_description());
 
        holder.accept.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(final View view) {
+               
                int status = 1;
                int requestservice_id = myReqServicesList.get(position).getReqservice_id();
                Call<ServiceRequets> call = MyRequestsServicesListAdapter.apiInterface.updateOnClickRequests(status,requestservice_id);
                call.enqueue(new Callback<ServiceRequets>() {
                    @Override
                    public void onResponse(Call<ServiceRequets> call, Response<ServiceRequets> response) {
-
-//                            Toast.makeText(context,myReqServicesList.get(position).getService_provider_id(),Toast.LENGTH_SHORT).show();
-                                              if(response.body().getResponse().equals("ok")){
+                        if(response.body().getResponse().equals("ok")){
                                                   remove(position);
                                                   notifyDataSetChanged();
-
+// Firebase Notification
                                                   Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
                                                           .sendPushNotification(myReqServicesList.get(position).getService_provider_id(),
                                                                   "Accept  you request for appointment","Vartista");
@@ -88,11 +104,32 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
                                                       }
                                                   });
+// Fire Base notification Sent
+//  Now Setting up Compact Notification
+
+                            AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+
+                            String appointmentdate = date+" "+time;
+                            SimpleDateFormat showsdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+                            Date date1 = null;
+                            try {
+                                date1 = showsdf.parse(appointmentdate);
+                            } catch (ParseException e) {
+                                Log.d("Date Parsing",""+e.getMessage());
+                                e.printStackTrace();
+                            }
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(date1);
+                            calendar.add(Calendar.HOUR,-3);
+                            Intent intent = new Intent("alarm");
+                            intent.putExtra("username",name);
+                            intent.putExtra("requestcode",REQUEST_CODE_SP);
+
+                            PendingIntent broadcast = PendingIntent.getBroadcast(context,REQUEST_CODE_SP,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                            alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),broadcast);
 
 
-
-
-                                              }
+                        }
 
                        else if(response.body().getResponse().equals("error")){
 
@@ -213,5 +250,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
         myReqServicesList.remove(position);
         notifyItemRemoved(position);
     }
+
+
 
 }

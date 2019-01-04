@@ -29,11 +29,11 @@
             android:name=".modules.general.SiginInActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <service android:name=".firebaseconfig.MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+        <!--<service android:name=".firebaseconfig.MyFirebaseMessagingService">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+            <!--</intent-filter>-->
+        <!--</service>-->
         <service android:name=".firebaseconfig.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -69,6 +69,11 @@
             android:exported="true" />
 
         <activity android:name=".modules.general.Asynctask_MultipleUrl"></activity>
+        <receiver android:name=".notifications.NotificationCompat.MyReceiver">
+            <intent-filter>
+                <action android:name="alarm" />
+            </intent-filter>s
+        </receiver>
     </application>
 
 </manifest>
