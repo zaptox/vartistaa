@@ -156,7 +156,8 @@ public class ServiceProviderDetail extends AppCompatActivity {
                             String service_description=service.getString("service_description");
                             String category_name=service.getString("name");
                             int user_id=service.getInt("user_id");
-                            myservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description,  status,  price,  category_id,  created_at,  updated_at));
+                            int home_avail_status= service.getInt("home_avail_status");
+                            myservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description,  status,  price,  category_id,  created_at,  updated_at,home_avail_status));
 
                         }
 
