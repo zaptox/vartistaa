@@ -81,12 +81,9 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
                 int s_provider_id= myServicesList.get(position).getUser_id();
                 int cat_id= myServicesList.get(position).getCategory_id();
                 int user_id= HomeActivity.user_id;
-
                 String sp_name= myServicesList.get(position).getSp_name();
-
                 Intent intent=new Intent(view.getContext(),ServiceProviderDetail.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
                 intent.putExtra("s_provider_id",s_provider_id);
                 intent.putExtra("cat_id",cat_id);
                 intent.putExtra("user_id",user_id);
@@ -111,6 +108,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
 
 
         public TextView service_p_name, service_name;
+
         public ScaleRatingBar ratingBar;
         public ImageView user_status, user_profile_img;
 

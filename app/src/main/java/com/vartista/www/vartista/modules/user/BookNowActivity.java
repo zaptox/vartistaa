@@ -3,7 +3,9 @@ package com.vartista.www.vartista.modules.user;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -58,31 +60,24 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
         layoutTime=(RelativeLayout)findViewById(R.id.layouttime);
         textViewReq_Date=(TextView)findViewById(R.id.textViewReq_Date);
         textViewReq_Time=(TextView)findViewById(R.id.textViewReq_time);
-
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         sendNotificationApiInterface = ApiClient.getApiClient().create(SendNotificationApiInterface.class);
-
         Intent intent=getIntent();
         user_customer_id=intent.getIntExtra("user_id",0);
         service_provider_id=intent.getIntExtra("provider_id",0);
         service_id=intent.getIntExtra("service_id",0);
         service_cat_id=intent.getIntExtra("cat_id",0);
-
-
         Calendar calendar=Calendar.getInstance();
         int day=calendar.get(Calendar.DAY_OF_MONTH);
         int month=calendar.get(Calendar.MONTH);
         int year=calendar.get(Calendar.YEAR);
-
         layoutDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 DialogFragment datePicker=new DatePickerFragment();
                 datePicker.show(getFragmentManager(),"date picker");
             }
         });
-
         layoutTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +94,10 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
              String time = textViewReq_Time.getText().toString();
              String date=textViewReq_Date.getText().toString();
 
+             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+             final String name_user = ob.getString("name","");
+
              Call<CreateRequest> call = BookNowActivity.apiInterface.createRequest(user_customer_id,
                      service_provider_id,
                      service_id,date,time,address,city,0,service_cat_id);
@@ -107,10 +106,10 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
                  @Override
                  public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
                      if (response.body().getResponse().equals("ok")) {
-
                          Call<NotificationsManager> callNotification = BookNowActivity.sendNotificationApiInterface
-                                 .sendPushNotification(service_provider_id,"Send you request for appointment","Vartista");
+                                 .sendPushNotification(service_provider_id,name_user+" Sent you request","Vartista-Request");
                          callNotification.enqueue(new Callback<NotificationsManager>() {
+
                              @Override
                              public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
 
@@ -124,7 +123,7 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
 
 
 
-                         MDToast mdToast = MDToast.makeText(getApplicationContext(), "Request has been Send succesfully.", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                         MDToast mdToast = MDToast.makeText(getApplicationContext(), "Request has been Sent succesfully.", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                          mdToast.show();
 
                           Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
