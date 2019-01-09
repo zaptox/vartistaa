@@ -29,6 +29,7 @@ import com.vartista.www.vartista.restcalls.ApiInterface;
 import com.vartista.www.vartista.restcalls.SendNotificationApiInterface;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import retrofit2.Call;
@@ -168,7 +169,9 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
         c.set(Calendar.YEAR,year);
         c.set(Calendar.MONTH,month);
         c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-        String currentDate= DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String currentDate = sdf.format(c.getTime());
+//        String currentDate= DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
         textViewReq_Date.setText(currentDate);
     }
 

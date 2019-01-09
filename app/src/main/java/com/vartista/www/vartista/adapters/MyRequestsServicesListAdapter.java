@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -102,11 +103,10 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
 //                            Toast.makeText(context,myReqServicesList.get(position).getService_provider_id(),Toast.LENGTH_SHORT).show();
                        if(response.body().getResponse().equals("ok")){
-                           remove(position);
                            notifyDataSetChanged();
                            Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
                                    .sendPushNotification(myReqServicesList.get(position).getUser_customer_id(),
-                                           name_user+ " Accepted  your request","Vartista-Accept");
+                                           name_user+ "Accepted  your request,"+date+","+time,"Vartista-Accept");
                            callNotification.enqueue(new Callback<NotificationsManager>() {
                                @Override
                                public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
@@ -121,6 +121,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                                                       }
                                                   });
 
+//                           sendCompactNotification(context,REQUEST_CODE_SP,date,time,name);
                             AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
                             String appointmentdate = date+" "+time;
@@ -134,7 +135,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                             }
                             Calendar calendar = Calendar.getInstance();
                             calendar.setTime(date1);
-                            calendar.add(Calendar.HOUR,-3);
+                            calendar.add(Calendar.SECOND,10);
                             Intent intent = new Intent("alarm");
                             intent.putExtra("username",name);
                             intent.putExtra("requestcode",REQUEST_CODE_SP);
@@ -154,9 +155,11 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                            Toast.makeText(view.getContext(),"Something went wrong....",Toast.LENGTH_SHORT).show();
 
                        }
+                       remove(position);
+
                    }
 
-                   @Override
+               @Override
                    public void onFailure(Call<ServiceRequets> call, Throwable t) {
                        Toast.makeText(view.getContext(),"Update Failed",Toast.LENGTH_SHORT).show();
                    }
@@ -333,7 +336,34 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
 
 
-
+//          public static void sendCompactNotification(Context context , int requestcode , String date , String time,String name){
+//              AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+////              PendingIntent pendingIntent;
+//              String appointmentdate = date+" "+time;
+//              SimpleDateFormat showsdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+//              Date date1 = null;
+//              try {
+//                  date1 = showsdf.parse(appointmentdate);
+//              } catch (ParseException e) {
+//                  Log.d("Date Parsing",""+e.getMessage());
+//                  e.printStackTrace();
+//              }
+//              Calendar calendar = Calendar.getInstance();
+//              calendar.setTime(date1);
+////              calendar.add(Calendar.HOUR,-1);
+//              calendar.add(Calendar.SECOND,10);
+//              Intent intent = new Intent("alarm");
+//              intent.putExtra("username",name);
+//              intent.putExtra("requestcode",requestcode);
+////              if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+////                  pendingIntent = PendingIntent.getForegroundService(context, 0, intent, 0);
+////              }else {
+////                  pendingIntent = PendingIntent.getService(context, 0, intent, 0);
+////              }
+//              PendingIntent broadcast = PendingIntent.getBroadcast(context,REQUEST_CODE_SP,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+//              alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),broadcast);
+//
+//          }
 
 
 
