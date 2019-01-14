@@ -18,6 +18,7 @@ import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 
 import static com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter.REQUEST_CODE_SP;
+import static com.vartista.www.vartista.firebaseconfig.FirebaseMsgService.REQEUST_CODE_FOR_USER;
 
 public class MyReceiver extends BroadcastReceiver {
     @Override
@@ -34,7 +35,11 @@ public class MyReceiver extends BroadcastReceiver {
         if(request_code==REQUEST_CODE_SP) {
             PendingIntent pendingIntent = stackBuilder.getPendingIntent(REQUEST_CODE_SP, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            createNotification(context, "Vartista", "After 3 hours you have to visit "+name, pendingIntent);
+            createNotification(context, "Vartista", "After 1 hours you have to visit "+name, pendingIntent);
+        }else if(request_code==REQEUST_CODE_FOR_USER){
+            PendingIntent pendingIntent = stackBuilder.getPendingIntent(REQUEST_CODE_SP, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            createNotification(context, "Vartista", "After 1 hours  "+name+" will visit you", pendingIntent);
         }
     }
 
@@ -44,11 +49,13 @@ public class MyReceiver extends BroadcastReceiver {
         builder.setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSound(Uri.parse("android.resource://" + context.getPackageName() + "/"  +R.raw.bubblingup))
+                .setSmallIcon(R.drawable.logoforsplash)
                 .setContentTitle(title)
                 .setContentText(body)
                 .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)
                 .setContentInfo("info")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent).build();
 
 //                  Notification n = builder.build();

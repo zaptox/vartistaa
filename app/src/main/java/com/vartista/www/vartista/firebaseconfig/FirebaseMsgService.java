@@ -28,6 +28,9 @@ import org.json.JSONObject;
 import java.util.Map;
 import java.util.Random;
 
+import static com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter.REQUEST_CODE_SP;
+import static com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter.sendCompactNotification;
+
 public class FirebaseMsgService   extends FirebaseMessagingService {
 
        private static String TAG="notifciation";
@@ -66,15 +69,25 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
-           String body = remoteMessage.getNotification().getBody();
-           String data[] = body.split(",");
-           String Msg = data[0];
-           String date = data[1];
-           String time = data[2];
 
-        Log.d("if not null", "Message Notification Body: " + remoteMessage.getNotification().getBody());
-        sendNotifcation(remoteMessage.getNotification().getTitle(),Msg,"HomeActivity",date,time);
+
+
 //        sendNotifcation(remoteMessage.getData().get("title"),remoteMessage.getData().get("body"),"HomeActivity");
+            if (remoteMessage.getNotification().getBody().contains("Accepted")){
+                String body = remoteMessage.getNotification().getBody();
+                String data[] = body.split("_");
+                String Msg = data[0];
+                String date = data[1];
+                String time = data[2];
+                Log.d("if not null", "Message Notification Body: " + remoteMessage.getNotification().getBody());
+                sendNotifcation(remoteMessage.getNotification().getTitle(),Msg,"HomeActivity",date,time);
+            }
+            else{
+                Log.d("if not null", "Message Notification Body: " + remoteMessage.getNotification().getBody());
+                sendNotifcation(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(),"HomeActivity","","");
+            }
+
+
         }
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
@@ -102,6 +115,10 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
             int user_id = obj.getInt("user_id", 0);
 
             if(title.contains("Accept")){
+
+                if (!date.equals("")){
+                    sendCompactNotification(this,REQEUST_CODE_FOR_USER,date,time,name_user);
+                }
 
                 resultIntent = new Intent(getApplicationContext(), MyServiceMeetings.class);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -133,7 +150,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
             Notification notification = new NotificationCompat.Builder(getApplicationContext(), NotificationHelper.CHANNEL_ID)
                         .setSmallIcon(R.drawable.logoforsplash)
                         .setContentText(body)
-                        .setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.bubblingup))
+                        .setSound(Uri.parse("android.resource://" + getPackageName() + "/"  +R.raw.bubblingup))
                         .setContentTitle(title)
                         .setAutoCancel(true)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)

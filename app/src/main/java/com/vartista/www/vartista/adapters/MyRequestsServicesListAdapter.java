@@ -104,10 +104,12 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
 //                            Toast.makeText(context,myReqServicesList.get(position).getService_provider_id(),Toast.LENGTH_SHORT).show();
                        if(response.body().getResponse().equals("ok")){
+                           String body = name_user+ "Accepted  your request_"+date+"_"+time;
                            notifyDataSetChanged();
                            Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
                                    .sendPushNotification(myReqServicesList.get(position).getUser_customer_id(),
-                                           name_user+ "Accepted  your request,"+date+","+time,"Vartista-Accept");
+                                           body,"Vartista-Accept");
+//                           Toast.makeText(context, name_user+ "Accepted  your request"+date+":"+time, Toast.LENGTH_SHORT).show();
                            callNotification.enqueue(new Callback<NotificationsManager>() {
                                @Override
                                public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
@@ -122,28 +124,28 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                                }
                            });
 
-//                           sendCompactNotification(context,REQUEST_CODE_SP,date,time,name);
-                            AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-
-                            String appointmentdate = date+" "+time;
-                            SimpleDateFormat showsdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-                            Date date1 = null;
-                            try {
-                                date1 = showsdf.parse(appointmentdate);
-                            } catch (ParseException e) {
-                                Log.d("Date Parsing",""+e.getMessage());
-                                e.printStackTrace();
-                            }
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.setTime(date1);
-                            calendar.add(Calendar.SECOND,10);
-                            Intent intent = new Intent("alarm");
-                            intent.putExtra("username",name);
-                            intent.putExtra("requestcode",REQUEST_CODE_SP);
-
-                            PendingIntent broadcast = PendingIntent.getBroadcast(context,REQUEST_CODE_SP,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-                            alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),broadcast);
-
+                           sendCompactNotification(context,REQUEST_CODE_SP,date,time,name);
+//                            AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+//
+//                            String appointmentdate = date+" "+time;
+//                            SimpleDateFormat showsdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+//                            Date date1 = null;
+//                            try {
+//                                date1 = showsdf.parse(appointmentdate);
+//                            } catch (ParseException e) {
+//                                Log.d("Date Parsing",""+e.getMessage());
+//                                e.printStackTrace();
+//                            }
+//                            Calendar calendar = Calendar.getInstance();
+//                            calendar.setTime(date1);
+//                            calendar.add(Calendar.SECOND,10);
+//                            Intent intent = new Intent("alarm");
+//                            intent.putExtra("username",name);
+//                            intent.putExtra("requestcode",REQUEST_CODE_SP);
+//
+//                            PendingIntent broadcast = PendingIntent.getBroadcast(context,REQUEST_CODE_SP,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+//                            alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),broadcast);
+//
 
                         }
 
@@ -335,34 +337,34 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
 
 
-//          public static void sendCompactNotification(Context context , int requestcode , String date , String time,String name){
-//              AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-////              PendingIntent pendingIntent;
-//              String appointmentdate = date+" "+time;
-//              SimpleDateFormat showsdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-//              Date date1 = null;
-//              try {
-//                  date1 = showsdf.parse(appointmentdate);
-//              } catch (ParseException e) {
-//                  Log.d("Date Parsing",""+e.getMessage());
-//                  e.printStackTrace();
+          public static void sendCompactNotification(Context context , int requestcode , String date , String time,String name){
+              AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+//              PendingIntent pendingIntent;
+              String appointmentdate = date+" "+time;
+              SimpleDateFormat showsdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+              Date date1 = null;
+              try {
+                  date1 = showsdf.parse(appointmentdate);
+              } catch (ParseException e) {
+                  Log.d("Date Parsing",""+e.getMessage());
+                  e.printStackTrace();
+              }
+              Calendar calendar = Calendar.getInstance();
+              calendar.setTime(date1);
+//              calendar.add(Calendar.HOUR,-1);
+              calendar.add(Calendar.SECOND,10);
+              Intent intent = new Intent("alarm");
+              intent.putExtra("username",name);
+              intent.putExtra("requestcode",requestcode);
+//              if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                  pendingIntent = PendingIntent.getForegroundService(context, 0, intent, 0);
+//              }else {
+//                  pendingIntent = PendingIntent.getService(context, 0, intent, 0);
 //              }
-//              Calendar calendar = Calendar.getInstance();
-//              calendar.setTime(date1);
-////              calendar.add(Calendar.HOUR,-1);
-//              calendar.add(Calendar.SECOND,10);
-//              Intent intent = new Intent("alarm");
-//              intent.putExtra("username",name);
-//              intent.putExtra("requestcode",requestcode);
-////              if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-////                  pendingIntent = PendingIntent.getForegroundService(context, 0, intent, 0);
-////              }else {
-////                  pendingIntent = PendingIntent.getService(context, 0, intent, 0);
-////              }
-//              PendingIntent broadcast = PendingIntent.getBroadcast(context,REQUEST_CODE_SP,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-//              alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),broadcast);
-//
-//          }
+              PendingIntent broadcast = PendingIntent.getBroadcast(context,REQUEST_CODE_SP,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+              alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),broadcast);
+
+          }
 
 
 
