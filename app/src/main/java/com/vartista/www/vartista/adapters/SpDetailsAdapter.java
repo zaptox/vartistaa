@@ -40,8 +40,21 @@ public class SpDetailsAdapter extends RecyclerView.Adapter<SpDetailsAdapter.View
 @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
+//    holder.home_avail_status.setVisibility(View.INVISIBLE);
+
     holder.tvService.setText(myServicesList.get(position).getService_title());
     holder.tvPrice.setText("Rs: "+myServicesList.get(position).getPrice());
+
+    if(myServicesList.get(position).getHome_avail_status()==1){
+
+//        holder.home_avail_status.setVisibility(View.VISIBLE);
+
+    }
+    else{
+        holder.home_avail_status.setText("(Not Available For Home)");
+        holder.home_avail_status.setTextColor(context.getResources().getColor(R.color.black));
+    }
+
 
     holder.btnBookNow.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -76,12 +89,12 @@ public class SpDetailsAdapter extends RecyclerView.Adapter<SpDetailsAdapter.View
      View mView;
         Button btnBookNow;
 
-     public TextView tvService,tvPrice;
+     public TextView tvService,tvPrice,home_avail_status;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mView=itemView;
-
+            home_avail_status=mView.findViewById(R.id.home_avail_status);
             tvService=(TextView)mView.findViewById(R.id.textView_req_service);
             tvPrice=(TextView)mView.findViewById(R .id.textViewPrice);
             btnBookNow=(Button)mView.findViewById(R.id.buttonBookNow);

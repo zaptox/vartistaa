@@ -19,7 +19,7 @@ public interface ServiceApiInterface {
                                 @Query("price") double price,
                                 @Query("category_id") int category_id,
                                 @Query("created_at") String created_at,
-                                @Query("updated_at") String updated_at);
+                                @Query("home_avail_status") int home_avail_status );
 
     @GET("CREATE_SERVICES/update.services.php")
     Call<Service> updateService(@Query("service_title") String service_title,
@@ -31,7 +31,9 @@ public interface ServiceApiInterface {
                                 @Query("category_id") int category_id,
                                 @Query("price") double price,
                                 @Query("updated_at") String updated_at,
-                                @Query("service_id") int service_id);
+                                @Query("service_id") int service_id,
+                                @Query("home_avail_status") int home_avail_status
+    );
 
     @GET("CREATE_SERVICES/get.service.by.id.php")
     Call<Service> getServiceById(@Query("id") int id);

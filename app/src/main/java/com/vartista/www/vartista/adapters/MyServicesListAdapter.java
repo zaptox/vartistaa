@@ -63,6 +63,15 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
     }
     holder.tvCategory.setText(""+myServicesList.get(position).getCategory_name());
     holder.tvPrice.setText(""+myServicesList.get(position).getPrice());
+
+    if(myServicesList.get(position).getHome_avail_status()==1){
+        holder.home_avail_text.setText("Home Service Available");
+    }
+    else{
+        holder.home_avail_text.setText("No Home Service");
+        holder.home_avail_text.setTextColor(context.getResources().getColor(R.color.colorAccent));
+    }
+
     if (myServicesList.get(position).getLocation().length()>50){
         holder.tvLocation.setText(" "+myServicesList.get(position).getLocation().substring(0,50)+"...");
     }
@@ -192,7 +201,7 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
     public class ViewHolder extends RecyclerView.ViewHolder{
      View mView;
 
-     public TextView tvTitle,tvCategory,tvPrice,tvLocation,tvDescription;
+     public TextView tvTitle,tvCategory,tvPrice,tvLocation,tvDescription,home_avail_text;
      Button edit ,delete;
 
         public ViewHolder(View itemView) {
@@ -206,7 +215,7 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
             delete = (Button)mView.findViewById(R.id.delete);
             tvLocation= (TextView)mView.findViewById(R.id.tvlocation);
             tvDescription= (TextView)mView.findViewById(R.id.tvDescription);
-
+            home_avail_text=mView.findViewById(R.id.home_avail_text);
 
         }
     }

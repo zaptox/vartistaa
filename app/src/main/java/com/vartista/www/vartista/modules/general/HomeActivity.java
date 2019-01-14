@@ -96,7 +96,7 @@ public class HomeActivity extends AppCompatActivity
     DrawerLayout drawer;
     DrawerLayout serviceProvider_Drawer;
     Toolbar toolbar;
-    NavigationView navigationView;
+    public static NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     private int[] tabIcons = {
             R.drawable.ic_tab,
@@ -302,38 +302,31 @@ public class HomeActivity extends AppCompatActivity
             intent.putExtra("user", user_id);
             startActivity(intent);
             Toast.makeText(this, "request", Toast.LENGTH_SHORT).show();
-
         } else if (id == R.id.notification) {
             Intent intent = new Intent(HomeActivity.this, Asynctask_MultipleUrl.class);
             startActivity(intent);
             Toast.makeText(this, "Notification", Toast.LENGTH_SHORT).show();
-
         } else if (id == R.id.appointments) {
             Intent intent = new Intent(HomeActivity.this, MyAppointments.class);
             startActivity(intent);
             Toast.makeText(this, "appointments", Toast.LENGTH_SHORT).show();
-
         } else if (id == R.id.ratings) {
             Toast.makeText(this, "raings", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(HomeActivity.this, My_Rating_Reviews.class);
             startActivity(intent);
-
         } else if (id == R.id.logout) {
             Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
             ob.edit().clear().commit();
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
-
         } else if (id == R.id.payment) {
             Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
             startActivity(intent);
             Toast.makeText(this, "appointments", Toast.LENGTH_SHORT).show();
-
         } else if (id == R.id.Userappointments) {
             Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
             startActivity(intent);
             Toast.makeText(this, "User appointments", Toast.LENGTH_SHORT).show();
-
         } else if (id == R.id.provider_doc_upload) {
             Intent intent = new Intent(HomeActivity.this, DocumentUploadActivity.class);
             startActivity(intent);
@@ -341,7 +334,6 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.Userappointments) {
             Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
             startActivity(intent);
-
         }
 
 
