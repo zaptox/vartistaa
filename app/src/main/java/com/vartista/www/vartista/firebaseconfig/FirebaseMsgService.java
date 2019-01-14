@@ -35,13 +35,16 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // ...
+
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
+
 
         Map<String,String> params= remoteMessage.getData();
         JSONObject object= new JSONObject(params);
         Log.d("Msg Data", "onMessageReceived: "+object.toString());
         //Toast.makeText(this, ""+object+"", Toast.LENGTH_SHORT).show();
+
         // Check if message contains a data payload.
 //        if (remoteMessage.getData().size() > 0) {
 //            Log.d(TAG, "Message data payload: " + remoteMessage.getData().get("gcm.notification.body").toString());
@@ -65,14 +68,19 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
         Log.d("if not null", "Message Notification Body: " + remoteMessage.getNotification().getBody());
         sendNotifcation(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(),"HomeActivity");
-
-        //        sendNotifcation(remoteMessage.getData().get("title"),remoteMessage.getData().get("body"),"HomeActivity");
+//        sendNotifcation(remoteMessage.getData().get("title"),remoteMessage.getData().get("body"),"HomeActivity");
         }
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
+
+
+
     private void sendNotifcation(String title,String body, String activity) {
+
+
         SharedPreferences ob = getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
+
         final String name_user = ob.getString("name","");
         NotificationHelper notificationHelper;
         NotificationManagerCompat notificationManager;
@@ -100,6 +108,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
             }
             else if(title.contains("Request")){
+
                 resultIntent = new Intent(getApplicationContext(), MyServiceRequests.class);
                 resultIntent.putExtra("user", user_id);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -128,7 +137,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
             Notification notification = new NotificationCompat.Builder(getApplicationContext(), NotificationHelper.CHANNEL_ID)
                         .setSmallIcon(R.drawable.logoforsplash)
                         .setContentText(body)
-                        .setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.bubblingup))
+                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                         .setContentTitle(title)
                         .setAutoCancel(true)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
