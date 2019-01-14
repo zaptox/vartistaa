@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -15,7 +16,6 @@ import android.widget.Toast;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.beans.RequestService;
 import com.vartista.www.vartista.modules.general.Asynctask_MultipleUrl;
 import com.vartista.www.vartista.modules.general.HomeActivity;
@@ -43,7 +43,6 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
         Map<String,String> params= remoteMessage.getData();
         JSONObject object= new JSONObject(params);
         Log.d("Msg Data", "onMessageReceived: "+object.toString());
-
         //Toast.makeText(this, ""+object+"", Toast.LENGTH_SHORT).show();
 
         // Check if message contains a data payload.
@@ -80,14 +79,8 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
-
-
-
     private void sendNotifcation(String title,String body, String activity,String date , String time) {
-
-
         SharedPreferences ob = getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
-
         final String name_user = ob.getString("name","");
         NotificationHelper notificationHelper;
         NotificationManagerCompat notificationManager;
@@ -97,7 +90,6 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
             Notification.Builder builder=notificationHelper.getChannelNotiifcation(title,body);
             notificationHelper.getManager().notify(new Random().nextInt(),builder.build());
-
         }
 
         // other than android O
@@ -114,16 +106,12 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 resultIntent = new Intent(getApplicationContext(), MyServiceMeetings.class);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-//                MyRequestsServicesListAdapter.sendCompactNotification(this,REQEUST_CODE_FOR_USER,date,time,name_user);
-
-
             }
             else if(title.contains("Request")){
 
                 resultIntent = new Intent(getApplicationContext(), MyServiceRequests.class);
                 resultIntent.putExtra("user", user_id);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
 
             }
             else if(title.contains("Decline")){
@@ -132,7 +120,10 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
-
+            else{
+                resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
+                resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
 
             PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                     0 /* Request code */, resultIntent,
@@ -142,7 +133,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
             Notification notification = new NotificationCompat.Builder(getApplicationContext(), NotificationHelper.CHANNEL_ID)
                         .setSmallIcon(R.drawable.logoforsplash)
                         .setContentText(body)
-                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                        .setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.bubblingup))
                         .setContentTitle(title)
                         .setAutoCancel(true)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -152,6 +143,10 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
                 notificationManager.notify(1, notification);
 
+            SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sharedPreferencespre.edit();
+            //insert
+            editor.putInt("last_notif_id",1);
 
 
 

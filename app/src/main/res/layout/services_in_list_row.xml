@@ -59,7 +59,17 @@
             android:background="@drawable/yellow_circle"
             android:layout_marginLeft="7dp"
             />
-
+        <TextView
+            android:id="@+id/busy_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/user_status"
+            android:layout_weight="1"
+            android:layout_alignBottom="@+id/simpleRatingBar"
+            android:text="(Busy)"
+            android:textColor="@android:color/background_dark"
+            android:textSize="10dp"
+            android:textStyle="bold" />
         <TextView
             android:id="@+id/textView_service11"
             android:layout_width="wrap_content"
@@ -95,7 +105,7 @@
             android:layout_below="@+id/textView_service11"
             android:layout_alignBottom="@+id/profile_image"
             android:layout_toEndOf="@+id/profile_image"
-            app:srcCompat="@drawable/location_tick"
+
             android:layout_toRightOf="@+id/profile_image" />
 
         <TextView

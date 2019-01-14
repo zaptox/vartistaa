@@ -146,6 +146,35 @@
 
     </android.support.v7.widget.CardView>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            >
+            <ImageView
+                android:layout_marginTop="10sp"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:src="@drawable/home"
+                />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Available For Home"
+            android:textSize="20sp"
+            android:layout_marginTop="10sp"
+            />
+          <CheckBox
+              android:id="@+id/home_avail"
+            android:layout_marginLeft="10sp"
+              android:layout_width="30sp"
+              android:layout_height="30sp"
+              android:layout_marginTop="10sp"
+
+              />
+        </LinearLayout>
     <Button
         android:id="@+id/btnCreateService"
 

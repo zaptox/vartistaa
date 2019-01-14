@@ -37,7 +37,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
     public ServicesInListMapAdapter(Context context, List<GetServiceProviders> myServicesList) {
         this.myServicesList = myServicesList;
         this.context = context;
-        Toast.makeText(context, ""+this.myServicesList, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, ""+this.myServicesList, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
-
+        holder.busy_status.setVisibility(View.INVISIBLE);
         holder.service_p_name.setText("" + myServicesList.get(position).getSp_name());
         holder.service_name.setText("" + myServicesList.get(position).getService_title());
         holder.ratingBar.setRating((float) (myServicesList.get(position).getRatings()));
@@ -59,8 +59,12 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
         }
         else {
             holder.user_status.setImageResource(R.drawable.yellow_circle);
-
         }
+
+        if(myServicesList.get(position).getBusy_status()==1){
+            holder.busy_status.setVisibility(View.VISIBLE);
+        }
+
         Picasso.get().load(myServicesList.get(position).getImage()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)
@@ -89,7 +93,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
                 intent.putExtra("user_id",user_id);
                 intent.putExtra("spname",sp_name);
 
-                Toast.makeText(context, "service provider "+s_provider_id+", cat_id: "+cat_id+", user_id: "+user_id, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "service provider "+s_provider_id+", cat_id: "+cat_id+", user_id: "+user_id, Toast.LENGTH_SHORT).show();
                 context.startActivity(intent);
 
             }
@@ -107,7 +111,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
         View mView;
 
 
-        public TextView service_p_name, service_name;
+        public TextView service_p_name, service_name,busy_status;
 
         public ScaleRatingBar ratingBar;
         public ImageView user_status, user_profile_img;
@@ -117,6 +121,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
             mView = itemView;
 
             service_p_name = (TextView) mView.findViewById(R.id.textViewName);
+            busy_status = (TextView) mView.findViewById(R.id.busy_status);
             service_name = (TextView) mView.findViewById(R.id.textViewService);
             ratingBar = mView.findViewById(R.id.simpleRatingBar);
             user_status = mView.findViewById(R.id.user_status);

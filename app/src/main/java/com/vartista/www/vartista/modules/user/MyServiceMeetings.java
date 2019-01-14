@@ -116,9 +116,8 @@ public class MyServiceMeetings extends AppCompatActivity {
 
 
                 JSONObject jsonResult = new JSONObject(result);
-
                 int success = jsonResult.getInt("success");
-                Toast.makeText(MyServiceMeetings.this, "Resposne"+success, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MyServiceMeetings.this, "Resposne"+success, Toast.LENGTH_SHORT).show();
                 if (success == 1) {
                     JSONArray services = jsonResult.getJSONArray("services");
                     for (int j = 0; j < services.length(); j++) {
@@ -135,9 +134,10 @@ public class MyServiceMeetings extends AppCompatActivity {
                         String price = ser1.getString("price");
                         String name = ser1.getString("name");
                         String Time = ser1.getString("time");
-//                        Toast.makeText(MyAppointments.this, "object added", Toast.LENGTH_SHORT).show();
-                        userAppointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time));
-                        Toast.makeText(MyServiceMeetings.this, ""+userAppointments, Toast.LENGTH_SHORT).show();
+                        String image= ser1.getString("image");
+//                      Toast.makeText(MyAppointments.this, "object added", Toast.LENGTH_SHORT).show();
+                        userAppointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time,image));
+//                      Toast.makeText(MyServiceMeetings.this, ""+userAppointments, Toast.LENGTH_SHORT).show();
                     }
 
 

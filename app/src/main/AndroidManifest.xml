@@ -74,6 +74,7 @@
         <activity android:name=".modules.general.ForgotPasswordActivity" />
         <activity android:name=".modules.general.DeleteMyAccount" />
         <activity android:name=".modules.general.AppSettings" />
+        <activity android:name=".modules.general.Asynctask_MultipleUrl" />
 
         <service
             android:name=".Offline_user_status_service"

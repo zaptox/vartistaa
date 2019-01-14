@@ -48,6 +48,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
     public Context context;
     public static ApiInterface apiInterface;
     public static SendNotificationApiInterface sendNotificationApiInterface;
+
     public static int REQUEST_CODE_SP = 100;
     String date,time,name;
 
@@ -115,11 +116,11 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                                }
 
 
-                                                      @Override
-                                                      public void onFailure(Call<NotificationsManager> call, Throwable t) {
+                               @Override
+                               public void onFailure(Call<NotificationsManager> call, Throwable t) {
 
-                                                      }
-                                                  });
+                               }
+                           });
 
 //                           sendCompactNotification(context,REQUEST_CODE_SP,date,time,name);
                             AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
@@ -159,7 +160,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
                    }
 
-               @Override
+                   @Override
                    public void onFailure(Call<ServiceRequets> call, Throwable t) {
                        Toast.makeText(view.getContext(),"Update Failed",Toast.LENGTH_SHORT).show();
                    }
@@ -315,8 +316,6 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
                     MDToast mdToast = MDToast.makeText(context, "Your Ratings are inserted", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                     mdToast.show();
-
-
                 }
 
 

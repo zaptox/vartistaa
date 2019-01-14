@@ -37,6 +37,21 @@ public class Service {
         this.user_id=user_id;
     }
 
+    public Service(int service_id,int user_id, String category_name, String service_title, String service_description,int status, double price, int category_id, String created_at, String updated_at,int home_avail_status) {
+        this.service_id = service_id;
+        this.service_title = service_title;
+        this.service_description = service_description;
+
+        this.status = status;
+        this.price = price;
+        this.category_id = category_id;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.category_name=category_name;
+        this.user_id=user_id;
+        this.home_avail_status=home_avail_status;
+    }
+
     public Service(int service_id,int user_id, String category_name, String service_title, String service_description,String location,int status, double price, int category_id, String created_at, String updated_at) {
         this.service_id = service_id;
         this.service_title = service_title;
@@ -50,6 +65,23 @@ public class Service {
         this.category_name=category_name;
         this.user_id=user_id;
     }
+
+    public Service(int service_id,int user_id, String category_name, String service_title, String service_description,String location,int status, double price, int category_id, String created_at, String updated_at,int home_avail_status) {
+        this.service_id = service_id;
+        this.service_title = service_title;
+        this.service_description = service_description;
+        this.location=location;
+        this.status = status;
+        this.price = price;
+        this.category_id = category_id;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.category_name=category_name;
+        this.user_id=user_id;
+        this.home_avail_status=home_avail_status;
+
+    }
+
 
     @SerializedName("response")
     private String Response;
@@ -97,6 +129,8 @@ public class Service {
     @SerializedName("country")
     String country;
 
+    @SerializedName("home_avail_status")
+    int home_avail_status;
 
 
 
@@ -107,12 +141,22 @@ public class Service {
 
 }
 
+
     public String getLocation() {
         return location;
     }
 
+
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public int getHome_avail_status() {
+        return home_avail_status;
+    }
+
+    public void setHome_avail_status(int home_avail_status) {
+        this.home_avail_status = home_avail_status;
     }
 
     public String getService_title() {
