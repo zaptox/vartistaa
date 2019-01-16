@@ -28,7 +28,7 @@ public class RequestAlertActivity extends AppCompatActivity {
                     int hours = (int) ((timeRemaining / (1000 * 60 * 60)) % 24);
                     int days = (int) (timeRemaining / (1000 * 60 * 60 * 24));
                     boolean hasDays = days > 0;
-                    return String.format("%1$02d%4$s %2$02d%5$s %3$02d%6$s",
+                    return String.format("%2$02d%5$s %3$02d%6$s",
                             hasDays ? days : hours,
                             hasDays ? hours : minutes,
                             hasDays ? minutes : seconds,
@@ -38,15 +38,13 @@ public class RequestAlertActivity extends AppCompatActivity {
                 }
             });
         }
-
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         Calendar end = Calendar.getInstance();
-        end.add(Calendar.MINUTE, 2);
+        end.add(Calendar.MINUTE, 1);
         end.add(Calendar.SECOND, 1);
 
         Calendar start = Calendar.getInstance();

@@ -128,7 +128,6 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             }
 
-
             PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                     0 /* Request code */, resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
