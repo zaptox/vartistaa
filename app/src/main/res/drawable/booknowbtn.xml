@@ -4,8 +4,8 @@
 
 
         <gradient
-            android:startColor="#ff2432"
-            android:endColor="#ff850f"></gradient>
+            android:startColor="@color/grey2_for_design"
+            android:endColor="@color/grey2_for_design"></gradient>
 
         <corners android:radius="150dp"></corners>
 
@@ -16,7 +16,7 @@
 
         <gradient
             android:startColor="#c5c6c5"
-            android:endColor="#ff850f"></gradient>
+            android:endColor="#ffffff"></gradient>
         <corners android:radius="150dp"></corners>
 
 

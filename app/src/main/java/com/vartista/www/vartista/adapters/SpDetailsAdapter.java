@@ -73,7 +73,6 @@ public class SpDetailsAdapter extends RecyclerView.Adapter<SpDetailsAdapter.View
     holder.mView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-        Toast.makeText(context,"requesr ID:"+service_id,Toast.LENGTH_SHORT).show();
         }
     });
 

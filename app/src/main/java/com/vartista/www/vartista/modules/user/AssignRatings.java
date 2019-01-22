@@ -50,14 +50,13 @@ public class AssignRatings extends AppCompatActivity {
         time = (TextView)findViewById(R.id.time);
         Date = (TextView)findViewById(R.id.date);
         location = (TextView)findViewById(R.id.location);
-        Username= (TextView)findViewById(R.id.header_name);
         done = (Button)findViewById(R.id.done);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         service.setText("Service :-  HairCut");
         time.setText("Time :-  19:45");
         Date.setText("Date :-  07/11/2018");
         location.setText("Location :-  Hyderabad");
-        Username.setText("Masood");
+//        getActionBar().setTitle("Masood");
         rating = 0.0;
         ratingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
             @Override
@@ -101,7 +100,6 @@ public class AssignRatings extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<CreateRequest> call, Throwable t) {
                         //
-                        // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 });

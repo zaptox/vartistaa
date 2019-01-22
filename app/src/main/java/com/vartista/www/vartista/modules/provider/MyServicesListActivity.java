@@ -138,7 +138,6 @@ public class MyServicesListActivity extends AppCompatActivity {
 
 
                 if(success==1){
-            //        Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
                     JSONArray services=jsonResult.getJSONArray("services");
                     for(int i=0;i<services.length();i++){
 
@@ -163,12 +162,10 @@ public class MyServicesListActivity extends AppCompatActivity {
 
                 }
                 else{
-                 //   Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-             //   Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }

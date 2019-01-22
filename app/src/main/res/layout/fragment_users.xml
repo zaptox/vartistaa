@@ -11,7 +11,7 @@
         android:id="@+id/lvCategory"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="25dp"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:elevation="2dp"
         android:scrollbars="vertical" />

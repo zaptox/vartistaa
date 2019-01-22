@@ -9,8 +9,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.SpDetailsAdapter;
 import com.vartista.www.vartista.beans.Service;
@@ -40,20 +43,22 @@ public class ServiceProviderDetail extends AppCompatActivity {
         int cat_id;
         int user_id;
         String spname;
-
-        TextView SpnmeField;
+        ImageView imageViewProfileImage;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_service_provider_detail);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
-        SpnmeField=findViewById(R.id.header_name);
+
 
             listViewSpDetials=(RecyclerView) findViewById(R.id.services_sp);
             listViewSpDetials.setHasFixedSize(true);
             listViewSpDetials.setLayoutManager(new LinearLayoutManager(this));
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
             listViewSpDetials.setLayoutManager(mLayoutManager);
+            imageViewProfileImage=(ImageView)findViewById(R.id.profile_image);
 
             listViewSpDetials.setItemAnimator(new DefaultItemAnimator());
 
@@ -64,10 +69,21 @@ public class ServiceProviderDetail extends AppCompatActivity {
             cat_id=intent.getIntExtra("cat_id",0);
             user_id=intent.getIntExtra("user_id",0);
             spname=intent.getStringExtra("spname");
-//            provider_id=17;
-//            cat_id=1;
-//            user_id=1;
-            SpnmeField.setText(spname);
+            String spProfileImage=intent.getStringExtra("profile_photo");
+            String serviceTitle=intent.getStringExtra("service_title");
+
+
+
+
+            String spFullName[]=spname.split(" ");
+            getSupportActionBar().setTitle(spFullName[0]);
+            getSupportActionBar().setSubtitle(serviceTitle);
+
+            Picasso.get().load(spProfileImage)
+                    .placeholder(R.drawable.profile)
+                    .error(R.drawable.profile)
+                    .into(imageViewProfileImage);
+
 
        new Conncetion(ServiceProviderDetail.this,provider_id,cat_id).execute();
 
@@ -141,7 +157,6 @@ public class ServiceProviderDetail extends AppCompatActivity {
 
 
                     if(success==1){
-                        // Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
                         JSONArray services=jsonResult.getJSONArray("services");
                         for(int i=0;i<services.length();i++){
 
@@ -163,12 +178,10 @@ public class ServiceProviderDetail extends AppCompatActivity {
 
                     }
                     else{
-                        //  Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    //  Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
             }
         }

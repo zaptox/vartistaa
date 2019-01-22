@@ -399,7 +399,17 @@ public class FindServicesInList extends AppCompatActivity {
                         double longitude = Double.parseDouble(ser1.getString("longitude"));
                         double latitude = Double.parseDouble(ser1.getString("latitude"));
                         String sp_name=ser1.getString("name");
-                        double stars = Double.parseDouble(ser1.getString("avg_stars"));
+                        double stars = 0;
+
+                        try {
+                            if (ser1.getString("avg_stars") != null) {
+                                stars = Double.parseDouble(ser1.getString("avg_stars"));
+
+                            }
+                        }
+                        catch(Exception e){
+                            stars=0;
+                        }
                         int user_status = Integer.parseInt(ser1.getString("user_status"));
                         String image = ser1.getString("image");
                         int busy_status=ser1.getInt("busy_status");
@@ -562,7 +572,17 @@ public class FindServicesInList extends AppCompatActivity {
                         double longitude = Double.parseDouble(ser1.getString("longitude"));
                         double latitude = Double.parseDouble(ser1.getString("latitude"));
                         String sp_name=ser1.getString("name");
-                        double stars = Double.parseDouble(ser1.getString("avg_stars"));
+                        double stars = 0;
+
+                        try {
+                            if (ser1.getString("avg_stars") != null) {
+                                stars = Double.parseDouble(ser1.getString("avg_stars"));
+
+                            }
+                        }
+                        catch(Exception e){
+                            stars=0;
+                        }
                         int user_status = Integer.parseInt(ser1.getString("user_status"));
                         String image = ser1.getString("image");
                         int busy_status=ser1.getInt("busy_status");

@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".appconfig.App"
@@ -63,7 +65,10 @@
         <activity android:name=".modules.user.UserNotification_activity" />
         <activity android:name=".modules.provider.MyAppointments" />
         <activity android:name=".modules.general.SettingsActivity" />
-        <activity android:name=".modules.user.ServiceProviderDetail" />
+        <activity
+            android:name=".modules.user.ServiceProviderDetail"
+            android:label=""
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".modules.user.MyServiceMeetings" />
         <activity android:name=".modules.user.AssignRatings" />
         <activity android:name=".modules.provider.DocumentUploadActivity" />
@@ -79,7 +84,15 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".modules.provider.RequestAlertActivity"></activity>
+        <activity
+            android:name=".ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".modules.provider.UploadDocListActivity"
+            android:label="@string/title_activity_upload_docs"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".modules.provider.UploadDoc"></activity>
     </application>
 
 </manifest>
