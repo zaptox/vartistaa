@@ -3,8 +3,8 @@ package com.vartista.www.vartista.restcalls;
 
 
 import com.vartista.www.vartista.beans.CreateRequest;
-import com.vartista.www.vartista.beans.DocUpload;
-import com.vartista.www.vartista.beans.DocUploadList;
+//import com.vartista.www.vartista.beans.DocUpload;
+//import com.vartista.www.vartista.beans.DocUploadList;
 import com.vartista.www.vartista.beans.Doument_Upload_Nil;
 import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.User;
@@ -107,8 +107,8 @@ public interface ApiInterface {
 
 
 
-    @GET("fetch_doc_req.php")
-    Call<DocUploadList> getDocUploadListByUserId(@Query("user_id") int user_id);
+//    @GET("fetch_doc_req.php")
+//    Call<DocUploadList> getDocUploadListByUserId(@Query("user_id") int user_id);
 
 
 

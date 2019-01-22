@@ -276,7 +276,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
                                 SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
                                 int sp_id = ob.getInt("user_id", 0);
-                                insertreviewnil(-1,sp_id,-1);
+//                                insertreviewnil(-1,sp_id,-1);
 
                             }
                         }

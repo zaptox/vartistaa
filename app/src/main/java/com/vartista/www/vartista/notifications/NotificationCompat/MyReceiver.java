@@ -12,13 +12,10 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
-
-import com.vartista.www.vartista.Main2Activity;
+//import com.vartista.www.vartista.Main2Activity;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
-
 import static com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter.REQUEST_CODE_SP;
-
 public class MyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -26,7 +23,6 @@ public class MyReceiver extends BroadcastReceiver {
         String name = intent.getStringExtra("username");
         int request_code = intent.getIntExtra("requestcode",0);
         Intent notificationIntent = new Intent(context,MyServiceRequests.class);
-
         TaskStackBuilder stackBuilder  = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(MyServiceRequests.class);
         stackBuilder.addNextIntent(notificationIntent);

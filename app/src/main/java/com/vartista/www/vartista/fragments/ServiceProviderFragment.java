@@ -14,13 +14,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.vartista.www.vartista.beans.DocUploadList;
+//import com.vartista.www.vartista.beans.DocUploadList;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
-import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
+//import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
 
 
 /**
@@ -47,16 +47,14 @@ public class ServiceProviderFragment extends Fragment {
         reqalert=(LinearLayout) view.findViewById(R.id.btnRequestAlert);
         btnMyServices=(LinearLayout)view.findViewById(R.id.btnMyServices);
         btnUploadDoc=(LinearLayout)view.findViewById(R.id.btnUploadDoc);
-
         btnUploadDoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),UploadDocListActivity.class);
-                intent.putExtra("userId",user_id);
-                startActivity(intent);
+//                Intent intent=new Intent(getContext(),UploadDocListActivity.class);
+//                intent.putExtra("userId",user_id);
+//                startActivity(intent);
             }
         });
-
         reqalert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +80,6 @@ public class ServiceProviderFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
    return view;
     }
 
