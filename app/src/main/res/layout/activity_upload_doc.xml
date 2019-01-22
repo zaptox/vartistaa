@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".modules.provider.UploadDoc">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        app:cardCornerRadius="2dp"
+        android:background="@drawable/card_background"
+        android:layout_marginTop="70dp"
+        android:layout_gravity="center"
+        android:elevation="10dp"
+
+        android:layout_marginBottom="5dp"
+        app:cardPreventCornerOverlap="true">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvDocTitle"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="22dp"
+                android:textColor="@color/grey2_for_design"
+                android:text="Documnet Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <View
+                android:layout_marginTop="7sp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:baselineAligned="false"
+                android:orientation="vertical"
+                app:cardCornerRadius="30dp"
+                app:cardPreventCornerOverlap="true">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageViewDocImage"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="150dp"
+                        android:adjustViewBounds="true"
+                        android:background="@color/light_gray"
+                        android:src="@drawable/ic_add_a_photo_black_24dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignBottom="@+id/imageViewDocImage"
+                        android:layout_alignTop="@+id/imageViewDocImage"
+                        android:background="@color/black_more_translucent" />
+
+                    <TextView
+                        android:id="@+id/imageViewTitleImage"
+                        style="@style/listTitleStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:padding="20dp"
+                        android:text="Click to add Bank Details"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <Button
+                android:id="@+id/btnUploadDoc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5sp"
+                android:textColor="@color/colorWhite"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/buttonshape"
+                android:text="Upload Documet"
+                />
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

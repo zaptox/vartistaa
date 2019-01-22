@@ -2,6 +2,8 @@
 package com.vartista.www.vartista.modules.provider;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,7 +63,10 @@ public class MyServicesListActivity extends AppCompatActivity {
         //ye shared prefrences se aega
         User u= HomeActivity.user;
 
-        user_id=u.getId();
+        SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+        user_id = ob.getInt("user_id", 0);
+
 
 
         new Conncetion(MyServicesListActivity.this,user_id).execute();
@@ -133,7 +138,6 @@ public class MyServicesListActivity extends AppCompatActivity {
 
 
                 if(success==1){
-            //        Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
                     JSONArray services=jsonResult.getJSONArray("services");
                     for(int i=0;i<services.length();i++){
 
@@ -147,22 +151,21 @@ public class MyServicesListActivity extends AppCompatActivity {
                         int category_id=service.getInt("category_id");
                         String service_description=service.getString("service_description");
                         String location=service.getString("location");
-
                         String category_name=service.getString("name");
                         int user_id=service.getInt("user_id");
-                        myservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description, location, status,  price,  category_id,  created_at,  updated_at));
+                        int home_avail_status= service.getInt("home_avail_status");
+
+                        myservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description, location, status,  price,  category_id,  created_at,  updated_at,home_avail_status));
 
 
                     }
 
                 }
                 else{
-                 //   Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-             //   Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }

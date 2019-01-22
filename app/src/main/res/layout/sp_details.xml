@@ -46,8 +46,6 @@
                 android:id="@+id/textViewPrice"
                 android:layout_width="95dp"
                 android:layout_height="wrap_content"
-
-
                 android:layout_alignStart="@+id/textView_req_service"
                 android:layout_below="@+id/textView_req_service"
                 android:layout_weight="1"
@@ -57,16 +55,37 @@
                 android:textSize="14dp"
                 android:layout_marginBottom="10dp"
                 android:textStyle="bold" />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/home"
+                android:layout_toLeftOf="@id/home_avail_status"
+                android:layout_below="@id/textViewPrice"
 
+                />
+
+            <TextView
+                android:id="@+id/home_avail_status"
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textView_req_service"
+                android:layout_below="@+id/textViewPrice"
+                android:layout_weight="1"
+                android:text="(Home Service Available)"
+                android:textColor="@android:color/holo_green_light"
+                android:textSize="10dp"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/buttonBookNow"
                 android:layout_width="78dp"
-                android:layout_height="38dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignTop="@+id/textView_req_service"
-                android:layout_marginEnd="20dp"
                 android:layout_below="@id/textView_req_service"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/booknowbtn"
                 android:text="Book now"
                 android:textAllCaps="false"

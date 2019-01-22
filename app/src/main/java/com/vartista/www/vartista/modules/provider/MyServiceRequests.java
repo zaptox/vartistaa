@@ -83,7 +83,6 @@ public class MyServiceRequests extends AppCompatActivity {
         user_id=getIntent().getIntExtra("user",0);
 
 
-        Toast.makeText(this, ""+user_id, Toast.LENGTH_SHORT).show();
         new MyServiceRequests.Conncetion(MyServiceRequests.this,user_id).execute();
 
 
@@ -151,7 +150,6 @@ public class MyServiceRequests extends AppCompatActivity {
                 JSONObject jsonResult=new JSONObject(result);
                 int success=jsonResult.getInt("success");
 
-                Toast.makeText(getApplicationContext(),jsonResult.toString(),Toast.LENGTH_SHORT).show();
 
                 if(success==1){
                     JSONArray services=jsonResult.getJSONArray("services");
@@ -174,7 +172,6 @@ public class MyServiceRequests extends AppCompatActivity {
                         double price = service.getDouble("price");
                         String service_description= service.getString("service_description");
                         String category_name=service.getString("catgname");
-                        Toast.makeText(MyServiceRequests.this, "The data is coming from database"+service_title, Toast.LENGTH_SHORT).show();
                         serviceRequestsList.add(new ServiceRequets(requestservice_id,user_name,status,date,time,location,user_customer_id,
                                 service_provider_id,service_id,service_cat_id,service_title,price,service_description,category_name,image
                                 ));
@@ -197,12 +194,10 @@ public class MyServiceRequests extends AppCompatActivity {
 
                 }
                 else{
-//                       Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-  //              Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }

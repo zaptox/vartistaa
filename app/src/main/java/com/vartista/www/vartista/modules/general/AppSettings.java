@@ -73,7 +73,6 @@ public class AppSettings extends AppCompatActivity {
                         String newpassword = NewPassword.getText().toString();
                         String confirmnewpassword = ConfirmNewPassword.getText().toString();
                         if(newpassword.equals(confirmnewpassword)){
-                            Toast.makeText(AppSettings.this, "id is "+id, Toast.LENGTH_SHORT).show();
                             updatedata(id,username,email,contact,confirmnewpassword);
                             changepassworddialog.cancel();
                         }
@@ -152,7 +151,6 @@ public class AppSettings extends AppCompatActivity {
             @Override
             public void onFailure(Call <User> call, Throwable t) {
                 setUIToWait(false);
-                Toast.makeText(AppSettings.this,"Update Failed",Toast.LENGTH_SHORT).show();
 
             }
         });

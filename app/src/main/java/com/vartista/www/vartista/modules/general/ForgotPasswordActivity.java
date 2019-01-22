@@ -86,7 +86,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 email = emaiverifyedittext.getText().toString();
-                Toast.makeText(getApplication(),email,Toast.LENGTH_SHORT).show();
                 new ForgotPasswordActivity.Connection(getApplicationContext(),email.trim().toString()).execute();
                 layoutforemail.setVisibility(View.GONE);
                 layoutforcode.setVisibility(View.VISIBLE);
@@ -100,8 +99,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String users_code = verificationcode.getText().toString();
-                Toast.makeText(ForgotPasswordActivity.this, "The user code is "+users_code+
-                        "\nThe server code is "+code, Toast.LENGTH_SHORT).show();
+
                 if(users_code.equals(code)){
                     layoutforcode.setVisibility(View.GONE);
                     layoutforpasswords.setVisibility(View.VISIBLE);
@@ -149,74 +147,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
 
 
-//public boolean checkemail(String userinputemail){
-//
-//    userinputemail2 = userinputemail;
-//    check = false;
-//
-//    String password = "";
-//
-//    Call<User> call = SiginInActivity.apiInterface.performUserLogin(userinputemail, password);
-//    call.enqueue(new Callback<User>() {
-//
-//        public void onResponse(Call<User> call, Response<User> response) {
-//
-////
-//            if (response.isSuccessful()) {
-////                   // Toast.makeText(SiginInActivity.this, "In response", Toast.LENGTH_SHORT).show();
-//
-//            }
-////
-//
-//            if (response.body().getResponse().equals("ok")) {
-//                int id = response.body().getId();
-//
-//                String name = response.body().getName();
-//
-//                String email = response.body().getEmail();
-//
-//                String password = response.body().getPassword();
-//
-//                String image = response.body().getImage();
-//
-//                String status = response.body().getStatus();
-//
-//                String contact = response.body().getContact();
-//
-//                String created_at = response.body().getCreatedAt();
-//
-//                String updated_at = response.body().getUpdatedAt();
-//
-//                String gender= response.body().getGender();
-//
-//                String sp_status= response.body().getSp_status();
-//
-//
-//                userLoggedIn = new User(id, name, email, password, image, status, contact, created_at, updated_at,gender,sp_status);
-//                if(userLoggedIn.getEmail().equals(userinputemail2)){
-//                    check=true;
-//                }
-//
-//            }
-//            else if (response.body().getResponse().equals("failed")) {
-//                  Toast.makeText(ForgotPasswordActivity.this, "Login Failed.. Please try again", Toast.LENGTH_SHORT).show();
-////                    Toast.makeText(SiginInActivity.this, "", Toast.LENGTH_SHORT).show();
-//
-//}
-////
-//            else {
-//                //  Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse(), Toast.LENGTH_SHORT).show();
-//            }
-////                Toast.makeText(SiginInActivity.this, "In response's last line", Toast.LENGTH_SHORT).show();
-// }
-//
-//        @Override
-//        public void onFailure(Call<User> call, Throwable t) {
-//            Toast.makeText(ForgotPasswordActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-//        }
-//    });
-//    return check;
-//}
+
 class Connection extends AsyncTask<String,String ,String > {
     private ProgressDialog dialog;
     String categoriesArray[]=null;
@@ -301,7 +232,6 @@ class Connection extends AsyncTask<String,String ,String > {
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 }

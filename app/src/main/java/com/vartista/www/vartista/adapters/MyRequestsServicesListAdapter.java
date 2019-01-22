@@ -37,7 +37,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
     public Context context;
     public static ApiInterface apiInterface;
     public static SendNotificationApiInterface sendNotificationApiInterface;
-
+    public static final int REQUEST_CODE_SP=0;
     public MyRequestsServicesListAdapter(Context context, List<ServiceRequets> myReqServicesList){
         this.myReqServicesList = myReqServicesList;
         this.context=context;
@@ -85,7 +85,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
 //                            Toast.makeText(context,myReqServicesList.get(position).getService_provider_id(),Toast.LENGTH_SHORT).show();
                        if(response.body().getResponse().equals("ok")){
-                           remove(position);
+
                            notifyDataSetChanged();
                            Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
                                    .sendPushNotification(myReqServicesList.get(position).getUser_customer_id(),
@@ -104,8 +104,6 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                                }
                            });
 
-
-
                                               }
 
                        else if(response.body().getResponse().equals("error")){
@@ -117,6 +115,9 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                            Toast.makeText(view.getContext(),"Something went wrong....",Toast.LENGTH_SHORT).show();
 
                        }
+                       remove(position);
+
+
                    }
 
                    @Override

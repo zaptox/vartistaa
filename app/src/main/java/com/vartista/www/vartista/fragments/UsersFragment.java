@@ -17,7 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
@@ -163,7 +162,6 @@ public class UsersFragment extends Fragment {
 
 
                 if(success==1){
-                    //  Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
                     JSONArray catogires=jsonResult.getJSONArray("category");
                     for(int i=0;i<catogires.length();i++){
 
@@ -183,13 +181,11 @@ public class UsersFragment extends Fragment {
                 }
 
                 else{
-//                        Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }

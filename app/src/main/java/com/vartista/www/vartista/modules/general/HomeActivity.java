@@ -32,9 +32,6 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
-import com.valdesekamdem.library.mdtoast.MDToast;
-//import com.vartista.www.vartista.Offline_user_status_service;
-
 import com.vartista.www.vartista.Offline_user_status_service;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
@@ -96,7 +93,7 @@ public class HomeActivity extends AppCompatActivity
     DrawerLayout drawer;
     DrawerLayout serviceProvider_Drawer;
     Toolbar toolbar;
-    NavigationView navigationView;
+    public static NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     private int[] tabIcons = {
             R.drawable.ic_tab,
@@ -118,8 +115,6 @@ public class HomeActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-//        Toast.makeText(getApplicationContext(), FirebaseInstanceId.getInstance().getToken(), Toast.LENGTH_SHORT).show();
-//        Log.d("deviceToken", FirebaseInstanceId.getInstance().getToken());
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -134,7 +129,6 @@ public class HomeActivity extends AppCompatActivity
         user = (User) intent.getSerializableExtra("user");
         u = user;
         user_id = u.getId();
-        //  Toast.makeText(this, ""+user.id, Toast.LENGTH_SHORT).show();
         name.setText(user.getName());
         email.setText(user.getEmail());
 
@@ -176,7 +170,6 @@ public class HomeActivity extends AppCompatActivity
                          public void onTabSelected(TabLayout.Tab tab) {
 
                 if(tab.getPosition()==1) {
-                    Toast.makeText(HomeActivity.this, ""+1, Toast.LENGTH_SHORT).show();
                               NavigationDrawerUser(true);
                              if (check == true) {
                                  NavigationDrawer_ServiceProvider(false);
@@ -260,7 +253,6 @@ public class HomeActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(HomeActivity.this, AppSettings.class));
             return true;
         }
@@ -287,7 +279,6 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.account) {
             // Handle the camera action
 
-//            Toast.makeText(this, "Account", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(HomeActivity.this, UserProfile.class);
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
@@ -301,20 +292,16 @@ public class HomeActivity extends AppCompatActivity
             Intent intent = new Intent(HomeActivity.this, MyServiceRequests.class);
             intent.putExtra("user", user_id);
             startActivity(intent);
-            Toast.makeText(this, "request", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.notification) {
             Intent intent = new Intent(HomeActivity.this, Asynctask_MultipleUrl.class);
             startActivity(intent);
-            Toast.makeText(this, "Notification", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.appointments) {
             Intent intent = new Intent(HomeActivity.this, MyAppointments.class);
             startActivity(intent);
-            Toast.makeText(this, "appointments", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.ratings) {
-            Toast.makeText(this, "raings", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(HomeActivity.this, My_Rating_Reviews.class);
             startActivity(intent);
 
@@ -327,12 +314,11 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.payment) {
             Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
             startActivity(intent);
-            Toast.makeText(this, "appointments", Toast.LENGTH_SHORT).show();
+
 
         } else if (id == R.id.Userappointments) {
             Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
             startActivity(intent);
-            Toast.makeText(this, "User appointments", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.provider_doc_upload) {
             Intent intent = new Intent(HomeActivity.this, DocumentUploadActivity.class);
@@ -361,14 +347,12 @@ public class HomeActivity extends AppCompatActivity
 
                 if (response.isSuccessful()) {
                     //for debugging
-                    MDToast mdToast = MDToast.makeText(getApplicationContext(), "Token stored", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                    mdToast.show();
+
                 }
             }
 
             @Override
             public void onFailure(Call<DeviceToken> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.d("errorinstoredevicetoken", t.getMessage());
             }
 
@@ -445,7 +429,6 @@ public class HomeActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(String result) {
-            //  Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
 
             try {
                 JSONObject jsonResult = new JSONObject(result);

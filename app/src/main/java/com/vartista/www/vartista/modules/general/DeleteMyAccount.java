@@ -44,7 +44,6 @@ public class DeleteMyAccount extends AppCompatActivity {
                 SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
 //                int user_id= Integer.parseInt(ob.getString("user_id","").toString());
                 int user_id= ob.getInt("user_id",-1);
-                Toast.makeText(DeleteMyAccount.this, "The id is "+user_id, Toast.LENGTH_SHORT).show();
                 Call<User> call=DeleteMyAccount.apiInterface.UpdateUserStatus(user_id);
                 call.enqueue(new Callback<User>() {
                     @Override

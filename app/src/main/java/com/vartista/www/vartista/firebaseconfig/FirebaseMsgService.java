@@ -138,6 +138,10 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
                 notificationManager.notify(1, notification);
 
+            SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sharedPreferencespre.edit();
+            //insert
+            editor.putInt("last_notif_id",1);
 
 
 

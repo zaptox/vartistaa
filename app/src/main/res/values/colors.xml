@@ -7,8 +7,8 @@
 
 
     <!--light gray-->
-    <color name="colorPrimary">#a8a8a8</color>
-    <color name="colorPrimaryDark">#a8a8a8</color>
+    <color name="colorPrimary">#262827</color>
+    <color name="colorPrimaryDark">#262827</color>
     <color name="colorAccent">#a8a8a8</color>
 
 
@@ -38,9 +38,11 @@
 
     <!--<color name="gray_client">#546b81</color>-->
     <color name="gray_client">#FFFFFF</color>
+    <color name="white_color">#FFFFFF</color>
+
     <!--<color name="text_color_client">#FFFFFF</color>-->
     <color name="text_color_client">#000000</color>
-    <color name="grey2_for_design">#a8a8a8</color>
+    <color name="grey2_for_design">#262827</color>
 
 
 
@@ -59,7 +61,6 @@
     <color name="gray">#A9A9A9</color>
     <color name="light_gray">#BDBDBD</color>
     <color name="extra_light_gray">#ffdbdbdb</color>
-    <color name="white">#26a1db</color>
 
     <!-- SoundCloud Shades of Gray-->
     <color name="grey_darker">#424242</color>

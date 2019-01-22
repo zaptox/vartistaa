@@ -139,7 +139,6 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
                  @Override
                  public void onFailure(Call<CreateRequest> call, Throwable t) {
                    //
-                     // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                  }
 
              });

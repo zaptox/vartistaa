@@ -71,7 +71,7 @@ public class CheckActivity extends AppCompatActivity {
 // OR
         AHNotification notification = new AHNotification.Builder()
                 .setText("1")
-                .setBackgroundColor(ContextCompat.getColor(CheckActivity.this, R.color.white))
+                .setBackgroundColor(ContextCompat.getColor(CheckActivity.this, R.color.white_color))
                 .setTextColor(ContextCompat.getColor(CheckActivity.this, R.color.text_color_client))
                 .build();
         bottomNavigation.setNotification(notification, 1);
@@ -87,12 +87,10 @@ public class CheckActivity extends AppCompatActivity {
             public boolean onTabSelected(int position, boolean wasSelected) {
                 // Do something cool here...
                 if(position==0) {
-                    Toast.makeText(CheckActivity.this, "first ", Toast.LENGTH_SHORT).show();
 
 
                 }
                 else if(position==1) {
-                    Toast.makeText(CheckActivity.this, "Second ", Toast.LENGTH_SHORT).show();
 
                 }
 

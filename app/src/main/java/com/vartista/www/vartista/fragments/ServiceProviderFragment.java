@@ -12,25 +12,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.vartista.www.vartista.beans.DocUploadList;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
+import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ServiceProviderFragment extends Fragment {
-    Button btnCreateServices,service_btn,reqalert;
+    LinearLayout btnCreateServices,btnMyServices,reqalert,btnUploadDoc;
      static int user_id;
     @SuppressLint("ValidFragment")
     public ServiceProviderFragment(int user_id) {
       this.user_id=user_id;
     }
-
     public ServiceProviderFragment() {
         // Required empty public constructor
     }
@@ -41,9 +43,19 @@ public class ServiceProviderFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_service, container, false);
-        btnCreateServices=(Button)view.findViewById(R.id.buttonCreateService);
-        reqalert=(Button)view.findViewById(R.id.reqalert);
-        service_btn=(Button)view.findViewById(R.id.service_btn);
+        btnCreateServices=(LinearLayout) view.findViewById(R.id.btnCreateService);
+        reqalert=(LinearLayout) view.findViewById(R.id.btnRequestAlert);
+        btnMyServices=(LinearLayout)view.findViewById(R.id.btnMyServices);
+        btnUploadDoc=(LinearLayout)view.findViewById(R.id.btnUploadDoc);
+
+        btnUploadDoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(),UploadDocListActivity.class);
+                intent.putExtra("userId",user_id);
+                startActivity(intent);
+            }
+        });
 
         reqalert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +65,7 @@ public class ServiceProviderFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        service_btn.setOnClickListener(new View.OnClickListener() {
+        btnMyServices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getContext(),MyServicesListActivity.class);

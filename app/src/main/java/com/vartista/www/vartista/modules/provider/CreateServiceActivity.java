@@ -3,6 +3,7 @@ package com.vartista.www.vartista.modules.provider;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,7 +23,9 @@ import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.adapters.MyServicesListAdapter;
+import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.general.SiginInActivity;
@@ -49,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import com.vartista.www.vartista.beans.Service;
 import com.vartista.www.vartista.restcalls.ServiceApiInterface;
@@ -64,6 +69,9 @@ public class  CreateServiceActivity extends AppCompatActivity {
     EditText service_location;
     TextView service_category;
     Button btnHome;
+    CheckBox home_avail;
+    public static ApiInterface apiInterface2;
+
     //Spinner spinnerService;
     public static ServiceApiInterface apiInterface;
     ArrayList<String> cat;
@@ -94,6 +102,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
         myServicesList = new ArrayList<Service>();
         apiInterface = ApiClient.getApiClient().create(ServiceApiInterface.class);
         service_category=(TextView)findViewById(R.id.service_category);
+        apiInterface2= ApiClient.getApiClient().create(ApiInterface.class);
 
         loggedin= HomeActivity.user;
 
@@ -103,17 +112,11 @@ public class  CreateServiceActivity extends AppCompatActivity {
         edTxtServicePrice = (AutoCompleteTextView) findViewById(R.id.edTxtServicePrice);
         edDescription = (EditText) findViewById(R.id.editTextDescription);
         btnHome = (Button) findViewById(R.id.btnHome);
- //       spinnerService = (Spinner) findViewById(R.id.spinnerService);
+        home_avail= findViewById(R.id.home_avail);
 
-
-        edit_user_id=getIntent().getIntExtra("edit_user_id",0);
-/*        MDToast mdToast = MDToast.makeText(getApplicationContext(), getLocationFromAddress("Hyderabad Sindh"), MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-        mdToast.show();*/
-
-
+          edit_user_id=getIntent().getIntExtra("edit_user_id",0);
 
         if (edit_user_id==0){
-          //  Toast.makeText(getApplicationContext(),"NO ID",Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText(getApplicationContext(),"Create Service Edit"+edit_user_id,Toast.LENGTH_SHORT).show();
@@ -138,20 +141,14 @@ public class  CreateServiceActivity extends AppCompatActivity {
         });
 
 
-// Selection of the spinner
-
-// Application of the Array to the Spinner
-       // apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         new Conncetion(CreateServiceActivity.this).execute();
 
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
               user_id=loggedin.getId();
                 Intent intent=new Intent(getApplicationContext(),MyServicesListActivity.class);
-
                 intent.putExtra("userId",user_id);
                 startActivity(intent);            }
         });
@@ -172,6 +169,14 @@ public class  CreateServiceActivity extends AppCompatActivity {
                     String price = edTxtServicePrice.getText().toString();
                     String description = edDescription.getText().toString();
                     String location = service_location.getText().toString();
+                    int home_avail_status=1;
+                    if(home_avail.isChecked()){
+                        home_avail_status=1;
+                    }
+                    else{
+                        home_avail_status=0;
+                    }
+
                     Date c = Calendar.getInstance().getTime();
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     String formattedDate = df.format(c);
@@ -183,7 +188,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
                    }
 
-                    Call<Service> call = CreateServiceActivity.apiInterface.updateService(title,description, location,latitude,longitude,country,category_id, Double.parseDouble(price),update_at,edit_user_id);
+                    Call<Service> call = CreateServiceActivity.apiInterface.updateService(title,description, location,latitude,longitude,country,category_id, Double.parseDouble(price),update_at,edit_user_id,home_avail_status);
                     call.enqueue(new Callback<Service>() {
                         @Override
                         public void onResponse(Call<Service> call, Response<Service> response) {
@@ -226,6 +231,14 @@ public class  CreateServiceActivity extends AppCompatActivity {
                     String description = edDescription.getText().toString();
                     String location = service_location.getText().toString();
                     String add="";
+                    int home_avail_status=1;
+                    if(home_avail.isChecked()){
+                        home_avail_status=1;
+                    }
+                    else{
+                        home_avail_status=0;
+                    }
+
                     try {
                         add = getLocationFromAddress(location);
                     }
@@ -235,11 +248,12 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
                     user_id=loggedin.getId();
 
+                    String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
                     Call<Service> call = CreateServiceActivity.apiInterface.
                             createService(title, user_id, description, location,latitude,longitude,country,
-                                    1, Double.parseDouble(price + ""), category_id, "2018-04-05",
-                                    "2018,06,04");
+                                    1, Double.parseDouble(price + ""), category_id, date,
+                                    home_avail_status);
 
                     call.enqueue(new Callback<Service>() {
                         @Override
@@ -253,13 +267,16 @@ public class  CreateServiceActivity extends AppCompatActivity {
                                 MDToast mdToast = MDToast.makeText(getApplicationContext(), "Your Service Created Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                                 mdToast.show();
 
+                                SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+                                int sp_id = ob.getInt("user_id", 0);
+                                insertreviewnil(-1,sp_id,-1);
+
                             }
                         }
 
 
                         @Override
                         public void onFailure(Call<Service> call, Throwable t) {
-                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
                     });
@@ -359,13 +376,11 @@ public class  CreateServiceActivity extends AppCompatActivity {
                 }
 
                 else{
-//                        Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -435,7 +450,6 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
 
                 if(success==1){
-                    //        Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
                     JSONArray services=jsonResult.getJSONArray("services");
                     for(int i=0;i<services.length();i++) {
 
@@ -450,23 +464,22 @@ public class  CreateServiceActivity extends AppCompatActivity {
                          category_id = service.getInt("category_id");
                         String service_description = service.getString("service_description");
                         String category_name = service.getString("name");
-
+                        int home_avail_status= service.getInt("home_avail_status");
                         int user_id = service.getInt("user_id");
 
 
+                        if(home_avail_status==1){
 
+                            home_avail.setChecked(true);
+                        }
+                        else {
+                            home_avail.setChecked(false);
+                        }
                         edtTxtSerivceTitle.setText(service_title);
                         edTxtServicePrice.setText(""+price);
                         edDescription.setText(service_description);
                         service_location.setText(location);
-
-                        service_category.setText("Service Category: "+category_name);
-
-
-
-
-
-
+//                        service_category.setText("Service Category: "+category_name);
                     }
 
                     btnCreateSerivce.setText("Edit Service");
@@ -474,12 +487,10 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
                 }
                 else{
-                    //   Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                //   Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -513,6 +524,35 @@ public class  CreateServiceActivity extends AppCompatActivity {
         return add;
     }
 
+
+    public void insertreviewnil(int user_id,int service_p_id,int service_id){
+        String servicetittle = "";
+        String Remarks = "";
+        String time = "";
+        String date = "";
+        Call<CreateRequest> call2 = CreateServiceActivity.apiInterface2.InsertRatings(0,0.0,user_id,service_p_id,service_id,Remarks,date,time);
+
+        call2.enqueue(new Callback<CreateRequest>() {
+            @Override
+            public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
+                if (response.body().getResponse().equals("ok")) {
+
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<CreateRequest> call, Throwable t) {
+                //
+            }
+
+        });
+
+
+    }
 
     }
 
