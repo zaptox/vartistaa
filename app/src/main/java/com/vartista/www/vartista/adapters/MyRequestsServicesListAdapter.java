@@ -276,8 +276,6 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
                     MDToast mdToast = MDToast.makeText(context, "Your Ratings are inserted", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                     mdToast.show();
-
-
                 }
 
 
