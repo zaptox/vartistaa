@@ -1,26 +1,26 @@
-package com.wasche.www.wasche.beans;
+package com.vartista.www.vartista.beans;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class UrgentCostList {
+public class DocUploadList {
 
     @SerializedName("Urgent")
-    private ArrayList<UrgentBean> urgentBeanList;
+    private ArrayList<DocUpload> DocUploadList;
 
-    public ArrayList<UrgentBean> getUrgentBeanList() {
-        return urgentBeanList;
+    public ArrayList<DocUpload> getDocUploadList() {
+        return DocUploadList;
     }
 
-    public void setUrgentBeanList(ArrayList<UrgentBean> urgentBeanList) {
-        this.urgentBeanList = urgentBeanList;
+    public void setDocUploadList(ArrayList<DocUpload> DocUploadList) {
+        this.DocUploadList = DocUploadList;
     }
 
     @Override
     public String toString() {
-        return "UrgentCostList{" +
-                "urgentBeanList=" + urgentBeanList +
+        return "DocUploadList{" +
+                "DocUploadList=" + DocUploadList +
                 '}';
     }
 }

@@ -54,7 +54,8 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
                  v.getContext().startActivity(intent);
              }
          });
-        Picasso.get().load(list.get(position).getImage()).fit().centerCrop()
+
+        Picasso.get().load(list.get(position).getUser_customer_id()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)
                 .into(holder.profile_image);

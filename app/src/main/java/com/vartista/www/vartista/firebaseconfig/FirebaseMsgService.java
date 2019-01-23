@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -20,7 +19,6 @@ import com.vartista.www.vartista.beans.RequestService;
 import com.vartista.www.vartista.modules.general.Asynctask_MultipleUrl;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
-import com.vartista.www.vartista.modules.provider.RequestAlertActivity;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.UserNotificationOnTime;
 
@@ -112,10 +110,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 resultIntent = new Intent(getApplicationContext(), MyServiceRequests.class);
                 resultIntent.putExtra("user", user_id);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Intent dialogIntent = new Intent(this, RequestAlertActivity.class);
-                dialogIntent.putExtra("user",user_id);
-                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(dialogIntent);
+
             }
             else if(title.contains("Decline")){
 
@@ -123,10 +118,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
-            else{
-                resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
-                resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            }
+
 
             PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                     0 /* Request code */, resultIntent,

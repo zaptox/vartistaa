@@ -128,6 +128,7 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
 
                           Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
                          intent.putExtra("user", HomeActivity.user);
+
                          startActivity(intent);
 
                      }

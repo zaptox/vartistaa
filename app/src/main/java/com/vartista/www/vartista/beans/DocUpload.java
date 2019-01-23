@@ -1,3 +1,4 @@
+
 package com.vartista.www.vartista.beans;
 
 import com.google.gson.annotations.SerializedName;
@@ -6,57 +7,127 @@ import com.google.gson.annotations.SerializedName;
  * Created by Vksoni on 7/11/2018.
  */
 
-public class Category {
+public class DocUpload {
 
 
     @SerializedName("response")
-    private String Response;
-
-
-    @SerializedName("name")
-    private String category_name;
+    private String response;
 
     @SerializedName("id")
-    private int cat_id;
+    private int id;
+
+    @SerializedName("user_id")
+    private String userId;
+
+    @SerializedName("title")
+    private String  title;
 
 
-    @SerializedName("image")
-    private String image;
+    @SerializedName("url")
+    private String url;
 
-    public Category(String category_name, int cat_id) {
-        this.category_name = category_name;
-        this.cat_id = cat_id;
+    @SerializedName("date")
+    private String date;
+
+
+    @SerializedName("response_date")
+    private String responseDate;
+
+
+    @SerializedName("approved")
+    private String approved;
+
+    @SerializedName("status")
+    private int status;
+
+
+    public DocUpload() {
     }
 
-    public Category(String category_name, int cat_id, String image) {
-        this.category_name = category_name;
-        this.cat_id = cat_id;
-        this.image = image;
+    public String getResponse() {
+        return response;
     }
 
-    public Category() {
+    public void setResponse(String response) {
+        this.response = response;
     }
 
-
-    public String getImage() {
-        return image;
+    public int getId() {
+        return id;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getResponse(){
-
-    return Response;
-
-}
-
-    public int getCat_id() {
-        return cat_id;
+    public String getUserId() {
+        return userId;
     }
 
-    public String getCategory_name() {
-        return category_name;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getResponseDate() {
+        return responseDate;
+    }
+
+    public void setResponseDate(String responseDate) {
+        this.responseDate = responseDate;
+    }
+
+    public String getApproved() {
+        return approved;
+    }
+
+    public void setApproved(String approved) {
+        this.approved = approved;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "DocUpload{" +
+                "response='" + response + '\'' +
+                ", id=" + id +
+                ", userId='" + userId + '\'' +
+                ", title=" + title +
+                ", url='" + url + '\'' +
+                ", date='" + date + '\'' +
+                ", responseDate='" + responseDate + '\'' +
+                ", approved='" + approved + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

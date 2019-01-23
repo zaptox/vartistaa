@@ -1,101 +1,91 @@
 package com.vartista.www.vartista.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-import com.vartista.www.vartista.beans.Category;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.modules.user.BookNowActivity;
+import com.vartista.www.vartista.beans.DocUpload;
+import com.vartista.www.vartista.modules.provider.UploadDoc;
 import com.vartista.www.vartista.modules.user.FindServicesInList;
 
-import java.util.List;
+import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.UploadNotificationConfig;
 
-public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAdapter.ViewHolder> {
-    public List<Category> myCategoryList;
+import java.util.List;
+import java.util.UUID;
+import java.util.zip.CheckedOutputStream;
+
+public class DocUploadAdapter extends RecyclerView.Adapter<DocUploadAdapter.ViewHolder> {
+    public List<DocUpload> myDocUploadList;
     public Context context;
-    public CategoriesListAdapter(Context context, List<Category> myCategoryList){
-        this.myCategoryList = myCategoryList;
+    public DocUploadAdapter(Context context, List<DocUpload> myDocUploadList){
+        this.myDocUploadList = myDocUploadList;
         this.context=context;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.categories_item,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.upload_doc_item,parent,false);
+
 
         return new ViewHolder(view);
     }
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final DocUpload docUpload=myDocUploadList.get(position);
+      holder.tvDocDate.setText(docUpload.getDate());
+      holder.tvDocTitle.setText(docUpload.getTitle());
 
-        holder.tvCategoryName.setText(myCategoryList.get(position).getCategory_name());
-
-//        if(myCategoryList.get(position).getCategory_name().equalsIgnoreCase("Beautician")){
-//            holder.imageView.setImageResource(R.drawable.beautican);
-//
-//        }
-//        else if(myCategoryList.get(position).getCategory_name().equalsIgnoreCase("Plumber")){
-//            holder.imageView.setImageResource(R.drawable.plumber);
-//
-//        }
-//        else {
-//            holder.imageView.setImageResource(R.drawable.ele);
-//        }
-
-    if(myCategoryList.get(position).getImage().equals("") || myCategoryList.get(position).getImage()==null ){
-        holder.imageView.setImageResource(R.drawable.ele);
-    }
-        else {
-        Picasso.get().load(myCategoryList.get(position).getImage()).fit().centerCrop()
-                .placeholder(R.drawable.profile)
-                .error(R.drawable.profile)
-                .into(holder.imageView);
-    }
-
-//        holder.imageView.setImageResource(R.drawable.ele);
-
-
-        final int cat_id= myCategoryList.get(position).getCat_id();
+        final int docId= myDocUploadList.get(position).getId();
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(context,"cat_id :"+cat_id,Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(view.getContext(), FindServicesInList.class);
-                intent.putExtra("cat_id",cat_id);
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, UploadDoc.class);
+                intent.putExtra("docId", docId);
+                intent.putExtra("title", docUpload.getTitle());
+                intent.putExtra("user_id", docUpload.getUserId());
 
                 context.startActivity(intent);
-
-
             }
         });
-
     }
+
 
 
     @Override
     public int getItemCount() {
-        return myCategoryList.size();
+        return myDocUploadList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         View mView;
 
-        public TextView tvCategoryName;
-        ImageView imageView;
+        public TextView tvDocDate,tvDocTitle;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mView=itemView;
 
-            tvCategoryName=(TextView)mView.findViewById(R.id.tvCategoryItem);
-            imageView=(ImageView) mView.findViewById(R .id.imageViewCategoryIcon);
+            tvDocTitle=(TextView)mView.findViewById(R.id.tvDocTitle);
+            tvDocDate=(TextView)mView.findViewById(R.id.tvDocDate);
+
+
 
         }
     }
+
+
 }
