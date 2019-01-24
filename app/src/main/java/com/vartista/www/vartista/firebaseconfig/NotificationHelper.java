@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 
@@ -100,8 +99,7 @@ public class NotificationHelper extends ContextWrapper {
              builder= new Notification.Builder(getApplicationContext(), CHANNEL_ID)
                     .setContentText(body)
                     .setContentTitle(title)
-                     .setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.bubblingup))
-                     .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentIntent(resultPendingIntent)
                     .setShowWhen(true)
                     .setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark))

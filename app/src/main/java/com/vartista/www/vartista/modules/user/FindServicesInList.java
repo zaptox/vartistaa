@@ -157,7 +157,6 @@ public class FindServicesInList extends AppCompatActivity {
                         filterCost = costSeekBar.getProgress()*100;
 
                         filterApplied = true;
-                        Toast.makeText(FindServicesInList.this, ""+filterLocation+""+filterGender, Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
 
 //                        Toast.makeText(FindServicesInList.this, "Filter: "+filterApplied+"\nLocation: "+filterLocation+"\nGender: "+filterGender,Toast.LENGTH_SHORT).show();
@@ -165,14 +164,12 @@ public class FindServicesInList extends AppCompatActivity {
 
                         if(filterApplied==true){
 
-//                            Toast.makeText(FindServicesInList.this,"filter applied py click neechy query likhi hia"+ filterApplied,Toast.LENGTH_SHORT).show();
 
                             new Connection(FindServicesInList.this,cat_id2,filterLocation,filterGender,filterCost).execute();
 
 
                         }
                         else {
-//                            Toast.makeText(FindServicesInList.this,""+ filterApplied,Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -301,12 +298,6 @@ public class FindServicesInList extends AppCompatActivity {
 
                 final String BASE_URL = "http://vartista.com/vartista_app/filter_get_service_providers.php?cat_id="+cat_id+"&filterLocation="+filter_location+"&filterGender='"+filterGender+"'&filtercost="+filter_cost+"&user_id="+user_id;
 
-//                runOnUiThread(new Runnable() {
-//                    public void run() {
-//                        Toast.makeText(FindServicesInList.this, "link main chala gaya "+filter_location+", "+filter_gender+", "+filter_cost, Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                });
                 try {
                     HttpClient client = new DefaultHttpClient();
                     HttpGet request = new HttpGet();
@@ -399,33 +390,15 @@ public class FindServicesInList extends AppCompatActivity {
                         double longitude = Double.parseDouble(ser1.getString("longitude"));
                         double latitude = Double.parseDouble(ser1.getString("latitude"));
                         String sp_name=ser1.getString("name");
-                        double stars = 0;
-
-                        try {
-                            if (ser1.getString("avg_stars") != null) {
-                                stars = Double.parseDouble(ser1.getString("avg_stars"));
-
-                            }
-                        }
-                        catch(Exception e){
-                            stars=0;
-                        }
+                        double stars = Double.parseDouble(ser1.getString("avg_stars"));
                         int user_status = Integer.parseInt(ser1.getString("user_status"));
                         String image = ser1.getString("image");
                         int busy_status=ser1.getInt("busy_status");
-//                        Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
 
                         splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name,stars, user_status, image,busy_status));
 
                     }
 
-//                    if(filterApplied==true) {
-//                    Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
-//                    }
-//                    else{
-//                        Toast.makeText(FindServicesInList.this, "filter applied true nh hai purani data hai ye"+splist, Toast.LENGTH_SHORT).show();
-//
-//                    }
                     myServicesListAdapter=new ServicesInListMapAdapter(getApplicationContext(),splist);
                     listViewMyServices.setAdapter(myServicesListAdapter);
 
@@ -435,7 +408,6 @@ public class FindServicesInList extends AppCompatActivity {
                      splist= new ArrayList<GetServiceProviders>();
                      myServicesListAdapter=new ServicesInListMapAdapter(getApplicationContext(),splist);
                      listViewMyServices.setAdapter(myServicesListAdapter);
-                    Toast.makeText(FindServicesInList.this, "oops", Toast.LENGTH_SHORT).show();
 
 
                 }
@@ -572,33 +544,15 @@ public class FindServicesInList extends AppCompatActivity {
                         double longitude = Double.parseDouble(ser1.getString("longitude"));
                         double latitude = Double.parseDouble(ser1.getString("latitude"));
                         String sp_name=ser1.getString("name");
-                        double stars = 0;
-
-                        try {
-                            if (ser1.getString("avg_stars") != null) {
-                                stars = Double.parseDouble(ser1.getString("avg_stars"));
-
-                            }
-                        }
-                        catch(Exception e){
-                            stars=0;
-                        }
+                        double stars = Double.parseDouble(ser1.getString("avg_stars"));
                         int user_status = Integer.parseInt(ser1.getString("user_status"));
                         String image = ser1.getString("image");
                         int busy_status=ser1.getInt("busy_status");
-//  Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
 
                         splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name,stars,user_status,image,busy_status));
 
                     }
 //
-//                    if(filterApplied==true) {
-//                        Toast.makeText(FindServicesInList.this, ""+splist, Toast.LENGTH_SHORT).show();
-//                    }
-//                    else{
-//                        Toast.makeText(FindServicesInList.this, "filter applied true nh hai purani data hai ye"+splist, Toast.LENGTH_SHORT).show();
-//
-//                    }
                     myServicesListAdapter=new ServicesInListMapAdapter(getApplicationContext(),splist);
                     listViewMyServices.setAdapter(myServicesListAdapter);
 
@@ -614,7 +568,6 @@ public class FindServicesInList extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
 
-                // Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
 

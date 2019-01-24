@@ -41,9 +41,6 @@ public class servicepaapointmentsitems {
     @SerializedName("name")
     private String name;
 
-    @SerializedName("image")
-    private String image;
-
     @SerializedName("time")
     private String time;
 
@@ -63,30 +60,6 @@ public class servicepaapointmentsitems {
         this.price = price;
         this.name = name;
         this.time = time;
-        }
-
-    public servicepaapointmentsitems(String requestservice_id, String user_customer_id, String service_provider_id, String username, String service_description, String location, String request_status, String date, String service_title, String price, String name, String time,String  image) {
-        this.requestservice_id = requestservice_id;
-        this.user_customer_id = user_customer_id;
-        this.service_provider_id = service_provider_id;
-        this.username = username;
-        this.service_description = service_description;
-        this.location = location;
-        this.request_status = request_status;
-        this.date = date;
-        this.service_title = service_title;
-        this.price = price;
-        this.name = name;
-        this.time = time;
-        this.image=image;
-        }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getRequestservice_id() {

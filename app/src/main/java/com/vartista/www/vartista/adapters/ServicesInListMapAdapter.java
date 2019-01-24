@@ -37,7 +37,6 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
     public ServicesInListMapAdapter(Context context, List<GetServiceProviders> myServicesList) {
         this.myServicesList = myServicesList;
         this.context = context;
-//        Toast.makeText(context, ""+this.myServicesList, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -60,6 +59,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
         else {
             holder.user_status.setImageResource(R.drawable.yellow_circle);
         }
+
         if(myServicesList.get(position).getBusy_status()==1){
             holder.busy_status.setVisibility(View.VISIBLE);
         }
@@ -91,8 +91,10 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
                 intent.putExtra("cat_id",cat_id);
                 intent.putExtra("user_id",user_id);
                 intent.putExtra("spname",sp_name);
+                intent.putExtra("service_title",myServicesList.get(position).getService_title());
                 intent.putExtra("profile_photo",myServicesList.get(position).getImage());
-//                Toast.makeText(context, "service provider "+s_provider_id+", cat_id: "+cat_id+", user_id: "+user_id, Toast.LENGTH_SHORT).show();
+
+
                 context.startActivity(intent);
 
             }

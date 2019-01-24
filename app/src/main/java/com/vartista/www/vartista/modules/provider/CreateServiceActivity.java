@@ -114,12 +114,9 @@ public class  CreateServiceActivity extends AppCompatActivity {
         btnHome = (Button) findViewById(R.id.btnHome);
         home_avail= findViewById(R.id.home_avail);
 
- //       spinnerService = (Spinner) findViewById(R.id.spinnerService);
           edit_user_id=getIntent().getIntExtra("edit_user_id",0);
-/*        MDToast mdToast = MDToast.makeText(getApplicationContext(), getLocationFromAddress("Hyderabad Sindh"), MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-        mdToast.show();*/
+
         if (edit_user_id==0){
-          //  Toast.makeText(getApplicationContext(),"NO ID",Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText(getApplicationContext(),"Create Service Edit"+edit_user_id,Toast.LENGTH_SHORT).show();
@@ -144,10 +141,6 @@ public class  CreateServiceActivity extends AppCompatActivity {
         });
 
 
-// Selection of the spinner
-
-// Application of the Array to the Spinner
-       // apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         new Conncetion(CreateServiceActivity.this).execute();
 
@@ -284,7 +277,6 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<Service> call, Throwable t) {
-                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
                     });
@@ -384,13 +376,11 @@ public class  CreateServiceActivity extends AppCompatActivity {
                 }
 
                 else{
-//                        Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -460,7 +450,6 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
 
                 if(success==1){
-                    //        Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
                     JSONArray services=jsonResult.getJSONArray("services");
                     for(int i=0;i<services.length();i++) {
 
@@ -498,12 +487,10 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
                 }
                 else{
-                    //   Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                //   Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -550,8 +537,6 @@ public class  CreateServiceActivity extends AppCompatActivity {
             public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
                 if (response.body().getResponse().equals("ok")) {
 
-//                    MDToast mdToast = MDToast.makeText(context, "Your Ratings are inserted", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-//                    mdToast.show();
 
 
                 }
@@ -562,7 +547,6 @@ public class  CreateServiceActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<CreateRequest> call, Throwable t) {
                 //
-                // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
         });
