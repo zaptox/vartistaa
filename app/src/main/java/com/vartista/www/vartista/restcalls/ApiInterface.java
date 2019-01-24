@@ -8,6 +8,7 @@ import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.beans.forgotpassword;
 import com.vartista.www.vartista.beans.UserAddressBean;
+import com.vartista.www.vartista.modules.user.StartService;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -102,7 +103,8 @@ public interface ApiInterface {
     @GET("update_sp_status.php")
     Call<User> UpdateSpStatus(@Query("user_id") int user_id);
 
-
+    @GET("updatebusystatus.php")
+    Call<User> updatebusystatus(@Query("id") int id);
 
 
 
