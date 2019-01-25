@@ -53,8 +53,10 @@ import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
+import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
+import com.vartista.www.vartista.modules.user.StartService;
 import com.vartista.www.vartista.modules.user.UserNotification_activity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ServiceApiInterface;
@@ -214,7 +216,6 @@ public class HomeActivity extends AppCompatActivity
         setupTabIcons();
         //making user online
 
-        SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
         user_id = ob.getInt("user_id", 0);
         new Connection(user_id, 1).execute();
