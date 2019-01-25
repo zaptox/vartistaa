@@ -139,7 +139,6 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
         }
 
         public void populate(usernotificationitems ob){
-            Toast.makeText(itemView.getContext(), ""+ob.getMsg(), Toast.LENGTH_SHORT).show();
                   username.setText(Html.fromHtml("Hello Mr : "+"<b>"+ob.getName()+"<b>"));
                   adminmsg.setText(Html.fromHtml("<b>"+ob.getTitle()+"<b> <br> "+ob.getMsg()));
     }

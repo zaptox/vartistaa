@@ -7,9 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
 import com.vartista.www.vartista.modules.general.HomeActivity;
@@ -53,9 +55,11 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
              }
          });
 
-
-
-    }
+        Picasso.get().load(list.get(position).getUser_customer_id()).fit().centerCrop()
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.profile)
+                .into(holder.profile_image);
+            }
 
     @Override
     public int getItemCount() { return list.size(); }
@@ -66,7 +70,7 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
 
 
         public TextView serviceprovidername,servicecharges,Date,Time,serviceDesc,serviceCat,serviceLoc;
-
+        public ImageView profile_image;
         public ViewHolder(View itemView) {
             super(itemView);
             mView=itemView;
@@ -78,7 +82,7 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
             serviceCat=(TextView)mView.findViewById(R.id.service_category_user);
             serviceDesc=(TextView)mView.findViewById(R.id.textView_service_description_user);
             serviceLoc= (TextView)mView.findViewById(R.id.textViewloc_user);
-
+            profile_image=mView.findViewById(R.id.profile_image);
 
         }
     }

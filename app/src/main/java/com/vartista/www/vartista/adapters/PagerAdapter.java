@@ -2,6 +2,7 @@ package com.vartista.www.vartista.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabItem;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -29,8 +30,8 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     public PagerAdapter(FragmentManager fm, int user_id, Context context) {
         super(fm);
-        this.user_id=user_id;
-        this.context=context;
+        this.user_id = user_id;
+        this.context = context;
     }
 
 
@@ -59,7 +60,6 @@ String title[]=new String[]{"As a User","As a Service Provider"};
                 else{
 
                 ServiceProviderFragment tab2 = new ServiceProviderFragment(user_id);
-
                 return tab2;
 
                 }

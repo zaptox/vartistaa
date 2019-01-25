@@ -129,15 +129,15 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignStart="@+id/textViewServiceTitle"
                 android:layout_marginBottom="8dp"
-                android:textStyle="bold"
-
-
                 android:layout_marginEnd="8dp"
+
+
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="description"
                 android:textColor="@android:color/background_dark"
                 android:textSize="10dp"
+                android:textStyle="bold"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintHorizontal_bias="0.1"
@@ -146,8 +146,8 @@
                 card_view:layout_constraintVertical_bias="0.537" />
 
             <android.support.v7.widget.AppCompatImageView
-                android:layout_width="54dp"
-                android:layout_height="77dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
@@ -155,10 +155,35 @@
                 android:src="@drawable/location"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.025"
+                card_view:layout_constraintHorizontal_bias="0.062"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintVertical_bias="1.0" />
+                card_view:layout_constraintVertical_bias="0.783" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+
+                tools:layout_editor_absoluteX="26dp"
+                tools:layout_editor_absoluteY="133dp">
+
+                <ImageView
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:src="@drawable/home" />
+
+                <TextView
+                    android:id="@+id/home_avail_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available for Home"
+                    android:textColor="@color/green_for_design"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/edit"
@@ -197,6 +222,7 @@
                 android:textSize="11dp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent" />
+
 
 
         </android.support.constraint.ConstraintLayout>

@@ -108,7 +108,6 @@ public class UserNotification_activity extends AppCompatActivity {
                 dialog.dismiss();
             }
             try {
-                Toast.makeText(UserNotification_activity.this, "ok", Toast.LENGTH_SHORT).show();
 
                 JSONObject jsonResult = new JSONObject(result);
 
@@ -132,7 +131,6 @@ public class UserNotification_activity extends AppCompatActivity {
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
             }
         }
 

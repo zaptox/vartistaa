@@ -68,6 +68,9 @@ public class ServiceRequets {
     @Expose
     String catgname;
 
+    @SerializedName("user_image")
+    @Expose
+    String user_image;
 
     public ServiceRequets(int reqservice_id, String username, int requests_status, String date, String time, String location, int user_customer_id, int service_provider_id, int service_id, int service_cat_id, String service_title,double price,String service_description, String catgname) {
         this.reqservice_id = reqservice_id;
@@ -87,11 +90,37 @@ public class ServiceRequets {
 
     }
 
+    public ServiceRequets(int reqservice_id, String username, int requests_status, String date, String time, String location, int user_customer_id, int service_provider_id, int service_id, int service_cat_id, String service_title,double price,String service_description, String catgname,String user_image) {
+        this.reqservice_id = reqservice_id;
+        this.username = username;
+        this.requests_status = requests_status;
+        this.date = date;
+        this.time = time;
+        this.location = location;
+        this.user_customer_id = user_customer_id;
+        this.service_provider_id = service_provider_id;
+        this.service_id = service_id;
+        this.service_cat_id = service_cat_id;
+        this.service_title = service_title;
+        this.price = price;
+        this.service_description= service_description;
+        this.catgname = catgname;
+        this.user_image=user_image;
+    }
+
+
 //
 //    public ServiceRequets() {
 //    }
 
 
+    public String getUser_image() {
+        return user_image;
+    }
+
+    public void setUser_image(String user_image) {
+        this.user_image = user_image;
+    }
 
     public int getReqservice_id() {
         return reqservice_id;

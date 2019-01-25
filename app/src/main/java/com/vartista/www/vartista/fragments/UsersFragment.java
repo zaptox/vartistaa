@@ -6,14 +6,17 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabItem;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
@@ -57,17 +60,16 @@ public class UsersFragment extends Fragment {
         // public constructor
         this.user_id=user_id;
     }
-
     public UsersFragment() {
         // Required empty public constructor
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_users, container, false);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+
         listViewMyCategories=(RecyclerView) view.findViewById(R.id.lvCategory);
         listViewMyCategories.setHasFixedSize(true);
         listViewMyCategories.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -87,7 +89,12 @@ public class UsersFragment extends Fragment {
         categoriesListAdapter=new CategoriesListAdapter(context,myCategoriesList);
 
 
+
+
         return  view; }
+
+
+
 
 
     class Conncetion extends AsyncTask<String,String ,String > {
@@ -155,7 +162,6 @@ public class UsersFragment extends Fragment {
 
 
                 if(success==1){
-                    //  Toast.makeText(getApplicationContext(),"Ok services are there",Toast.LENGTH_SHORT).show();
                     JSONArray catogires=jsonResult.getJSONArray("category");
                     for(int i=0;i<catogires.length();i++){
 
@@ -165,6 +171,8 @@ public class UsersFragment extends Fragment {
                         String image=category.getString("image");
                         myCategoriesList.add(new Category(category_name,category_id,image));
 
+
+
                     }
 
 
@@ -173,13 +181,11 @@ public class UsersFragment extends Fragment {
                 }
 
                 else{
-//                        Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }

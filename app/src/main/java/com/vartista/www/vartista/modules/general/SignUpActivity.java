@@ -76,8 +76,6 @@ public class SignUpActivity extends AppCompatActivity {
         female_radio=findViewById(R.id.female);
 
         Intent  i = getIntent();
-//        sp_list=i.getParcelableArrayListExtra("service_providers");
-//        Toast.makeText(this, ""+sp_list.get(0).getService_title(), Toast.LENGTH_SHORT).show();
 
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -236,7 +234,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         } catch (Exception exc) {
 
-            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
+
+
         }
     }
 
@@ -306,8 +305,6 @@ public class SignUpActivity extends AppCompatActivity {
                 //Displaying a toast
                 Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
             } else {
-                //Displaying another toast if permission is not granted
-                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -320,17 +317,12 @@ public class SignUpActivity extends AppCompatActivity {
             public void onResponse(Call<Doument_Upload_Nil> call, Response<Doument_Upload_Nil> response) {
                 if (response.isSuccessful()) {
 
-                    MDToast mdToast = MDToast.makeText(getApplicationContext(), " "+response.body().getResponse(), MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                    mdToast.show();
-//                    MDToast mdToast = MDToast.makeText(getApplicationContext(), "User Inserted: "+response, MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-//                    mdToast.show();
                 }
             }
 
             @Override
             public void onFailure(Call<Doument_Upload_Nil> call, Throwable t) {
 
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
         });

@@ -3,6 +3,11 @@
     package="com.vartista.www.vartista">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".appconfig.App"
@@ -27,14 +32,21 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".modules.general.SiginInActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <service android:name=".firebaseconfig.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+        <service android:name=".firebaseconfig.FirebaseMsgService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/logoforsplash" />
 
         <activity
             android:name=".modules.general.HomeActivity"
@@ -52,7 +64,10 @@
         <activity android:name=".modules.user.UserNotification_activity" />
         <activity android:name=".modules.provider.MyAppointments" />
         <activity android:name=".modules.general.SettingsActivity" />
-        <activity android:name=".modules.user.ServiceProviderDetail" />
+        <activity
+            android:name=".modules.user.ServiceProviderDetail"
+            android:label=""
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".modules.user.MyServiceMeetings" />
         <activity android:name=".modules.user.AssignRatings" />
         <activity android:name=".modules.provider.DocumentUploadActivity" />
@@ -61,11 +76,22 @@
         <activity android:name=".modules.general.ForgotPasswordActivity" />
         <activity android:name=".modules.general.DeleteMyAccount" />
         <activity android:name=".modules.general.AppSettings" />
+        <activity android:name=".modules.general.Asynctask_MultipleUrl" />
 
         <service
             android:name=".Offline_user_status_service"
             android:enabled="true"
             android:exported="true" />
+
+        <activity
+            android:name=".ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".modules.provider.UploadDocListActivity"
+            android:label="@string/title_activity_upload_docs"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".modules.provider.UploadDoc"></activity>
 
         <activity android:name=".modules.user.StartService" />
         <activity android:name=".modules.provider.ServicestartProvider"></activity>

@@ -118,7 +118,6 @@ public class Asynctask_MultipleUrl extends AppCompatActivity {
                         requestlist.add(new usernotificationitems(username,request_detail,Time,Service_title,price));
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
                 }
                if(success2==1){
                     JSONArray services2 = jsonResult2.getJSONArray("services");
@@ -133,7 +132,6 @@ public class Asynctask_MultipleUrl extends AppCompatActivity {
                         notificationlist.add(new usernotificationitems(notificationid,username,title,msg,created_at,sp_status));
                     }
                 } else {
-                   Toast.makeText(getApplicationContext(),"no data in 2 ",Toast.LENGTH_SHORT).show();
                }
                 listadapter = new TwoListInRecyclerView(getApplicationContext(),requestlist,notificationlist);
                 view.setAdapter(listadapter);
@@ -141,7 +139,6 @@ public class Asynctask_MultipleUrl extends AppCompatActivity {
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
             }
         }
 

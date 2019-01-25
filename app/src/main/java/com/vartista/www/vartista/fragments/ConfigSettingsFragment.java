@@ -49,7 +49,6 @@ public class ConfigSettingsFragment extends Fragment {
                 intent.putExtra("userId",user_id);
                 startActivity(intent);
 
-//                Toast.makeText(getContext(), " Now you are a service provider", Toast.LENGTH_SHORT).show();
 
             }
         });
