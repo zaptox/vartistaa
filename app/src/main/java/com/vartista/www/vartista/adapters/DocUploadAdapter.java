@@ -57,7 +57,7 @@ public class DocUploadAdapter extends RecyclerView.Adapter<DocUploadAdapter.View
                 intent.putExtra("docId", docId);
                 intent.putExtra("title", docUpload.getTitle());
                 intent.putExtra("user_id", docUpload.getUserId());
-
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });

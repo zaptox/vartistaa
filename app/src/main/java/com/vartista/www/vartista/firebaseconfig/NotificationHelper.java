@@ -42,9 +42,6 @@ public class NotificationHelper extends ContextWrapper {
         notificationChannel.setLightColor(Color.GREEN);
         notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         notificationChannel.setShowBadge(true);
-
-
-        
         getManager().createNotificationChannel(notificationChannel);}
 
     }

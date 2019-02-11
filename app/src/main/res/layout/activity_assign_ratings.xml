@@ -6,8 +6,6 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context="com.vartista.www.vartista.modules.user.AssignRatings">
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:gravity="center_horizontal"
@@ -83,14 +81,14 @@
         android:text="Location: Mircolony, Tando Jam"
         android:textSize="18sp"
         />
+
         </LinearLayout>
-        <View
+            <View
             android:layout_marginTop="7sp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
-
-        <LinearLayout
+            <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,7 +102,6 @@
                 android:paddingTop="3dp"
                 android:layout_marginLeft="10dp"
                 />
-
             <EditText
                 android:id="@+id/user_remarks"
                 android:layout_width="match_parent"
@@ -115,16 +112,13 @@
                 android:gravity="top"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/shapeforreviewedittext"
-
                 />
         </LinearLayout>
-
         <View
             android:layout_marginTop="7sp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
-
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -137,7 +131,6 @@
             android:text="Wanna Rate Mr.Masood Khalid ?"
             android:textSize="18sp"
             />
-
         <com.willy.ratingbar.ScaleRatingBar
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/simpleRatingBar"
@@ -177,9 +170,6 @@
             android:background="@drawable/loginbtneffect"
             />
 </LinearLayout>
-
     </LinearLayout>
-
     </ScrollView>
-
 </LinearLayout>
