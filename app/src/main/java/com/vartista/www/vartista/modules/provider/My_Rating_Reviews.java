@@ -144,7 +144,6 @@ public class My_Rating_Reviews extends AppCompatActivity {
                         String Time = ser1.getString("time");
                         list.add(new RatingsReviewDetailBean(id,stars,UserName,user_id,SpName,service_p_id,service_id,service_tittle,user_remarks,Date,Time));
                         serviceProvierRating+=list.get(j).getStars();
-
                     }
                     listadapter = new RatingsReviewDetailsAdaptor(getApplicationContext(),list);
                     view.setAdapter(listadapter);

@@ -57,10 +57,7 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
                 .error(R.drawable.profile)
                 .into(holder.imageView);
     }
-
 //        holder.imageView.setImageResource(R.drawable.ele);
-
-
         final int cat_id= myCategoryList.get(position).getCat_id();
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +65,6 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
                 Toast.makeText(context,"cat_id :"+cat_id,Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(view.getContext(), FindServicesInList.class);
                 intent.putExtra("cat_id",cat_id);
-
                 context.startActivity(intent);
 
 

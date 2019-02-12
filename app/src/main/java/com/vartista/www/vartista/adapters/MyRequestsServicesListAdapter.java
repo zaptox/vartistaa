@@ -94,7 +94,8 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                                @Override
                                public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
                                    if(response.isSuccessful())
-                                       MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
+                                       Toast.makeText(view.getContext(), "Request Accepted",Toast.LENGTH_SHORT).show();
+
                                }
 
 
