@@ -2,11 +2,13 @@ package com.vartista.www.vartista.beans;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by khan on 9/6/2018.
  */
 
-public class servicepaapointmentsitems {
+public class servicepaapointmentsitems implements Serializable {
 
     @SerializedName("requestservice_id")
     private String requestservice_id;

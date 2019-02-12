@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by Dell on 2018-08-02.
  */
 
-public class User implements Serializable{
+    public class User implements Serializable{
 
 
 

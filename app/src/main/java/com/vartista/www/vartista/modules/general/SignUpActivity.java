@@ -223,7 +223,6 @@ public class SignUpActivity extends AppCompatActivity {
         //Uploading code
         try {
             String uploadId = UUID.randomUUID().toString();
-
             //Creating a multi part request
             new MultipartUploadRequest(this, uploadId, UPLOAD_URL)
                     .addFileToUpload(path, "image") //Adding file
@@ -231,11 +230,8 @@ public class SignUpActivity extends AppCompatActivity {
                     .addParameter("password", password)
                     .setNotificationConfig(new UploadNotificationConfig())
                     .setMaxRetries(3)
-
                     .startUpload(); //Starting the upload
-
         } catch (Exception exc) {
-
             Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }

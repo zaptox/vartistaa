@@ -17,7 +17,6 @@ import com.vartista.www.vartista.adapters.UserNotificationlistadapter;
 import com.vartista.www.vartista.beans.RatingsReviewDetailBean;
 import com.vartista.www.vartista.beans.usernotificationitems;
 import com.vartista.www.vartista.modules.general.HomeActivity;
-import com.vartista.www.vartista.modules.user.UserNotification_activity;
 import com.willy.ratingbar.ScaleRatingBar;
 
 import org.apache.http.HttpResponse;

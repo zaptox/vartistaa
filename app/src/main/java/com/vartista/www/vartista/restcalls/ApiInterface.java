@@ -2,6 +2,7 @@ package com.vartista.www.vartista.restcalls;
 
 
 
+import com.vartista.www.vartista.beans.AllNotificationBean;
 import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.Doument_Upload_Nil;
 import com.vartista.www.vartista.beans.ServiceRequets;
@@ -103,9 +104,8 @@ public interface ApiInterface {
     Call<User> UpdateSpStatus(@Query("user_id") int user_id);
 
 
-
-
-
+    @GET("insert_allnotification.php")
+    Call<AllNotificationBean> Insert_Notification(@Query("title")String title,@Query("message")String message ,@Query("sender_id") int sender_id,@Query("receiver_id") int receiver_id,@Query("status")int status,@Query("created_at")String created_at);
 
 
 }

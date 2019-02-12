@@ -34,10 +34,9 @@ public class MyReceiver extends BroadcastReceiver {
 
         if(request_code==REQUEST_CODE_SP) {
             PendingIntent pendingIntent = stackBuilder.getPendingIntent(REQUEST_CODE_SP, PendingIntent.FLAG_UPDATE_CURRENT);
-
             createNotification(context, "Vartista", "After 1 hours you have to visit "+name, pendingIntent);
         }else if(request_code==REQEUST_CODE_FOR_USER){
-            PendingIntent pendingIntent = stackBuilder.getPendingIntent(REQUEST_CODE_SP, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = stackBuilder.getPendingIntent(REQEUST_CODE_FOR_USER, PendingIntent.FLAG_UPDATE_CURRENT);
 
             createNotification(context, "Vartista", "After 1 hours  "+name+" will visit you", pendingIntent);
         }
@@ -49,7 +48,7 @@ public class MyReceiver extends BroadcastReceiver {
         builder.setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
-                .setSound(Uri.parse("android.resource://" + context.getPackageName() + "/"  +R.raw.bubblingup))
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setSmallIcon(R.drawable.logoforsplash)
                 .setContentTitle(title)
                 .setContentText(body)

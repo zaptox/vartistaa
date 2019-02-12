@@ -56,7 +56,6 @@ import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
 import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
-import com.vartista.www.vartista.modules.user.UserNotification_activity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ServiceApiInterface;
 import com.vartista.www.vartista.restcalls.TokenApiInterface;
@@ -94,6 +93,7 @@ public class HomeActivity extends AppCompatActivity
     public static TokenApiInterface tokenApiInterface;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    
     DrawerLayout drawer;
     DrawerLayout serviceProvider_Drawer;
     Toolbar toolbar;
@@ -177,7 +177,6 @@ public class HomeActivity extends AppCompatActivity
                          public void onTabSelected(TabLayout.Tab tab) {
 
                 if(tab.getPosition()==1) {
-                    Toast.makeText(HomeActivity.this, ""+1, Toast.LENGTH_SHORT).show();
                               NavigationDrawerUser(true);
                              if (check == true) {
                                  NavigationDrawer_ServiceProvider(false);
@@ -302,32 +301,25 @@ public class HomeActivity extends AppCompatActivity
             Intent intent = new Intent(HomeActivity.this, MyServiceRequests.class);
             intent.putExtra("user", user_id);
             startActivity(intent);
-            Toast.makeText(this, "request", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.notification) {
             Intent intent = new Intent(HomeActivity.this, Asynctask_MultipleUrl.class);
             startActivity(intent);
-            Toast.makeText(this, "Notification", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.appointments) {
             Intent intent = new Intent(HomeActivity.this, MyAppointments.class);
             startActivity(intent);
-            Toast.makeText(this, "appointments", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.ratings) {
-            Toast.makeText(this, "raings", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(HomeActivity.this, My_Rating_Reviews.class);
             startActivity(intent);
         } else if (id == R.id.logout) {
-            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
             ob.edit().clear().commit();
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
         } else if (id == R.id.payment) {
             Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
             startActivity(intent);
-            Toast.makeText(this, "appointments", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.Userappointments) {
             Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
             startActivity(intent);
-            Toast.makeText(this, "User appointments", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.provider_doc_upload) {
             Intent intent = new Intent(HomeActivity.this, DocumentUploadActivity.class);
             startActivity(intent);

@@ -11,11 +11,11 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.TwoListInRecyclerView;
 import com.vartista.www.vartista.adapters.UserNotificationlistadapter;
 import com.vartista.www.vartista.beans.usernotificationitems;
-import com.vartista.www.vartista.modules.user.UserNotification_activity;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -81,9 +81,6 @@ public class Asynctask_MultipleUrl extends AppCompatActivity {
         @Override
         protected String[] doInBackground(String... strings) {
 
-
-            String result = "";
-
             final String BASE_URL = "http://vartista.com/vartista_app/usernotificationstatus.php?user_customer_id="+user_id;
             final String BASE_URL2 = "http://vartista.com/vartista_app/fetch_notificationmsg.php?user_id="+user_id;
             String[] ob = new String[2];
@@ -111,11 +108,12 @@ public class Asynctask_MultipleUrl extends AppCompatActivity {
                     for (int j = 0; j < services.length(); j++) {
                         JSONObject ser1 = services.getJSONObject(j);
                         String username = ser1.getString("username");
+                        String image = ser1.getString("image");
                         String request_detail = ser1.getString("request_status");
                         String Time = ser1.getString("time");
                         String Service_title = ser1.getString("service_title");
                         Double price = ser1.getDouble("price");
-                        requestlist.add(new usernotificationitems(username,request_detail,Time,Service_title,price));
+                        requestlist.add(new usernotificationitems(username,image,request_detail,Time,Service_title,price));
                     }
                 } else {
                     Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();

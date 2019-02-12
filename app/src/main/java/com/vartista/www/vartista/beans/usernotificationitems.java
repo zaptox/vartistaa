@@ -38,14 +38,19 @@ public class usernotificationitems  {
     @SerializedName("created_at")
     private String created_at;
 
+    @SerializedName("image")
+    private String image;
+
 
     @SerializedName("response")
     private String Response;
 
 
 
-    public usernotificationitems(String name, String request_status, String time , String service_title ,double price) {
+
+    public usernotificationitems(String name, String image,String request_status, String time , String service_title ,double price) {
         Name = name;
+        this.image = image;
         this.request_status = request_status;
         Time = time;
         this.service_title = service_title;
@@ -60,6 +65,14 @@ public class usernotificationitems  {
         this.sp_status = sp_status;
     }
 
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getTitle() {
         return title;

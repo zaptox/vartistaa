@@ -90,7 +90,6 @@ public class MyServiceRequests extends AppCompatActivity {
     }
 
 
-
     class Conncetion extends AsyncTask<String,String ,String > {
         private ProgressDialog dialog;
         int userId;
@@ -151,8 +150,6 @@ public class MyServiceRequests extends AppCompatActivity {
                 JSONObject jsonResult=new JSONObject(result);
                 int success=jsonResult.getInt("success");
 
-                Toast.makeText(getApplicationContext(),jsonResult.toString(),Toast.LENGTH_SHORT).show();
-
                 if(success==1){
                     JSONArray services=jsonResult.getJSONArray("services");
                     for(int i=0;i<services.length();i++){
@@ -174,10 +171,9 @@ public class MyServiceRequests extends AppCompatActivity {
                         double price = service.getDouble("price");
                         String service_description= service.getString("service_description");
                         String category_name=service.getString("catgname");
-                        Toast.makeText(MyServiceRequests.this, "The data is coming from database"+service_title, Toast.LENGTH_SHORT).show();
                         serviceRequestsList.add(new ServiceRequets(requestservice_id,user_name,status,date,time,location,user_customer_id,
                                 service_provider_id,service_id,service_cat_id,service_title,price,service_description,category_name,image
-                                ));
+                        ));
                     }
 
 
@@ -187,7 +183,7 @@ public class MyServiceRequests extends AppCompatActivity {
 
 
 
-                    myRequestServicesListAdapter= new MyRequestsServicesListAdapter(MyServiceRequests.this,serviceRequestsList);
+                    myRequestServicesListAdapter = new MyRequestsServicesListAdapter(MyServiceRequests.this,serviceRequestsList);
                     AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(myRequestServicesListAdapter);
                     alphaAdapter.setDuration(1000);
                     alphaAdapter.setInterpolator(new OvershootInterpolator());
@@ -202,10 +198,11 @@ public class MyServiceRequests extends AppCompatActivity {
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-  //              Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                //              Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }
+
 
 
     static class MyViewHolder extends RecyclerView.ViewHolder implements AnimateViewHolder {
