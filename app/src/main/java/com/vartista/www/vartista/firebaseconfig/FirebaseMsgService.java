@@ -20,6 +20,7 @@ import com.vartista.www.vartista.beans.RequestService;
 import com.vartista.www.vartista.modules.general.Asynctask_MultipleUrl;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
+import com.vartista.www.vartista.modules.provider.RequestAlertActivity;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.UserNotificationOnTime;
 
@@ -69,8 +70,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
-
-
+        Log.d("if not null", "Message Notification Body: " + remoteMessage.getNotification().getBody());
 
 //        sendNotifcation(remoteMessage.getData().get("title"),remoteMessage.getData().get("body"),"HomeActivity");
             if (remoteMessage.getNotification().getBody().contains("Accepted")){
@@ -129,7 +129,10 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 resultIntent = new Intent(getApplicationContext(), MyServiceRequests.class);
                 resultIntent.putExtra("user", user_id);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
+                Intent dialogIntent = new Intent(this, RequestAlertActivity.class);
+                dialogIntent.putExtra("user",user_id);
+                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(dialogIntent);
             }
             else if(title.contains("Decline")){
 
@@ -142,6 +145,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             }
 
+
             PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                     0 /* Request code */, resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
@@ -150,7 +154,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
             Notification notification = new NotificationCompat.Builder(getApplicationContext(), NotificationHelper.CHANNEL_ID)
                         .setSmallIcon(R.drawable.logoforsplash)
                         .setContentText(body)
-                        .setSound(Uri.parse("android.resource://" + getPackageName() + "/"  +R.raw.bubblingup))
+                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                         .setContentTitle(title)
                         .setAutoCancel(true)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
