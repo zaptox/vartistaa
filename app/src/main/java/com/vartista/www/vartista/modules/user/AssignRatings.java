@@ -77,37 +77,37 @@ public class AssignRatings extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String servicetittle = "HairCut";
-//                String Remarks = user_remarks.getText().toString();
-//                String time = "";
-//                String date = "07/11/2018";
-//                Call<CreateRequest> call = AssignRatings.apiInterface.InsertRatings(0,rating,101,68,10,Remarks,date,time);
-//
-//                call.enqueue(new Callback<CreateRequest>() {
-//                    @Override
-//                    public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
-//                        if (response.body().getResponse().equals("ok")) {
-//
-//                            MDToast mdToast = MDToast.makeText(getApplicationContext(), "Your Ratings are Assigned", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-//                            mdToast.show();
-//
-//                            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
-//                            intent.putExtra("user", HomeActivity.user);
-//
-//                            startActivity(intent);
-//
-//                        }
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<CreateRequest> call, Throwable t) {
-//                        //
-//                        // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                });
+                String servicetittle = "HairCut";
+                String Remarks = user_remarks.getText().toString();
+                String time = "";
+                String date = "07/11/2018";
+                Call<CreateRequest> call = AssignRatings.apiInterface.updateratings(13,rating,Remarks);
+
+                call.enqueue(new Callback<CreateRequest>() {
+                    @Override
+                    public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
+                        if (response.body().getResponse().equals("ok")) {
+
+                            MDToast mdToast = MDToast.makeText(getApplicationContext(), "Your Ratings are Assigned", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                            mdToast.show();
+
+                            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+                            intent.putExtra("user", HomeActivity.user);
+
+                            startActivity(intent);
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<CreateRequest> call, Throwable t) {
+                        //
+                        // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                });
 
 
             }

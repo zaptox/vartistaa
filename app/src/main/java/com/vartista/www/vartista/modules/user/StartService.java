@@ -16,9 +16,11 @@ import android.widget.Toast;
 import com.bcgdv.asia.lib.ticktock.TickTockView;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.beans.NotificationsManager;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
+import com.vartista.www.vartista.restcalls.SendNotificationApiInterface;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -39,6 +41,7 @@ public class StartService extends AppCompatActivity {
     long MillisecondTime, StartTime, TimeBuff, UpdateTime = 0L;
     Handler handler;
     int Hours, Seconds, Minutes, MilliSeconds;
+    public static SendNotificationApiInterface sendNotificationApiInterface;
 
         @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,29 +52,47 @@ public class StartService extends AppCompatActivity {
         startservice = (Button)findViewById(R.id.startbutton);
         endservice = (Button)findViewById(R.id.btPause);
         reset = (Button)findViewById(R.id.btReset);
-
+        sendNotificationApiInterface = ApiClient.getApiClient().create(SendNotificationApiInterface.class);
         handler = new Handler() ;
 
         startservice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
-//               int userid = ob.getInt("user_id",0);
-//                Call<User> call = StartService.apiInterface.updatebusystatus(userid);
-//                call.enqueue(new Callback<User>() {
-//                    @Override
-//                    public void onResponse(Call<User> call, Response<User> response) {
-//                        if (response.body().getResponse().equals("ok")) {
-//
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<User> call, Throwable t) {
-//
-//                    }
-//
-//                });
+                SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
+               int userid = ob.getInt("user_id",0);
+               final String name="shared";
+
+                final int service_provider_id= 63;
+                Call<User> call = StartService.apiInterface.updatebusystatus(userid);
+                call.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        if (response.body().getResponse().equals("ok")) {
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+
+                    }
+
+                });
+                Call<NotificationsManager> callNotification = StartService.sendNotificationApiInterface
+                        .sendPushNotification(service_provider_id,name+" has started the work","Vartista-Busy");
+                callNotification.enqueue(new Callback<NotificationsManager>() {
+
+                    @Override
+                    public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
+                        Toast.makeText(StartService.this, "notification send", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<NotificationsManager> call, Throwable t) {
+
+                    }
+                });
                 StartTime = SystemClock.uptimeMillis();
                 handler.postDelayed(runnable, 0);
 
@@ -136,6 +157,25 @@ public class StartService extends AppCompatActivity {
         }
 
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 //    @Override

@@ -29,8 +29,12 @@ public class ServicestartProvider extends AppCompatActivity {
         startservice = (Button)findViewById(R.id.startbutton);
         endservice = (Button)findViewById(R.id.btPause);
         reset = (Button)findViewById(R.id.btReset);
-
+        startservice.setEnabled(false);
         handler = new Handler() ;
+
+        StartTime = SystemClock.uptimeMillis();
+        handler.postDelayed(runnable, 0);
+        reset.setEnabled(false);
 
         startservice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,10 +56,10 @@ public class ServicestartProvider extends AppCompatActivity {
 //                    }
 //
 //                });
-                StartTime = SystemClock.uptimeMillis();
-                handler.postDelayed(runnable, 0);
-
-                reset.setEnabled(false);
+//                StartTime = SystemClock.uptimeMillis();
+//                handler.postDelayed(runnable, 0);
+//
+//                reset.setEnabled(false);
 
             }
         });

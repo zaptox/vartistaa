@@ -19,6 +19,7 @@ import com.vartista.www.vartista.beans.RequestService;
 import com.vartista.www.vartista.modules.general.Asynctask_MultipleUrl;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
+import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.UserNotificationOnTime;
 
@@ -119,12 +120,15 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
             }
 
+            else if(title.contains("Busy")){
 
+                resultIntent = new Intent(getApplicationContext(), ServicestartProvider.class);
+                resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            }
             PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                     0 /* Request code */, resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
-
-
             Notification notification = new NotificationCompat.Builder(getApplicationContext(), NotificationHelper.CHANNEL_ID)
                         .setSmallIcon(R.drawable.logoforsplash)
                         .setContentText(body)
