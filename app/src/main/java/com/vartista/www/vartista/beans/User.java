@@ -21,6 +21,10 @@ import java.io.Serializable;
     @Expose
     int id;
 
+    @SerializedName("busy_status")
+    @Expose
+    int busystatus;
+
     @SerializedName("name")
     @Expose
     String name;
@@ -64,7 +68,7 @@ import java.io.Serializable;
 
 
 
-    public User(int id, String name, String email, String password, String image, String status, String contact, String createdAt, String updatedAt) {
+    public User(int id,String name, String email, String password, String image, String status, String contact, String createdAt, String updatedAt) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -74,9 +78,10 @@ import java.io.Serializable;
         this.contact = contact;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+
     }
 
-    public User( int id, String name, String email, String password, String image, String status, String contact, String createdAt, String updatedAt, String gender, String sp_status) {
+    public User( int id,String name, String email, String password, String image, String status, String contact, String createdAt, String updatedAt, String gender, String sp_status) {
 
         this.id = id;
         this.name = name;
@@ -89,7 +94,26 @@ import java.io.Serializable;
         this.updatedAt = updatedAt;
         this.gender = gender;
         this.sp_status = sp_status;
+
     }
+
+    public User( int id,int busytstatus,String name, String email, String password, String image, String status, String contact, String createdAt, String updatedAt, String gender, String sp_status) {
+
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.image = image;
+        this.status = status;
+        this.contact = contact;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.gender = gender;
+        this.sp_status = sp_status;
+        this.busystatus = busytstatus;
+
+    }
+
 
     public String getResponse() {
         return response;
@@ -105,6 +129,14 @@ import java.io.Serializable;
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getBusystatus() {
+        return busystatus;
+    }
+
+    public void setBusystatus(int busystatus) {
+        this.busystatus = busystatus;
     }
 
     public String getName() {

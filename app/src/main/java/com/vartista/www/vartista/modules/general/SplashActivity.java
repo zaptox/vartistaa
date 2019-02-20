@@ -40,8 +40,7 @@ public class SplashActivity extends AwesomeSplash {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            Toast.makeText(getApplicationContext(),"body: "+bundle.get("body")+"  title:  "+bundle.get("title")
-                    +"  Xoni  "+bundle.get("Xoni"),Toast.LENGTH_SHORT).show();
+
         }
 
 
@@ -95,21 +94,7 @@ public class SplashActivity extends AwesomeSplash {
         startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
         finish();
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-//
-//        if((ob.getString("Email","").equals(user.getEmail()) && ob.getString("Password","").equals(user.getPassword()))){
-//            Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
-//            intent.putExtra("user", userLoggedIn);
-//            startActivity(intent);
-//            finivnsh();
-//
-//            }
-//        else{
 
-
-//            Toast.makeText(SplashActivity.this,""+ob.getString("Email",""),Toast.LENGTH_SHORT);
-//            startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
-//            finish();
-//        }
 
 
         SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
@@ -120,7 +105,6 @@ public class SplashActivity extends AwesomeSplash {
         if(email_shared.equals("") && pass_shared.equals("")){
 
             startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
-//            startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
 
         }
         else {
@@ -135,9 +119,7 @@ public class SplashActivity extends AwesomeSplash {
 
     public User perfromLogin(String email1, String password1) {
 
-//        Toast.makeText(this, "in perform function", Toast.LENGTH_SHORT).show();
         Call<User> call = SplashActivity.apiInterface.performUserLogin(email1, password1);
-//        Call<User> call = SiginInActivity.apiInterface.performUserLogin();
 
 
         setUIToWait(true);
@@ -150,7 +132,6 @@ public class SplashActivity extends AwesomeSplash {
 
 //
                 if (response.isSuccessful()) {
-//                   // Toast.makeText(SiginInActivity.this, "In response", Toast.LENGTH_SHORT).show();
                     setUIToWait(false);
                 }
 //
@@ -178,27 +159,13 @@ public class SplashActivity extends AwesomeSplash {
 
                     String sp_status= response.body().getSp_status();
 
+
+
                     userLoggedIn = new User(id, name, email, password, image, status, contact, created_at, updated_at,gender,sp_status);
-//                    Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse() + "--name:" + name, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(SplashActivity.this, "in b/w "+userLoggedIn, Toast.LENGTH_SHORT).show();
 
 
                     setUIToWait(false);
-//                    Toast.makeText(SiginInActivity.this, ""+userLoggedIn, Toast.LENGTH_SHORT).show();
-                    //
 
-//                    SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
-//
-//                    String email_shared=ob.getString("Email","");
-//                    String pass_shared=ob.getString("Password","");
-//
-//                    if(email_shared.equals("") && pass_shared.equals("")){
-//
-//                        startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
-//
-//                    }
-//                    else {
-//
                     SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor=sharedPreferencespre.edit();
                     editor.putInt("user_id",userLoggedIn.getId());
@@ -227,19 +194,15 @@ public class SplashActivity extends AwesomeSplash {
 //
 //
                 } else if (response.body().getResponse().equals("failed")) {
-                    //  Toast.makeText(SiginInActivity.this, "Login Failed.. Please try again", Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(SiginInActivity.this, "", Toast.LENGTH_SHORT).show();
-                    setUIToWait(false);
+                     setUIToWait(false);
 
                 }
 //
                 else {
                     setUIToWait(false);
-                    //  Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse(), Toast.LENGTH_SHORT).show();
 
                 }
 
-//                Toast.makeText(SiginInActivity.this, "In response's last line", Toast.LENGTH_SHORT).show();
 
 
             }
@@ -247,12 +210,10 @@ public class SplashActivity extends AwesomeSplash {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
 
-                //  Toast.makeText(SiginInActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 setUIToWait(false);
 
             }
         });
-        Toast.makeText(this, "in last"+userLoggedIn, Toast.LENGTH_SHORT).show();
         return userLoggedIn;
     }
 

@@ -74,7 +74,6 @@ public class AddressSetActivity extends AppCompatActivity {
         user_id = ob.getInt("user_id", 0);
 
         new AddressSetActivity.Conncetion(AddressSetActivity.this,user_id).execute();
-        Toast.makeText(this, "Procced", Toast.LENGTH_SHORT).show();
 
 
 
@@ -129,7 +128,6 @@ public class AddressSetActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<UserAddressBean> call, Throwable t) {
                             setUIToWait(false);
-                            Toast.makeText(AddressSetActivity.this, "Signup Failed", Toast.LENGTH_SHORT).show();
 
 
                         }
@@ -247,7 +245,6 @@ public class AddressSetActivity extends AppCompatActivity {
                 JSONObject jsonResult=new JSONObject(result);
                 int success=jsonResult.getInt("success");
 
-                Toast.makeText(getApplicationContext(),jsonResult.toString(),Toast.LENGTH_SHORT).show();
 
                 if(success==1){
                     JSONArray services=jsonResult.getJSONArray("services");

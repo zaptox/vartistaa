@@ -181,10 +181,12 @@ public class SiginInActivity extends AppCompatActivity {
 
                     String sp_status= response.body().getSp_status();
 
+                    int busystatus = response.body().getBusystatus();
 
-                    userLoggedIn = new User(id, name, email, password, image, status, contact, created_at, updated_at,gender,sp_status);
+
+                    userLoggedIn = new User(id, busystatus,name, email, password, image, status, contact, created_at, updated_at,gender,sp_status);
 //                    Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse() + "--name:" + name, Toast.LENGTH_SHORT).show();
-                    addtosharedpreference(userLoggedIn.getId(),userLoggedIn.getEmail(),userLoggedIn.getPassword(),
+                    addtosharedpreference(userLoggedIn.getId(),userLoggedIn.getBusystatus(),userLoggedIn.getEmail(),userLoggedIn.getPassword(),
                             userLoggedIn.getName(),userLoggedIn.getGender(),userLoggedIn.getSp_status(),
                             userLoggedIn.getContact());
 //                    upload_document(userLoggedIn.getName(),userLoggedIn.getPassword(),userLoggedIn.getContact());
@@ -268,11 +270,12 @@ public class SiginInActivity extends AppCompatActivity {
         return "";
     }
 
-    public void addtosharedpreference(int user_id,String email,String Password,String name,String gender, String sp_status,String contact){
+    public void addtosharedpreference(int user_id,int busystatus,String email,String Password,String name,String gender, String sp_status,String contact){
 
         SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferencespre.edit();
         editor.putInt("user_id",user_id);
+        editor.putInt("busy_status",busystatus);
         editor.putString("contact",contact);
         editor.putString("Email",email);
         editor.putString("Password",Password);

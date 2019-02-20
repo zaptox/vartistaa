@@ -15,6 +15,7 @@ import com.vartista.www.vartista.adapters.UserNotificationlistadapter;
 import com.vartista.www.vartista.adapters.servicepappointmentsadapter;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
 import com.vartista.www.vartista.beans.usernotificationitems;
+import com.vartista.www.vartista.modules.user.UserNotification_activity;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -135,7 +136,7 @@ public class MyAppointments extends AppCompatActivity {
                         String name = ser1.getString("name");
                         String Time = ser1.getString("time");
 //                        Toast.makeText(MyAppointments.this, "object added", Toast.LENGTH_SHORT).show();
-                        myappointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time,image));
+                        myappointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time));
 //                        Toast.makeText(MyAppointments.this, ""+myappointments, Toast.LENGTH_SHORT).show();
                     }
 

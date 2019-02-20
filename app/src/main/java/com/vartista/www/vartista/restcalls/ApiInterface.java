@@ -4,14 +4,18 @@ package com.vartista.www.vartista.restcalls;
 
 import com.vartista.www.vartista.beans.AllNotificationBean;
 import com.vartista.www.vartista.beans.CreateRequest;
+//import com.vartista.www.vartista.beans.DocUpload;
+//import com.vartista.www.vartista.beans.DocUploadList;
 import com.vartista.www.vartista.beans.Doument_Upload_Nil;
 import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.beans.forgotpassword;
 import com.vartista.www.vartista.beans.UserAddressBean;
+import com.vartista.www.vartista.modules.user.StartService;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -102,6 +106,12 @@ public interface ApiInterface {
 
     @GET("update_sp_status.php")
     Call<User> UpdateSpStatus(@Query("user_id") int user_id);
+
+    @GET("updatebusystatus.php")
+    Call<User> updatebusystatus(@Query("id") int id);
+
+//    @GET("fetch_doc_req.php")
+//    Call<DocUploadList> getDocUploadListByUserId(@Query("user_id") int user_id);
 
 
     @GET("insert_allnotification.php")

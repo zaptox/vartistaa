@@ -54,9 +54,11 @@ import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
+import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.restcalls.ApiClient;
+import com.vartista.www.vartista.modules.user.StartService;
 import com.vartista.www.vartista.restcalls.ServiceApiInterface;
 import com.vartista.www.vartista.restcalls.TokenApiInterface;
 
@@ -93,7 +95,6 @@ public class HomeActivity extends AppCompatActivity
     public static TokenApiInterface tokenApiInterface;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    
     DrawerLayout drawer;
     DrawerLayout serviceProvider_Drawer;
     Toolbar toolbar;
@@ -115,6 +116,9 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         tokenApiInterface = ApiClient.getApiClient().create(TokenApiInterface.class);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        int id = ob.getInt("user_id",0);
+        getbusystatus(id);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -214,7 +218,6 @@ public class HomeActivity extends AppCompatActivity
         setupTabIcons();
         //making user online
 
-        SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
         user_id = ob.getInt("user_id", 0);
         new Connection(user_id, 1).execute();
@@ -260,12 +263,18 @@ public class HomeActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(HomeActivity.this, AppSettings.class));
             return true;
         }
         else if(id==R.id.Assign_ratings){
             startActivity(new Intent(HomeActivity.this, AssignRatings.class));
+        }
+
+        else if(id==R.id.Start_Service){
+            startActivity(new Intent(HomeActivity.this, StartService.class));
+        }
+        else if(id==R.id.Start_Service_Provider){
+            startActivity(new Intent(HomeActivity.this, ServicestartProvider.class));
         }
         else if (id == R.id.logout) {
             Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
@@ -301,25 +310,32 @@ public class HomeActivity extends AppCompatActivity
             Intent intent = new Intent(HomeActivity.this, MyServiceRequests.class);
             intent.putExtra("user", user_id);
             startActivity(intent);
+
         } else if (id == R.id.notification) {
             Intent intent = new Intent(HomeActivity.this, Asynctask_MultipleUrl.class);
             startActivity(intent);
+
         } else if (id == R.id.appointments) {
             Intent intent = new Intent(HomeActivity.this, MyAppointments.class);
             startActivity(intent);
+
         } else if (id == R.id.ratings) {
             Intent intent = new Intent(HomeActivity.this, My_Rating_Reviews.class);
             startActivity(intent);
         } else if (id == R.id.logout) {
+            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
             ob.edit().clear().commit();
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
         } else if (id == R.id.payment) {
             Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
             startActivity(intent);
+
+
         } else if (id == R.id.Userappointments) {
             Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
             startActivity(intent);
+
         } else if (id == R.id.provider_doc_upload) {
             Intent intent = new Intent(HomeActivity.this, DocumentUploadActivity.class);
             startActivity(intent);
@@ -346,14 +362,12 @@ public class HomeActivity extends AppCompatActivity
 
                 if (response.isSuccessful()) {
                     //for debugging
-                    MDToast mdToast = MDToast.makeText(getApplicationContext(), "Token stored", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                    mdToast.show();
+
                 }
             }
 
             @Override
             public void onFailure(Call<DeviceToken> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.d("errorinstoredevicetoken", t.getMessage());
             }
 
@@ -449,6 +463,97 @@ public class HomeActivity extends AppCompatActivity
         }
 
     }
+    User userLoggedIn = null;
+
+    public void getbusystatus(int user_id) {
+
+//        Toast.makeText(this, "in perform function", Toast.LENGTH_SHORT).show();
+        Call<User> call = SiginInActivity.apiInterface.getUserById(user_id);
+//        Call<User> call = SiginInActivity.apiInterface.performUserLogin();
+
+
+
+
+        call.enqueue(new Callback<User>() {
+            @Override
+
+            public void onResponse(Call<User> call, Response<User> response) {
+
+                if (response.body().getResponse().equals("ok")) {
+                    int id = response.body().getId();
+
+                    String name = response.body().getName();
+
+                    String email = response.body().getEmail();
+
+                    String password = response.body().getPassword();
+
+                    String image = response.body().getImage();
+
+                    String status = response.body().getStatus();
+
+                    String contact = response.body().getContact();
+
+                    String created_at = response.body().getCreatedAt();
+
+                    String updated_at = response.body().getUpdatedAt();
+
+                    String gender= response.body().getGender();
+
+                    String sp_status= response.body().getSp_status();
+
+                    int busy_status = response.body().getBusystatus();
+
+                    userLoggedIn = new User(id,busy_status,name, email, password, image, status, contact, created_at, updated_at,gender,sp_status);
+
+                    Toast.makeText(HomeActivity.this, "The  busy_status  of user "+email+""+response.body().getBusystatus(), Toast.LENGTH_SHORT).show();
+                    if(busy_status==1){
+                        startActivity(new Intent(HomeActivity.this,ServicestartProvider.class));
+                    }
+// Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse() + "--name:" + name, Toast.LENGTH_SHORT).show();
+
+//                    upload_document(userLoggedIn.getName(),userLoggedIn.getPassword(),userLoggedIn.getContact());
+//                    Toast.makeText(SiginInActivity.this, "The User Id is :- "+userLoggedIn.getId()
+//                            +"\n"+"The Name is "+userLoggedIn.getName()
+//                            +"\n"+"The password is "+userLoggedIn.getPassword(), Toast.LENGTH_SHORT).show();
+
+//                    Toast.makeText(SiginInActivity.this, ""+userLoggedIn, Toast.LENGTH_SHORT).show();
+                    //
+
+
+
+//
+//
+                } else if (response.body().getResponse().equals("failed")) {
+                    //  Toast.makeText(SiginInActivity.this, "Login Failed.. Please try again", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SiginInActivity.this, "", Toast.LENGTH_SHORT).show();
+
+
+                }
+//
+                else {
+
+                    //  Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse(), Toast.LENGTH_SHORT).show();
+
+                }
+
+//                Toast.makeText(SiginInActivity.this, "In response's last line", Toast.LENGTH_SHORT).show();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+                //  Toast.makeText(SiginInActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+
+
 
 
 

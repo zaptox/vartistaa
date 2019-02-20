@@ -86,7 +86,6 @@ public class My_Rating_Reviews extends AppCompatActivity {
 
             String result = "";
 
-//            Toast.makeText(My_Rating_Reviews.this, ""+serviceproviderid, Toast.LENGTH_SHORT).show();
             final String BASE_URL = "http://vartista.com/vartista_app/My_Ratings_Review.php?service_provider_id="+serviceproviderid;
             try {
                 HttpClient client = new DefaultHttpClient();
@@ -122,7 +121,6 @@ public class My_Rating_Reviews extends AppCompatActivity {
                 dialog.dismiss();
             }
             try {
-                Toast.makeText(My_Rating_Reviews.this, "ok", Toast.LENGTH_SHORT).show();
 
                 JSONObject jsonResult = new JSONObject(result);
 
@@ -145,15 +143,11 @@ public class My_Rating_Reviews extends AppCompatActivity {
                         String Time = ser1.getString("time");
                         list.add(new RatingsReviewDetailBean(id,stars,UserName,user_id,SpName,service_p_id,service_id,service_tittle,user_remarks,Date,Time));
                         serviceProvierRating+=list.get(j).getStars();
-
                     }
                     listadapter = new RatingsReviewDetailsAdaptor(getApplicationContext(),list);
                     view.setAdapter(listadapter);
                     headername.setText(list.get(0).getSpName());
-//                    Toast.makeText(My_Rating_Reviews.this, " The total rating of service provider "+serviceProvierRating
-//                            +"\nThe size of the list is"+list.size(), Toast.LENGTH_SHORT).show();
                     Float finalrating = (Float)serviceProvierRating/list.size();
-//                    Toast.makeText(My_Rating_Reviews.this, "This rating is after dividing with size"+finalrating, Toast.LENGTH_SHORT).show();
                     ratingBar.setRating(finalrating);
                     ratingBar.setIsIndicator(true);
                     ratingBar.setFocusable(false);
@@ -162,7 +156,6 @@ public class My_Rating_Reviews extends AppCompatActivity {
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
             }
         }
 

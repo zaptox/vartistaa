@@ -18,9 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
@@ -47,7 +45,7 @@ public class DocumentUploadActivity extends AppCompatActivity
     private static final int BANK_DETAILS_IMAGE_REQUEST_CODE = 11;
     private static final int STORAGE_PERMISSION_CODE = 123;
     private ImageView imageViewBankDetails,imageViewCnicFront,imageViewBackCinc;
-    private Button btnUpload, btnSetAddress;
+    private Button btnUploadCnicBack, btnSetAddress,btnUploadBankDetails,btnUploadCNICFront;
     private Bitmap bitmapCnicFront,bitmapCnicBack,bitmapBankDetails;
     private Uri filePathCnicFront,filePathCnicBack,filePathBankDetails;
    private  static String cnic_front_document_title="cnic_front";
@@ -72,7 +70,9 @@ public class DocumentUploadActivity extends AppCompatActivity
         user_id=ob.getInt("user_id",0);
         apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
 
-        btnUpload=(Button)findViewById(R.id.btnUpload);
+        btnUploadCnicBack =(Button)findViewById(R.id.btnUploadCNICBack);
+        btnUploadBankDetails =(Button)findViewById(R.id.btnUploadBankDetails);
+        btnUploadCNICFront =(Button)findViewById(R.id.btnUploadCNICFront);
 
           btnSetAddress.setOnClickListener(new View.OnClickListener() {
               @Override
@@ -114,94 +114,123 @@ public class DocumentUploadActivity extends AppCompatActivity
         });
 
 
-        btnUpload.setOnClickListener(new View.OnClickListener() {
+        btnUploadCnicBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              if(cnic_front==true && cnic_back==true && bank_details==true) {
+                if(cnic_back==true) {
 
-                 try{ uploadMultipart( filePathBankDetails,bank_details_document_title);
-                  uploadMultipart( filePathCnicFront, cnic_front_document_title);
-                  uploadMultipart( filePathCnicBack, cnic_back_document_title);}catch (Exception e){
-                     Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                 }
-              }
-              else if(bank_details==false){
-                    showCompletedDialog("error in uploading documents","Kindly provide Bank Details ");
-              }
-              else if(cnic_front==false){
-                  showCompletedDialog("error in uploading documents","Kindly provide CNIC front side image");
-
-              }
-
-              else if(cnic_back==false){
-                  showCompletedDialog("error in uploading documents","Kindly provide CNIC back side image");
-
-              }
-
-
-                setUIToWait(true);
-                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
-
-
-                Call<User> call= DocumentUploadActivity.apiInterface.UpdateSpStatus(user_id);
-                try {
-                    call.enqueue(new Callback<User>() {
-                        @Override
-                        public void onResponse(Call<User> call, Response<User> response) {
-
-                            if (response.body().getResponse().equals("ok")) {
-                                setUIToWait(false);
-
-                                Toast.makeText(DocumentUploadActivity.this, "Updated Successfully..", Toast.LENGTH_SHORT).show();
-
-                            } else if (response.body().getResponse().equals("exist")) {
-                                setUIToWait(false);
-
-                                Toast.makeText(DocumentUploadActivity.this, "Same Data exists....", Toast.LENGTH_SHORT).show();
-
-                            } else if (response.body().getResponse().equals("error")) {
-                                setUIToWait(false);
-
-                                Toast.makeText(DocumentUploadActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
-
-                            } else {
-                                setUIToWait(false);
-
-                                Toast.makeText(DocumentUploadActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
-
-                            }
-
-
-//                        user_name.setText("response ");
-                            Toast.makeText(DocumentUploadActivity.this, "Request sent to admin", Toast.LENGTH_SHORT).show();
-
-//                            finish();
-                        }
-
-                        @Override
-                        public void onFailure(Call<User> call, Throwable t) {
-                            setUIToWait(false);
-                            Toast.makeText(DocumentUploadActivity.this, "Update Failed", Toast.LENGTH_SHORT).show();
-
-//                        create.setText(t.getMessage());
-                        }
-                    });
+                    try{
+                        uploadMultipart( filePathCnicBack, cnic_back_document_title);}catch (Exception e){
+                    }
                 }
-                catch(Exception e){
-                    MDToast mdToast = MDToast.makeText(getApplicationContext(), ""+e.getMessage(), MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                    mdToast.show();
-
+                else {
+                    showCompletedDialog("error in uploading CNIC Back","Kindly provide required image ");
                 }
 
+             updateSPStatus();
 
 
             }
         });
 
+
+        btnUploadCNICFront.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(cnic_front==true) {
+
+                    try{
+                        uploadMultipart( filePathCnicFront, cnic_front_document_title);
+                       }catch (Exception e){
+                    }
+                }
+                else {
+                    showCompletedDialog("error in uploading CNIC Front","Kindly provide required image ");
+                }
+
+                updateSPStatus();
+
+
+            }
+        });
+        btnUploadBankDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(bank_details==true) {
+
+                    try{
+                        uploadMultipart( filePathBankDetails,bank_details_document_title);
+                    }catch (Exception e){
+                    }
+                }
+                else {
+                    showCompletedDialog("error in uploading Bank Details","Kindly provide required image ");
+                }
+
+                updateSPStatus();
+
+
+            }
+        });
   }
 
 
+   private  void updateSPStatus(){
+       setUIToWait(true);
+       progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+
+
+       Call<User> call= DocumentUploadActivity.apiInterface.UpdateSpStatus(user_id);
+       try {
+           call.enqueue(new Callback<User>() {
+               @Override
+               public void onResponse(Call<User> call, Response<User> response) {
+
+                   if (response.body().getResponse().equals("ok")) {
+                       setUIToWait(false);
+
+                       Toast.makeText(DocumentUploadActivity.this, "Updated Successfully..", Toast.LENGTH_SHORT).show();
+
+                   } else if (response.body().getResponse().equals("exist")) {
+                       setUIToWait(false);
+
+                       Toast.makeText(DocumentUploadActivity.this, "Same Data exists....", Toast.LENGTH_SHORT).show();
+
+                   } else if (response.body().getResponse().equals("error")) {
+                       setUIToWait(false);
+
+                       Toast.makeText(DocumentUploadActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
+
+                   } else {
+                       setUIToWait(false);
+
+                       Toast.makeText(DocumentUploadActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
+
+                   }
+
+
+//                        user_name.setText("response ");
+                   Toast.makeText(DocumentUploadActivity.this, "Request sent to admin", Toast.LENGTH_SHORT).show();
+
+//                            finish();
+               }
+
+               @Override
+               public void onFailure(Call<User> call, Throwable t) {
+                   setUIToWait(false);
+                   Toast.makeText(DocumentUploadActivity.this, "Update Failed", Toast.LENGTH_SHORT).show();
+
+//                        create.setText(t.getMessage());
+               }
+           });
+       }
+       catch(Exception e){
+           MDToast mdToast = MDToast.makeText(getApplicationContext(), ""+e.getMessage(), MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+           mdToast.show();
+
+       }
+   }
             private void setUIToWait(boolean wait) {
 
                 if (wait) {
@@ -320,10 +349,8 @@ public class DocumentUploadActivity extends AppCompatActivity
             //If permission is granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //Displaying a toast
-                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
             } else {
                 //Displaying another toast if permission is not granted
-                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
             }
         }
     }

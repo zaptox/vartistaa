@@ -125,6 +125,9 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                                public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
                                    if(response.isSuccessful()){}
 
+                                   if(response.isSuccessful())
+                                       Toast.makeText(view.getContext(), "Request Accepted",Toast.LENGTH_SHORT).show();
+
                                }
 
 
@@ -318,6 +321,8 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
                     MDToast mdToast = MDToast.makeText(context, "Your Ratings are inserted", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                     mdToast.show();
+
+
                 }
 
 
@@ -325,7 +330,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
             @Override
             public void onFailure(Call<CreateRequest> call, Throwable t) {
-
+                //
                 // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
 

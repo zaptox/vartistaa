@@ -83,7 +83,6 @@ public class MyServiceRequests extends AppCompatActivity {
         user_id=getIntent().getIntExtra("user",0);
 
 
-        Toast.makeText(this, ""+user_id, Toast.LENGTH_SHORT).show();
         new MyServiceRequests.Conncetion(MyServiceRequests.this,user_id).execute();
 
 
@@ -150,6 +149,7 @@ public class MyServiceRequests extends AppCompatActivity {
                 JSONObject jsonResult=new JSONObject(result);
                 int success=jsonResult.getInt("success");
 
+
                 if(success==1){
                     JSONArray services=jsonResult.getJSONArray("services");
                     for(int i=0;i<services.length();i++){
@@ -193,12 +193,10 @@ public class MyServiceRequests extends AppCompatActivity {
 
                 }
                 else{
-//                       Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                //              Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         }
     }

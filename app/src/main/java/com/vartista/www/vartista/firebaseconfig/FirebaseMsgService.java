@@ -114,6 +114,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
     }
     private void sendNotifcation(String title,String body, String activity,String date , String time) {
         SharedPreferences ob = getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
+
         final String name_user = ob.getString("name","");
         NotificationHelper notificationHelper;
         NotificationManagerCompat notificationManager;

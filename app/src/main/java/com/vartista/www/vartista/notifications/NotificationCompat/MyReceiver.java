@@ -38,7 +38,7 @@ public class MyReceiver extends BroadcastReceiver {
         }else if(request_code==REQEUST_CODE_FOR_USER){
             PendingIntent pendingIntent = stackBuilder.getPendingIntent(REQEUST_CODE_FOR_USER, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            createNotification(context, "Vartista", "After 1 hours  "+name+" will visit you", pendingIntent);
+            createNotification(context, "Vartista", "After 3 hours you have to visit "+name, pendingIntent);
         }
     }
 

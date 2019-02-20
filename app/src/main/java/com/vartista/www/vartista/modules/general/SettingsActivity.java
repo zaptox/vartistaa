@@ -194,7 +194,6 @@ public class SettingsActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
             try {
-                Toast.makeText(SettingsActivity.this, "ok", Toast.LENGTH_SHORT).show();
 
                 JSONObject jsonResult = new JSONObject(result);
 
@@ -218,11 +217,9 @@ public class SettingsActivity extends AppCompatActivity {
                     Email.setText(user.getEmail());
                     ContactNo.setText(user.getContact());
                 } else {
-                    Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
             }
         }
 
@@ -279,7 +276,6 @@ public void updatedata(int id,String name,String email,String contact,String pas
         @Override
         public void onFailure(Call <User> call, Throwable t) {
             setUIToWait(false);
-            Toast.makeText(SettingsActivity.this,"Update Failed",Toast.LENGTH_SHORT).show();
 
         }
     });
