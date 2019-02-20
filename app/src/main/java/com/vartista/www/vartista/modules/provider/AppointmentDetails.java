@@ -32,7 +32,7 @@ public class AppointmentDetails extends AppCompatActivity {
         Intent intent = getIntent();
         servicepaapointmentsitems ob = (servicepaapointmentsitems) intent.getSerializableExtra("object");
 
-        Picasso.get().load(ob.getImage()).fit().centerCrop()
+        Picasso.get().load(ob    .getImage()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)
                 .into(imageView);

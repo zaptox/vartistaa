@@ -14,11 +14,11 @@ public class RequestAlertActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_request_alert);
+//        setContentView(R.layout.activity_request_alert);
 
 
 
-        mCountDown = (TickTockView) findViewById(R.id.view_ticktock_countdown);
+//        mCountDown = (TickTockView) findViewById(R.id.view_ticktock_countdown);
         if (mCountDown != null) {
             mCountDown.setOnTickListener(new TickTockView.OnTickListener() {
                 @Override

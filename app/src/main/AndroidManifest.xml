@@ -64,7 +64,6 @@
         <activity android:name=".modules.provider.MyServiceRequests" />
         <activity android:name=".modules.user.FindServicesInList" />
         <activity android:name=".modules.payment.PaymentActivity" />
-        <activity android:name=".modules.user.UserNotification_activity" />
         <activity android:name=".modules.provider.MyAppointments" />
         <activity android:name=".modules.general.SettingsActivity" />
         <activity android:name=".modules.user.ServiceProviderDetail" />
