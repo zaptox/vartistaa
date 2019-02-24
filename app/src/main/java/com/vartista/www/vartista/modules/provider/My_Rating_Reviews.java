@@ -147,6 +147,7 @@ public class My_Rating_Reviews extends AppCompatActivity {
                     listadapter = new RatingsReviewDetailsAdaptor(getApplicationContext(),list);
                     view.setAdapter(listadapter);
                     headername.setText(list.get(0).getSpName());
+                    Toast.makeText(My_Rating_Reviews.this, ""+list.size(), Toast.LENGTH_SHORT).show();
                     Float finalrating = (Float)serviceProvierRating/list.size();
                     ratingBar.setRating(finalrating);
                     ratingBar.setIsIndicator(true);

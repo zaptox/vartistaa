@@ -34,7 +34,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".modules.general.SiginInActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <service android:name=".firebaseconfig.MyFirebaseInstanceIDService">
             <intent-filter>
@@ -46,7 +46,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/logoforsplash" />
@@ -64,7 +63,10 @@
         <activity android:name=".modules.provider.MyServiceRequests" />
         <activity android:name=".modules.user.FindServicesInList" />
         <activity android:name=".modules.payment.PaymentActivity" />
+        <activity android:name=".modules.user.UserNotification_activity" />
+        <activity android:name=".modules.user.Service_user_cancel" />
         <activity android:name=".modules.provider.MyAppointments" />
+        <activity android:name=".modules.provider.ServiceCancelActivity" />
         <activity android:name=".modules.general.SettingsActivity" />
         <activity android:name=".modules.user.ServiceProviderDetail" />
         <activity android:name=".modules.user.MyServiceMeetings" />
@@ -90,8 +92,7 @@
             android:name=".modules.provider.UploadDocListActivity"
             android:label="@string/title_activity_upload_docs"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".modules.provider.UploadDoc"></activity>
-
+        <activity android:name=".modules.provider.UploadDoc" />
         <activity android:name=".modules.user.StartService" />
         <activity android:name=".modules.provider.ServicestartProvider"></activity>
         <activity android:name=".modules.provider.RequestAlertActivity" />

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by khan on 9/6/2018.
  */
 
-public class servicepaapointmentsitems implements Serializable {
+public class servicepaapointmentsitems {
 
     @SerializedName("requestservice_id")
     private String requestservice_id;
@@ -22,8 +22,14 @@ public class servicepaapointmentsitems implements Serializable {
     @SerializedName("username")
     private String username;
 
+    @SerializedName("Spname")
+    private String spname;
+
     @SerializedName("service_description")
     private String service_description;
+
+    @SerializedName("image")
+    private String Image;
 
     @SerializedName("location")
     private String location;
@@ -68,6 +74,24 @@ public class servicepaapointmentsitems implements Serializable {
         this.time = time;
     }
 
+    public servicepaapointmentsitems(String requestservice_id, String user_customer_id, String service_provider_id, String username, String spname, String service_description, String image, String location, String request_status, String date, String service_title, String price, String name, String time) {
+        this.requestservice_id = requestservice_id;
+        this.user_customer_id = user_customer_id;
+        this.service_provider_id = service_provider_id;
+        this.username = username;
+        this.spname = spname;
+        this.service_description = service_description;
+        Image = image;
+        this.location = location;
+        this.request_status = request_status;
+        this.date = date;
+        this.service_title = service_title;
+        this.price = price;
+        this.name = name;
+        this.time = time;
+
+    }
+
     public servicepaapointmentsitems(String requestservice_id, String user_customer_id, String service_provider_id, String username, String service_description, String location, String request_status, String date, String service_title, String price, String name, String time, String image) {
         this.requestservice_id = requestservice_id;
         this.user_customer_id = user_customer_id;
@@ -100,6 +124,14 @@ public class servicepaapointmentsitems implements Serializable {
         this.requestservice_id = requestservice_id;
     }
 
+    public String getSpname() {
+        return spname;
+    }
+
+    public void setSpname(String spname) {
+        this.spname = spname;
+    }
+
     public String getUser_customer_id() {
         return user_customer_id;
     }
@@ -107,6 +139,7 @@ public class servicepaapointmentsitems implements Serializable {
     public void setUser_customer_id(String user_customer_id) {
         this.user_customer_id = user_customer_id;
     }
+
 
     public String getService_provider_id() {
         return service_provider_id;

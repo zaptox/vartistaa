@@ -76,6 +76,11 @@ public interface ApiInterface {
                             @Query("user_remarks") String user_remarks,@Query("date") String date,@Query("time") String time);
 
 
+    @GET("update_ratings.php")
+    Call<CreateRequest> updateratings(@Query("id") int id,@Query("stars") double stars,@Query("user_remarks") String user_remarks);
+
+
+
     @GET("insert_user_address.php")
     Call<UserAddressBean> insertUserAddress(@Query("work_address") String work_address, @Query("permanent_address") String permanent_address,
                                             @Query("city") String city,
@@ -109,6 +114,10 @@ public interface ApiInterface {
 
     @GET("updatebusystatus.php")
     Call<User> updatebusystatus(@Query("id") int id);
+
+
+    @GET("Update_requestStatus.php")
+    Call<CreateRequest> updaterequeststatus(@Query("requestservice_id") int request_id);
 
 //    @GET("fetch_doc_req.php")
 //    Call<DocUploadList> getDocUploadListByUserId(@Query("user_id") int user_id);

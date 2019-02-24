@@ -54,9 +54,13 @@ import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
+import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
+import com.vartista.www.vartista.modules.user.Service_user_cancel;
+import com.vartista.www.vartista.modules.user.StartService;
+import com.vartista.www.vartista.modules.user.UserNotification_activity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.modules.user.StartService;
 import com.vartista.www.vartista.restcalls.ServiceApiInterface;
@@ -123,8 +127,6 @@ public class HomeActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-//        Toast.makeText(getApplicationContext(), FirebaseInstanceId.getInstance().getToken(), Toast.LENGTH_SHORT).show();
-//        Log.d("deviceToken", FirebaseInstanceId.getInstance().getToken());
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -146,7 +148,7 @@ public class HomeActivity extends AppCompatActivity
 
         // save or update device token
         storeDeviceToken();
-
+        Toast.makeText(this, ""+user.getImage(), Toast.LENGTH_SHORT).show();
         Picasso.get().load(user.getImage()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)
@@ -276,6 +278,15 @@ public class HomeActivity extends AppCompatActivity
         else if(id==R.id.Start_Service_Provider){
             startActivity(new Intent(HomeActivity.this, ServicestartProvider.class));
         }
+
+        else if(id==R.id.user_cancelservice){
+            startActivity(new Intent(HomeActivity.this, Service_user_cancel.class));
+        }
+
+        else if(id==R.id.cancel_service){
+            startActivity(new Intent(HomeActivity.this, ServiceCancelActivity.class));
+        }
+
         else if (id == R.id.logout) {
             Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
@@ -322,11 +333,13 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.ratings) {
             Intent intent = new Intent(HomeActivity.this, My_Rating_Reviews.class);
             startActivity(intent);
+
         } else if (id == R.id.logout) {
             Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
             ob.edit().clear().commit();
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
+
         } else if (id == R.id.payment) {
             Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
             startActivity(intent);
@@ -343,6 +356,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.Userappointments) {
             Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
             startActivity(intent);
+
         }
 
 
