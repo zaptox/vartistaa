@@ -37,7 +37,7 @@ public class UploadDoc extends AppCompatActivity {
     private Button btnUploadDoc;
     private Uri filePath;
     private Bitmap bitmap;
-      int userId;
+    int userId;
 
 
 

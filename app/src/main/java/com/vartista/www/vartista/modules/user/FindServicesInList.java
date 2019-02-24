@@ -547,7 +547,6 @@ public class FindServicesInList extends AppCompatActivity {
                         String service_title = ser1.getString("service_title");
                         String service_description = ser1.getString("service_description");
                         double price = Double.parseDouble(ser1.getString("price"));
-
                         double longitude = Double.parseDouble(ser1.getString("longitude"));
                         double latitude = Double.parseDouble(ser1.getString("latitude"));
                         String sp_name=ser1.getString("name");

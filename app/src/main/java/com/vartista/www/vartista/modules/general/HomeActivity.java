@@ -118,7 +118,7 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
         int id = ob.getInt("user_id",0);
-        getbusystatus(id);
+//        getbusystatus(id);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);

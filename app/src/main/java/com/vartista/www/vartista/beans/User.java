@@ -58,6 +58,7 @@ public class User implements Serializable{
     @Expose
     String updatedAt;
 
+
     @SerializedName("gender")
     @Expose
     String gender;
@@ -186,7 +187,6 @@ public class User implements Serializable{
     public void setContact(String contact) {
         this.contact = contact;
     }
-
 
     public String getCreatedAt() {
         return createdAt;

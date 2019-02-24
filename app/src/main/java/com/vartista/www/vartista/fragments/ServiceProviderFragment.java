@@ -18,6 +18,7 @@ import com.vartista.www.vartista.beans.DocUploadList;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.modules.provider.EarningActivity;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
 import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
@@ -27,7 +28,7 @@ import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
  * A simple {@link Fragment} subclass.
  */
 public class ServiceProviderFragment extends Fragment {
-    LinearLayout btnCreateServices,btnMyServices,reqalert,btnUploadDoc;
+    LinearLayout btnCreateServices,btnMyServices,reqalert,btnUploadDoc,earnings;
      static int user_id;
     @SuppressLint("ValidFragment")
     public ServiceProviderFragment(int user_id) {
@@ -47,6 +48,9 @@ public class ServiceProviderFragment extends Fragment {
         reqalert=(LinearLayout) view.findViewById(R.id.btnRequestAlert);
         btnMyServices=(LinearLayout)view.findViewById(R.id.btnMyServices);
         btnUploadDoc=(LinearLayout)view.findViewById(R.id.btnUploadDoc);
+        earnings=(LinearLayout) view.findViewById(R.id.earnings);
+
+
         btnUploadDoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +63,14 @@ public class ServiceProviderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getContext(),MyServiceRequests.class);
+                intent.putExtra("userId",user_id);
+                startActivity(intent);
+            }
+        });
+        earnings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(),EarningActivity.class);
                 intent.putExtra("userId",user_id);
                 startActivity(intent);
             }

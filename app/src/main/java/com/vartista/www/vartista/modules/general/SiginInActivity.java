@@ -141,8 +141,6 @@ public class SiginInActivity extends AppCompatActivity {
 //        Toast.makeText(this, "in perform function", Toast.LENGTH_SHORT).show();
         Call<User> call = SiginInActivity.apiInterface.performUserLogin(email1, password1);
 //        Call<User> call = SiginInActivity.apiInterface.performUserLogin();
-
-
         setUIToWait(true);
         progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 

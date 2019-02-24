@@ -19,6 +19,8 @@ import com.vartista.www.vartista.beans.RequestService;
 import com.vartista.www.vartista.modules.general.Asynctask_MultipleUrl;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
+import com.vartista.www.vartista.modules.provider.UploadDoc;
+import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.UserNotificationOnTime;
 
@@ -118,7 +120,12 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
+            else if(title.contains("Document")){
 
+                resultIntent = new Intent(getApplicationContext(), UploadDocListActivity.class);
+                resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            }
 
             PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                     0 /* Request code */, resultIntent,
