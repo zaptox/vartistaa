@@ -8,8 +8,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".appconfig.App"
@@ -34,7 +34,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".modules.general.SiginInActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".firebaseconfig.MyFirebaseInstanceIDService">
             <intent-filter>
@@ -46,6 +46,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/logoforsplash" />
@@ -93,9 +94,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".modules.provider.UploadDoc" />
         <activity android:name=".modules.user.StartService" />
-        <activity android:name=".modules.provider.ServicestartProvider"></activity>
+        <activity android:name=".modules.provider.ServicestartProvider" />
         <activity android:name=".modules.provider.RequestAlertActivity" />
-
 
         <receiver android:name=".notifications.NotificationCompat.MyReceiver">
             <intent-filter>
@@ -108,7 +108,8 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".modules.provider.AppointmentDetails"></activity>
+        <activity android:name=".modules.provider.AppointmentDetails" />
+        <activity android:name=".modules.user.UserAppointmentDetails"></activity>
     </application>
 
 </manifest>

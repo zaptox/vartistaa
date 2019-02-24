@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="com.vartista.www.vartista.modules.provider.AppointmentDetails">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.vartista.www.vartista.modules.user.UserAppointmentDetails">
 
 
-<de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/profile_image"
-    android:layout_width="80dp"
-    android:layout_height="80dp"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"
-    android:layout_gravity="center_horizontal"
-    android:layout_marginTop="12dp"
-    android:src="@drawable/profile"
-    app:civ_border_color="#FF000000"
-    app:civ_border_width="0dp" />
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/profile"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="0dp" />
 
     <LinearLayout
         android:id="@+id/detailslayout"
@@ -69,37 +69,36 @@ tools:context="com.vartista.www.vartista.modules.provider.AppointmentDetails">
 
     </LinearLayout>
 
-<TextView
-    android:id="@+id/textView_service_description"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/detailslayout"
-    android:layout_marginTop="40px"
-    android:layout_centerInParent="true"
-    android:text="Service Descrription"
-    android:textSize="18sp"
-    />
-
-<Button
-    android:id="@+id/cancelbuttonUser"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/textView_service_description"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="5dp"
-    android:text="Cancel This Service"
-    android:textAllCaps="false"/>
+    <TextView
+        android:id="@+id/textView_service_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detailslayout"
+        android:layout_marginTop="40px"
+        android:layout_centerInParent="true"
+        android:text="Service Descrription"
+        android:textSize="18sp"
+        />
 
     <Button
-        android:id="@+id/PaymentReceivedButon"
+        android:id="@+id/cancelbuttonUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_service_description"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Cancel This Service"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:id="@+id/PayButon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cancelbuttonUser"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:text="Payment Received"
+        android:text="PayNow"
         android:textAllCaps="false"/>
-
 
 
 

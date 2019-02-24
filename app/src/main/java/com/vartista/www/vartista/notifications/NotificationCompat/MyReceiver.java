@@ -56,7 +56,7 @@ public class MyReceiver extends BroadcastReceiver {
         else if(request_code==REQUEST_CODE_SP_BEFORE2H){
             Intent notificationIntent = new Intent(context,ServiceCancelActivity.class);
             notificationIntent.putExtra("service_id",service_id);
-                TaskStackBuilder stackBuilder  = TaskStackBuilder.create(context);
+            TaskStackBuilder stackBuilder  = TaskStackBuilder.create(context);
             stackBuilder.addParentStack(ServiceCancelActivity.class);
             stackBuilder.addNextIntent(notificationIntent);
             PendingIntent pendingIntent = stackBuilder.getPendingIntent(request_code, PendingIntent.FLAG_UPDATE_CURRENT);

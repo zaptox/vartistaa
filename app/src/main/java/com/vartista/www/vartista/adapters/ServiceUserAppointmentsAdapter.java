@@ -17,6 +17,7 @@ import com.vartista.www.vartista.beans.servicepaapointmentsitems;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
+import com.vartista.www.vartista.modules.user.UserAppointmentDetails;
 
 import java.util.List;
 
@@ -50,7 +51,8 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
          holder.mView.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Intent intent = new Intent(v.getContext(), MyServiceMeetings.class);
+                 Intent intent = new Intent(v.getContext(), UserAppointmentDetails.class);
+                 intent.putExtra("object",list.get(position));
                  v.getContext().startActivity(intent);
              }
          });

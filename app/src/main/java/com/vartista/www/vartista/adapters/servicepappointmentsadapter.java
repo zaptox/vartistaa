@@ -79,7 +79,7 @@ public class servicepappointmentsadapter extends RecyclerView.Adapter<servicepap
         View mView;
 
         public TextView serviceprovidername,servicecharges,Date,Time,serviceDesc,serviceCat,serviceLoc;
-       public ImageView imageView;
+        public ImageView imageView;
         public ViewHolder(View itemView) {
             super(itemView);
             mView=itemView;

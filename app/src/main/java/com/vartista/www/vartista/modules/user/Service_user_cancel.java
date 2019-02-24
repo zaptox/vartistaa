@@ -48,7 +48,7 @@ public class Service_user_cancel extends AppCompatActivity {
 
     TextView Date,Time,Service,Spname,Location;
     ImageView spimage;
-    Button cancelservice;
+    Button cancelservice,availservice;
     public static ApiInterface apiInterface;
     int requestservice_id = -1;
 
@@ -63,6 +63,9 @@ public class Service_user_cancel extends AppCompatActivity {
         Location = (TextView)findViewById(R.id.location);
         spimage = (ImageView)findViewById(R.id.imageViewuser);
         cancelservice = (Button)findViewById(R.id.cancelbuttonUser);
+        availservice= (Button)findViewById(R.id.acceptbutton);
+
+
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         Intent intent = getIntent();
@@ -77,7 +80,6 @@ public class Service_user_cancel extends AppCompatActivity {
                 upaterequeststatus(requestservice_id);
             }
         });
-
 
 
     }
@@ -100,7 +102,6 @@ public class Service_user_cancel extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-           int requestservice_id = 114;
 
             String result = "";
 
@@ -197,7 +198,7 @@ public class Service_user_cancel extends AppCompatActivity {
 
     }
 
-    public void upaterequeststatus(int id){
+    public void  upaterequeststatus(int id){
         Call<CreateRequest> call= Service_user_cancel.apiInterface.updaterequeststatus(id);
         call.enqueue(new Callback<CreateRequest>() {
             @Override

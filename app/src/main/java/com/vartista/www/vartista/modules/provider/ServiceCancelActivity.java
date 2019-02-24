@@ -81,7 +81,7 @@ public class ServiceCancelActivity extends AppCompatActivity {
     }
 
 
-    class Conncetion extends AsyncTask<String,String ,String > {
+     class Conncetion extends AsyncTask<String,String ,String > {
         private int requestservice_id;
         private ProgressDialog dialog;
 
