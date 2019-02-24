@@ -32,6 +32,9 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
+import com.valdesekamdem.library.mdtoast.MDToast;
+//import com.vartista.www.vartista.Offline_user_status_service;
+
 import com.vartista.www.vartista.Offline_user_status_service;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
@@ -50,8 +53,10 @@ import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
+import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
+import com.vartista.www.vartista.modules.user.StartService;
 import com.vartista.www.vartista.modules.user.UserNotification_activity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ServiceApiInterface;
@@ -111,6 +116,9 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         tokenApiInterface = ApiClient.getApiClient().create(TokenApiInterface.class);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        int id = ob.getInt("user_id",0);
+        getbusystatus(id);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -129,13 +137,14 @@ public class HomeActivity extends AppCompatActivity
         user = (User) intent.getSerializableExtra("user");
         u = user;
         user_id = u.getId();
+        //  Toast.makeText(this, ""+user.id, Toast.LENGTH_SHORT).show();
         name.setText(user.getName());
         email.setText(user.getEmail());
 
 
         // save or update device token
         storeDeviceToken();
-
+        Toast.makeText(this, ""+user.getImage(), Toast.LENGTH_SHORT).show();
         Picasso.get().load(user.getImage()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)
@@ -207,7 +216,6 @@ public class HomeActivity extends AppCompatActivity
         setupTabIcons();
         //making user online
 
-        SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
         user_id = ob.getInt("user_id", 0);
         new Connection(user_id, 1).execute();
@@ -259,6 +267,13 @@ public class HomeActivity extends AppCompatActivity
         else if(id==R.id.Assign_ratings){
             startActivity(new Intent(HomeActivity.this, AssignRatings.class));
         }
+
+        else if(id==R.id.Start_Service){
+            startActivity(new Intent(HomeActivity.this, StartService.class));
+        }
+        else if(id==R.id.Start_Service_Provider){
+            startActivity(new Intent(HomeActivity.this, ServicestartProvider.class));
+        }
         else if (id == R.id.logout) {
             Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
@@ -279,6 +294,7 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.account) {
             // Handle the camera action
 
+//            Toast.makeText(this, "Account", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(HomeActivity.this, UserProfile.class);
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
@@ -429,6 +445,7 @@ public class HomeActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(String result) {
+            //  Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
 
             try {
                 JSONObject jsonResult = new JSONObject(result);
@@ -447,6 +464,97 @@ public class HomeActivity extends AppCompatActivity
         }
 
     }
+    User userLoggedIn = null;
+
+    public void getbusystatus(int user_id) {
+
+//        Toast.makeText(this, "in perform function", Toast.LENGTH_SHORT).show();
+        Call<User> call = SiginInActivity.apiInterface.getUserById(user_id);
+//        Call<User> call = SiginInActivity.apiInterface.performUserLogin();
+
+
+
+
+        call.enqueue(new Callback<User>() {
+            @Override
+
+            public void onResponse(Call<User> call, Response<User> response) {
+
+                if (response.body().getResponse().equals("ok")) {
+                    int id = response.body().getId();
+
+                    String name = response.body().getName();
+
+                    String email = response.body().getEmail();
+
+                    String password = response.body().getPassword();
+
+                    String image = response.body().getImage();
+
+                    String status = response.body().getStatus();
+
+                    String contact = response.body().getContact();
+
+                    String created_at = response.body().getCreatedAt();
+
+                    String updated_at = response.body().getUpdatedAt();
+
+                    String gender= response.body().getGender();
+
+                    String sp_status= response.body().getSp_status();
+
+                    int busy_status = response.body().getBusystatus();
+
+                    userLoggedIn = new User(id,busy_status,name, email, password, image, status, contact, created_at, updated_at,gender,sp_status);
+
+                    Toast.makeText(HomeActivity.this, "The  busy_status  of user "+email+""+response.body().getBusystatus(), Toast.LENGTH_SHORT).show();
+                    if(busy_status==1){
+                        startActivity(new Intent(HomeActivity.this,ServicestartProvider.class));
+                    }
+// Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse() + "--name:" + name, Toast.LENGTH_SHORT).show();
+
+//                    upload_document(userLoggedIn.getName(),userLoggedIn.getPassword(),userLoggedIn.getContact());
+//                    Toast.makeText(SiginInActivity.this, "The User Id is :- "+userLoggedIn.getId()
+//                            +"\n"+"The Name is "+userLoggedIn.getName()
+//                            +"\n"+"The password is "+userLoggedIn.getPassword(), Toast.LENGTH_SHORT).show();
+
+//                    Toast.makeText(SiginInActivity.this, ""+userLoggedIn, Toast.LENGTH_SHORT).show();
+                    //
+
+
+
+//
+//
+                } else if (response.body().getResponse().equals("failed")) {
+                    //  Toast.makeText(SiginInActivity.this, "Login Failed.. Please try again", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SiginInActivity.this, "", Toast.LENGTH_SHORT).show();
+
+
+                }
+//
+                else {
+
+                    //  Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse(), Toast.LENGTH_SHORT).show();
+
+                }
+
+//                Toast.makeText(SiginInActivity.this, "In response's last line", Toast.LENGTH_SHORT).show();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+                //  Toast.makeText(SiginInActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+
+
 
 
 

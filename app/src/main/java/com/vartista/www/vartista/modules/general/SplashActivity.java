@@ -159,6 +159,8 @@ public class SplashActivity extends AwesomeSplash {
 
                     String sp_status= response.body().getSp_status();
 
+
+
                     userLoggedIn = new User(id, name, email, password, image, status, contact, created_at, updated_at,gender,sp_status);
 
 

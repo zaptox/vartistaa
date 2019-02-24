@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="wrap_content"
@@ -105,9 +106,9 @@
             android:layout_below="@+id/textView_service11"
             android:layout_alignBottom="@+id/profile_image"
             android:layout_toEndOf="@+id/profile_image"
-
-            android:src="@drawable/location_tick"
-            android:layout_toRightOf="@+id/profile_image" />
+            app:srcCompat="@drawable/location_tick"
+            android:layout_toRightOf="@+id/profile_image"
+            tools:ignore="VectorDrawableCompat" />
 
         <TextView
             android:id="@+id/textViewAddress"
@@ -121,6 +122,9 @@
             android:textSize="11dp"
             android:layout_toRightOf="@+id/imageView2"
             />
+
+
+
         <com.willy.ratingbar.ScaleRatingBar
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/simpleRatingBar"

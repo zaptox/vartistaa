@@ -43,7 +43,8 @@
             android:layout_alignBottom="@+id/profile_image"
             android:layout_toEndOf="@+id/profile_image"
             app:srcCompat="@drawable/ic_event_available_black_24dp"
-            android:layout_toRightOf="@+id/profile_image" />
+            android:layout_toRightOf="@+id/profile_image"
+            tools:ignore="VectorDrawableCompat" />
 
             <TextView
                 android:id="@+id/textViewSelectDate"
@@ -87,7 +88,8 @@
                 android:layout_alignBottom="@+id/profile_image"
                 android:layout_toEndOf="@+id/profile_image"
                 app:srcCompat="@drawable/ic_access_time_black_24dp"
-                android:layout_toRightOf="@+id/profile_image" />
+                android:layout_toRightOf="@+id/profile_image"
+                tools:ignore="VectorDrawableCompat" />
 
             <TextView
                 android:id="@+id/textViewSelectTime"

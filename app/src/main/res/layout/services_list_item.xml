@@ -167,7 +167,8 @@
                 android:orientation="horizontal"
 
                 tools:layout_editor_absoluteX="26dp"
-                tools:layout_editor_absoluteY="133dp">
+                tools:layout_editor_absoluteY="133dp"
+                tools:ignore="MissingConstraints">
 
                 <ImageView
                     android:layout_width="30sp"
