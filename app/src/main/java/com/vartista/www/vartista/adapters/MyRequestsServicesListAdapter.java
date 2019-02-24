@@ -55,8 +55,9 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
     public static SendNotificationApiInterface sendNotificationApiInterface;
     private ProgressDialog progressDialog;
     public static int REQUEST_CODE_SP = 100;
+    public static int REQUEST_CODE_SP_BEFORE2H = 211;
     String date,time,name;
-    int customer_id;
+    int customer_id,requestservice_id;
 
     public MyRequestsServicesListAdapter(Context context, List<ServiceRequets> myReqServicesList){
         this.myReqServicesList = myReqServicesList;
@@ -97,14 +98,13 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
        holder.accept.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(final View view) {
-
                customer_id = myReqServicesList.get(position).getUser_customer_id();
                date = myReqServicesList.get(position).getDate();
                time = myReqServicesList.get(position).getTime();
                name = myReqServicesList.get(position).getUsername();
 
                int status = 1;
-               int requestservice_id = myReqServicesList.get(position).getReqservice_id();
+                requestservice_id = myReqServicesList.get(position).getReqservice_id();
                Call<ServiceRequets> call = MyRequestsServicesListAdapter.apiInterface.updateOnClickRequests(status,requestservice_id);
                call.enqueue(new Callback<ServiceRequets>() {
                    @Override
@@ -112,7 +112,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
 
                        if(response.body().getResponse().equals("ok")){
-                          final String body = name_user+ "Accepted  your request_"+date+"_"+time;
+                          final String body = name_user+ "Accepted  your request_"+date+"_"+time+"_"+requestservice_id;
                           final String title = "Vartista-Accept";
                            notifyDataSetChanged();
                            insertNotification(title,body,user_id,customer_id,1,get_Current_Date());
@@ -136,8 +136,11 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
                                }
                            });
+String timeformat = "hour";
+int timevalue = -2;
+                           sendCompactNotification(context,REQUEST_CODE_SP_BEFORE2H,date,time,name,"minute",-1,requestservice_id);
+                           sendCompactNotification(context,REQUEST_CODE_SP,date,time,name,"minute",-30,requestservice_id);
 
-                           sendCompactNotification(context,REQUEST_CODE_SP,date,time,name);
 //                            AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 //
 //                            String appointmentdate = date+" "+time;
@@ -342,7 +345,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
 
 
-          public static void sendCompactNotification(Context context , int requestcode , String date , String time,String name){
+          public static void sendCompactNotification(Context context , int requestcode , String date , String time,String name,String timeformat,int timevalue,int Reqeustserviceid){
               AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 //              PendingIntent pendingIntent;
               String appointmentdate = date+" "+time;
@@ -356,17 +359,23 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
               }
               Calendar calendar = Calendar.getInstance();
               calendar.setTime(date1);
-//              calendar.add(Calendar.HOUR,-1);
-              calendar.add(Calendar.SECOND,10);
+              if (timeformat.equals("hour")){
+                  calendar.add(Calendar.HOUR,timevalue);
+              }
+              else{
+                  calendar.add(Calendar.MINUTE,timevalue);
+
+              }
               Intent intent = new Intent("alarm");
               intent.putExtra("username",name);
               intent.putExtra("requestcode",requestcode);
+              intent.putExtra("service_id",Reqeustserviceid);
 //              if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 //                  pendingIntent = PendingIntent.getForegroundService(context, 0, intent, 0);
 //              }else {
 //                  pendingIntent = PendingIntent.getService(context, 0, intent, 0);
 //              }
-              PendingIntent broadcast = PendingIntent.getBroadcast(context,REQUEST_CODE_SP,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+              PendingIntent broadcast = PendingIntent.getBroadcast(context,requestcode,intent,PendingIntent.FLAG_UPDATE_CURRENT);
               alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),broadcast);
 
           }

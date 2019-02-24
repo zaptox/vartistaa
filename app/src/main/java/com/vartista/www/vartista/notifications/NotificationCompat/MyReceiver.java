@@ -16,9 +16,15 @@ import android.widget.Toast;
 import com.vartista.www.vartista.Main2Activity;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
+import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;
+import com.vartista.www.vartista.modules.user.Service_user_cancel;
+
+import java.util.Random;
 
 import static com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter.REQUEST_CODE_SP;
+import static com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter.REQUEST_CODE_SP_BEFORE2H;
 import static com.vartista.www.vartista.firebaseconfig.FirebaseMsgService.REQEUST_CODE_FOR_USER;
+import static com.vartista.www.vartista.firebaseconfig.FirebaseMsgService.REQEUST_CODE_FOR_USER_BEFORE2H;
 
 public class MyReceiver extends BroadcastReceiver {
     @Override
@@ -26,19 +32,44 @@ public class MyReceiver extends BroadcastReceiver {
         Toast.makeText(context, "Alarm Triggered", Toast.LENGTH_SHORT).show();
         String name = intent.getStringExtra("username");
         int request_code = intent.getIntExtra("requestcode",0);
-        Intent notificationIntent = new Intent(context,MyServiceRequests.class);
+        int service_id = intent.getIntExtra("service_id",0);
 
-        TaskStackBuilder stackBuilder  = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(MyServiceRequests.class);
-        stackBuilder.addNextIntent(notificationIntent);
 
         if(request_code==REQUEST_CODE_SP) {
-            PendingIntent pendingIntent = stackBuilder.getPendingIntent(REQUEST_CODE_SP, PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent notificationIntent = new Intent(context,MyServiceRequests.class);
+
+            TaskStackBuilder stackBuilder  = TaskStackBuilder.create(context);
+            stackBuilder.addParentStack(MyServiceRequests.class);
+            stackBuilder.addNextIntent(notificationIntent);
+            PendingIntent pendingIntent = stackBuilder.getPendingIntent(request_code, PendingIntent.FLAG_UPDATE_CURRENT);
             createNotification(context, "Vartista", "After 1 hours you have to visit "+name, pendingIntent);
         }else if(request_code==REQEUST_CODE_FOR_USER){
-            PendingIntent pendingIntent = stackBuilder.getPendingIntent(REQEUST_CODE_FOR_USER, PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent notificationIntent = new Intent(context,MyServiceRequests.class);
+
+            TaskStackBuilder stackBuilder  = TaskStackBuilder.create(context);
+            stackBuilder.addParentStack(MyServiceRequests.class);
+            stackBuilder.addNextIntent(notificationIntent);
+            PendingIntent pendingIntent = stackBuilder.getPendingIntent(request_code, PendingIntent.FLAG_UPDATE_CURRENT);
 
             createNotification(context, "Vartista", "After 3 hours you have to visit "+name, pendingIntent);
+        }
+        else if(request_code==REQUEST_CODE_SP_BEFORE2H){
+            Intent notificationIntent = new Intent(context,ServiceCancelActivity.class);
+            notificationIntent.putExtra("service_id",service_id);
+                TaskStackBuilder stackBuilder  = TaskStackBuilder.create(context);
+            stackBuilder.addParentStack(ServiceCancelActivity.class);
+            stackBuilder.addNextIntent(notificationIntent);
+            PendingIntent pendingIntent = stackBuilder.getPendingIntent(request_code, PendingIntent.FLAG_UPDATE_CURRENT);
+            createNotification(context, "Vartista", "2 HOURS left do you want to go or cancel ? "+name, pendingIntent);
+        }
+        else if(request_code==REQEUST_CODE_FOR_USER_BEFORE2H){
+            Intent notificationIntent = new Intent(context,Service_user_cancel.class);
+            notificationIntent.putExtra("service_id",service_id);
+            TaskStackBuilder stackBuilder  = TaskStackBuilder.create(context);
+            stackBuilder.addParentStack(Service_user_cancel.class);
+            stackBuilder.addNextIntent(notificationIntent);
+            PendingIntent pendingIntent = stackBuilder.getPendingIntent(request_code, PendingIntent.FLAG_UPDATE_CURRENT);
+            createNotification(context, "Vartista", "Provider will come after 2 hour wanna cancel?"+name, pendingIntent);
         }
     }
 
@@ -61,7 +92,7 @@ public class MyReceiver extends BroadcastReceiver {
 //        n.vibrate = new long[]{150, 300, 150, 400};
 //
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-        notificationManager.notify( 0,builder.build());
+        notificationManager.notify( new Random().nextInt(),builder.build());
         try {
 
             Uri som = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

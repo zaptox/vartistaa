@@ -219,7 +219,7 @@ public class NetworkStateChangeReceiver extends BroadcastReceiver {
             if(title.contains("Accept")){
 
                 if (!date.equals("")){
-                    sendCompactNotification(context,REQEUST_CODE_FOR_USER,date,time,name_user);
+                    sendCompactNotification(context,REQEUST_CODE_FOR_USER,date,time,name_user,"minut",-2,0);
                 }
 
                 resultIntent = new Intent(context.getApplicationContext(), MyServiceMeetings.class);

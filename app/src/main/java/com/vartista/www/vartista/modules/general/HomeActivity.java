@@ -60,7 +60,6 @@ import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.Service_user_cancel;
 import com.vartista.www.vartista.modules.user.StartService;
-import com.vartista.www.vartista.modules.user.UserNotification_activity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.modules.user.StartService;
 import com.vartista.www.vartista.restcalls.ServiceApiInterface;
@@ -275,9 +274,9 @@ public class HomeActivity extends AppCompatActivity
         else if(id==R.id.Start_Service){
             startActivity(new Intent(HomeActivity.this, StartService.class));
         }
-        else if(id==R.id.Start_Service_Provider){
-            startActivity(new Intent(HomeActivity.this, ServicestartProvider.class));
-        }
+//        else if(id==R.id.Start_Service_Provider){
+//            startActivity(new Intent(HomeActivity.this, ServicestartProvider.class));
+//        }
 
         else if(id==R.id.user_cancelservice){
             startActivity(new Intent(HomeActivity.this, Service_user_cancel.class));

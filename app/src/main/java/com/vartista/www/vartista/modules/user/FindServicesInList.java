@@ -45,6 +45,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Executable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -390,7 +391,13 @@ public class FindServicesInList extends AppCompatActivity {
                         double longitude = Double.parseDouble(ser1.getString("longitude"));
                         double latitude = Double.parseDouble(ser1.getString("latitude"));
                         String sp_name=ser1.getString("name");
-                        double stars = Double.parseDouble(ser1.getString("avg_stars"));
+                        double stars = 0.0;
+                        try{
+                        stars = Double.parseDouble(ser1.getString("avg_stars"));
+
+                        }catch (Exception e){
+                         stars = 0.0;
+                        }
                         int user_status = Integer.parseInt(ser1.getString("user_status"));
                         String image = ser1.getString("image");
                         int busy_status=ser1.getInt("busy_status");

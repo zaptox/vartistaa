@@ -2,6 +2,7 @@ package com.vartista.www.vartista.modules.provider;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,7 +48,7 @@ public class ServiceCancelActivity extends AppCompatActivity {
     ImageView Spimage;
     Button cancelservicep;
     public static ApiInterface apiInterface;
-    int requestservice_id = 114;
+    int requestservice_id = -1;
 
 
     @Override
@@ -62,6 +63,12 @@ public class ServiceCancelActivity extends AppCompatActivity {
         Spimage = (ImageView)findViewById(R.id.imageView7);
         cancelservicep = (Button)findViewById(R.id.cancelbuttonServiceP);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+
+
+        Intent intent = getIntent();
+        requestservice_id = intent.getIntExtra("service_id",0);
+        Toast.makeText(this, ""+requestservice_id, Toast.LENGTH_SHORT).show();
+
 
         new ServiceCancelActivity.Conncetion(ServiceCancelActivity.this,requestservice_id).execute();
 

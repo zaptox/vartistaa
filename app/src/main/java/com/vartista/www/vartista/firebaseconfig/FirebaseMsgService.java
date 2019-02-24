@@ -56,7 +56,9 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
        private static String TAG="notifciation";
        public static int REQEUST_CODE_FOR_USER = 101;
-       int user_id;
+    public static int REQEUST_CODE_FOR_USER_BEFORE2H = 201;
+
+    int user_id;
        static int notification_id = -1;
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -100,12 +102,14 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 String Msg = data[0];
                 String date = data[1];
                 String time = data[2];
+                String rservice_id= data[3];
+
                 Log.d("if not null", "Message Notification Body: " + remoteMessage.getNotification().getBody());
-                sendNotifcation(remoteMessage.getNotification().getTitle(),Msg,"HomeActivity",date,time);
+                sendNotifcation(remoteMessage.getNotification().getTitle(),Msg,"HomeActivity",date,time,rservice_id);
             }
             else{
                 Log.d("if not null", "Message Notification Body: " + remoteMessage.getNotification().getBody());
-                sendNotifcation(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(),"HomeActivity","","");
+                sendNotifcation(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(),"HomeActivity","","","");
             }
 
 
@@ -113,7 +117,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
-    private void sendNotifcation(String title,String body, String activity,String date , String time) {
+    private void sendNotifcation(String title,String body, String activity,String date , String time,String rservice_id) {
         SharedPreferences ob = getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
 
         final String name_user = ob.getString("name","");
@@ -137,9 +141,11 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
             int user_id = obj.getInt("user_id", 0);
 
             if(title.contains("Accept")){
-
+           int R_S_ID = Integer.parseInt(rservice_id);
                 if (!date.equals("")){
-                    sendCompactNotification(this,REQEUST_CODE_FOR_USER,date,time,name_user);
+                    sendCompactNotification(this,REQEUST_CODE_FOR_USER,date,time,name_user,"minute",-2,0);
+                    sendCompactNotification(this,REQEUST_CODE_FOR_USER_BEFORE2H,date,time,name_user,"minute",-2,R_S_ID );
+
                 }
 
                 resultIntent = new Intent(getApplicationContext(), MyServiceMeetings.class);
@@ -162,16 +168,17 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
-            else{
-                resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
-                resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            }
+
 
             else if(title.contains("Busy")){
 
                 resultIntent = new Intent(getApplicationContext(), ServicestartProvider.class);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+            }
+            else {
+                resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
+                resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             }
             PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                     0 /* Request code */, resultIntent,
