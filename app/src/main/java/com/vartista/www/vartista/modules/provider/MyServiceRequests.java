@@ -89,7 +89,6 @@ public class MyServiceRequests extends AppCompatActivity {
     }
 
 
-
     class Conncetion extends AsyncTask<String,String ,String > {
         private ProgressDialog dialog;
         int userId;
@@ -174,7 +173,7 @@ public class MyServiceRequests extends AppCompatActivity {
                         String category_name=service.getString("catgname");
                         serviceRequestsList.add(new ServiceRequets(requestservice_id,user_name,status,date,time,location,user_customer_id,
                                 service_provider_id,service_id,service_cat_id,service_title,price,service_description,category_name,image
-                                ));
+                        ));
                     }
 
 
@@ -184,7 +183,7 @@ public class MyServiceRequests extends AppCompatActivity {
 
 
 
-                    myRequestServicesListAdapter= new MyRequestsServicesListAdapter(MyServiceRequests.this,serviceRequestsList);
+                    myRequestServicesListAdapter = new MyRequestsServicesListAdapter(MyServiceRequests.this,serviceRequestsList);
                     AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(myRequestServicesListAdapter);
                     alphaAdapter.setDuration(1000);
                     alphaAdapter.setInterpolator(new OvershootInterpolator());
@@ -201,6 +200,7 @@ public class MyServiceRequests extends AppCompatActivity {
             }
         }
     }
+
 
 
     static class MyViewHolder extends RecyclerView.ViewHolder implements AnimateViewHolder {

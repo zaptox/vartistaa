@@ -223,8 +223,8 @@ public class SignUpActivity extends AppCompatActivity {
                     .setNotificationConfig(new UploadNotificationConfig())
                     .setMaxRetries(3)
                     .startUpload(); //Starting the upload
-
         } catch (Exception exc) {
+            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
 
 
 

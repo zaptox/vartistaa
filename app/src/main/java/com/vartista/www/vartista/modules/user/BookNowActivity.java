@@ -19,8 +19,11 @@ import android.widget.TimePicker;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
+import com.vartista.www.vartista.beans.AllNotificationBean;
 import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.NotificationsManager;
+import com.vartista.www.vartista.firebaseconfig.FirebaseMsgService;
 import com.vartista.www.vartista.fragments.DatePickerFragment;
 import com.vartista.www.vartista.fragments.TimePickerFragment;
 import com.vartista.www.vartista.modules.general.HomeActivity;
@@ -29,6 +32,7 @@ import com.vartista.www.vartista.restcalls.ApiInterface;
 import com.vartista.www.vartista.restcalls.SendNotificationApiInterface;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import retrofit2.Call;
@@ -97,7 +101,9 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
              SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
              final String name_user = ob.getString("name","");
-
+             final String title = "Vartista-Request";
+             final String body = name_user+" Sent you request";
+             insertNotification(title,body,user_customer_id,service_provider_id,1,date);
              Call<CreateRequest> call = BookNowActivity.apiInterface.createRequest(user_customer_id,
                      service_provider_id,
                      service_id,date,time,address,city,0,service_cat_id);
@@ -107,7 +113,7 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
                  public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
                      if (response.body().getResponse().equals("ok")) {
                          Call<NotificationsManager> callNotification = BookNowActivity.sendNotificationApiInterface
-                                 .sendPushNotification(service_provider_id,name_user+" Sent you request","Vartista-Request");
+                                 .sendPushNotification(service_provider_id,body,title);
                          callNotification.enqueue(new Callback<NotificationsManager>() {
 
                              @Override
@@ -120,8 +126,6 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
 
                              }
                          });
-
-
 
                          MDToast mdToast = MDToast.makeText(getApplicationContext(), "Request has been Sent succesfully.", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                          mdToast.show();
@@ -167,7 +171,9 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
         c.set(Calendar.YEAR,year);
         c.set(Calendar.MONTH,month);
         c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-        String currentDate= DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String currentDate = sdf.format(c.getTime());
+//        String currentDate= DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
         textViewReq_Date.setText(currentDate);
     }
 
@@ -175,4 +181,44 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         textViewReq_Time.setText(hourOfDay+":"+minute);
     }
+
+
+    public void insertNotification(String title , String message, int sender_id , int receiver_id , int status , String created_at){
+//         setUIToWait(true);
+        Call<AllNotificationBean> call=BookNowActivity.apiInterface.Insert_Notification(title,message,sender_id,receiver_id,status,created_at);
+        call.enqueue(new Callback<AllNotificationBean>() {
+            @Override
+            public void onResponse(Call <AllNotificationBean> call, Response<AllNotificationBean> response) {
+
+                if(response.body().getResponse().equals("ok")){
+//                     setUIToWait(false);
+
+                }
+                else if(response.body().getResponse().equals("exist")){
+//                     setUIToWait(false);
+
+                }
+                else if(response.body().getResponse().equals("error")){
+//                     setUIToWait(false);
+
+
+                }
+
+                else{
+//                     setUIToWait(false);
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call <AllNotificationBean> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
 }

@@ -16,13 +16,25 @@
     <item
         android:id="@+id/Start_Service"
         android:orderInCategory="100"
-        android:title="Start Service"
+        android:title="Start User"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/Start_Service_Provider"
+        android:id="@+id/servicePstart"
         android:orderInCategory="100"
-        android:title="Start Service"
+        android:title="Start provider"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/cancel_service"
+        android:orderInCategory="100"
+        android:title="servicep cancel"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/user_cancelservice"
+        android:orderInCategory="100"
+        android:title="user_cancelservice"
         app:showAsAction="never" />
 
     <item

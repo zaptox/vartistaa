@@ -76,8 +76,6 @@ public class UsersFragment extends Fragment {
         Context context = inflater.getContext();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         listViewMyCategories.setLayoutManager(mLayoutManager);
-        HomeActivity.navigationView.getMenu().getItem(3).setVisible(false);
-        HomeActivity.navigationView.getMenu().getItem(2).setVisible(true);
         listViewMyCategories.setItemAnimator(new DefaultItemAnimator());
 
         myCategoriesList=new ArrayList<>();

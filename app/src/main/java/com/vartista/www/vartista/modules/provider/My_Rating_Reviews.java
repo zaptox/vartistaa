@@ -17,7 +17,6 @@ import com.vartista.www.vartista.adapters.UserNotificationlistadapter;
 import com.vartista.www.vartista.beans.RatingsReviewDetailBean;
 import com.vartista.www.vartista.beans.usernotificationitems;
 import com.vartista.www.vartista.modules.general.HomeActivity;
-import com.vartista.www.vartista.modules.user.UserNotification_activity;
 import com.willy.ratingbar.ScaleRatingBar;
 
 import org.apache.http.HttpResponse;
@@ -148,6 +147,7 @@ public class My_Rating_Reviews extends AppCompatActivity {
                     listadapter = new RatingsReviewDetailsAdaptor(getApplicationContext(),list);
                     view.setAdapter(listadapter);
                     headername.setText(list.get(0).getSpName());
+                    Toast.makeText(My_Rating_Reviews.this, ""+list.size(), Toast.LENGTH_SHORT).show();
                     Float finalrating = (Float)serviceProvierRating/list.size();
                     ratingBar.setRating(finalrating);
                     ratingBar.setIsIndicator(true);
