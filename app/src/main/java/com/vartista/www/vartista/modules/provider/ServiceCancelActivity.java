@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.CreateRequest;
+import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
 import com.vartista.www.vartista.modules.user.Service_user_cancel;
 import com.vartista.www.vartista.restcalls.ApiClient;
@@ -48,7 +49,7 @@ public class ServiceCancelActivity extends AppCompatActivity {
 
     TextView Date,Time,Service,Spname,Location;
     ImageView Spimage;
-    Button cancelservicep;
+    Button cancelservicep,provide_service;
     public static ApiInterface apiInterface;
     int requestservice_id = -1;
 
@@ -64,6 +65,7 @@ public class ServiceCancelActivity extends AppCompatActivity {
         Location = (TextView)findViewById(R.id.Splocation);
         Spimage = (ImageView)findViewById(R.id.imageView7);
         cancelservicep = (Button)findViewById(R.id.cancelbuttonServiceP);
+        provide_service= (Button)findViewById(R.id.acceptbutton);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
 
@@ -78,6 +80,14 @@ public class ServiceCancelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 upaterequeststatus(requestservice_id);
+            }
+        });
+
+        provide_service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                acceptrequeststatus_redzone(requestservice_id);
+
             }
         });
     }
@@ -215,6 +225,47 @@ public class ServiceCancelActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call <CreateRequest> call, Throwable t) {
+
+                Toast.makeText(ServiceCancelActivity.this,"Update Failed",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+
+    public void acceptrequeststatus_redzone(int id){
+        Call<ServiceRequets> call= ServiceCancelActivity.apiInterface.updateOnClickRequests(5,id);
+        call.enqueue(new Callback<ServiceRequets>() {
+            @Override
+            public void onResponse(Call <ServiceRequets> call, Response<ServiceRequets> response) {
+
+                if(response.body().getResponse().equals("ok")){
+
+
+                    Toast.makeText(ServiceCancelActivity.this,"Updated Successfully..",Toast.LENGTH_SHORT).show();
+
+                }else if(response.body().getResponse().equals("exist")){
+
+
+                    Toast.makeText(ServiceCancelActivity.this,"Same Data exists....",Toast.LENGTH_SHORT).show();
+
+                }
+                else if(response.body().getResponse().equals("error")){
+
+
+                    Toast.makeText(ServiceCancelActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+
+                }
+                else{
+
+
+                    Toast.makeText(ServiceCancelActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call <ServiceRequets> call, Throwable t) {
 
                 Toast.makeText(ServiceCancelActivity.this,"Update Failed",Toast.LENGTH_SHORT).show();
 

@@ -16,9 +16,11 @@ import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.ServiceUserAppointmentsAdapter;
 import com.vartista.www.vartista.beans.CreateRequest;
+import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
 import com.vartista.www.vartista.modules.general.ForgotPasswordActivity;
+import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 
@@ -50,7 +52,7 @@ public class Service_user_cancel extends AppCompatActivity {
 
     TextView Date,Time,Service,Spname,Location;
     ImageView spimage;
-    Button cancelservice;
+    Button cancelservice,avail_service;
     public static ApiInterface apiInterface;
     int requestservice_id = -1;
 
@@ -65,6 +67,7 @@ public class Service_user_cancel extends AppCompatActivity {
         Location = (TextView)findViewById(R.id.location);
         spimage = (ImageView)findViewById(R.id.imageViewuser);
         cancelservice = (Button)findViewById(R.id.cancelbuttonUser);
+        avail_service = (Button)findViewById(R.id.acceptbutton);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         Intent intent = getIntent();
@@ -77,6 +80,12 @@ public class Service_user_cancel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 upaterequeststatus(requestservice_id);
+            }
+        });
+        avail_service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                acceptrequeststatus_redzone(requestservice_id);
             }
         });
 
@@ -232,6 +241,46 @@ public class Service_user_cancel extends AppCompatActivity {
 
             @Override
             public void onFailure(Call <CreateRequest> call, Throwable t) {
+
+                Toast.makeText(Service_user_cancel.this,"Update Failed",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    public void acceptrequeststatus_redzone(int id){
+        Call<ServiceRequets> call= Service_user_cancel.apiInterface.updateOnClickRequests(5,id);
+        call.enqueue(new Callback<ServiceRequets>() {
+            @Override
+            public void onResponse(Call <ServiceRequets> call, Response<ServiceRequets> response) {
+
+                if(response.body().getResponse().equals("ok")){
+
+
+                    Toast.makeText(Service_user_cancel.this,"Updated Successfully..",Toast.LENGTH_SHORT).show();
+
+                }else if(response.body().getResponse().equals("exist")){
+
+
+                    Toast.makeText(Service_user_cancel.this,"Same Data exists....",Toast.LENGTH_SHORT).show();
+
+                }
+                else if(response.body().getResponse().equals("error")){
+
+
+                    Toast.makeText(Service_user_cancel.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+
+                }
+                else{
+
+
+                    Toast.makeText(Service_user_cancel.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call <ServiceRequets> call, Throwable t) {
 
                 Toast.makeText(Service_user_cancel.this,"Update Failed",Toast.LENGTH_SHORT).show();
 
