@@ -103,9 +103,12 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                time = myReqServicesList.get(position).getTime();
                name = myReqServicesList.get(position).getUsername();
 
+
+               insertreviewnil(myReqServicesList.get(position).getUser_customer_id(),myReqServicesList.get(position).getService_provider_id(),myReqServicesList.get(position).getService_id());
                int status = 1;
                 requestservice_id = myReqServicesList.get(position).getReqservice_id();
                Call<ServiceRequets> call = MyRequestsServicesListAdapter.apiInterface.updateOnClickRequests(status,requestservice_id);
+
                call.enqueue(new Callback<ServiceRequets>() {
                    @Override
                    public void onResponse(Call<ServiceRequets> call, Response<ServiceRequets> response) {

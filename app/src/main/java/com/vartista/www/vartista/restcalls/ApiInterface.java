@@ -78,7 +78,7 @@ public interface ApiInterface {
 
 
     @GET("update_ratings.php")
-    Call<CreateRequest> updateratings(@Query("id") int id,@Query("stars") double stars,@Query("user_remarks") String user_remarks);
+    Call<CreateRequest> updateratings(@Query("id") int id,@Query("stars") double stars,@Query("user_remarks") String user_remarks,@Query("request_id") int request_id);
 
 
 

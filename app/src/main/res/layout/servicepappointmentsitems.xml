@@ -114,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_marginTop="4sp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 >
 
                 <!--<ImageView-->
@@ -125,11 +125,19 @@
 
 
                 <TextView
+                    android:id="@+id/textView_contact"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="7sp"
+                    android:layout_height="wrap_content"
+                    android:text="Contact: 03073220780" />
+
+                <TextView
                     android:id="@+id/textViewloc_user"
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="7sp"
                     android:layout_height="wrap_content"
-                    android:text="2018-06-10" />
+                    android:text="Latifabad no.7" />
+
             </LinearLayout>
 
 

@@ -8,8 +8,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".appconfig.App"
@@ -34,7 +34,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".modules.general.SiginInActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".firebaseconfig.MyFirebaseInstanceIDService">
             <intent-filter>
@@ -46,6 +46,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/logoforsplash" />
@@ -67,10 +68,10 @@
         <activity android:name=".modules.provider.MyAppointments" />
         <activity android:name=".modules.provider.ServiceCancelActivity" />
         <activity android:name=".modules.general.SettingsActivity" />
-        <activity android:name=".modules.user.ServiceProviderDetail"
+        <activity
+            android:name=".modules.user.ServiceProviderDetail"
             android:label=""
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".modules.user.MyServiceMeetings" />
         <activity android:name=".modules.user.AssignRatings" />
         <activity android:name=".modules.provider.DocumentUploadActivity" />
@@ -97,9 +98,8 @@
         <activity android:name=".modules.provider.UploadDoc" />
         <activity android:name=".modules.user.StartService" />
         <activity android:name=".modules.provider.ServicestartProvider" />
-        <activity android:name=".modules.provider.EarningActivity"></activity>
+        <activity android:name=".modules.provider.EarningActivity" />
         <activity android:name=".modules.provider.RequestAlertActivity" />
-
 
         <receiver android:name=".notifications.NotificationCompat.MyReceiver">
             <intent-filter>
@@ -113,7 +113,8 @@
         </receiver>
 
         <activity android:name=".modules.provider.AppointmentDetails" />
-        <activity android:name=".modules.user.UserAppointmentDetails"></activity>
+        <activity android:name=".modules.user.UserAppointmentDetails" />
+        <activity android:name=".modules.user.MyCompletedServices"></activity>
     </application>
 
 </manifest>

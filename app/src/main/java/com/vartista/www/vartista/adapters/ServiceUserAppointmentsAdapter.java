@@ -25,11 +25,18 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
 
     Context context;
     List<servicepaapointmentsitems> list;
-
+    boolean completed=false;
+    boolean forratings=false;
     public ServiceUserAppointmentsAdapter(Context context, List<servicepaapointmentsitems> list) {
         this.context = context;
         this.list = list;
     }
+    public ServiceUserAppointmentsAdapter(Context context, List<servicepaapointmentsitems> list,boolean completed) {
+        this.context = context;
+        this.list = list;
+        this.completed=completed;
+    }
+
 
     @NonNull
     @Override
@@ -40,6 +47,10 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
 
     @Override
     public void onBindViewHolder(@NonNull final ServiceUserAppointmentsAdapter.ViewHolder holder, final int position) {
+
+
+        holder.rating_text.setVisibility(View.INVISIBLE);
+
         holder.serviceprovidername.setText(list.get(position).getUsername());
         holder.servicecharges.setText(list.get(position).getService_title()+" "+list.get(position).getPrice());
         holder.Date.setText(list.get(position).getDate());
@@ -47,17 +58,39 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
         holder.serviceCat.setText(list.get(position).getName());
         holder.serviceDesc.setText(list.get(position).getService_description());
         holder.serviceLoc.setText(list.get(position).getLocation());
+        holder.contact.setText("Contact: "+list.get(position).getContact());
+        if(completed==false) {
 
-         holder.mView.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 Intent intent = new Intent(v.getContext(), UserAppointmentDetails.class);
-                 intent.putExtra("object",list.get(position));
-                 v.getContext().startActivity(intent);
-             }
-         });
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), UserAppointmentDetails.class);
+                    intent.putExtra("object", list.get(position));
+                    v.getContext().startActivity(intent);
+                }
+            });
+        }
+        else if (completed==true){
 
-        Picasso.get().load(list.get(position).getUser_customer_id()).fit().centerCrop()
+            if(list.get(position).getRating_status().equals("0")) {
+                holder.rating_text.setVisibility(View.VISIBLE);
+
+                    holder.mView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(v.getContext(), AssignRatings.class);
+                            intent.putExtra("object", list.get(position));
+                            v.getContext().startActivity(intent);
+                        }
+                    });
+
+                }
+
+
+        }
+
+
+        Picasso.get().load(list.get(position).getImage()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)
                 .into(holder.profile_image);
@@ -71,7 +104,7 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
       public  View mView;
 
 
-        public TextView serviceprovidername,servicecharges,Date,Time,serviceDesc,serviceCat,serviceLoc;
+        public TextView serviceprovidername,servicecharges,Date,Time,serviceDesc,serviceCat,serviceLoc,contact,rating_text;
         public ImageView profile_image;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -85,6 +118,8 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
             serviceDesc=(TextView)mView.findViewById(R.id.textView_service_description_user);
             serviceLoc= (TextView)mView.findViewById(R.id.textViewloc_user);
             profile_image=mView.findViewById(R.id.profile_image);
+            contact=(TextView)mView.findViewById(R.id.textView_sp_contact);
+            rating_text=mView.findViewById(R.id.rating_text);
 
         }
     }

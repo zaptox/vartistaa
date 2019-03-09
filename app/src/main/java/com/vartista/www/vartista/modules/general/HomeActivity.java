@@ -57,6 +57,7 @@ import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
 import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.AssignRatings;
+import com.vartista.www.vartista.modules.user.MyCompletedServices;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.Service_user_cancel;
 import com.vartista.www.vartista.modules.user.StartService;
@@ -355,6 +356,12 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.Userappointments) {
             Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
             startActivity(intent);
+
+        }
+        else if(id==R.id.user_completed_services){
+            Intent intent = new Intent(HomeActivity.this, MyCompletedServices.class);
+            startActivity(intent);
+
 
         }
 

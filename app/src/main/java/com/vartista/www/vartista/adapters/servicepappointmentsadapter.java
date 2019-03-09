@@ -52,6 +52,7 @@ public class servicepappointmentsadapter extends RecyclerView.Adapter<servicepap
         holder.serviceCat.setText(list.get(position).getName());
         holder.serviceDesc.setText(list.get(position).getService_description());
         holder.serviceLoc.setText(list.get(position).getLocation());
+        holder.contact.setText("Contact: "+list.get(position).getContact());
         Picasso.get().load(list.get(position).getImage()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)
@@ -78,7 +79,7 @@ public class servicepappointmentsadapter extends RecyclerView.Adapter<servicepap
     public class ViewHolder extends RecyclerView.ViewHolder{
         View mView;
 
-        public TextView serviceprovidername,servicecharges,Date,Time,serviceDesc,serviceCat,serviceLoc;
+        public TextView serviceprovidername,servicecharges,Date,Time,serviceDesc,serviceCat,serviceLoc,contact;
         public ImageView imageView;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -92,6 +93,7 @@ public class servicepappointmentsadapter extends RecyclerView.Adapter<servicepap
             serviceDesc=(TextView)mView.findViewById(R.id.textView_service_description);
             serviceLoc= (TextView)mView.findViewById(R.id.textViewloc_user);
             imageView = (ImageView) mView.findViewById(R.id.profile_image);
+            contact=(TextView)mView.findViewById(R.id.textView_contact);
 
 
         }

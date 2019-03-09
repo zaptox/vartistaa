@@ -28,7 +28,10 @@ import com.vartista.www.vartista.modules.provider.UploadDoc;
 import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.provider.RequestAlertActivity;
+import com.vartista.www.vartista.modules.user.AssignRatings;
+import com.vartista.www.vartista.modules.user.MyCompletedServices;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
+import com.vartista.www.vartista.modules.user.UserAppointmentDetails;
 import com.vartista.www.vartista.modules.user.UserNotificationOnTime;
 
 import org.apache.http.HttpResponse;
@@ -184,6 +187,17 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
+            else if(title.contains("Cash")){
+                resultIntent = new Intent(getApplicationContext(), MyServiceMeetings.class);
+                resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            }
+            else if(title.contains("rate")){
+                resultIntent = new Intent(getApplicationContext(), MyCompletedServices.class);
+                resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            }
+
             else {
                 resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

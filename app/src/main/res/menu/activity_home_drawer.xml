@@ -21,6 +21,11 @@
                     android:id="@+id/Userappointments"
                     android:icon="@drawable/appointment"
                     android:title="User Appointments" ></item>
+                <item
+                    android:id="@+id/user_completed_services"
+                    android:icon="@drawable/appointment"
+                    android:title="Availed Services" ></item>
+
             </menu>
         </item>
 

@@ -123,6 +123,7 @@ public class MyAppointments extends AppCompatActivity {
                         JSONObject ser1 = services.getJSONObject(j);
                         String requestservice_id = ser1.getString("requestservice_id");
                         String user_customer_id = ser1.getString("user_customer_id");
+                        int service_id= ser1.getInt("service_id");
                         String service_provider_id = ser1.getString("service_provider_id");
                         String username = ser1.getString("username");
                         String image = ser1.getString("image");
@@ -134,8 +135,11 @@ public class MyAppointments extends AppCompatActivity {
                         String price = ser1.getString("price");
                         String name = ser1.getString("name");
                         String Time = ser1.getString("time");
+                        String contact= ser1.getString("contact");
+//                        int rating_status=ser1.getInt("rating_status");
+
 //                        Toast.makeText(MyAppointments.this, "object added", Toast.LENGTH_SHORT).show();
-                        myappointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time,image));
+                        myappointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time,image,contact,service_id));
 //                        Toast.makeText(MyAppointments.this, ""+myappointments, Toast.LENGTH_SHORT).show();
                     }
 

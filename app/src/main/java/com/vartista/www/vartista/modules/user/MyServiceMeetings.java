@@ -134,7 +134,12 @@ public class MyServiceMeetings extends AppCompatActivity {
                         String price = ser1.getString("price");
                         String name = ser1.getString("name");
                         String Time = ser1.getString("time");
-                        userAppointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time));
+                        String image=ser1.getString("image");
+                        String contact = ser1.getString("contact");
+//                        int rating_status=ser1.getInt("rating_status");
+
+
+                        userAppointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time,image,contact));
                     }
 
 

@@ -1,21 +1,37 @@
 package com.vartista.www.vartista.modules.user;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
+import com.vartista.www.vartista.beans.AllNotificationBean;
 import com.vartista.www.vartista.beans.CreateRequest;
+import com.vartista.www.vartista.beans.NotificationsManager;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
+import com.vartista.www.vartista.modules.general.AppSettings;
+import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.AppointmentDetails;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
+import com.vartista.www.vartista.restcalls.SendNotificationApiInterface;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,9 +39,11 @@ import retrofit2.Response;
 
 public class UserAppointmentDetails extends AppCompatActivity {
 
-    public TextView serviceprovidername,servicecharges,Date,Time,serviceDesc,serviceCat,serviceLoc;
+    public TextView serviceprovidername,servicecharges,date_view,Time,serviceDesc,serviceCat,serviceLoc,d_servicename,d_sp_name,d_payment;
     ImageView imageView;
     public static ApiInterface apiInterface;
+    Dialog payment_dialogue, cancel_service;
+    public static SendNotificationApiInterface sendNotificationApiInterface;
 
     Button cancelButton , btn_paynow;
 
@@ -34,10 +52,16 @@ public class UserAppointmentDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_appointment_details);
 
+        Date currentTime = Calendar.getInstance().getTime();
+        Toast.makeText(this, ""+currentTime, Toast.LENGTH_SHORT).show();
+
+        sendNotificationApiInterface = ApiClient.getApiClient().create(SendNotificationApiInterface.class);
+
+
         imageView = findViewById(R.id.profile_image);
         serviceprovidername=(TextView)findViewById(R.id.textViewname_user);
         servicecharges=(TextView)findViewById(R.id.servicedetail_user);
-        Date=(TextView)findViewById(R .id.textViewdate_user);
+        date_view=(TextView)findViewById(R .id.textViewdate_user);
         Time=(TextView)findViewById(R .id.textViewtime_user);
         serviceCat=(TextView)findViewById(R.id.service_category);
         serviceDesc=(TextView)findViewById(R.id.textView_service_description);
@@ -46,10 +70,10 @@ public class UserAppointmentDetails extends AppCompatActivity {
         btn_paynow= (Button)findViewById(R.id.PayButon);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
-        btn_paynow.setEnabled(false);
+        btn_paynow.setEnabled(true);
 
         Intent intent = getIntent();
-        servicepaapointmentsitems ob = (servicepaapointmentsitems) intent.getSerializableExtra("object");
+        final servicepaapointmentsitems ob = (servicepaapointmentsitems) intent.getSerializableExtra("object");
 
         Picasso.get().load(ob    .getImage()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
@@ -57,21 +81,143 @@ public class UserAppointmentDetails extends AppCompatActivity {
                 .into(imageView);
         serviceprovidername.setText(ob.getUsername());
         servicecharges.setText(ob.getService_title()+" "+ob.getPrice());
-        Date.setText(ob.getDate());
+        date_view.setText(ob.getDate());
         Time.setText(ob.getTime());
         serviceDesc.setText(ob.getService_description());
         serviceLoc.setText(ob.getLocation());
 
         if (ob.getRequest_status().equals("5")){
-            cancelButton.setEnabled(false);
+            cancelButton.setEnabled(true);
             btn_paynow.setEnabled(true);
         }
-        final int requestservice_id = Integer.parseInt(ob.getRequest_status());
+        final int requestservice_id = Integer.parseInt(ob.getRequestservice_id());
+
+        btn_paynow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                payment_dialogue = new Dialog(UserAppointmentDetails.this);
+                payment_dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+                payment_dialogue.setContentView(R.layout.paynow_dialogue);
+                Button paynow = (Button)payment_dialogue.findViewById(R.id.paynow);
+                final RadioButton cash_pay=payment_dialogue.findViewById(R.id.cash_pay);
+                final RadioButton online_pay=payment_dialogue.findViewById(R.id.online_pay);
+
+                Button  cancel = (Button)payment_dialogue.findViewById(R.id.cancelbutton);
+                d_sp_name = payment_dialogue.findViewById(R.id.sp_name);
+                d_payment = payment_dialogue.findViewById(R.id.to_pay);
+                d_servicename = payment_dialogue.findViewById(R.id.service_name);
+
+                d_sp_name.setText("Service Provider: "+ob.getUsername());
+                d_payment.setText("Payment: "+ob.getPrice());
+                d_servicename.setText("Service:"+ob.getService_title());
+
+                payment_dialogue.show();
+
+                paynow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    if(cash_pay.isChecked()){
+                        //ye  toast mat hatana
+                        Toast.makeText(UserAppointmentDetails.this, "Verification by Service Provider Under Process...", Toast.LENGTH_LONG).show();
+                        int customer_id=Integer.parseInt(ob.getService_provider_id());
+                        String body="Have you Received the payment from "+ob.getUsername();
+                        String title="Cash Payment Verification";
+                        insertNotification(title,body,Integer.parseInt(ob.getUser_customer_id()),customer_id,1,get_Current_Date());
+
+
+                        Call<NotificationsManager> callNotification = UserAppointmentDetails.sendNotificationApiInterface
+                                .sendPushNotification(customer_id,
+                                        body,title);
+                        callNotification.enqueue(new Callback<NotificationsManager>() {
+                            @Override
+                            public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
+                                if(response.isSuccessful()){}
+
+//                                if(response.isSuccessful())
+//                                    Toast.makeText(getContext(), "Request Accepted",Toast.LENGTH_SHORT).show();
+
+                            }
+
+
+                            @Override
+                            public void onFailure(Call<NotificationsManager> call, Throwable t) {
+
+                            }
+                        });
+
+
+
+                    }
+                    else if(online_pay.isChecked()){
+                        Toast.makeText(UserAppointmentDetails.this, "Online Payment", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    }
+                });
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+
+                        payment_dialogue.cancel();
+                    }
+                });
+
+
+            }
+        });
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            upaterequeststatus(requestservice_id);
+                cancel_service = new Dialog(UserAppointmentDetails.this);
+                cancel_service.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+                cancel_service.setContentView(R.layout.cancel_service_dialogue);
+                Button yes_cancel = (Button)cancel_service.findViewById(R.id.yes_cancel);
+
+                Button  cancel = (Button)cancel_service.findViewById(R.id.cancelbutton);
+                d_sp_name = cancel_service.findViewById(R.id.sp_name);
+                d_payment = cancel_service.findViewById(R.id.to_pay);
+                d_servicename = cancel_service.findViewById(R.id.service_name);
+                TextView penalty_text=cancel_service.findViewById(R.id.penalty_text);
+                penalty_text.setVisibility(View.INVISIBLE);
+                if(ob.getRequest_status().equals("5")){
+                    penalty_text.setVisibility(View.VISIBLE);
+                }
+                d_sp_name.setText("Service Provider: "+ob.getUsername());
+                d_payment.setText("Payment: "+ob.getPrice());
+                d_servicename.setText("Service:"+ob.getService_title());
+
+
+                cancel_service.show();
+
+                yes_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        upaterequeststatus(requestservice_id);
+                        Intent intent = new Intent(UserAppointmentDetails.this, MyServiceMeetings.class);
+                        startActivity(intent);
+
+                    }
+                });
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+
+                        cancel_service.cancel();
+                    }
+                });
+
+
+
+
             }
         });
 
@@ -82,6 +228,8 @@ public class UserAppointmentDetails extends AppCompatActivity {
         call.enqueue(new Callback<CreateRequest>() {
             @Override
             public void onResponse(Call <CreateRequest> call, Response<CreateRequest> response) {
+
+
 
                 if(response.body().getResponse().equals("ok")){
 
@@ -115,5 +263,53 @@ public class UserAppointmentDetails extends AppCompatActivity {
 
             }
         });
+    }
+
+
+
+    public String get_Current_Date(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String currentDate = sdf.getDateTimeInstance().format(new Date());
+        return currentDate;
+    }
+
+
+
+    public  void insertNotification(String title , String message, int sender_id , int receiver_id , int status , String created_at){
+//         setUIToWait(true);
+        Call<AllNotificationBean> call=UserAppointmentDetails.apiInterface.Insert_Notification(title,message,sender_id,receiver_id,status,created_at);
+        call.enqueue(new Callback<AllNotificationBean>() {
+            @Override
+            public void onResponse(Call <AllNotificationBean> call, Response<AllNotificationBean> response) {
+
+                if(response.body().getResponse().equals("ok")){
+//                     setUIToWait(false);
+
+                }
+                else if(response.body().getResponse().equals("exist")){
+//                     setUIToWait(false);
+
+                }
+                else if(response.body().getResponse().equals("error")){
+//                     setUIToWait(false);
+
+
+                }
+
+                else{
+//                     setUIToWait(false);
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call <AllNotificationBean> call, Throwable t) {
+
+            }
+        });
+
+
     }
 }

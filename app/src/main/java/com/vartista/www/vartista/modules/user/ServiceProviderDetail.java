@@ -49,7 +49,7 @@ public class ServiceProviderDetail extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_service_provider_detail);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//            setSupportActionBar(toolbar);
+            setSupportActionBar(toolbar);
             listViewSpDetials=(RecyclerView) findViewById(R.id.services_sp);
             listViewSpDetials.setHasFixedSize(true);
             listViewSpDetials.setLayoutManager(new LinearLayoutManager(this));

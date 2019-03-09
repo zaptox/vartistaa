@@ -14,6 +14,15 @@
         android:layout_marginBottom="25dp"
         app:cardPreventCornerOverlap="true">
 
+        <TextView
+            android:id="@+id/rating_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ratings Not Given!!"
+            android:layout_gravity="center_horizontal"
+            android:padding="5sp"
+            android:textColor="@color/mdtp_red_focused"
+            />
 
 
         <LinearLayout
@@ -109,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_marginTop="4sp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 >
 
                 <!--<ImageView-->
@@ -118,13 +127,19 @@
                 <!--android:src="@drawable/loc"-->
                 <!--/>-->
 
+                <TextView
+                    android:id="@+id/textView_sp_contact"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="7sp"
+                    android:layout_height="wrap_content"
+                    android:text="Contact: 03073220780" />
 
                 <TextView
                     android:id="@+id/textViewloc_user"
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="7sp"
                     android:layout_height="wrap_content"
-                    android:text="2018-06-10" />
+                    android:text="Latifabad no.7" />
             </LinearLayout>
 
 

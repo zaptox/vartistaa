@@ -1,6 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
+    <TextView
+        android:id="@+id/titleLogin"
+        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:text="Are You Sure?"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:padding="08dp"
+        android:background="@color/text_color_client"
+        android:typeface="sans"
+        android:textStyle="bold"
+        android:gravity="center" />
+    <TextView
+        android:id="@+id/service_name"
+        android:layout_below="@+id/titleLogin"
+        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:text="Service: Hajamat wala"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:paddingLeft="5dp"
+        android:paddingTop="2dp"
+        android:typeface="sans" />
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/sp_name"
+        android:layout_below="@+id/service_name"
+        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="20dp"
+        android:text="Service Availer: Mehdi Raza Lakho"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:paddingLeft="5dp"
+        android:paddingTop="2dp"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/to_pay"
+        android:layout_below="@+id/sp_name"
+        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="20dp"
+        android:text="Payment: 500Rs"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:paddingLeft="5dp"
+        android:paddingTop="2dp"
+        android:typeface="sans" />
+
+
+    <LinearLayout
+        android:id="@+id/pay_options"
+        android:layout_below="@+id/to_pay"
+        android:layout_width="wrap_content"
+        android:padding="10sp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color_client"
+            android:textSize="20sp"
+            android:gravity="center_horizontal"
+            android:padding="10sp"
+            android:text="Are you sure the service Availer has paid you?  "
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"
+            android:textSize="16sp"
+            android:padding="15sp"
+            android:gravity="center_horizontal"
+            android:text="By Clicking yes, It will be saved in your earning and you will be  responsible for any future conflict about not getting paid."
+
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayoutBtns"
+        android:layout_below="@+id/pay_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp">
+        <Button
+            android:id="@+id/yes_paid"
+            android:layout_width="125dp"
+            android:layout_height="35dp"
+            android:textSize="14dp"
+            android:text="Yes"
+            android:textAllCaps="false"
+            android:typeface="sans"
+            android:background="@drawable/roundedcorners"
+            android:backgroundTint="#FF0000"
+            android:textColor="#ffffffff"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="5dp" />
+        <Button
+            android:id="@+id/cancelbutton"
+            android:layout_width="125dp"
+            android:layout_height="35dp"
+            android:textSize="14dp"
+            android:textAllCaps="false"
+            android:text="No"
+            android:typeface="sans"
+            android:background="@drawable/roundedcorners"
+            android:backgroundTint="@color/text_color_client"
+            android:layout_marginLeft="5dp"
+            android:textColor="#ffffffff"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="5dp" />
+    </LinearLayout>
+</RelativeLayout>

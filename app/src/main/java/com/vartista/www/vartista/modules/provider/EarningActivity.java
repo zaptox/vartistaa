@@ -161,10 +161,13 @@ public class EarningActivity extends AppCompatActivity {
                         earnings_list.add(new EarningBean(id,  service_provider,  service_availer,  service,  location,  service_time,  total_amount, admin_tax, discount,  user_bonus,  sp_earning,admin_earning, date));
                         }
 
+                    if(earnings_list==null){
 
-                    listadapter = new EarningsListAdapter(getApplicationContext(),earnings_list);
-                    recyclerView.setAdapter(listadapter);
-
+                    }
+                    else {
+                        listadapter = new EarningsListAdapter(getApplicationContext(), earnings_list);
+                        recyclerView.setAdapter(listadapter);
+                    }
                 }
 
                 else {
