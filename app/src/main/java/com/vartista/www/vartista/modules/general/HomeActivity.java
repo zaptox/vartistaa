@@ -286,7 +286,7 @@ public class HomeActivity extends AppCompatActivity
             startActivity(new Intent(HomeActivity.this, ServiceCancelActivity.class));
         }
 
-        else if (id == R.id.logout) {
+        else if (id == R.id.logout){
             Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
             ob.edit().clear().commit();

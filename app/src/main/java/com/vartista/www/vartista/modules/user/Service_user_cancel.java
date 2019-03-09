@@ -46,8 +46,6 @@ import retrofit2.Response;
 
 import com.vartista.www.vartista.R;
 
-import com.vartista.www.vartista.R;
-
 public class Service_user_cancel extends AppCompatActivity {
 
     TextView Date,Time,Service,Spname,Location;
@@ -111,7 +109,6 @@ public class Service_user_cancel extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-           int requestservice_id = 114;
 
             String result = "";
 
