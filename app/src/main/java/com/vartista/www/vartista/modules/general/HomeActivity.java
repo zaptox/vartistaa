@@ -141,15 +141,12 @@ public class HomeActivity extends AppCompatActivity
         user = (User) intent.getSerializableExtra("user");
         u = user;
         user_id = u.getId();
-        //  Toast.makeText(this, ""+user.id, Toast.LENGTH_SHORT).show();
         name.setText(user.getName());
         email.setText(user.getEmail());
 
 
         // save or update device token
-        storeDeviceToken();
-        Toast.makeText(this, ""+user.getImage(), Toast.LENGTH_SHORT).show();
-        Picasso.get().load(user.getImage()).fit().centerCrop()
+        storeDeviceToken();Picasso.get().load(user.getImage()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)
                 .into(imageViewProfileDrawer);

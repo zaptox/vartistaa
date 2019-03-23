@@ -71,8 +71,6 @@ public class SiginInActivity extends AppCompatActivity {
         try {
             getLocationFromAddress("latifabad no 7");
         } catch (IOException e) {
-//            e.printStackTrace();
-            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         list=new ArrayList<User>();
         signin = findViewById(R.id.sign_in_button);
@@ -113,23 +111,15 @@ public class SiginInActivity extends AppCompatActivity {
 
                     User usergotten = perfromLogin(email1, password1);
 
-//                    Toast.makeText(SiginInActivity.this, "Yes gotten " + usergotten, Toast.LENGTH_SHORT).show();
 
 
                 } catch (Exception e) {
 
-                   // Toast.makeText(SiginInActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
 
             }
         });
-
-        //FOR CHECKING GITHUB WORKING
-
-       // Toast.makeText(this, "Mehdi's Commit yayyyyyyyy", Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this, "THIS IS SAAD COMMIT AGAIN", Toast.LENGTH_LONG).show();
-//        Toast.makeText(this, "THIS IS Xoni COMMIT ", Toast.LENGTH_LONG).show();
 
 
     }
@@ -138,7 +128,6 @@ public class SiginInActivity extends AppCompatActivity {
 
     public User perfromLogin(String email1, String password1) {
 
-//        Toast.makeText(this, "in perform function", Toast.LENGTH_SHORT).show();
         Call<User> call = SiginInActivity.apiInterface.performUserLogin(email1, password1);
 //        Call<User> call = SiginInActivity.apiInterface.performUserLogin();
         setUIToWait(true);
@@ -283,59 +272,11 @@ public class SiginInActivity extends AppCompatActivity {
 
         editor.apply();
         editor.commit();
-        Toast.makeText(this, "Shared PReference are working "+user_id+"\n"+Password, Toast.LENGTH_SHORT).show();
 
 
 
 
     }
-
-//public void upload_document(String Name,String Password,String ContactNo){
-//    setUIToWait(true);
-//    progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//    Call<Doument_Upload_Nil> call=SiginInActivity.apiInterface.document_upload_nil(Name,Password,ContactNo);
-//    call.enqueue(new Callback<Doument_Upload_Nil>() {
-//        @Override
-//        public void onResponse(Call <Doument_Upload_Nil> call, Response<Doument_Upload_Nil> response) {
-//
-//            if(response.body().getResponse().equals("ok")){
-//                setUIToWait(false);
-//
-//                Toast.makeText(SiginInActivity.this,"Updated Successfully..",Toast.LENGTH_SHORT).show();
-//
-//            }else if(response.body().getResponse().equals("exist")){
-//                setUIToWait(false);
-//
-//                Toast.makeText(SiginInActivity.this,"Same Data exists....",Toast.LENGTH_SHORT).show();
-//
-//            }
-//            else if(response.body().getResponse().equals("error")){
-//                setUIToWait(false);
-//
-//                Toast.makeText(SiginInActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//            else{
-//                setUIToWait(false);
-//
-//                Toast.makeText(SiginInActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
-//
-//            }
-//            Intent intent = new Intent(SiginInActivity.this, SiginInActivity.class);
-//            startActivity(intent);
-//
-//        }
-//
-//        @Override
-//        public void onFailure(Call <Doument_Upload_Nil> call, Throwable t) {
-//            setUIToWait(false);
-//            Toast.makeText(SiginInActivity.this,"Update Failed",Toast.LENGTH_SHORT).show();
-//        }
-//    });
-//
-//
-//}
 
 
 
