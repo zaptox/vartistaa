@@ -26,11 +26,6 @@ public class SplashActivity extends AwesomeSplash {
     private ProgressDialog progressDialog;
     public static ApiInterface apiInterface;
     User user=null;
-    //    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_splash);
-//    }
 
     @Override
     public void initSplash(ConfigSplash configSplash) {
@@ -46,7 +41,6 @@ public class SplashActivity extends AwesomeSplash {
 
 
         ActionBar actionBar= getSupportActionBar();
-//        actionBar.hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
 
 
@@ -91,8 +85,6 @@ public class SplashActivity extends AwesomeSplash {
 
     @Override
     public void animationsFinished() {
-        startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
-        finish();
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
 
@@ -105,6 +97,7 @@ public class SplashActivity extends AwesomeSplash {
         if(email_shared.equals("") && pass_shared.equals("")){
 
             startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
+            finish();
 
         }
         else {
@@ -181,17 +174,10 @@ public class SplashActivity extends AwesomeSplash {
 
 
                     Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
-//                    Intent intent = new Intent(SplashActivity.this, CheckActivity.class);
-
                     intent.putExtra("user", userLoggedIn);
-
-
                     startActivity(intent);
                     finish();
 
-
-                    //                    }
-//
 //
                 } else if (response.body().getResponse().equals("failed")) {
                      setUIToWait(false);

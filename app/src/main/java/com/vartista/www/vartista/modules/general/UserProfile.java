@@ -162,7 +162,6 @@ public class UserProfile extends AppCompatActivity {
 
         if (wait) {
             progressDialog = ProgressDialog.show(this, null, null, true, true);
-//            progressDialog.setContentView(new ProgressBar(this));
             progressDialog.setContentView(R.layout.loader);
 
         } else {

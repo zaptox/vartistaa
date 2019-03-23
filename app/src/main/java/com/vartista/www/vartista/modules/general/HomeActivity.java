@@ -289,6 +289,7 @@ public class HomeActivity extends AppCompatActivity
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
             ob.edit().clear().commit();
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
+            finish();
             return true;
         }
 
