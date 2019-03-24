@@ -59,7 +59,9 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/create" />
+
+                            />
+                        <!--android:src="@drawable/create"-->
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -104,7 +106,10 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/myservices" />
+
+                            />
+                        <!--android:src="@drawable/myservices"-->
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -202,7 +207,11 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/upload" />
+
+                            />
+                        <!--android:src="@drawable/upload"-->
+
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -298,7 +307,9 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/setting" />
+
+                            />
+                        <!--android:src="@drawable/setting"-->
 
                         <TextView
                             android:layout_width="wrap_content"
