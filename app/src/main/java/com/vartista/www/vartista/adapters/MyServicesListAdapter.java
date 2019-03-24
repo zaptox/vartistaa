@@ -141,7 +141,8 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
 
                                 @Override
                                 public void onFailure(Call<Service> call, Throwable t) {
-                                    Toast.makeText(v.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                    MDToast.makeText(v.getContext(), t.getMessage(), Toast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                                 }
 
                             });
@@ -163,7 +164,6 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
             intent.putExtra("edit_user_id",user_id);
 
 
-            //intent.putStringArrayListExtra("myservicelist",myServicesList);
             v.getContext().startActivity(intent);
 
 //            Toast.makeText(context,"edit ID:"+user_id,Toast.LENGTH_SHORT).show();
@@ -173,7 +173,6 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
     holder.mView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-        //Toast.makeText(context,"requesr ID:"+user_id,Toast.LENGTH_SHORT).show();
 
             new LovelyInfoDialog(view.getContext())
                     .setTopColorRes(R.color.price_color)

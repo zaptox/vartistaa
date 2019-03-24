@@ -108,7 +108,7 @@ public class StartService extends AppCompatActivity {
 
                     @Override
                     public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
-                        Toast.makeText(StartService.this, "notification send", Toast.LENGTH_SHORT).show();
+                        MDToast.makeText(StartService.this, "notification send", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
                     }
 
                     @Override
@@ -285,7 +285,7 @@ public class StartService extends AppCompatActivity {
                 }
 
                 else {
-                    Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(getApplicationContext(),"no data",MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.vartista.www.vartista.modules.user.BookNowActivity;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.Service;

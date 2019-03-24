@@ -119,7 +119,6 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                           final String title = "Vartista-Accept";
                            notifyDataSetChanged();
                            insertNotification(title,body,user_id,customer_id,1,get_Current_Date());
-                           MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
                            Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
                                    .sendPushNotification(customer_id,
                                            body,title);
@@ -128,8 +127,8 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                                public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
                                    if(response.isSuccessful()){}
 
-                                   if(response.isSuccessful())
-                                       Toast.makeText(view.getContext(), "Request Accepted",Toast.LENGTH_SHORT).show();
+                                   MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
+
 
                                }
 
@@ -170,11 +169,11 @@ int timevalue = -2;
 
                        else if(response.body().getResponse().equals("error")){
 
-                           Toast.makeText(view.getContext(),"Something went wrong....",Toast.LENGTH_SHORT).show();
+                           MDToast.makeText(view.getContext(),"Something went wrong....",Toast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                        }
                        else{
-                           Toast.makeText(view.getContext(),"Something went wrong....",Toast.LENGTH_SHORT).show();
+                           MDToast.makeText(view.getContext(),"Something went wrong....",Toast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                        }
                        remove(position);
@@ -183,7 +182,7 @@ int timevalue = -2;
 
                    @Override
                    public void onFailure(Call<ServiceRequets> call, Throwable t) {
-                       Toast.makeText(view.getContext(),"Update Failed",Toast.LENGTH_SHORT).show();
+                       MDToast.makeText(view.getContext(),"Something went wrong....",Toast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                    }
                });
 
@@ -231,11 +230,11 @@ int timevalue = -2;
 
                        else if(response.body().getResponse().equals("error")){
 
-                           Toast.makeText(view.getContext(),"Something went wrong....",Toast.LENGTH_SHORT).show();
+                           MDToast.makeText(view.getContext(),"Something went wrong....",Toast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                        }
                        else{
-                           Toast.makeText(view.getContext(),"Something went wrong....",Toast.LENGTH_SHORT).show();
+                           MDToast.makeText(view.getContext(),"Something went wrong....",Toast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                        }
                        remove(position);
@@ -243,10 +242,11 @@ int timevalue = -2;
 
                    @Override
                    public void onFailure(Call<ServiceRequets> call, Throwable t) {
-                       Toast.makeText(view.getContext(),"Update Failed",Toast.LENGTH_SHORT).show();
+                       MDToast.makeText(view.getContext(),"Update Failed",Toast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+
                    }
                });
-               MDToast.makeText(view.getContext(),"Request Declined",Toast.LENGTH_SHORT).show();
+               MDToast.makeText(view.getContext(),"Request Declined",Toast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
 
            }
        });

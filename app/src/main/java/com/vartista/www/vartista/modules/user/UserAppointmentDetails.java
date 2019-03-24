@@ -13,9 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.squareup.picasso.Picasso;
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.beans.AllNotificationBean;
@@ -53,7 +52,6 @@ public class UserAppointmentDetails extends AppCompatActivity {
         setContentView(R.layout.activity_user_appointment_details);
 
         Date currentTime = Calendar.getInstance().getTime();
-        Toast.makeText(this, ""+currentTime, Toast.LENGTH_SHORT).show();
 
         sendNotificationApiInterface = ApiClient.getApiClient().create(SendNotificationApiInterface.class);
 
@@ -118,7 +116,7 @@ public class UserAppointmentDetails extends AppCompatActivity {
                     public void onClick(View v) {
                     if(cash_pay.isChecked()){
                         //ye  toast mat hatana
-                        Toast.makeText(UserAppointmentDetails.this, "Verification by Service Provider Under Process...", Toast.LENGTH_LONG).show();
+                        MDToast.makeText(UserAppointmentDetails.this, "Verification by Service Provider Under Process...", MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
                         int customer_id=Integer.parseInt(ob.getService_provider_id());
                         String body="Have you Received the payment from "+ob.getUsername();
                         String title="Cash Payment Verification";
@@ -133,8 +131,6 @@ public class UserAppointmentDetails extends AppCompatActivity {
                             public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
                                 if(response.isSuccessful()){}
 
-//                                if(response.isSuccessful())
-//                                    Toast.makeText(getContext(), "Request Accepted",Toast.LENGTH_SHORT).show();
 
                             }
 
@@ -149,7 +145,7 @@ public class UserAppointmentDetails extends AppCompatActivity {
 
                     }
                     else if(online_pay.isChecked()){
-                        Toast.makeText(UserAppointmentDetails.this, "Online Payment", Toast.LENGTH_SHORT).show();
+                        MDToast.makeText(UserAppointmentDetails.this, "Online Payment", MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();
 
                     }
 
@@ -234,24 +230,24 @@ public class UserAppointmentDetails extends AppCompatActivity {
                 if(response.body().getResponse().equals("ok")){
 
 
-                    Toast.makeText(UserAppointmentDetails.this,"Updated Successfully..",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(UserAppointmentDetails.this,"Updated Successfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
                 }else if(response.body().getResponse().equals("exist")){
 
 
-                    Toast.makeText(UserAppointmentDetails.this,"Same Data exists....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(UserAppointmentDetails.this,"Same Data exists....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                 }
                 else if(response.body().getResponse().equals("error")){
 
 
-                    Toast.makeText(UserAppointmentDetails.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(UserAppointmentDetails.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                 }
                 else{
 
 
-                    Toast.makeText(UserAppointmentDetails.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(UserAppointmentDetails.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 }
 
             }
@@ -259,7 +255,7 @@ public class UserAppointmentDetails extends AppCompatActivity {
             @Override
             public void onFailure(Call <CreateRequest> call, Throwable t) {
 
-                Toast.makeText(UserAppointmentDetails.this,"Update Failed",Toast.LENGTH_SHORT).show();
+                MDToast.makeText(UserAppointmentDetails.this,"Update Failed",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
             }
         });

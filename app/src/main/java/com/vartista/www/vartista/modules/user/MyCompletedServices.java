@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.ServiceUserAppointmentsAdapter;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
@@ -144,7 +145,7 @@ public class MyCompletedServices extends AppCompatActivity {
                 }
 
                 else {
-                    Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(getApplicationContext(),"no data",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
