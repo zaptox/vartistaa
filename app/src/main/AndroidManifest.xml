@@ -61,22 +61,35 @@
             />
         <activity android:name=".modules.provider.CreateServiceActivity"
             android:label=""
+            android:theme="@style/AppTheme.NoActionBar"
             />
-        <activity android:name=".modules.provider.MyServicesListActivity"             android:label=""
+        <activity android:name=".modules.provider.MyServicesListActivity"
+            android:label=""
+
             />
-        <activity android:name=".modules.user.BookNowActivity"            android:label=""
+        <activity android:name=".modules.user.BookNowActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label=""
             />
-        <activity android:name=".modules.provider.MyServiceRequests"             android:label=""
+        <activity android:name=".modules.provider.MyServiceRequests"
+
+            android:label=""
             />
         <activity android:name=".modules.user.FindServicesInList"             android:label=""
             />
-        <activity android:name=".modules.payment.PaymentActivity"             android:label=""
+        <activity android:name=".modules.payment.PaymentActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label=""
             />
-        <activity android:name=".modules.user.Service_user_cancel"             android:label=""
+        <activity android:name=".modules.user.Service_user_cancel"
+
+            android:label=""
             />
         <activity android:name=".modules.provider.MyAppointments"             android:label=""
             />
-        <activity android:name=".modules.provider.ServiceCancelActivity"             android:label=""
+        <activity android:name=".modules.provider.ServiceCancelActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label=""
             />
         <activity android:name=".modules.general.SettingsActivity"             android:label=""
             />
@@ -86,9 +99,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".modules.user.MyServiceMeetings"             android:label=""
             />
-        <activity android:name=".modules.user.AssignRatings"             android:label=""
+        <activity android:name=".modules.user.AssignRatings"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label=""
             />
-        <activity android:name=".modules.provider.DocumentUploadActivity"             android:label=""
+        <activity android:name=".modules.provider.DocumentUploadActivity"
+
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label=""
             />
         <activity android:name=".modules.provider.My_Rating_Reviews"             android:label=""
             />
@@ -96,7 +114,9 @@
             />
         <activity android:name=".modules.general.ForgotPasswordActivity"             android:label=""
             />
-        <activity android:name=".modules.general.DeleteMyAccount"             android:label=""
+        <activity android:name=".modules.general.DeleteMyAccount"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label=""
             />
         <activity android:name=".modules.general.AppSettings"             android:label=""
             />
@@ -118,7 +138,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".modules.provider.UploadDoc"             android:label=""
             />
-        <activity android:name=".modules.user.StartService"             android:label=""
+        <activity android:name=".modules.user.StartService"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label=""
             />
         <activity android:name=".modules.provider.ServicestartProvider"             android:label=""
             />
@@ -138,9 +160,14 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".modules.provider.AppointmentDetails"             android:label=""
+        <activity android:name=".modules.provider.AppointmentDetails"
+            android:theme="@style/AppTheme.NoActionBar"
+
+            android:label=""
             />
-        <activity android:name=".modules.user.UserAppointmentDetails"             android:label=""
+        <activity android:name=".modules.user.UserAppointmentDetails"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label=""
             />
         <activity android:name=".modules.user.MyCompletedServices"             android:label=""
             ></activity>
