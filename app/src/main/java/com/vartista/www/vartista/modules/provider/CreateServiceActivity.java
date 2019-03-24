@@ -19,7 +19,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
@@ -119,7 +118,6 @@ public class  CreateServiceActivity extends AppCompatActivity {
         if (edit_user_id==0){
         }
         else{
-            Toast.makeText(getApplicationContext(),"Create Service Edit"+edit_user_id,Toast.LENGTH_SHORT).show();
             new GetServiceConncetion(CreateServiceActivity.this,edit_user_id).execute();
 
 
@@ -163,8 +161,6 @@ public class  CreateServiceActivity extends AppCompatActivity {
                 }
 
                 if (btnCreateSerivce.getText().equals("Edit Service")) {
-                   // MDToast mdToast = MDToast.makeText(getApplicationContext(), "Your Service Edit Successfully"+edit_user_id, MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                    //mdToast.show();
                     String title = edtTxtSerivceTitle.getText().toString();
                     String price = edTxtServicePrice.getText().toString();
                     String description = edDescription.getText().toString();
@@ -194,9 +190,9 @@ public class  CreateServiceActivity extends AppCompatActivity {
                         public void onResponse(Call<Service> call, Response<Service> response) {
 
                             if (response.body().getResponse().equals("ok")) {
-                               // MDToast mdToast = MDToast.makeText(getApplicationContext(), "Your Service Edit Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                                MDToast mdToast = MDToast.makeText(getApplicationContext(), "Your Service Edit Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                                mdToast.show();
+                               // MDMDToast mdMDToast = MDMDToast.makeText(getApplicationContext(), "Your Service Edit Successfully", MDMDToast.LENGTH_LONG, MDMDToast.TYPE_SUCCESS);
+                                MDToast mdMDToast = MDToast.makeText(getApplicationContext(), "Your Service Edit Successfully", MDToast.LENGTH_SHORT, MDToast.TYPE_SUCCESS);
+                                mdMDToast.show();
 
                                 edDescription.setText("");
                                 edtTxtSerivceTitle.setText("");
@@ -215,7 +211,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<Service> call, Throwable t) {
-                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                            MDToast.makeText(getApplicationContext(), t.getMessage(), MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                         }
 
                     });
@@ -264,8 +260,8 @@ public class  CreateServiceActivity extends AppCompatActivity {
 
                             }
                             if (response.isSuccessful()) {
-                                MDToast mdToast = MDToast.makeText(getApplicationContext(), "Your Service Created Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                                mdToast.show();
+                                MDToast mdMDToast = MDToast.makeText(getApplicationContext(), "Your Service Created Successfully", MDToast.LENGTH_SHORT, MDToast.TYPE_SUCCESS);
+                                mdMDToast.show();
 
                                 SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
                                 int sp_id = ob.getInt("user_id", 0);

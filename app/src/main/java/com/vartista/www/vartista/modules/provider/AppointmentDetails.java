@@ -19,11 +19,10 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.kennyc.bottomsheet.BottomSheet;
 import com.kennyc.bottomsheet.BottomSheetListener;
 import com.squareup.picasso.Picasso;
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.adapters.servicepappointmentsadapter;
@@ -241,24 +240,24 @@ public class AppointmentDetails extends AppCompatActivity {
                 if(response.body().getResponse().equals("ok")){
 
                     payment_received_function(requestservice_id,user_id,sp_name);
-                    Toast.makeText(AppointmentDetails.this,"Updated Successfully..",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(AppointmentDetails.this,"Updated Successfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
                 }else if(response.body().getResponse().equals("exist")){
 
 
-                    Toast.makeText(AppointmentDetails.this,"Same Data exists....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(AppointmentDetails.this,"Same Data exists....",MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
 
                 }
                 else if(response.body().getResponse().equals("error")){
 
 
-                    Toast.makeText(AppointmentDetails.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(AppointmentDetails.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                 }
                 else{
 
 
-                    Toast.makeText(AppointmentDetails.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(AppointmentDetails.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 }
 
             }
@@ -266,7 +265,7 @@ public class AppointmentDetails extends AppCompatActivity {
             @Override
             public void onFailure(Call <EarningsBean> call, Throwable t) {
 
-                Toast.makeText(AppointmentDetails.this,"Update Failed",Toast.LENGTH_SHORT).show();
+                MDToast.makeText(AppointmentDetails.this,"Update Failed",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
             }
         });
@@ -285,24 +284,24 @@ public class AppointmentDetails extends AppCompatActivity {
                 if(response.body().getResponse().equals("ok")){
 
 
-                    Toast.makeText(AppointmentDetails.this,"Updated Successfully..",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(AppointmentDetails.this,"Updated Successfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
                 }else if(response.body().getResponse().equals("exist")){
 
 
-                    Toast.makeText(AppointmentDetails.this,"Same Data exists....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(AppointmentDetails.this,"Same Data exists....",MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
 
                 }
                 else if(response.body().getResponse().equals("error")){
 
 
-                    Toast.makeText(AppointmentDetails.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(AppointmentDetails.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                 }
                 else{
 
 
-                    Toast.makeText(AppointmentDetails.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(AppointmentDetails.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 }
 
             }
@@ -310,7 +309,7 @@ public class AppointmentDetails extends AppCompatActivity {
             @Override
             public void onFailure(Call <CreateRequest> call, Throwable t) {
 
-                Toast.makeText(AppointmentDetails.this,"Update Failed",Toast.LENGTH_SHORT).show();
+                MDToast.makeText(AppointmentDetails.this,"Update Failed",MDToast.LENGTH_SHORT).show();
 
             }
         });
@@ -327,7 +326,7 @@ public class AppointmentDetails extends AppCompatActivity {
                 String title="Wanna rate "+sp_name+"?";
                 String body="Make sure to rate and let us know about service provider's behavior.";
 
-                    Toast.makeText(AppointmentDetails.this,"Service Completed Successfully..",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(AppointmentDetails.this,"Service Completed Successfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
                     //notification to user for ratings
                     Call<NotificationsManager> callNotification = AppointmentDetails.sendNotificationApiInterface
@@ -339,7 +338,7 @@ public class AppointmentDetails extends AppCompatActivity {
                             if(response.isSuccessful()){}
 
 //                            if(response.isSuccessful())
-//                                Toast.makeText(view.getContext(), "Request Accepted",Toast.LENGTH_SHORT).show();
+//                                MDToast.makeText(view.getContext(), "Request Accepted",MDToast.LENGTH_SHORT).show();
 
                         }
 
@@ -354,19 +353,19 @@ public class AppointmentDetails extends AppCompatActivity {
                 }else if(response.body().getResponse().equals("exist")){
 
 
-                    Toast.makeText(AppointmentDetails.this,"Same Data exists....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(AppointmentDetails.this,"Same Data exists....",MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
 
                 }
                 else if(response.body().getResponse().equals("error")){
 
 
-                    Toast.makeText(AppointmentDetails.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(AppointmentDetails.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                 }
                 else{
 
 
-                    Toast.makeText(AppointmentDetails.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(AppointmentDetails.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 }
 
             }
@@ -374,7 +373,7 @@ public class AppointmentDetails extends AppCompatActivity {
             @Override
             public void onFailure(Call <ServiceRequets> call, Throwable t) {
 
-                Toast.makeText(AppointmentDetails.this,"Update Failed",Toast.LENGTH_SHORT).show();
+                MDToast.makeText(AppointmentDetails.this,"Update Failed",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
             }
         });
@@ -446,17 +445,17 @@ public class AppointmentDetails extends AppCompatActivity {
                         admin_tax = ser1.getDouble("admin_tax");
                         penalty = ser1.getDouble("penalty");
 
-//                          Toast.makeText(MyAppointments.this, ""+myappointments, Toast.LENGTH_SHORT).show();
+//                          MDToast.makeText(MyAppointments.this, ""+myappointments, MDToast.LENGTH_SHORT).show();
                     }
                 }
 
                 else {
-                    //   Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                    //   MDToast.makeText(getApplicationContext(),"no data",MDToast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(AppointmentDetails.this, "Connection Problem!", Toast.LENGTH_SHORT).show();
-                // Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                MDToast.makeText(AppointmentDetails.this, "Connection Problem!", MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
+                // MDToast.makeText(getApplicationContext(),e.getMessage(),MDToast.LENGTH_LONG).show();
             }
         }
 

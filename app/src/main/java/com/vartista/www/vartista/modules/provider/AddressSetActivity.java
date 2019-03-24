@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.beans.ServiceRequets;
@@ -114,12 +114,12 @@ public class AddressSetActivity extends AppCompatActivity {
                             } else if (response.body().getResponse().equals("error")) {
                                 setUIToWait(false);
 
-                                Toast.makeText(AddressSetActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
+                                MDToast.makeText(AddressSetActivity.this, "Something went wrong....", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                             } else {
                                 setUIToWait(false);
 
-                                Toast.makeText(AddressSetActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
+                                MDToast.makeText(AddressSetActivity.this, "Something went wrong....", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                             }
 
@@ -155,12 +155,12 @@ public class AddressSetActivity extends AppCompatActivity {
                             } else if (response.body().getResponse().equals("error")) {
                                 setUIToWait(false);
 
-                                Toast.makeText(AddressSetActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
+                                MDToast.makeText(AddressSetActivity.this, "Something went wrong....", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                             } else {
                                 setUIToWait(false);
 
-                                Toast.makeText(AddressSetActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
+                                MDToast.makeText(AddressSetActivity.this, "Something went wrong....", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                             }
 
@@ -169,7 +169,7 @@ public class AddressSetActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<UserAddressBean> call, Throwable t) {
                             setUIToWait(false);
-                            Toast.makeText(AddressSetActivity.this, "Signup Failed", Toast.LENGTH_SHORT).show();
+                            MDToast.makeText(AddressSetActivity.this, "Signup Failed", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
 
                         }
@@ -261,11 +261,11 @@ public class AddressSetActivity extends AppCompatActivity {
 
                 }
                 else{
-                    Toast.makeText(AddressSetActivity.this, "Insert Address", Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(AddressSetActivity.this, "Insert Address", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                MDToast.makeText(getApplicationContext(),e.getMessage(),MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
             }
         }
     }

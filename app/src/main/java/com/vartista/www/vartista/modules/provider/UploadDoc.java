@@ -13,8 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 
@@ -111,7 +111,7 @@ public class UploadDoc extends AppCompatActivity {
 
         } catch (Exception exc) {
 
-            Toast.makeText(getApplicationContext(), exc.getMessage(), Toast.LENGTH_SHORT).show();
+            MDToast.makeText(getApplicationContext(), exc.getMessage(), MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
         }
     }
 

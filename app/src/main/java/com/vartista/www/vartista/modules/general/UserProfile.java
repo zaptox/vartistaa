@@ -18,9 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.squareup.picasso.Picasso;
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
@@ -102,24 +101,24 @@ public class UserProfile extends AppCompatActivity {
                         if(response.body().getResponse().equals("ok")){
                             uploadMultipart(filePath,emailchange,passchange);
 
-                            Toast.makeText(UserProfile.this,"Updated Successfully..",Toast.LENGTH_SHORT).show();
+                            MDToast.makeText(UserProfile.this,"Updated Successfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
                         }else if(response.body().getResponse().equals("exist")){
                             setUIToWait(false);
-                            Toast.makeText(UserProfile.this,"Same Data exists....",Toast.LENGTH_SHORT).show();
+                            MDToast.makeText(UserProfile.this,"Same Data exists....",MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
 
                         }
                         else if(response.body().getResponse().equals("error")){
                             setUIToWait(false);
 
-                            Toast.makeText(UserProfile.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                            MDToast.makeText(UserProfile.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                         }
 
                         else{
                             setUIToWait(false);
 
-                            Toast.makeText(UserProfile.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                            MDToast.makeText(UserProfile.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                         }
 
@@ -137,7 +136,7 @@ public class UserProfile extends AppCompatActivity {
                     @Override
                     public void onFailure(Call <User> call, Throwable t) {
                         setUIToWait(false);
-                        Toast.makeText(UserProfile.this,"Update Failed",Toast.LENGTH_SHORT).show();
+                        MDToast.makeText(UserProfile.this,"Update Failed",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
 //                        create.setText(t.getMessage());
                     }
@@ -203,8 +202,8 @@ public class UserProfile extends AppCompatActivity {
 
         //getting the actual path of the image
         String path = getPath(filePath);
-        Toast.makeText(this,   "path "+path, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this,   "filepath "+filePath, Toast.LENGTH_SHORT).show();
+        MDToast.makeText(this,   "path "+path, MDToast.LENGTH_SHORT).show();
+        MDToast.makeText(this,   "filepath "+filePath, MDToast.LENGTH_SHORT).show();
 
         //Uploading code
         try {
@@ -261,8 +260,8 @@ public class UserProfile extends AppCompatActivity {
         if (requestCode == STORAGE_PERMISSION_CODE) {
             //If permission is granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Displaying a toast
-                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
+                //Displaying a MDToast
+                MDToast.makeText(this, "Permission granted now you can read the storage", MDToast.LENGTH_LONG).show();
             } else {
             }
         }

@@ -247,8 +247,7 @@ public class UserAppointmentDetails extends AppCompatActivity {
                 else{
 
 
-                    MDToast.makeText(UserAppointmentDetails.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
-                }
+c                }
 
             }
 
