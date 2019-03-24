@@ -199,6 +199,39 @@ public class UserAppointmentDetails extends AppCompatActivity {
                     public void onClick(View v) {
 
                         upaterequeststatus(requestservice_id);
+
+                        SharedPreferences current_user = getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+                        String current_username = current_user.getString("name", "user-undefined");
+
+                        int customer_id=Integer.parseInt(ob.getService_provider_id());
+                        String body=current_username+" has cancelled your service, unfortunately the service "+ob.getService_title()+" will not be provided.";
+                        String title="'"+ob.getService_title()+"' service is cancelled";
+                        insertNotification(title,body,Integer.parseInt(ob.getUser_customer_id()),customer_id,1,get_Current_Date());
+
+
+                        Call<NotificationsManager> callNotification = UserAppointmentDetails.sendNotificationApiInterface
+                                .sendPushNotification(customer_id,
+                                        body,title);
+                        callNotification.enqueue(new Callback<NotificationsManager>() {
+                            @Override
+                            public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
+                                if(response.isSuccessful()){}
+
+//                                if(response.isSuccessful())
+//                                    Toast.makeText(getContext(), "Request Accepted",Toast.LENGTH_SHORT).show();
+
+                            }
+
+
+                            @Override
+                            public void onFailure(Call<NotificationsManager> call, Throwable t) {
+
+                            }
+                        });
+
+
+
                         Intent intent = new Intent(UserAppointmentDetails.this, MyServiceMeetings.class);
                         startActivity(intent);
 

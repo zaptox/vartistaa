@@ -115,7 +115,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
 
                        if(response.body().getResponse().equals("ok")){
-                          final String body = name_user+ "Accepted  your request_"+date+"_"+time+""+requestservice_id;
+                          final String body = name_user+ "Accepted  your request_"+date+"_"+time+"_"+requestservice_id;
                           final String title = "Vartista-Accept";
                            notifyDataSetChanged();
                            insertNotification(title,body,user_id,customer_id,1,get_Current_Date());
@@ -208,7 +208,7 @@ int timevalue = -2;
 
                            notifyDataSetChanged();
                            final String body = name_user+ " has Declined your request";
-                           final String title = "Vartista-Decline";
+                           final String title = "Vartista- Decline";
                            insertNotification(title,body,user_id,customer_id,1,get_Current_Date());
                            Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
                                    .sendPushNotification(myReqServicesList.get(position).getUser_customer_id(),

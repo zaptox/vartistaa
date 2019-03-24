@@ -384,6 +384,7 @@ public class FindServicesInList extends AppCompatActivity {
                         int address_id = Integer.parseInt(ser1.getString("id"));
                         int category_id = Integer.parseInt(ser1.getString("category_id"));
                         String service_title = ser1.getString("service_title");
+                        String location = ser1.getString("location");
 
                         String service_description = ser1.getString("service_description");
                         double price = Double.parseDouble(ser1.getString("price"));
@@ -403,7 +404,7 @@ public class FindServicesInList extends AppCompatActivity {
                         String image = ser1.getString("image");
                         int busy_status=ser1.getInt("busy_status");
 
-                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name,stars, user_status, image,busy_status));
+                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name,stars, user_status, image,busy_status,location));
 
                     }
 
@@ -548,6 +549,7 @@ public class FindServicesInList extends AppCompatActivity {
                         String service_title = ser1.getString("service_title");
                         String service_description = ser1.getString("service_description");
                         double price = Double.parseDouble(ser1.getString("price"));
+                        String location = ser1.getString("location");
 
                         double longitude = Double.parseDouble(ser1.getString("longitude"));
                         double latitude = Double.parseDouble(ser1.getString("latitude"));
@@ -563,7 +565,7 @@ public class FindServicesInList extends AppCompatActivity {
                         String image = ser1.getString("image");
                         int busy_status=ser1.getInt("busy_status");
 
-                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name,stars,user_status,image,busy_status));
+                        splist.add(new GetServiceProviders(service_id, address_id, latitude, longitude, user_id2, service_title, service_description, price, category_id,sp_name,stars,user_status,image,busy_status,location));
 
                     }
 //

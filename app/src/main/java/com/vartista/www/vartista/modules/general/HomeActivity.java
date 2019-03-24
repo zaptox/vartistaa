@@ -149,11 +149,21 @@ public class HomeActivity extends AppCompatActivity
         // save or update device token
         storeDeviceToken();
         Toast.makeText(this, ""+user.getImage(), Toast.LENGTH_SHORT).show();
-        Picasso.get().load(user.getImage()).fit().centerCrop()
-                .placeholder(R.drawable.profile)
-                .error(R.drawable.profile)
-                .into(imageViewProfileDrawer);
+if(user.getImage()==null) {
+//    Picasso.get().load(user.getImage()).fit().centerCrop()
+//            .placeholder(R.drawable.profile)
+//            .error(R.drawable.profile)
+//            .into(imageViewProfileDrawer);
+    imageViewProfileDrawer.setImageResource(R.drawable.profile);
+}
+else{
+    Picasso.get().load(user.getImage()).fit().centerCrop()
+            .placeholder(R.drawable.profile)
+            .error(R.drawable.profile)
+            .into(imageViewProfileDrawer);
 
+
+}
         //device token add to server
 
         // view pager

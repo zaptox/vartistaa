@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.adapters.servicepappointmentsadapter;
 import com.vartista.www.vartista.appconfig.App;
+import com.vartista.www.vartista.beans.AllNotificationBean;
 import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.EarningsBean;
 import com.vartista.www.vartista.beans.NotificationsManager;
@@ -146,6 +148,38 @@ public class AppointmentDetails extends AppCompatActivity {
                     public void onClick(View v) {
 
                         upaterequeststatus(requestservice_id);
+
+                        SharedPreferences current_user = getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+                        String current_username = current_user.getString("name", "user-undefined");
+
+
+                        int customer_id=Integer.parseInt(ob.getUser_customer_id());
+                        String body=current_username+" has cancelled your service, unfortunately the service "+ob.getService_title()+" will not be provided.";
+                        String title="'"+ob.getService_title()+"' service is cancelled";
+                        insertNotification(title,body,Integer.parseInt(ob.getService_provider_id()),customer_id,1,get_Current_Date());
+
+
+                        Call<NotificationsManager> callNotification = AppointmentDetails.sendNotificationApiInterface
+                                .sendPushNotification(customer_id,
+                                        body,title);
+                        callNotification.enqueue(new Callback<NotificationsManager>() {
+                            @Override
+                            public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
+                                if(response.isSuccessful()){}
+
+//                                if(response.isSuccessful())
+//                                    Toast.makeText(getContext(), "Request Accepted",Toast.LENGTH_SHORT).show();
+
+                            }
+
+
+                            @Override
+                            public void onFailure(Call<NotificationsManager> call, Throwable t) {
+
+                            }
+                        });
+
 
                         Intent intent = new Intent(AppointmentDetails.this, MyAppointments.class);
                         startActivity(intent);
@@ -469,6 +503,51 @@ public class AppointmentDetails extends AppCompatActivity {
         return dateFormat.format(date);
     }
 
+    public String get_Current_Date(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String currentDate = sdf.getDateTimeInstance().format(new Date());
+        return currentDate;
+    }
+
+
+
+    public  void insertNotification(String title , String message, int sender_id , int receiver_id , int status , String created_at){
+//         setUIToWait(true);
+        Call<AllNotificationBean> call=AppointmentDetails.apiInterface.Insert_Notification(title,message,sender_id,receiver_id,status,created_at);
+        call.enqueue(new Callback<AllNotificationBean>() {
+            @Override
+            public void onResponse(Call <AllNotificationBean> call, Response<AllNotificationBean> response) {
+
+                if(response.body().getResponse().equals("ok")){
+//                     setUIToWait(false);
+
+                }
+                else if(response.body().getResponse().equals("exist")){
+//                     setUIToWait(false);
+
+                }
+                else if(response.body().getResponse().equals("error")){
+//                     setUIToWait(false);
+
+
+                }
+
+                else{
+//                     setUIToWait(false);
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call <AllNotificationBean> call, Throwable t) {
+
+            }
+        });
+
+
+    }
 
 
 

@@ -147,11 +147,11 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
             if(title.contains("Accept")){
            int R_S_ID = Integer.parseInt(rservice_id);
-                if (!date.equals("")){
-                    sendCompactNotification(this,REQEUST_CODE_FOR_USER,date,time,name_user,"minute",-2,0);
-                    sendCompactNotification(this,REQEUST_CODE_FOR_USER_BEFORE2H,date,time,name_user,"minute",-2,R_S_ID );
-
-                }
+//                if (!date.equals("")){
+//                    sendCompactNotification(this,REQEUST_CODE_FOR_USER,date,time,name_user,"minute",-2,0);
+//                    sendCompactNotification(this,REQEUST_CODE_FOR_USER_BEFORE2H,date,time,name_user,"minute",-2,R_S_ID );
+//
+//                }
 
                 resultIntent = new Intent(getApplicationContext(), MyServiceMeetings.class);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -188,12 +188,17 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
             }
             else if(title.contains("Cash")){
-                resultIntent = new Intent(getApplicationContext(), MyServiceMeetings.class);
+                resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
             else if(title.contains("rate")){
                 resultIntent = new Intent(getApplicationContext(), MyCompletedServices.class);
+                resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            }
+            else if(title.contains("cancelled")){
+                resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
