@@ -280,7 +280,7 @@ public class UserAppointmentDetails extends AppCompatActivity {
                 else{
 
 
-c                }
+                }
 
             }
 
