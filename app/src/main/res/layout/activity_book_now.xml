@@ -7,23 +7,31 @@
     tools:context=".modules.user.BookNowActivity"
     android:orientation="vertical">
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/colorPrimary">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20sp"
-            android:text="Confirm Booking"
-            android:textColor="@android:color/black"
+            android:text="CONFIRM BOOKING"
+            android:textColor="@color/textColor"
+            android:layout_marginBottom="20dp"
             android:textStyle="bold"
             android:textSize="20sp" />
+        </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +50,7 @@
             android:layout_marginLeft="20dp"
             android:layout_alignBottom="@+id/profile_image"
             android:layout_toEndOf="@+id/profile_image"
-            app:srcCompat="@drawable/ic_event_available_black_24dp"
+            app:srcCompat="@drawable/date_icon_black"
             android:layout_toRightOf="@+id/profile_image"
             tools:ignore="VectorDrawableCompat" />
 
@@ -87,7 +95,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_alignBottom="@+id/profile_image"
                 android:layout_toEndOf="@+id/profile_image"
-                app:srcCompat="@drawable/ic_access_time_black_24dp"
+                app:srcCompat="@drawable/time_black_icon"
                 android:layout_toRightOf="@+id/profile_image"
                 tools:ignore="VectorDrawableCompat" />
 

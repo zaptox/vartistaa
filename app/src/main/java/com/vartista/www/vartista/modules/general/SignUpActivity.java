@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
@@ -132,14 +131,14 @@ public class SignUpActivity extends AppCompatActivity {
                         else if(response.body().getResponse().equals("error")){
                             setUIToWait(false);
 
-                           Toast.makeText(SignUpActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                           MDToast.makeText(SignUpActivity.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                         }
 
                         else{
                             setUIToWait(false);
 
-                            Toast.makeText(SignUpActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                            MDToast.makeText(SignUpActivity.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                         }
 
@@ -148,7 +147,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call <User> call, Throwable t) {
                         setUIToWait(false);
-                        Toast.makeText(SignUpActivity.this,"Signup Failed",Toast.LENGTH_SHORT).show();
+                        MDToast.makeText(SignUpActivity.this,"Signup Failed",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                     create.setText(t.getMessage());
                     }
@@ -224,7 +223,7 @@ public class SignUpActivity extends AppCompatActivity {
                     .setMaxRetries(3)
                     .startUpload(); //Starting the upload
         } catch (Exception exc) {
-            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
+            MDToast.makeText(this, exc.getMessage(), MDToast.LENGTH_SHORT).show();
 
 
 
@@ -294,8 +293,8 @@ public class SignUpActivity extends AppCompatActivity {
 
             //If permission is granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Displaying a toast
-                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
+                //Displaying a MDToast
+                MDToast.makeText(this, "Permission granted now you can read the storage", MDToast.LENGTH_LONG).show();
             } else {
             }
         }

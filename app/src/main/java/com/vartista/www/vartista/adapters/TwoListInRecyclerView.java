@@ -14,8 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.kennyc.bottomsheet.BottomSheet;
 import com.kennyc.bottomsheet.BottomSheetListener;
 import com.squareup.picasso.Picasso;
@@ -176,7 +174,6 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
 
                                 @Override
                                 public void onSheetItemSelected(@NonNull BottomSheet bottomSheet, MenuItem menuItem, @Nullable Object o) {
-                                    Toast.makeText(context, name + " Clicked", Toast.LENGTH_SHORT).show();
 
                                 }
 
@@ -211,7 +208,6 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
             final String image = ob.getImage();
             final String title = ob.getTitle();
 
-            Toast.makeText(itemView.getContext(), ""+ob.getMsg(), Toast.LENGTH_SHORT).show();
                   username.setText(Html.fromHtml("Hello Mr : "+"<b>"+ob.getName()+"<b>"));
                   adminmsg.setText(Html.fromHtml("<b>"+ob.getTitle()+"<b> <br> "+ob.getMsg()));
 

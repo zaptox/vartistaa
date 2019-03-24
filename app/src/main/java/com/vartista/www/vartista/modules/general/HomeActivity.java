@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
+
 import com.valdesekamdem.library.mdtoast.MDToast;
 //import com.vartista.www.vartista.Offline_user_status_service;
 
@@ -141,29 +142,16 @@ public class HomeActivity extends AppCompatActivity
         user = (User) intent.getSerializableExtra("user");
         u = user;
         user_id = u.getId();
-        //  Toast.makeText(this, ""+user.id, Toast.LENGTH_SHORT).show();
         name.setText(user.getName());
         email.setText(user.getEmail());
 
 
         // save or update device token
-        storeDeviceToken();
-        Toast.makeText(this, ""+user.getImage(), Toast.LENGTH_SHORT).show();
-if(user.getImage()==null) {
-//    Picasso.get().load(user.getImage()).fit().centerCrop()
-//            .placeholder(R.drawable.profile)
-//            .error(R.drawable.profile)
-//            .into(imageViewProfileDrawer);
-    imageViewProfileDrawer.setImageResource(R.drawable.profile);
-}
-else{
-    Picasso.get().load(user.getImage()).fit().centerCrop()
-            .placeholder(R.drawable.profile)
-            .error(R.drawable.profile)
-            .into(imageViewProfileDrawer);
+        storeDeviceToken();Picasso.get().load(user.getImage()).fit().centerCrop()
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.profile)
+                .into(imageViewProfileDrawer);
 
-
-}
         //device token add to server
 
         // view pager
@@ -298,10 +286,11 @@ else{
         }
 
         else if (id == R.id.logout){
-            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+            MDToast.makeText(this, "logout", MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
             ob.edit().clear().commit();
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
+            finish();
             return true;
         }
 
@@ -317,7 +306,6 @@ else{
         if (id == R.id.account) {
             // Handle the camera action
 
-//            Toast.makeText(this, "Account", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(HomeActivity.this, UserProfile.class);
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
@@ -345,7 +333,7 @@ else{
             startActivity(intent);
 
         } else if (id == R.id.logout) {
-            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+            MDToast.makeText(this, "logout", MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
             ob.edit().clear().commit();
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
@@ -474,7 +462,7 @@ else{
 
         @Override
         protected void onPostExecute(String result) {
-            //  Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+            //  MDToast.makeText(getApplicationContext(),result,MDToast.LENGTH_SHORT).show();
 
             try {
                 JSONObject jsonResult = new JSONObject(result);
@@ -497,7 +485,7 @@ else{
 
     public void getbusystatus(int user_id) {
 
-//        Toast.makeText(this, "in perform function", Toast.LENGTH_SHORT).show();
+//        MDToast.makeText(this, "in perform function", MDToast.LENGTH_SHORT).show();
         Call<User> call = SiginInActivity.apiInterface.getUserById(user_id);
 //        Call<User> call = SiginInActivity.apiInterface.performUserLogin();
 
@@ -536,18 +524,17 @@ else{
 
                     userLoggedIn = new User(id,busy_status,name, email, password, image, status, contact, created_at, updated_at,gender,sp_status);
 
-                    Toast.makeText(HomeActivity.this, "The  busy_status  of user "+email+""+response.body().getBusystatus(), Toast.LENGTH_SHORT).show();
                     if(busy_status==1){
                         startActivity(new Intent(HomeActivity.this,ServicestartProvider.class));
                     }
-// Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse() + "--name:" + name, Toast.LENGTH_SHORT).show();
+// MDToast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse() + "--name:" + name, MDToast.LENGTH_SHORT).show();
 
 //                    upload_document(userLoggedIn.getName(),userLoggedIn.getPassword(),userLoggedIn.getContact());
-//                    Toast.makeText(SiginInActivity.this, "The User Id is :- "+userLoggedIn.getId()
+//                    MDToast.makeText(SiginInActivity.this, "The User Id is :- "+userLoggedIn.getId()
 //                            +"\n"+"The Name is "+userLoggedIn.getName()
-//                            +"\n"+"The password is "+userLoggedIn.getPassword(), Toast.LENGTH_SHORT).show();
+//                            +"\n"+"The password is "+userLoggedIn.getPassword(), MDToast.LENGTH_SHORT).show();
 
-//                    Toast.makeText(SiginInActivity.this, ""+userLoggedIn, Toast.LENGTH_SHORT).show();
+//                    MDToast.makeText(SiginInActivity.this, ""+userLoggedIn, MDToast.LENGTH_SHORT).show();
                     //
 
 

@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.UserNotificationlistadapter;
@@ -138,9 +137,7 @@ public class MyAppointments extends AppCompatActivity {
                         String contact= ser1.getString("contact");
 //                        int rating_status=ser1.getInt("rating_status");
 
-//                        Toast.makeText(MyAppointments.this, "object added", Toast.LENGTH_SHORT).show();
                         myappointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time,image,contact,service_id));
-//                        Toast.makeText(MyAppointments.this, ""+myappointments, Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -150,11 +147,9 @@ public class MyAppointments extends AppCompatActivity {
                 }
 
                 else {
-                 //   Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-               // Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
             }
         }
 

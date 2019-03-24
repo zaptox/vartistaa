@@ -51,9 +51,7 @@ String title[]=new String[]{"As a User","As a Service Provider"};
                 SharedPreferences ob =context.getSharedPreferences("Login", Context.MODE_PRIVATE);
                 String sp_status=ob.getString("sp_status","0");
                 MANDATORY_PAGE_LOCATION=1;
-                Toast.makeText(context, ""+sp_status, Toast.LENGTH_SHORT).show();
                 if(sp_status.equals("0")||sp_status.equals("-1")){
-                    Toast.makeText(context, ""+sp_status, Toast.LENGTH_SHORT).show();
                 ConfigSettingsFragment tab3= new ConfigSettingsFragment();
                     return tab3;
                 }

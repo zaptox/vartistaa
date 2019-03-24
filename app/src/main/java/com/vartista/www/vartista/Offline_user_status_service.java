@@ -116,7 +116,7 @@ public class Offline_user_status_service extends Service {
 
         @Override
         protected void onPostExecute(String result) {
-            //  Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+
 
             try {
                 JSONObject jsonResult = new JSONObject(result);

@@ -13,7 +13,7 @@
         android:layout_height="170dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#fa0335"
+        android:background="@color/rejectBtnColor"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -76,6 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
+
         android:layout_below="@+id/textView4"
         android:layout_marginTop="20dp">
         <Button
@@ -86,9 +87,8 @@
             android:padding="30px"
             android:paddingRight="30px"
             android:textAllCaps="false"
-            android:background="@drawable/rounded_button_service"
-            android:backgroundTint="#fa0335"
-            android:textColor="#FFFFFF"
+            android:background="@drawable/reject_btn_shape"
+            android:textColor="@color/textColor"
             android:text="Delete"/>
         <Button
             android:id="@+id/cancel"
@@ -97,8 +97,8 @@
             android:layout_weight="1"
             android:padding="30px"
             android:text="Cancel"
-            android:background="@drawable/rounded_button_service"
-            android:backgroundTint="#b3b1b1"
+            android:textColor="@color/textColor"
+            android:background="@drawable/accept_btn_shape"
             android:textAllCaps="false"/>
 
     </LinearLayout>

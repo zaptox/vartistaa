@@ -6,7 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.vartista.www.vartista.modules.provider.ServiceCancelActivity">
 
-
+<LinearLayout
+    android:id="@+id/topLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imageView7"
         android:layout_width="80dp"
@@ -16,15 +21,19 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="12dp"
         android:src="@drawable/profile"
+        android:layout_marginBottom="20dp"
         app:civ_border_color="#FF000000"
         app:civ_border_width="0dp" />
-
+</LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_below="@+id/imageView7"
+        android:layout_below="@+id/topLayout"
         android:layout_marginTop="40px"
         android:id="@+id/detailslayout">
 
@@ -82,6 +91,7 @@
         android:layout_marginTop="40px"
         android:layout_centerInParent="true"
         android:text="Want to Cancel this Service....?"
+
         android:textSize="18sp"
         />
 
@@ -89,20 +99,27 @@
         android:id="@+id/cancelbuttonServiceP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtview"
+        android:layout_below="@+id/acceptbutton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
+        android:background="@drawable/reject_btn_shape"
         android:text="Cancel This Service"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"
         android:textAllCaps="false"/>
 
     <Button
         android:id="@+id/acceptbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cancelbuttonServiceP"
+        android:layout_below="@+id/txtview"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="05dp"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:background="@drawable/accept_btn_shape"
+        android:textColor="@color/textColor"
         android:text=" Yes i want to provice service "
         android:textAllCaps="false" />
+</ScrollView>
 
 </RelativeLayout>

@@ -14,8 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.restcalls.ApiClient;
@@ -251,24 +251,24 @@ public void updatedata(int id,String name,String email,String contact,String pas
             if(response.body().getResponse().equals("ok")){
                 setUIToWait(false);
 
-                Toast.makeText(SettingsActivity.this,"Updated Successfully..",Toast.LENGTH_SHORT).show();
+                MDToast.makeText(SettingsActivity.this,"Updated Successfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
             }else if(response.body().getResponse().equals("exist")){
                 setUIToWait(false);
 
-                Toast.makeText(SettingsActivity.this,"Same Data exists....",Toast.LENGTH_SHORT).show();
+                MDToast.makeText(SettingsActivity.this,"Same Data exists....",MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
 
             }
             else if(response.body().getResponse().equals("error")){
                 setUIToWait(false);
 
-                Toast.makeText(SettingsActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                MDToast.makeText(SettingsActivity.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
             }
             else{
                 setUIToWait(false);
 
-                Toast.makeText(SettingsActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                MDToast.makeText(SettingsActivity.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
             }
 
         }

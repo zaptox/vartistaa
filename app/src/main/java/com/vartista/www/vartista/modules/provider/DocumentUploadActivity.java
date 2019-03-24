@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
@@ -190,28 +189,28 @@ public class DocumentUploadActivity extends AppCompatActivity
                    if (response.body().getResponse().equals("ok")) {
                        setUIToWait(false);
 
-                       Toast.makeText(DocumentUploadActivity.this, "Updated Successfully..", Toast.LENGTH_SHORT).show();
+                       MDToast.makeText(DocumentUploadActivity.this, "Updated Successfully..", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
                    } else if (response.body().getResponse().equals("exist")) {
                        setUIToWait(false);
 
-                       Toast.makeText(DocumentUploadActivity.this, "Same Data exists....", Toast.LENGTH_SHORT).show();
+                       MDToast.makeText(DocumentUploadActivity.this, "Same Data exists....", MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
 
                    } else if (response.body().getResponse().equals("error")) {
                        setUIToWait(false);
 
-                       Toast.makeText(DocumentUploadActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
+                       MDToast.makeText(DocumentUploadActivity.this, "Something went wrong....", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                    } else {
                        setUIToWait(false);
 
-                       Toast.makeText(DocumentUploadActivity.this, "Something went wrong....", Toast.LENGTH_SHORT).show();
+                       MDToast.makeText(DocumentUploadActivity.this, "Something went wrong....", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                    }
 
 
 //                        user_name.setText("response ");
-                   Toast.makeText(DocumentUploadActivity.this, "Request sent to admin", Toast.LENGTH_SHORT).show();
+                   MDToast.makeText(DocumentUploadActivity.this, "Request sent to admin", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
 //                            finish();
                }
@@ -219,15 +218,15 @@ public class DocumentUploadActivity extends AppCompatActivity
                @Override
                public void onFailure(Call<User> call, Throwable t) {
                    setUIToWait(false);
-                   Toast.makeText(DocumentUploadActivity.this, "Update Failed", Toast.LENGTH_SHORT).show();
+                   MDToast.makeText(DocumentUploadActivity.this, "Update Failed", MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
 
 //                        create.setText(t.getMessage());
                }
            });
        }
        catch(Exception e){
-           MDToast mdToast = MDToast.makeText(getApplicationContext(), ""+e.getMessage(), MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-           mdToast.show();
+           MDToast mdMDToast = MDToast.makeText(getApplicationContext(), ""+e.getMessage(), MDToast.LENGTH_SHORT, MDToast.TYPE_SUCCESS);
+           mdMDToast.show();
 
        }
    }
@@ -305,7 +304,7 @@ public class DocumentUploadActivity extends AppCompatActivity
 
                 } catch (Exception exc) {
 
-                    Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(this, exc.getMessage(), MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 }
             }
 
@@ -348,9 +347,9 @@ public class DocumentUploadActivity extends AppCompatActivity
 
             //If permission is granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Displaying a toast
+                //Displaying a MDToast
             } else {
-                //Displaying another toast if permission is not granted
+                //Displaying another MDToast if permission is not granted
             }
         }
     }

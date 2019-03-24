@@ -3,11 +3,6 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
-        <entry key="imageWizard">
-          <value>
-            <PersistentState />
-          </value>
-        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -23,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/F:/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/file/ic_cloud_upload_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/F:/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_date_range_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,8 +28,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="3676b2" />
-                            <entry key="outputName" value="ic_upload_black" />
+                            <entry key="outputName" value="date_icon_black" />
                             <entry key="sourceFile" value="C:\Users\ALI SHAIKH PC" />
                           </map>
                         </option>
