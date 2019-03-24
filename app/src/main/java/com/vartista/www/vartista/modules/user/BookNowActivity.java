@@ -79,6 +79,7 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
             @Override
             public void onClick(View v) {
                 DialogFragment datePicker=new DatePickerFragment();
+
                 datePicker.show(getFragmentManager(),"date picker");
             }
         });

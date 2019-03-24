@@ -120,7 +120,7 @@
                 card_view:layout_constraintHorizontal_bias="0.224"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintVertical_bias="0.785" />
+                card_view:layout_constraintVertical_bias="0.656" />
 
             <TextView
                 android:id="@+id/tvDescription"
@@ -155,10 +155,10 @@
                 android:src="@drawable/location"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.062"
+                card_view:layout_constraintHorizontal_bias="0.091"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintVertical_bias="0.783" />
+                card_view:layout_constraintVertical_bias="0.746" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -166,9 +166,9 @@
                 android:gravity="center"
                 android:orientation="horizontal"
 
+                tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="26dp"
-                tools:layout_editor_absoluteY="133dp"
-                tools:ignore="MissingConstraints">
+                tools:layout_editor_absoluteY="133dp">
 
                 <ImageView
                     android:layout_width="30sp"
@@ -192,22 +192,16 @@
                 android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="172dp"
+                android:layout_marginTop="120dp"
                 android:background="@drawable/accept_btn_shape"
                 android:text="Edit"
                 android:textAllCaps="false"
                 android:textColor="@color/textColor"
-                android:textStyle="bold"
                 android:textSize="11dp"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintEnd_toStartOf="@+id/delete"
-                card_view:layout_constraintHorizontal_bias="1.0"
+                android:textStyle="bold"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintVertical_bias="1.0" />
+                card_view:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/delete"
@@ -215,17 +209,16 @@
                 android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="28dp"
                 android:background="@drawable/reject_btn_shape"
                 android:text="Delete"
                 android:textAllCaps="false"
                 android:textColor="@color/textColor"
-                android:textStyle="bold"
                 android:textSize="11dp"
+                android:textStyle="bold"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent" />
-
 
 
         </android.support.constraint.ConstraintLayout>
