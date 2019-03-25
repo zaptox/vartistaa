@@ -116,7 +116,9 @@ public class SignUpActivity extends AppCompatActivity {
                            uploadMultipart(filePath,user_email.getText().toString(),user_password.getText().toString());
                               insertdocumentnil(user_email.getText().toString(),user_password.getText().toString(),user_contact.getText().toString());
                            startActivity(new Intent(getApplicationContext(),SiginInActivity.class));
-                              finish();
+                            MDToast.makeText(SignUpActivity.this,"Account created sucessfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
+
+                            finish();
                         }
                         else if(response.body().getResponse().equals("exist")){
                             setUIToWait(false);
