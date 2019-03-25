@@ -116,6 +116,9 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.loggoo);
         tokenApiInterface = ApiClient.getApiClient().create(TokenApiInterface.class);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
