@@ -147,10 +147,20 @@ public class HomeActivity extends AppCompatActivity
 
 
         // save or update device token
-        storeDeviceToken();Picasso.get().load(user.getImage()).fit().centerCrop()
-                .placeholder(R.drawable.profile)
-                .error(R.drawable.profile)
-                .into(imageViewProfileDrawer);
+        storeDeviceToken();
+
+        if(!(user.getImage().equalsIgnoreCase(""))){
+
+
+            Picasso.get().load(user.getImage()).fit().centerCrop()
+                    .placeholder(R.drawable.profile)
+                    .error(R.drawable.profile)
+                    .into(imageViewProfileDrawer);
+
+        }
+        else{
+            imageViewProfileDrawer.setImageResource(R.drawable.profile);
+        }
 
         //device token add to server
 
