@@ -112,7 +112,10 @@
             />
         <activity android:name=".modules.provider.AddressSetActivity"             android:label=""
             />
-        <activity android:name=".modules.general.ForgotPasswordActivity"             android:label=""
+        <activity android:name=".modules.general.ForgotPasswordActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+
+            android:label=""
             />
         <activity android:name=".modules.general.DeleteMyAccount"
             android:theme="@style/AppTheme.NoActionBar"
