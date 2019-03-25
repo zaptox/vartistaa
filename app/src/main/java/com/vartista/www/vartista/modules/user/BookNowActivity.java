@@ -150,7 +150,7 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
 
              editTextaddress.setText("");
              editTextCity.setText("");
-             textViewReq_Date.setText("00/00/0000");
+             textViewReq_Date.setText("00-00-0000");
              textViewReq_Time.setText("00:00");
 //             Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
 //             intent.putExtra("userId",user_customer_id);
@@ -180,7 +180,16 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        textViewReq_Time.setText(hourOfDay+":"+minute);
+        String amPm="";
+        if(hourOfDay>=12){
+        amPm="PM";
+        hourOfDay=hourOfDay-12;
+        }
+        else{
+            amPm="AM";
+        }
+        textViewReq_Time.setText(String.format("%02d:%02d",hourOfDay,minute)+" "+amPm);
+
     }
 
 
