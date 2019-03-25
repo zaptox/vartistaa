@@ -30,9 +30,15 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
 
         int user_id=ob.getInt("user_id",0);
+        if(user_id!=0){
+            storeDeviceToken(refreshedToken,user_id);
+          try{}catch (Exception e){
 
-        storeDeviceToken(refreshedToken,user_id);
-    }
+          }
+
+            }
+  }
+
 
 
 
