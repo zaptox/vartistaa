@@ -144,7 +144,10 @@
             />
         <activity android:name=".modules.provider.ServicestartProvider"             android:label=""
             />
-        <activity android:name=".modules.provider.EarningActivity"             android:label=""
+        <activity android:name=".modules.provider.EarningActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+
+            android:label=""
             />
         <activity android:name=".modules.provider.RequestAlertActivity"             android:label=""
             />
