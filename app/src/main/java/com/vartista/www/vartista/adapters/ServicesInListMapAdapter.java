@@ -59,7 +59,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
             holder.ratingBar.setRating((float)myServicesList.get(position).getRatings());
 
         }
-        Toast.makeText(context, "rating is "+myServicesList.get(position).getRatings(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "rating is "+myServicesList.get(position).getRatings(), Toast.LENGTH_SHORT).show();
         if(myServicesList.get(position).getUser_status() == 1){
             holder.user_status.setImageResource(R.drawable.green_circle);
         }
