@@ -141,6 +141,7 @@ public class UserAppointmentDetails extends AppCompatActivity {
                             }
                         });
 
+                        payment_dialogue.cancel();
 
 
                     }

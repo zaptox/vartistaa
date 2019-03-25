@@ -115,7 +115,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
 
                        if(response.body().getResponse().equals("ok")){
-                          final String body = name_user+ "Accepted  your request_"+date+"_"+time+"_"+requestservice_id;
+                          final String body = name_user+ " has accepted  your request_"+date+"_"+time+"_"+requestservice_id;
                           final String title = "Vartista-Accept";
                            notifyDataSetChanged();
                            insertNotification(title,body,user_id,customer_id,1,get_Current_Date());

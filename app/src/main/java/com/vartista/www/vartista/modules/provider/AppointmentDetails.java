@@ -230,9 +230,6 @@ public class AppointmentDetails extends AppCompatActivity {
 
                         insertEarnings(Integer.parseInt(ob.getService_provider_id()),Integer.parseInt(ob.getUser_customer_id()),ob.getService_id(), Integer.parseInt(ob.getRequestservice_id()),Double.parseDouble(ob.getPrice()),admin_tax,discount,0.0,ob.getSpname());
 //                        insertEarnings();
-                        Intent intent = new Intent(AppointmentDetails.this, MyAppointments.class);
-                        startActivity(intent);
-                        finish();
 
                     }
                 });
