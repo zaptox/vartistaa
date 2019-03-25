@@ -13,7 +13,7 @@
         card_view:cardCornerRadius="10dp">
 
 
-        <android.support.constraint.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="10dp"
@@ -26,15 +26,12 @@
                 android:id="@+id/tvCurrency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textViewServiceTitle"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/textViewServiceTitle"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Rs."
+                android:layout_marginEnd="110dp"
+                android:text="Rs:"
                 android:textColor="@color/price_color"
-                android:textSize="10dp"
+                android:textSize="14dp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toStartOf="@+id/tvServicePrice"
                 card_view:layout_constraintHorizontal_bias="1.0"
@@ -44,20 +41,17 @@
 
             <TextView
                 android:id="@+id/tvServicePrice"
-                android:layout_width="wrap_content"
+                android:layout_width="108dp"
                 android:layout_height="38dp"
 
-                android:layout_alignStart="@+id/delete"
-                android:layout_below="@+id/textViewServiceTitle"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_alignBaseline="@+id/tvCurrency"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="0dp"
+
                 android:text="30$"
                 android:textColor="@color/price_color"
                 android:textSize="20dp"
                 android:textStyle="bold"
-
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintHorizontal_bias="1.0"
@@ -67,33 +61,12 @@
 
 
             <TextView
-                android:id="@+id/textViewServiceTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_above="@+id/textViewCategory"
-                android:layout_alignLeft="@+id/textViewCategory"
-                android:layout_alignStart="@+id/textViewCategory"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="20dp"
-                android:text="ServiceTitle"
-                android:textColor="@android:color/black"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.092"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent" />
-
-
-            <TextView
                 android:id="@+id/textViewCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginBottom="120dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_below="@+id/tvCurrency"
+                android:layout_marginStart="24dp"
                 android:text="Category"
                 android:textSize="16dp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
@@ -106,12 +79,10 @@
                 android:id="@+id/tvlocation"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
-                android:layout_alignBottom="@+id/edit"
-                android:layout_alignStart="@+id/textViewServiceTitle"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="70dp"
+                android:layout_marginStart="50dp"
                 android:text="Location"
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="10dp"
@@ -120,20 +91,16 @@
                 card_view:layout_constraintHorizontal_bias="0.224"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintVertical_bias="0.785" />
+                card_view:layout_constraintVertical_bias="0.656" />
 
             <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/textViewServiceTitle"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content"
 
 
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_alignStart="@+id/textViewCategory"
+                android:layout_below="@+id/textViewCategory"
                 android:text="description"
                 android:textColor="@android:color/background_dark"
                 android:textSize="10dp"
@@ -146,29 +113,31 @@
                 card_view:layout_constraintVertical_bias="0.537" />
 
             <android.support.v7.widget.AppCompatImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_width="28dp"
+                android:layout_height="35dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/textViewCategory"
+                android:layout_marginBottom="61dp"
                 android:src="@drawable/location"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.062"
+                card_view:layout_constraintHorizontal_bias="0.091"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintVertical_bias="0.783" />
+                card_view:layout_constraintVertical_bias="0.746" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:layout_alignStart="@+id/textViewCategory"
+
+                android:layout_below="@+id/tvlocation"
+                android:layout_marginTop="-70dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-
+                tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="26dp"
-                tools:layout_editor_absoluteY="133dp"
-                tools:ignore="MissingConstraints">
+                tools:layout_editor_absoluteY="133dp">
 
                 <ImageView
                     android:layout_width="30sp"
@@ -189,46 +158,49 @@
             <Button
                 android:id="@+id/edit"
                 android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:layout_alignParentBottom="true"
+                android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_alignTop="@+id/delete"
+                android:layout_marginEnd="90dp"
                 android:background="@drawable/accept_btn_shape"
                 android:text="Edit"
                 android:textAllCaps="false"
                 android:textColor="@color/textColor"
-                android:textStyle="bold"
                 android:textSize="11dp"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintEnd_toStartOf="@+id/delete"
-                card_view:layout_constraintHorizontal_bias="1.0"
+                android:textStyle="bold"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintVertical_bias="1.0" />
+                card_view:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/delete"
                 android:layout_width="80dp"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/reject_btn_shape"
                 android:text="Delete"
                 android:textAllCaps="false"
                 android:textColor="@color/textColor"
-                android:textStyle="bold"
                 android:textSize="11dp"
+                android:textStyle="bold"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent" />
 
+            <TextView
+                android:id="@+id/textViewServiceTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/textViewCategory"
+                android:text="TextView"
+                android:textColor="@color/colorPrimary"
+                android:textSize="22dp"
+                android:textStyle="bold" />
 
 
-        </android.support.constraint.ConstraintLayout>
+        </RelativeLayout>
 
         <View
             android:layout_width="4dip"
