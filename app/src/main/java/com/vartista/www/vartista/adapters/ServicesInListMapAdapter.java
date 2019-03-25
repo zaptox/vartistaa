@@ -71,11 +71,17 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
             holder.busy_status.setVisibility(View.VISIBLE);
         }
 
-        Picasso.get().load(myServicesList.get(position).getImage()).fit().centerCrop()
-                .placeholder(R.drawable.profile)
-                .error(R.drawable.profile)
-                .into(holder.user_profile_img);
+        if(!myServicesList.get(position).getImage().equals("")) {
 
+            Picasso.get().load(myServicesList.get(position).getImage()).fit().centerCrop()
+                    .placeholder(R.drawable.profile)
+                    .error(R.drawable.profile)
+                    .into(holder.user_profile_img);
+
+        }
+        else{
+            holder.user_profile_img.setImageResource(R.drawable.profile);
+        }
 
 
         final int abhipoition = position;

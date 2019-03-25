@@ -20,6 +20,7 @@ import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.beans.AllNotificationBean;
 import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.NotificationsManager;
+import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
 import com.vartista.www.vartista.modules.general.AppSettings;
 import com.vartista.www.vartista.modules.general.HomeActivity;
@@ -121,7 +122,7 @@ public class UserAppointmentDetails extends AppCompatActivity {
                         String body="Have you Received the payment from "+ob.getUsername();
                         String title="Cash Payment Verification";
                         insertNotification(title,body,Integer.parseInt(ob.getUser_customer_id()),customer_id,1,get_Current_Date());
-
+                        payment_received_function(Integer.parseInt(ob.getRequestservice_id()));
 
                         Call<NotificationsManager> callNotification = UserAppointmentDetails.sendNotificationApiInterface
                                 .sendPushNotification(customer_id,
@@ -341,4 +342,39 @@ public class UserAppointmentDetails extends AppCompatActivity {
 
 
     }
+
+    public void payment_received_function(int id){
+        Call<ServiceRequets> call= UserAppointmentDetails.apiInterface.updateOnClickRequests(6,id);
+        call.enqueue(new Callback<ServiceRequets>() {
+            @Override
+            public void onResponse(Call <ServiceRequets> call, Response<ServiceRequets> response) {
+
+                if(response.body().getResponse().equals("ok")){
+
+
+                }else if(response.body().getResponse().equals("exist")){
+
+
+                }
+                else if(response.body().getResponse().equals("error")){
+
+
+
+                }
+                else{
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call <ServiceRequets> call, Throwable t) {
+
+//                MDToast.makeText(AppointmentDetails.this,"Update Failed",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+
+            }
+        });
+    }
+
 }
