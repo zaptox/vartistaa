@@ -146,7 +146,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
             int user_id = obj.getInt("user_id", 0);
 
             if(title.contains("Accept")){
-           int R_S_ID = Integer.parseInt(rservice_id);
+//           int R_S_ID = Integer.parseInt(rservice_id);
 //                if (!date.equals("")){
 //                    sendCompactNotification(this,REQEUST_CODE_FOR_USER,date,time,name_user,"minute",-2,0);
 //                    sendCompactNotification(this,REQEUST_CODE_FOR_USER_BEFORE2H,date,time,name_user,"minute",-2,R_S_ID );
@@ -162,10 +162,10 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 resultIntent = new Intent(getApplicationContext(), MyServiceRequests.class);
                 resultIntent.putExtra("user", user_id);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Intent dialogIntent = new Intent(this, RequestAlertActivity.class);
-                dialogIntent.putExtra("user",user_id);
-                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(dialogIntent);
+//                Intent dialogIntent = new Intent(this, RequestAlertActivity.class);
+//                dialogIntent.putExtra("user",user_id);
+//                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(dialogIntent);
             }
             else if(title.contains("Decline")){
 

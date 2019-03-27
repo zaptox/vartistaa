@@ -1,5 +1,6 @@
 package com.vartista.www.vartista.modules.provider;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +49,9 @@ public class RequestAlertActivity extends AppCompatActivity {
     String service_Id = "";
     String serv_provider_id = "";
     String reqUserId = "";
+    Button btn_accept;
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +60,7 @@ public class RequestAlertActivity extends AppCompatActivity {
         TxtUserNameAddress = findViewById(R.id.userlocation);
         txtUserReqServ = findViewById(R.id.user_reqserv);
         reqUserImage = findViewById(R.id.reqUserIdImage);
-
+        btn_accept=findViewById(R.id.button_paynow);
         Intent I = getIntent();
         reqUserId = I.getStringExtra("reqUserId");
         serv_provider_id = I.getStringExtra("serv_prv_Id");
@@ -149,6 +153,7 @@ public class RequestAlertActivity extends AppCompatActivity {
         mCountDown = (TickTockView) findViewById(R.id.view_ticktock_countdown);
         if (mCountDown != null) {
             mCountDown.setOnTickListener(new TickTockView.OnTickListener() {
+                @SuppressLint("DefaultLocale")
                 @Override
                 public String getText(long timeRemaining) {
                     int seconds = (int) (timeRemaining / 1000) % 60;
@@ -167,14 +172,10 @@ public class RequestAlertActivity extends AppCompatActivity {
             });
 
         }
-    }
-    //    public void remove(int position) {
-//        myReqServicesList.remove(position);
-//        notifyItemRemoved(position);
-//    }
-    public void OnClick(final View V){
-        switch (V.getId()) {
-            case  R.id.button_paynow :
+
+        btn_accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 int status = 1;
                 int requestservice_id = Integer.parseInt(service_Id);
 
@@ -199,7 +200,7 @@ public class RequestAlertActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
                                     if(response.isSuccessful())
-                                        MDToast.makeText(V.getContext(),"Request Accepted", Toast.LENGTH_SHORT).show();
+                                        MDToast.makeText(RequestAlertActivity.this,"Request Accepted", Toast.LENGTH_SHORT).show();
                                 }
 
 
@@ -213,11 +214,11 @@ public class RequestAlertActivity extends AppCompatActivity {
 
                         else if(response.body().getResponse().equals("error")){
 
-                            Toast.makeText(V.getContext(),"Something went wrong....",Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(V.getContext(),"Something went wrong....",Toast.LENGTH_SHORT).show();
 
                         }
                         else{
-                            Toast.makeText(V.getContext(),"Something went wrong....",Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(V.getContext(),"Something went wrong....",Toast.LENGTH_SHORT).show();
 
                         }
 //                        remove(position);
@@ -228,9 +229,22 @@ public class RequestAlertActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<ServiceRequets> call, Throwable t) {
-                        Toast.makeText(V.getContext(),"Update Failed",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(V.getContext(),"Update Failed",Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+        });
+
+    }
+
+    //    public void remove(int position) {
+//        myReqServicesList.remove(position);
+//        notifyItemRemoved(position);
+//    }
+    public void OnClick(final View V){
+        switch (V.getId()) {
+            case  R.id.button_paynow :
+
                 break;
         }
     }
