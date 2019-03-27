@@ -106,8 +106,9 @@ public class HomeActivity extends AppCompatActivity
     public static NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     private int[] tabIcons = {
-            R.drawable.ic_tab,
-            R.drawable.ic_tab,
+            R.drawable.user,
+            R.drawable.myservices,
+
 
     };
     Boolean check = true;
@@ -596,6 +597,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void setupTabIcons() {
+        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
 
 
