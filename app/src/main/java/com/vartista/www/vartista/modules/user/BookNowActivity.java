@@ -101,8 +101,8 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
              SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
              final String name_user = ob.getString("name","");
-             final String title = "Vartista-Request";
-             final String body = name_user+" Sent you request";
+             final String title = "Vartista- Request";
+             final String body = name_user+" sent you request";
              insertNotification(title,body,user_customer_id,service_provider_id,1,date);
              Call<CreateRequest> call = BookNowActivity.apiInterface.createRequest(user_customer_id,
                      service_provider_id,
@@ -171,7 +171,7 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
         c.set(Calendar.YEAR,year);
         c.set(Calendar.MONTH,month);
         c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String currentDate = sdf.format(c.getTime());
 //        String currentDate= DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
         textViewReq_Date.setText(currentDate);

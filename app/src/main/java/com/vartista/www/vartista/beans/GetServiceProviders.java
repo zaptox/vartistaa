@@ -75,7 +75,7 @@ public class GetServiceProviders implements Serializable,Parcelable{
         this.user_status = user_status;
         this.image = image;
     }
-    public GetServiceProviders(int service_id, int address_id, double latitude, double longitude, int user_id, String service_title, String service_description, double price, int category_id, String sp_name, double ratings, int user_status, String image,int busy_status) {
+    public GetServiceProviders(int service_id, int address_id, double latitude, double longitude, int user_id, String service_title, String service_description, double price, int category_id, String sp_name, double ratings, int user_status, String image,int busy_status,String location) {
         this.service_id = service_id;
         this.address_id = address_id;
         this.latitude = latitude;
@@ -90,6 +90,7 @@ public class GetServiceProviders implements Serializable,Parcelable{
         this.user_status = user_status;
         this.image = image;
         this.busy_status=busy_status;
+        this.location=location;
     }
 
     protected GetServiceProviders(Parcel in) {

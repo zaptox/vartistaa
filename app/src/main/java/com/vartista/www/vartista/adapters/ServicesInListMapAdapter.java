@@ -52,7 +52,16 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
         holder.busy_status.setVisibility(View.INVISIBLE);
         holder.service_p_name.setText("" + myServicesList.get(position).getSp_name());
         holder.service_name.setText("" + myServicesList.get(position).getService_title());
-        holder.ratingBar.setRating((float) (myServicesList.get(position).getRatings()));
+        holder.location.setText(""+myServicesList.get(position).getLocation());
+        if(myServicesList.get(position).getRatings()==0.0){
+            holder.ratingBar.setRating(0);
+
+        }
+        else{
+            holder.ratingBar.setRating((float)myServicesList.get(position).getRatings());
+
+        }
+        Toast.makeText(context, "rating is "+myServicesList.get(position).getRatings(), Toast.LENGTH_SHORT).show();
         if(myServicesList.get(position).getUser_status() == 1){
             holder.user_status.setImageResource(R.drawable.green_circle);
         }
@@ -112,7 +121,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
         View mView;
 
 
-        public TextView service_p_name, service_name,busy_status;
+        public TextView service_p_name, service_name,busy_status,location;
 
         public ScaleRatingBar ratingBar;
         public ImageView user_status, user_profile_img;
@@ -125,6 +134,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
             busy_status = (TextView) mView.findViewById(R.id.busy_status);
             service_name = (TextView) mView.findViewById(R.id.textViewService);
             ratingBar = mView.findViewById(R.id.simpleRatingBar);
+            location=mView.findViewById(R.id.textViewAddress);
             user_status = mView.findViewById(R.id.user_status);
             user_profile_img = mView.findViewById(R.id.user_profile_img);
 

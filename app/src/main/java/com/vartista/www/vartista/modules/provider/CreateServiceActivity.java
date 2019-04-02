@@ -159,7 +159,7 @@ public class  CreateServiceActivity extends AppCompatActivity {
                 //update Work here
 
                 if(category_id==0){
-                    category_id=1;
+                    category_id=cat_id.get(0);
                 }
 
                 if (btnCreateSerivce.getText().equals("Edit Service")) {

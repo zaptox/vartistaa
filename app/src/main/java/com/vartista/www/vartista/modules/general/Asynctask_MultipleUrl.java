@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.TwoListInRecyclerView;
 import com.vartista.www.vartista.adapters.UserNotificationlistadapter;
+import com.vartista.www.vartista.beans.AllNotificationBean;
 import com.vartista.www.vartista.beans.usernotificationitems;
 
 import org.apache.http.HttpResponse;
@@ -43,6 +44,7 @@ public class Asynctask_MultipleUrl extends AppCompatActivity {
     private TwoListInRecyclerView listadapter;
     ArrayList<usernotificationitems> requestlist;
     ArrayList<usernotificationitems> notificationlist;
+
     int user_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +105,8 @@ public class Asynctask_MultipleUrl extends AppCompatActivity {
                 int success = jsonResult.getInt("success");
                 int success2 = jsonResult2.getInt("success");
 
+
+
                 if (success == 1) {
                     JSONArray services = jsonResult.getJSONArray("services");
                     for (int j = 0; j < services.length(); j++) {
@@ -111,9 +115,16 @@ public class Asynctask_MultipleUrl extends AppCompatActivity {
                         String image = ser1.getString("image");
                         String request_detail = ser1.getString("request_status");
                         String Time = ser1.getString("time");
+                        String reqest_sendat = ser1.getString("reqeustsend_at") ;
+                        String accepted_date = ser1.getString("accepted_date");
+                        String rejected_date = ser1.getString("rejected_date");
+                        String pay_verify_date = ser1.getString("pay_verify_date");
+                        String Cancelled_date = ser1.getString("cancelled_date");
+                        String completed_date = ser1.getString("completed_date");
+                        String Canceled_by_id = ser1.getString("cancelled_by_id");
                         String Service_title = ser1.getString("service_title");
                         Double price = ser1.getDouble("price");
-                        requestlist.add(new usernotificationitems(username,image,request_detail,Time,Service_title,price));
+                        requestlist.add(new usernotificationitems(username,image,request_detail,Time,reqest_sendat,accepted_date,rejected_date,pay_verify_date,Cancelled_date,completed_date,Canceled_by_id,Service_title,price));
                     }
                 } else {
                 }
@@ -131,6 +142,7 @@ public class Asynctask_MultipleUrl extends AppCompatActivity {
                     }
                 } else {
                }
+
                 listadapter = new TwoListInRecyclerView(getApplicationContext(),requestlist,notificationlist);
                 view.setAdapter(listadapter);
 
