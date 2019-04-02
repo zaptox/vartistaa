@@ -48,9 +48,11 @@
         android:textColor="@color/text_color_client"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:padding="7sp"
         android:layout_gravity="center_horizontal"
         android:text="By becoming Service provider you can
-provide your own services."
+provide your own services. Per service vartista tax will be only 20%. Lets join the world of Vartista and start earning through your skills."
         />
         </LinearLayout>
     </ScrollView>

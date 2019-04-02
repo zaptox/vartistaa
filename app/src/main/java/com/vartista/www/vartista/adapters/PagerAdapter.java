@@ -55,10 +55,15 @@ String title[]=new String[]{"As a User","As a Service Provider"};
                 ConfigSettingsFragment tab3= new ConfigSettingsFragment();
                     return tab3;
                 }
+//                else if(HomeActivity.changed_from_notif.equals("1")){
+//
+//                ServiceProviderFragment tab2 = new ServiceProviderFragment(user_id);
+//                return tab2;
+//
+//                }
                 else{
-
-                ServiceProviderFragment tab2 = new ServiceProviderFragment(user_id);
-                return tab2;
+                    ServiceProviderFragment tab2 = new ServiceProviderFragment(user_id);
+                    return tab2;
 
                 }
 

@@ -38,7 +38,7 @@ import java.util.ArrayList;
 public class EarningActivity extends AppCompatActivity {
 
 
-    public TextView total_earning;
+    public TextView total_earning,total_dues_text;
     public int serviceproviderid;
     RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -52,25 +52,28 @@ public class EarningActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earning);
         total_earning= findViewById(R.id.total_earning);
-
+        total_dues_text= findViewById(R.id.dues);
         recyclerView = (RecyclerView)findViewById(R.id.earning_list);
         earnings_list=new ArrayList<EarningBean>();
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-
-
-
         SharedPreferences object =getSharedPreferences("Login", Context.MODE_PRIVATE);
         serviceproviderid= object.getInt("user_id",0);
 
+try {
+    new EarningActivity.Conncetion2(EarningActivity.this, serviceproviderid).execute();
 
 
-        new EarningActivity.Conncetion2(EarningActivity.this,serviceproviderid).execute();
+    new EarningActivity.Conncetion(EarningActivity.this, serviceproviderid).execute();
 
+    new EarningActivity.Conncetion3(EarningActivity.this, serviceproviderid).execute();
 
-        new EarningActivity.Conncetion(EarningActivity.this,serviceproviderid).execute();
+}
+catch (Exception e){
+    MDToast.makeText(EarningActivity.this,"No Earnings Yet..",MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();
 
+}
 
 
 
@@ -251,8 +254,15 @@ public class EarningActivity extends AppCompatActivity {
                     for (int j = 0; j < services.length(); j++) {
                         JSONObject ser1 = services.getJSONObject(j);
                         if(ser1.getString("total_earning")!=null) {
+
+                        try {
                             total_earned = Double.parseDouble(ser1.getString("total_earning"));
-                            }
+                        }
+                        catch (Exception e){
+                            total_earned=0.0;
+                        }
+
+                        }
                             else{
                             total_earned=0.0;
                         }
@@ -271,4 +281,99 @@ public class EarningActivity extends AppCompatActivity {
 
     }
 
+    class Conncetion3 extends AsyncTask<String,String ,String > {
+        private int user_customer_id;
+        private ProgressDialog dialog;
+
+        public Conncetion3(Context activity, int user_customer_id) {
+            dialog = new ProgressDialog(activity);
+            this.user_customer_id = user_customer_id;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage("Retriving data Please Wait..");
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+
+            String result = "";
+
+
+            final String BASE_URL = "http://vartista.com/vartista_app/retreive_sp_dues.php?sp_id=" + serviceproviderid;
+            try {
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(BASE_URL));
+                HttpResponse response = client.execute(request);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                StringBuffer stringBuffer = new StringBuffer();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    stringBuffer.append(line);
+                    break;
+                }
+                reader.close();
+                result = stringBuffer.toString();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+                return new String("Exception is " + e.getMessage());
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            Double rating;
+
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            try {
+
+                JSONObject jsonResult = new JSONObject(result);
+                double total_dues = 0.0;
+                int success = jsonResult.getInt("success");
+
+                if (success == 1) {
+                    JSONArray services = jsonResult.getJSONArray("services");
+                    for (int j = 0; j < services.length(); j++) {
+                        JSONObject ser1 = services.getJSONObject(j);
+                        if(ser1.getString("amount_due")!=null) {
+
+                            try {
+                                total_dues = Double.parseDouble(ser1.getString("amount_due"));
+                            }
+                            catch (Exception e){
+                                total_dues=0.0;
+                            }
+
+                        }
+                        else{
+                            total_dues=0.0;
+                        }
+                    }
+
+                    total_dues_text.setText("" + total_dues);
+
+                } else {
+                    MDToast.makeText(getApplicationContext(), "no data", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
+
+
+}

@@ -117,7 +117,7 @@
                             android:textStyle="bold"
                             android:textAllCaps="true"
                             android:textColor="@color/grey2_for_design"
-                            android:text="My Servies"
+                            android:text="My Services"
                             android:layout_gravity="center"/>
 
 
@@ -318,7 +318,7 @@
                             android:textStyle="bold"
                             android:textAllCaps="true"
                             android:textColor="@color/grey2_for_design"
-                            android:text="Setting"
+                            android:text="Settings"
                             android:layout_gravity="center"/>
 
 

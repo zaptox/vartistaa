@@ -20,6 +20,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.kennyc.bottomsheet.BottomSheet;
 import com.kennyc.bottomsheet.BottomSheetListener;
 import com.squareup.picasso.Picasso;
@@ -31,6 +33,7 @@ import com.vartista.www.vartista.appconfig.App;
 import com.vartista.www.vartista.beans.AllNotificationBean;
 import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.EarningsBean;
+import com.vartista.www.vartista.beans.EarningsDuesBean;
 import com.vartista.www.vartista.beans.NotificationsManager;
 import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
@@ -110,12 +113,13 @@ public class AppointmentDetails extends AppCompatActivity {
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)
                 .into(imageView);
-        serviceprovidername.setText(ob.getUsername());
+
+        serviceprovidername.setText("Service Provider : "+ob.getUsername());
         servicecharges.setText(ob.getService_title()+" "+ob.getPrice());
         Date.setText(ob.getDate());
         Time.setText(ob.getTime());
         serviceDesc.setText(ob.getService_description());
-        serviceLoc.setText(ob.getLocation());
+        serviceLoc.setText("Location : "+ob.getLocation());
 
         final int requestservice_id = Integer.parseInt(ob.getRequestservice_id());
 
@@ -228,8 +232,10 @@ public class AppointmentDetails extends AppCompatActivity {
 
 //                        upaterequeststatus(requestservice_id);
 
-                        insertEarnings(Integer.parseInt(ob.getService_provider_id()),Integer.parseInt(ob.getUser_customer_id()),ob.getService_id(), Integer.parseInt(ob.getRequestservice_id()),Double.parseDouble(ob.getPrice()),admin_tax,discount,0.0,ob.getSpname());
+                        insertEarnings(Integer.parseInt(ob.getService_provider_id()),Integer.parseInt(ob.getUser_customer_id()),ob.getService_id(), Integer.parseInt(ob.getRequestservice_id()),Double.parseDouble(ob.getPrice()),admin_tax,discount,0.0,ob.getName());
 //                        insertEarnings();
+
+                        payment_received_dialogue.cancel();
 
                     }
                 });
@@ -255,9 +261,9 @@ public class AppointmentDetails extends AppCompatActivity {
 
 
     @TargetApi(Build.VERSION_CODES.N)
-    public void insertEarnings(int sp_id, final int user_id, int serviceid , final int requestservice_id, double total_ammout, double admin_tax, double discount, double user_bones, final String sp_name){
+    public void insertEarnings(final int sp_id, final int user_id, int serviceid , final int requestservice_id, double total_ammout, double admin_tax, double discount, double user_bones, final String sp_name){
 
-        double admin_earning=(total_ammout *admin_tax)/100;
+        final double admin_earning=(total_ammout *admin_tax)/100;
         double sp_earning= total_ammout-admin_earning;
         String date=getDateTime();
 
@@ -269,9 +275,10 @@ public class AppointmentDetails extends AppCompatActivity {
             public void onResponse(Call <EarningsBean> call, Response<EarningsBean> response) {
 
                 if(response.body().getResponse().equals("ok")){
+                    updateDues(sp_id,admin_earning);
 
                     payment_received_function(requestservice_id,user_id,sp_name);
-                    MDToast.makeText(AppointmentDetails.this,"Updated Successfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
+                    MDToast.makeText(AppointmentDetails.this,"Earnings Added..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
                 }else if(response.body().getResponse().equals("exist")){
 
@@ -544,6 +551,43 @@ public class AppointmentDetails extends AppCompatActivity {
 
 
     }
+
+    public void updateDues(int sp_id, double amount_due){
+
+//        String date=getDateTime();
+
+//        System.out.println("Current time => " + c);,
+
+        Call<EarningsDuesBean> call= AppointmentDetails.apiInterface.UpdateDues(sp_id,amount_due);
+        call.enqueue(new Callback<EarningsDuesBean>() {
+            @Override
+            public void onResponse(Call <EarningsDuesBean> call, Response<EarningsDuesBean> response) {
+                Toast.makeText(AppointmentDetails.this, ""+response.body().getResponse(), Toast.LENGTH_SHORT).show();
+                if(response.body().getResponse().equals("ok")){
+//                    payment_received_function(requestservice_id,user_id,sp_name);
+                    MDToast.makeText(AppointmentDetails.this,"Dues Added..",MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();
+                }else if(response.body().getResponse().equals("exist")){
+                    MDToast.makeText(AppointmentDetails.this,"Same Data exists....",MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
+                }
+                else if(response.body().getResponse().equals("error")){
+                    MDToast.makeText(AppointmentDetails.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+                }
+                else{
+                    MDToast.makeText(AppointmentDetails.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call <EarningsDuesBean> call, Throwable t) {
+
+                MDToast.makeText(AppointmentDetails.this,"Update Failed",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+
+            }
+        });
+    }
+
+
 
 
 

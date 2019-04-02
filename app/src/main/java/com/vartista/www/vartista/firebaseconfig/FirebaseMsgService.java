@@ -21,8 +21,10 @@ import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.beans.RequestService;
 import com.vartista.www.vartista.beans.ServiceRequets;
+import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.modules.general.Asynctask_MultipleUrl;
 import com.vartista.www.vartista.modules.general.HomeActivity;
+import com.vartista.www.vartista.modules.general.SiginInActivity;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.UploadDoc;
 import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
@@ -167,12 +169,30 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 //                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                startActivity(dialogIntent);
             }
+
+            else if (title.contains("Congratulations")){
+                resultIntent = new Intent(getApplicationContext(), SiginInActivity.class);
+                User user= HomeActivity.user;
+                user.setSp_status("1");
+                SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor=sharedPreferencespre.edit();
+                editor.putString("sp_status","1");
+//                HomeActivity.changed_from_notif="1";
+                resultIntent.putExtra("user", user);
+                resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                resultIntent.putExtra("user", user_id);
+
+            }
+
+
             else if(title.contains("Decline")){
 
                 resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
+
+
             else if(title.contains("Document")){
 
                 resultIntent = new Intent(getApplicationContext(), UploadDocListActivity.class);
@@ -204,6 +224,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
             }
 
             else {
+
                 resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             }

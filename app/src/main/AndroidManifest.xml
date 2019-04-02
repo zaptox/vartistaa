@@ -126,15 +126,12 @@
         <activity android:name=".modules.general.Asynctask_MultipleUrl"             android:label=""
             />
 
-        <service
-            android:name=".Offline_user_status_service"
-            android:enabled="true"
-            android:exported="true" />
 
         <activity
             android:name=".ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".modules.provider.UploadDocListActivity"
             android:label="@string/title_activity_upload_docs"

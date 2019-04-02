@@ -129,6 +129,12 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
                                    MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
 
+                                   Intent intent=new Intent(view.getContext(),HomeActivity.class);
+                                   intent.putExtra("user", HomeActivity.user);
+                                   context.startActivity(intent);
+
+//                                   view.startActivity(intent);
+
 
                                }
 

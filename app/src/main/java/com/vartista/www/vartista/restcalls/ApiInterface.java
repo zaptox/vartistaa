@@ -8,6 +8,7 @@ import com.vartista.www.vartista.beans.CreateRequest;
 //import com.vartista.www.vartista.beans.DocUploadList;
 import com.vartista.www.vartista.beans.Doument_Upload_Nil;
 import com.vartista.www.vartista.beans.EarningsBean;
+import com.vartista.www.vartista.beans.EarningsDuesBean;
 import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.beans.forgotpassword;
@@ -129,6 +130,9 @@ public interface ApiInterface {
 
     @GET("earnings_insert.php")
     Call<EarningsBean> Insert_Earnings(@Query("sp_id")int sp_id, @Query("user_id")int user_id, @Query("service_id") int service_id, @Query("request_service_id") int request_service_id, @Query("total_amount")double total_amount, @Query("admin_tax")double admin_tax, @Query("discount")double discount, @Query("user_bonus")double user_bonus, @Query("sp_earning")double sp_earning, @Query("admin_earning")double admin_earning, @Query("date")String date);
+
+    @GET("update_dues.php")
+    Call<EarningsDuesBean> UpdateDues(@Query("sp_id")int sp_id,@Query("amount_due")double amount_due);
 
 }
 

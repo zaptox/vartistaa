@@ -74,16 +74,21 @@ public class UserAppointmentDetails extends AppCompatActivity {
         Intent intent = getIntent();
         final servicepaapointmentsitems ob = (servicepaapointmentsitems) intent.getSerializableExtra("object");
 
+        if(Integer.parseInt(ob.getRequest_status())==6){
+            btn_paynow.setText("Payment Under Verification");
+            btn_paynow.setEnabled(false);
+        }
+
         Picasso.get().load(ob    .getImage()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)
                 .into(imageView);
-        serviceprovidername.setText(ob.getUsername());
-        servicecharges.setText(ob.getService_title()+" "+ob.getPrice());
-        date_view.setText(ob.getDate());
-        Time.setText(ob.getTime());
+        serviceprovidername.setText("Service Provider : "+ob.getUsername());
+        servicecharges.setText("Service : "+ob.getService_title()+" "+ob.getPrice());
+        date_view.setText("Date : "+ob.getDate());
+        Time.setText("Time : "+ob.getTime());
         serviceDesc.setText(ob.getService_description());
-        serviceLoc.setText(ob.getLocation());
+        serviceLoc.setText("Location : "+ob.getLocation());
 
         if (ob.getRequest_status().equals("5")){
             cancelButton.setEnabled(true);
@@ -94,6 +99,9 @@ public class UserAppointmentDetails extends AppCompatActivity {
         btn_paynow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
                 payment_dialogue = new Dialog(UserAppointmentDetails.this);
                 payment_dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
                 payment_dialogue.setContentView(R.layout.paynow_dialogue);
@@ -111,6 +119,8 @@ public class UserAppointmentDetails extends AppCompatActivity {
                 d_servicename.setText("Service:"+ob.getService_title());
 
                 payment_dialogue.show();
+
+
 
                 paynow.setOnClickListener(new View.OnClickListener() {
                     @Override

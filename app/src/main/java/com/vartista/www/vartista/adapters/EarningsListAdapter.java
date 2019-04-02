@@ -51,6 +51,8 @@ public class EarningsListAdapter  extends RecyclerView.Adapter<EarningsListAdapt
         holder.time.setText(list.get(position).getService_time());
         holder.earning.setText("Earning: "+list.get(position).getSp_earning()+"");
         holder.service_location.setText("Location: "+list.get(position).getLocation());
+        holder.admin_tax.setText("Vartista Tax: "+list.get(position).getAdmin_tax()+"%");
+
 
     }
 
@@ -62,7 +64,7 @@ public class EarningsListAdapter  extends RecyclerView.Adapter<EarningsListAdapt
     public class ViewHolder extends RecyclerView.ViewHolder{
         View mView;
 
-        public TextView service_name,service_availer,date,time,earning,service_location;
+        public TextView service_name,service_availer,date,time,earning,service_location,admin_tax;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -74,7 +76,7 @@ public class EarningsListAdapter  extends RecyclerView.Adapter<EarningsListAdapt
             earning=(TextView)mView.findViewById(R .id.textViewtime_user);
             time=(TextView)mView.findViewById(R.id.time_service);
             service_location=(TextView)mView.findViewById(R.id.service_location);
-
+            admin_tax= mView.findViewById(R.id.admin_tax);
         }
     }
 

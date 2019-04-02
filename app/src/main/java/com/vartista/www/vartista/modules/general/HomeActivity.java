@@ -91,7 +91,7 @@ import retrofit2.Response;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
+//    public static String changed_from_notif="0";
     private TextView email, name;
     User u = null;
     public static int user_id;

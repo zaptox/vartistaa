@@ -6,16 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.vartista.www.vartista.modules.provider.My_Rating_Reviews">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:gravity="center_horizontal"
-        android:background="@color/colorPrimary"
-        android:orientation="vertical"
+    <RelativeLayout
         android:id="@+id/userData"
+        android:layout_width="match_parent"
+        android:gravity="left"
+        android:background="@color/colorPrimary"
         android:layout_height="120sp">
-
-
-
 
 
 
@@ -25,6 +21,7 @@
             android:text="Total Earning"
             android:id="@+id/header_name"
             android:layout_marginTop="40dp"
+            android:layout_marginLeft="10sp"
             android:textSize="24sp"
             android:textColor="#FFFFFF"
             />
@@ -32,13 +29,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="____"
+            android:layout_marginLeft="10sp"
+            android:layout_below="@id/header_name"
             android:id="@+id/total_earning"
             android:layout_marginTop="10sp"
             android:textSize="24sp"
             android:textColor="#FFFFFF"
 
             />
-    </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vartista Dues"
+            android:id="@+id/due_header"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="10sp"
+            android:textSize="24sp"
+            android:layout_alignParentRight="true"
+            android:textColor="#FFFFFF"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="____"
+            android:layout_marginRight="10sp"
+            android:layout_below="@id/header_name"
+            android:id="@+id/dues"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10sp"
+            android:textSize="24sp"
+            android:textColor="@color/zaptox_blue"
+
+            />
+
+    </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/earning_list"
         android:layout_below="@+id/userData"
