@@ -11,9 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.squareup.picasso.Picasso;
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.modules.user.StartService;
 import com.vartista.www.vartista.restcalls.ApiClient;
@@ -240,7 +239,7 @@ public class ServicestartProvider extends AppCompatActivity {
 
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(getApplicationContext(),"no data",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

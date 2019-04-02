@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.RatingsReviewDetailsAdaptor;
 import com.vartista.www.vartista.adapters.UserNotificationlistadapter;
@@ -147,13 +147,12 @@ public class My_Rating_Reviews extends AppCompatActivity {
                     listadapter = new RatingsReviewDetailsAdaptor(getApplicationContext(),list);
                     view.setAdapter(listadapter);
                     headername.setText(list.get(0).getSpName());
-                    Toast.makeText(My_Rating_Reviews.this, ""+list.size(), Toast.LENGTH_SHORT).show();
                     Float finalrating = (Float)serviceProvierRating/list.size();
                     ratingBar.setRating(finalrating);
                     ratingBar.setIsIndicator(true);
                     ratingBar.setFocusable(false);
                 } else {
-                    Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(getApplicationContext(),"no data",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

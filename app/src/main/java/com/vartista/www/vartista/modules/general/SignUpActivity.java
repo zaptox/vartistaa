@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
@@ -106,24 +105,20 @@ public class SignUpActivity extends AppCompatActivity {
                 setUIToWait(true);
 
 
-                if(select_profile){
                 progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                Call<User> call=SignUpActivity.apiInterface.performRegistration(user_name1,user_email1,user_password1,null,"1",user_contact1,null,null,gender);
+                Call<User> call=SignUpActivity.apiInterface.performRegistration(user_name1,user_email1,user_password1,"","1",user_contact1,null,null,gender);
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call <User> call, Response<User> response) {
 
                         if(response.body().getResponse().equals("ok")){
                             setUIToWait(false);
-                          if(select_profile){
                            uploadMultipart(filePath,user_email.getText().toString(),user_password.getText().toString());
                               insertdocumentnil(user_email.getText().toString(),user_password.getText().toString(),user_contact.getText().toString());
                            startActivity(new Intent(getApplicationContext(),SiginInActivity.class));
-                              finish();}
-                              else{
-                              showCompletedDialog("Error","select the profile image!");
-                          }
+                            MDToast.makeText(SignUpActivity.this,"Account created sucessfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
+                            finish();
                         }
                         else if(response.body().getResponse().equals("exist")){
                             setUIToWait(false);
@@ -132,14 +127,14 @@ public class SignUpActivity extends AppCompatActivity {
                         else if(response.body().getResponse().equals("error")){
                             setUIToWait(false);
 
-                           Toast.makeText(SignUpActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                           MDToast.makeText(SignUpActivity.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                         }
 
                         else{
                             setUIToWait(false);
 
-                            Toast.makeText(SignUpActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                            MDToast.makeText(SignUpActivity.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                         }
 
@@ -148,7 +143,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call <User> call, Throwable t) {
                         setUIToWait(false);
-                        Toast.makeText(SignUpActivity.this,"Signup Failed",Toast.LENGTH_SHORT).show();
+                        MDToast.makeText(SignUpActivity.this,"Signup Failed",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                     create.setText(t.getMessage());
                     }
@@ -156,12 +151,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 }
 
-                else{
 
-                    showCompletedDialog("Error","select the profile image!");
-
-                }
-            }
         });
 
 
@@ -224,7 +214,7 @@ public class SignUpActivity extends AppCompatActivity {
                     .setMaxRetries(3)
                     .startUpload(); //Starting the upload
         } catch (Exception exc) {
-            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
+            MDToast.makeText(this, exc.getMessage(), MDToast.LENGTH_SHORT).show();
 
 
 
@@ -294,8 +284,8 @@ public class SignUpActivity extends AppCompatActivity {
 
             //If permission is granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Displaying a toast
-                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
+                //Displaying a MDToast
+                MDToast.makeText(this, "Permission granted now you can read the storage", MDToast.LENGTH_LONG).show();
             } else {
             }
         }

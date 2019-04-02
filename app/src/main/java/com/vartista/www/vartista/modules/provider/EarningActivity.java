@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.EarningsListAdapter;
 import com.vartista.www.vartista.adapters.RatingsReviewDetailsAdaptor;
@@ -157,7 +157,6 @@ public class EarningActivity extends AppCompatActivity {
                         Double sp_earning = ser1.getDouble("sp_earning");
                         Double admin_earning = ser1.getDouble("admin_earning");
                         String date = ser1.getString("date");
-                        Toast.makeText(EarningActivity.this, "Yes it has data "+total_amount, Toast.LENGTH_SHORT).show();
                         earnings_list.add(new EarningBean(id,  service_provider,  service_availer,  service,  location,  service_time,  total_amount, admin_tax, discount,  user_bonus,  sp_earning,admin_earning, date));
                         }
 
@@ -262,7 +261,7 @@ public class EarningActivity extends AppCompatActivity {
                     total_earning.setText("" + total_earned);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(getApplicationContext(), "no data", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

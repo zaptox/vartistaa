@@ -7,17 +7,12 @@
     android:orientation="vertical"
     tools:context="com.vartista.www.vartista.modules.general.SettingsActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="15dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/imagelayouts"
-            android:layout_gravity="center_horizontal"
-            android:orientation="vertical">
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@color/colorPrimary"
+               android:orientation="vertical"> <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/profile_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -34,7 +29,9 @@
                 android:layout_height="30sp"
                 android:layout_marginTop="20sp"
                 android:layout_marginLeft="146sp"
-                android:background="@drawable/loginbtneffect"
+                android:background="@drawable/buttonshape"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
                 android:shadowColor="#A8A8A8"
                 android:shadowDx="0"
                 android:shadowDy="0"
@@ -43,7 +40,19 @@
                 android:text="Upload Image"
                 android:layout_marginBottom="14sp"
                 />
-
+           </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:id="@+id/imagelayouts"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -126,12 +135,12 @@
                     android:text="Change Password"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
-                    android:textColor="#000000"
+                    android:textColor="@color/textColor"
                     android:textAllCaps="false"
                     android:textStyle="bold"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:padding="10dp"
-                    android:background="@drawable/loginbtneffect"
+                    android:background="@drawable/buttonshape"
                     android:id="@+id/changepassword"
                     />
                 <Button
@@ -141,12 +150,12 @@
                     android:text="Update Data"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
-                    android:textColor="#000000"
+                    android:textColor="@color/textColor"
                     android:textAllCaps="false"
                     android:textStyle="bold"
                     android:textSize="17sp"
                     android:padding="10dp"
-                    android:background="@drawable/loginbtneffect"
+                    android:background="@drawable/buttonshape"
                     android:id="@+id/updatedata"
                     />
             </LinearLayout>

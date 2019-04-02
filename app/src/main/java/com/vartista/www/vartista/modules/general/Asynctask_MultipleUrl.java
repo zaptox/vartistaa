@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.BaseAdapter;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;

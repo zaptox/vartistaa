@@ -12,7 +12,7 @@
         android:textSize="20dp"
         android:textColor="#FFFFFF"
         android:padding="08dp"
-        android:background="@color/text_color_client"
+        android:background="@color/colorPrimary"
         android:typeface="sans"
         android:textStyle="bold"
         android:gravity="center" />
@@ -111,9 +111,8 @@
             android:text="Pay"
             android:textAllCaps="false"
             android:typeface="sans"
-            android:background="@drawable/roundedcorners"
-            android:backgroundTint="@color/text_color_client"
-            android:textColor="#ffffffff"
+            android:background="@drawable/accept_btn_shape"
+            android:textColor="@color/textColor"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_marginBottom="5dp" />
@@ -125,10 +124,9 @@
             android:textAllCaps="false"
             android:text="Cancel"
             android:typeface="sans"
-            android:background="@drawable/roundedcorners"
-            android:backgroundTint="@color/text_color_client"
+            android:background="@drawable/reject_btn_shape"
+            android:textColor="@color/textColor"
             android:layout_marginLeft="5dp"
-            android:textColor="#ffffffff"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_marginBottom="5dp" />

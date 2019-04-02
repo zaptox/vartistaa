@@ -91,8 +91,8 @@ public class SplashActivity extends AwesomeSplash {
 
     @Override
     public void animationsFinished() {
-        startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
-        finish();
+//        startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
+//        finish();
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
 
@@ -101,6 +101,16 @@ public class SplashActivity extends AwesomeSplash {
 
         String email_shared=ob.getString("Email","");
         String pass_shared=ob.getString("Password","");
+        int user_id_shared=ob.getInt("user_id",0);
+        String name_shared=ob.getString("name","");
+        String gender_shared=ob.getString("gender","");
+        String sp_status_shared=ob.getString("sp_status","");
+        String contact_shared=ob.getString("contact","");
+        String image_shared=ob.getString("image","");
+
+
+
+        userLoggedIn = new User(user_id_shared, name_shared, email_shared, pass_shared, image_shared, sp_status_shared, contact_shared, "", "",gender_shared,sp_status_shared);
 
         if(email_shared.equals("") && pass_shared.equals("")){
 
@@ -108,7 +118,18 @@ public class SplashActivity extends AwesomeSplash {
 
         }
         else {
-            perfromLogin(email_shared, pass_shared);
+//            perfromLogin(email_shared, pass_shared);
+
+
+            Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+//                    Intent intent = new Intent(SplashActivity.this, CheckActivity.class);
+
+            intent.putExtra("user", userLoggedIn);
+
+
+            startActivity(intent);
+            finish();
+
         }
 
 
@@ -174,6 +195,10 @@ public class SplashActivity extends AwesomeSplash {
                     editor.putString("name",userLoggedIn.getName());
                     editor.putString("gender",userLoggedIn.getGender());
                     editor.putString("sp_status",userLoggedIn.getSp_status());
+                    editor.putInt("busy_status",userLoggedIn.getBusystatus());
+                    editor.putString("contact",contact);
+                    editor.putString("image",image);
+
 
                     editor.apply();
                     editor.commit();
@@ -194,7 +219,7 @@ public class SplashActivity extends AwesomeSplash {
 //
 //
                 } else if (response.body().getResponse().equals("failed")) {
-                     setUIToWait(false);
+                    setUIToWait(false);
 
                 }
 //

@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.ServiceUserAppointmentsAdapter;
 import com.vartista.www.vartista.adapters.servicepappointmentsadapter;
@@ -149,7 +150,7 @@ public class MyServiceMeetings extends AppCompatActivity {
                 }
 
                 else {
-                       Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                       MDToast.makeText(getApplicationContext(),"no data",MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

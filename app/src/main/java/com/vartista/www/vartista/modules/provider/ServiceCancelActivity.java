@@ -10,9 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.squareup.picasso.Picasso;
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.ServiceRequets;
@@ -71,7 +70,6 @@ public class ServiceCancelActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         requestservice_id = intent.getIntExtra("service_id",0);
-        Toast.makeText(this, ""+requestservice_id, Toast.LENGTH_SHORT).show();
 
 
         new ServiceCancelActivity.Conncetion(ServiceCancelActivity.this,requestservice_id).execute();
@@ -183,7 +181,8 @@ public class ServiceCancelActivity extends AppCompatActivity {
 
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(getApplicationContext(),"no data",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR
+                    ).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -201,24 +200,24 @@ public class ServiceCancelActivity extends AppCompatActivity {
                 if(response.body().getResponse().equals("ok")){
 
 
-                    Toast.makeText(ServiceCancelActivity.this,"Updated Successfully..",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(ServiceCancelActivity.this,"Updated Successfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
                 }else if(response.body().getResponse().equals("exist")){
 
 
-                    Toast.makeText(ServiceCancelActivity.this,"Same Data exists....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(ServiceCancelActivity.this,"Same Data exists....",MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
 
                 }
                 else if(response.body().getResponse().equals("error")){
 
 
-                    Toast.makeText(ServiceCancelActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(ServiceCancelActivity.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                 }
                 else{
 
 
-                    Toast.makeText(ServiceCancelActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(ServiceCancelActivity.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 }
 
             }
@@ -226,7 +225,7 @@ public class ServiceCancelActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call <CreateRequest> call, Throwable t) {
 
-                Toast.makeText(ServiceCancelActivity.this,"Update Failed",Toast.LENGTH_SHORT).show();
+                MDToast.makeText(ServiceCancelActivity.this,"Update Failed",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
             }
         });
@@ -242,24 +241,24 @@ public class ServiceCancelActivity extends AppCompatActivity {
                 if(response.body().getResponse().equals("ok")){
 
 
-                    Toast.makeText(ServiceCancelActivity.this,"Updated Successfully..",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(ServiceCancelActivity.this,"Updated Successfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
                 }else if(response.body().getResponse().equals("exist")){
 
 
-                    Toast.makeText(ServiceCancelActivity.this,"Same Data exists....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(ServiceCancelActivity.this,"Same Data exists....",MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
 
                 }
                 else if(response.body().getResponse().equals("error")){
 
 
-                    Toast.makeText(ServiceCancelActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(ServiceCancelActivity.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                 }
                 else{
 
 
-                    Toast.makeText(ServiceCancelActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(ServiceCancelActivity.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 }
 
             }
@@ -267,7 +266,7 @@ public class ServiceCancelActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call <ServiceRequets> call, Throwable t) {
 
-                Toast.makeText(ServiceCancelActivity.this,"Update Failed",Toast.LENGTH_SHORT).show();
+                MDToast.makeText(ServiceCancelActivity.this,"Update Failed",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
             }
         });

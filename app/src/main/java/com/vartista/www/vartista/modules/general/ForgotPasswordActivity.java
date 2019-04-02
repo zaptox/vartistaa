@@ -13,18 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.adapters.ServiceUserAppointmentsAdapter;
-import com.vartista.www.vartista.beans.Category;
-import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.User;
-import com.vartista.www.vartista.beans.forgotpassword;
-import com.vartista.www.vartista.beans.servicepaapointmentsitems;
-import com.vartista.www.vartista.modules.user.AssignRatings;
-import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 
@@ -42,8 +34,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -226,7 +216,7 @@ class Connection extends AsyncTask<String,String ,String > {
             }
 
             else{
-                        Toast.makeText(getApplicationContext(),"no data",Toast.LENGTH_SHORT).show();
+                        MDToast.makeText(getApplicationContext(),"no data",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
             }
 
@@ -248,24 +238,24 @@ class Connection extends AsyncTask<String,String ,String > {
                 if(response.body().getResponse().equals("ok")){
 
 
-                    Toast.makeText(ForgotPasswordActivity.this,"Updated Successfully..",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(ForgotPasswordActivity.this,"Updated Successfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
                 }else if(response.body().getResponse().equals("exist")){
 
 
-                    Toast.makeText(ForgotPasswordActivity.this,"Same Data exists....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(ForgotPasswordActivity.this,"Same Data exists....",MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
 
                 }
                 else if(response.body().getResponse().equals("error")){
 
 
-                    Toast.makeText(ForgotPasswordActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(ForgotPasswordActivity.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                 }
                 else{
 
 
-                    Toast.makeText(ForgotPasswordActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(ForgotPasswordActivity.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 }
 
             }
@@ -273,7 +263,7 @@ class Connection extends AsyncTask<String,String ,String > {
             @Override
             public void onFailure(Call <User> call, Throwable t) {
 
-                Toast.makeText(ForgotPasswordActivity.this,"Update Failed",Toast.LENGTH_SHORT).show();
+                MDToast.makeText(ForgotPasswordActivity.this,"Update Failed",MDToast.LENGTH_SHORT).show();
 
             }
         });

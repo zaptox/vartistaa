@@ -133,7 +133,7 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
             if(status.equals("1")){
                 requestdetail.setTextColor(Color.GREEN);
                 requestdetail.setText(RA);
-                timeduration.setText(TimeAgo(ob.getAccepted_date()));
+                timeduration.setText(ob.getTime());
             }
            else if(status.equals("0")){
                 requestdetail.setText(Html.fromHtml(
@@ -211,7 +211,6 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
 
                                 @Override
                                 public void onSheetItemSelected(@NonNull BottomSheet bottomSheet, MenuItem menuItem, @Nullable Object o) {
-                                    Toast.makeText(context, name + " Clicked", Toast.LENGTH_SHORT).show();
 
                                 }
 
@@ -276,7 +275,6 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
                                               imageView = (ImageView)bottomSheet.findViewById(R.id.imageView_bottomsheet);
                                               bs_text = (TextView)bottomSheet.findViewById(R.id.text_bottomsheet);
                                               bs_text2 = (TextView)bottomSheet.findViewById(R.id.text_bottomsheet2);
-                                              bs_text3 = (TextView)bottomSheet.findViewById(R.id.time_bottomsheet3);
                                               Picasso.get().load(image).fit().centerCrop()
                                                       .placeholder(R.drawable.profile)
                                                       .error(R.drawable.profile)
@@ -285,7 +283,6 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
 
                                               bs_name.setText(title );
                                               bs_text.setText(Html.fromHtml(""+msg));
-                                              bs_text3.setText(TimeAgo(Created_at));
 
                                           }
 

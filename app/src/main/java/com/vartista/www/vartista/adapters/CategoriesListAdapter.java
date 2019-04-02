@@ -62,7 +62,6 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"cat_id :"+cat_id,Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(view.getContext(), FindServicesInList.class);
                 intent.putExtra("cat_id",cat_id);
                 context.startActivity(intent);

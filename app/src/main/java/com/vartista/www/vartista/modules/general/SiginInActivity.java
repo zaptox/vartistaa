@@ -118,7 +118,7 @@ public class SiginInActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
 
-                   // Toast.makeText(SiginInActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(SiginInActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -127,7 +127,7 @@ public class SiginInActivity extends AppCompatActivity {
 
         //FOR CHECKING GITHUB WORKING
 
-       // Toast.makeText(this, "Mehdi's Commit yayyyyyyyy", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "Mehdi's Commit yayyyyyyyy", Toast.LENGTH_SHORT).show();
 //        Toast.makeText(this, "THIS IS SAAD COMMIT AGAIN", Toast.LENGTH_LONG).show();
 //        Toast.makeText(this, "THIS IS Xoni COMMIT ", Toast.LENGTH_LONG).show();
 
@@ -186,7 +186,7 @@ public class SiginInActivity extends AppCompatActivity {
 //                    Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse() + "--name:" + name, Toast.LENGTH_SHORT).show();
                     addtosharedpreference(userLoggedIn.getId(),userLoggedIn.getBusystatus(),userLoggedIn.getEmail(),userLoggedIn.getPassword(),
                             userLoggedIn.getName(),userLoggedIn.getGender(),userLoggedIn.getSp_status(),
-                            userLoggedIn.getContact());
+                            userLoggedIn.getContact(),image);
 //                    upload_document(userLoggedIn.getName(),userLoggedIn.getPassword(),userLoggedIn.getContact());
 //                    Toast.makeText(SiginInActivity.this, "The User Id is :- "+userLoggedIn.getId()
 //                            +"\n"+"The Name is "+userLoggedIn.getName()
@@ -202,7 +202,7 @@ public class SiginInActivity extends AppCompatActivity {
 //
 //
                 } else if (response.body().getResponse().equals("failed")) {
-                  //  Toast.makeText(SiginInActivity.this, "Login Failed.. Please try again", Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(SiginInActivity.this, "Login Failed.. Please try again", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(SiginInActivity.this, "", Toast.LENGTH_SHORT).show();
                     setUIToWait(false);
 
@@ -210,7 +210,7 @@ public class SiginInActivity extends AppCompatActivity {
 //
                 else {
                     setUIToWait(false);
-                  //  Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse(), Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse(), Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -222,7 +222,7 @@ public class SiginInActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
 
-              //  Toast.makeText(SiginInActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(SiginInActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 setUIToWait(false);
 
             }
@@ -246,29 +246,29 @@ public class SiginInActivity extends AppCompatActivity {
     public String getLocationFromAddress(String strAddress) throws IOException {
 
         Geocoder coder = new Geocoder(this);
-       List<Address>is =coder.getFromLocationName(strAddress,5);
+        List<Address>is =coder.getFromLocationName(strAddress,5);
 
-       Geocoder fwd = new Geocoder(this, Locale.US);
-       String st="latifabad no 7";
+        Geocoder fwd = new Geocoder(this, Locale.US);
+        String st="latifabad no 7";
 
-       List<Address> loc=null;
+        List<Address> loc=null;
 
-       try{
-           loc=fwd.getFromLocationName(st,10);
+        try{
+            loc=fwd.getFromLocationName(st,10);
 
-         //  Toast.makeText(this, ""+loc, Toast.LENGTH_SHORT).show();
+            //  Toast.makeText(this, ""+loc, Toast.LENGTH_SHORT).show();
 
             loc.get(0).getLongitude();
-         //  Toast.makeText(this, "Lat: "+loc.get(0).getLatitude() + "long "+loc.get(0).getLongitude(), Toast.LENGTH_SHORT).show();
+            //  Toast.makeText(this, "Lat: "+loc.get(0).getLatitude() + "long "+loc.get(0).getLongitude(), Toast.LENGTH_SHORT).show();
 
-       }
-       catch (Exception e){}
+        }
+        catch (Exception e){}
 
 
         return "";
     }
 
-    public void addtosharedpreference(int user_id,int busystatus,String email,String Password,String name,String gender, String sp_status,String contact){
+    public void addtosharedpreference(int user_id,int busystatus,String email,String Password,String name,String gender, String sp_status,String contact,String image){
 
         SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferencespre.edit();
@@ -280,6 +280,8 @@ public class SiginInActivity extends AppCompatActivity {
         editor.putString("name",name);
         editor.putString("gender",gender);
         editor.putString("sp_status",sp_status);
+        editor.putString("image",image);
+
 
         editor.apply();
         editor.commit();
@@ -341,3 +343,4 @@ public class SiginInActivity extends AppCompatActivity {
 
 
 }
+
