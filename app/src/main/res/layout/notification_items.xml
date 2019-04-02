@@ -16,6 +16,7 @@
     <TextView
         android:id="@+id/textViewname_user_noti"
         android:text=""
+        android:textColorHighlight="@color/cardview_dark_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -29,11 +30,13 @@
         android:id="@+id/textViewrequestdetail_noti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColorHighlight="@color/cardview_dark_background"
          android:layout_alignStart="@+id/profile_image"
         android:layout_below="@+id/textViewname_user_noti"
         android:layout_marginTop="4dp"
         android:paddingLeft="10dp"
         android:layout_marginLeft="68dp"
+        android:textColor="@color/mdtp_dark_gray"
         android:text="Message From Admin" />
 
     <TextView
@@ -44,6 +47,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/textViewname_user"
         android:layout_marginEnd="11dp"
+        android:textSize="18sp"
         android:text="3h ago" />
 
 

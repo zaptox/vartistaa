@@ -14,14 +14,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.choota.dev.ctimeago.TimeAgo;
 import com.kennyc.bottomsheet.BottomSheet;
 import com.kennyc.bottomsheet.BottomSheetListener;
 import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.*;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.beans.AllNotificationBean;
 import com.vartista.www.vartista.beans.usernotificationitems;
+import com.vartista.www.vartista.modules.general.MyTimeAgo;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class TwoListInRecyclerView extends RecyclerView.Adapter{
@@ -33,11 +42,10 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
     Context context;
     List<usernotificationitems> list;
     List<usernotificationitems> notificationlist2;
-
     public TwoListInRecyclerView(Context context, List<usernotificationitems> list,List<usernotificationitems> notificationlist2) {
         this.context = context;
         this.list = list;
-         this.notificationlist2 = notificationlist2;
+        this.notificationlist2 = notificationlist2;
     }
 
     @Override
@@ -65,6 +73,7 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
             ((AdminNotificationViewHolder) viewHolder).populate(notificationlist2.get(position - list.size()));
 
         }
+
     }
 
     @Override
@@ -78,7 +87,7 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
             return VIEW_TYPE_NOTIFICATION;
         }
 
-        if(position - list.size() < notificationlist2.size()){
+        if(position - list.size()  < notificationlist2.size()){
             return VIEW_TYPE_ADMINNOTIFICATION;
         }
 
@@ -129,12 +138,30 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
            else if(status.equals("0")){
                 requestdetail.setText(Html.fromHtml(
                         "Your request has sent to "+name));
-                timeduration.setText(ob.getTime());
+                timeduration.setText(TimeAgo(ob.getReqeustsend_at()));
             }
             else if(status.equals("-1")){
                 requestdetail.setTextColor(Color.RED);
                 requestdetail.setText(RR);
-                timeduration.setText(ob.getTime());
+                timeduration.setText(TimeAgo(ob.getRejected_date()));
+            }
+            else if(status.equals("-2")){
+                //Cancelled
+                requestdetail.setTextColor(Color.RED);
+                requestdetail.setText("Cancelled Service");
+                timeduration.setText(TimeAgo(ob.getCancelled_date()));
+            }
+            else if(status.equals("3")){
+                //Completed
+                requestdetail.setTextColor(Color.RED);
+                requestdetail.setText("Completed Service");
+                timeduration.setText(TimeAgo(ob.getCompleted_date()));
+            }
+            else if(status.equals("6")){
+                //verification of cash
+                requestdetail.setTextColor(Color.RED);
+                requestdetail.setText("Verification Of Cash ");
+                timeduration.setText(TimeAgo(ob.getPay_verify_date()));
             }
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -167,8 +194,18 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
                                     else if(status.equals("-1")){
                                         bs_name.setText(name+" Has Canceled Your Request");
                                         bs_text.setText(Html.fromHtml("Your Reqeust To "+ name +" For <b>"+service+ "</b> for <b> "+ time +"</b> has been Canceled."));
-                                    }
 
+                                    }
+                                    else if(status.equals("3")){
+                                        bs_name.setText(" Your Service is Completed");
+                                        bs_text.setText(Html.fromHtml("Service <b>" +service+"</b> By "+ name +" is Completed <br> Thank you For Using V-artista" ));
+
+                                    }
+                                    else if(status.equals("6")){
+                                        bs_name.setText("Verification Of Cash");
+                                        bs_text.setText(Html.fromHtml(name +" will pay You by cash <br> Did you received it or amount ?" ));
+
+                                    }
 
                                 }
 
@@ -192,13 +229,15 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
 
     public class AdminNotificationViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView username,adminmsg,timeduration,bs_name,bs_text,bs_text2;
+        public TextView username,adminmsg,timeduration,bs_name,bs_text,bs_text2,bs_text3;
         public ImageView imageView;
         public AdminNotificationViewHolder(View itemView){
             super(itemView);
             imageView = (ImageView)itemView.findViewById(R.id.profile_image);
             username=(TextView)itemView.findViewById(R.id.textViewname_user_noti);
             adminmsg=(TextView)itemView.findViewById(R.id.textViewrequestdetail_noti);
+            timeduration=(TextView)itemView.findViewById(R.id.textViewtimeduration_noti);
+
 
 
         }
@@ -207,9 +246,12 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
            final String msg = ob.getMsg();
             final String image = ob.getImage();
             final String title = ob.getTitle();
+            final String Created_at = ob.getCreated_at();
 
-                  username.setText(Html.fromHtml("Hello Mr : "+"<b>"+ob.getName()+"<b>"));
+            Toast.makeText(itemView.getContext(), ""+ob.getMsg(), Toast.LENGTH_SHORT).show();
+                  username.setText(Html.fromHtml("Dear "+"<b>"+ob.getName()+"<b>"));
                   adminmsg.setText(Html.fromHtml("<b>"+ob.getTitle()+"<b> <br> "+ob.getMsg()));
+                  timeduration.setText(TimeAgo(Created_at));
 
             Picasso.get().load(R.drawable.profile).fit().centerCrop()
                     .placeholder(R.drawable.profile)
@@ -261,5 +303,20 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
                   });
     }
     }
+
+    public String TimeAgo(String PastDate){
+    SimpleDateFormat sdf = (new SimpleDateFormat("dd/MM/yyyy hh:mm:ss"));
+     String result = "";
+        try{
+           Date p_date =  sdf.parse(PastDate);
+            MyTimeAgo timeAgo = new MyTimeAgo().locale(context);
+            result = timeAgo.getTimeAgo(p_date);
+        } catch(ParseException e) {
+            e.printStackTrace();
+
+        }
+        return  result;
+    }
+
 
 }

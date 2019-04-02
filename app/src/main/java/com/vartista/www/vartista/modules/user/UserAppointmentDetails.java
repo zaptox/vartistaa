@@ -51,11 +51,9 @@ public class UserAppointmentDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_appointment_details);
-
         Date currentTime = Calendar.getInstance().getTime();
 
         sendNotificationApiInterface = ApiClient.getApiClient().create(SendNotificationApiInterface.class);
-
 
         imageView = findViewById(R.id.profile_image);
         serviceprovidername=(TextView)findViewById(R.id.textViewname_user);
@@ -308,7 +306,7 @@ public class UserAppointmentDetails extends AppCompatActivity {
 
 
     public String get_Current_Date(){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String currentDate = sdf.getDateTimeInstance().format(new Date());
         return currentDate;
     }

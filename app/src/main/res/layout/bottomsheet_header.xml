@@ -62,7 +62,16 @@
         android:layout_width="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text="asdasd" />
+    <TextView
+        android:paddingTop="0dp"
+        android:gravity="center_horizontal"
+        android:id="@+id/time_bottomsheet3"
+        android:layout_gravity="end"
+        android:textColor="@color/text_color_client"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:text="2 hours ago" />
 
 
 

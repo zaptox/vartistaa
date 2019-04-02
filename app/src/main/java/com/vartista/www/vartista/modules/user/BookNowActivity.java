@@ -172,7 +172,7 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
         c.set(Calendar.YEAR,year);
         c.set(Calendar.MONTH,month);
         c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String currentDate = sdf.format(c.getTime());
 //        String currentDate= DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
         textViewReq_Date.setText(currentDate);
