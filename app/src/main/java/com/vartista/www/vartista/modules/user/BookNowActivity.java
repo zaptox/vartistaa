@@ -97,14 +97,13 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
              String address = editTextaddress.getText().toString();
              String city = editTextCity.getText().toString();
              String time = textViewReq_Time.getText().toString();
-             String date=textViewReq_Date.getText().toString();
+             final String date=textViewReq_Date.getText().toString();
 
              SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
              final String name_user = ob.getString("name","");
              final String title = "Vartista- Request";
              final String body = name_user+" sent you request";
-             insertNotification(title,body,user_customer_id,service_provider_id,1,date);
              Call<CreateRequest> call = BookNowActivity.apiInterface.createRequest(user_customer_id,
                      service_provider_id,
                      service_id,date,time,address,city,0,service_cat_id);
@@ -113,6 +112,8 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
                  @Override
                  public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
                      if (response.body().getResponse().equals("ok")) {
+                         insertNotification(title,body,user_customer_id,service_provider_id,1,date);
+
                          Call<NotificationsManager> callNotification = BookNowActivity.sendNotificationApiInterface
                                  .sendPushNotification(service_provider_id,body,title);
                          callNotification.enqueue(new Callback<NotificationsManager>() {
