@@ -146,8 +146,8 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                            });
 String timeformat = "hour";
 int timevalue = -2;
-                           sendCompactNotification(context,REQUEST_CODE_SP_BEFORE2H,date,time,name,"minute",-1,requestservice_id);
-                           sendCompactNotification(context,REQUEST_CODE_SP,date,time,name,"minute",-30,requestservice_id);
+//                           sendCompactNotification(context,REQUEST_CODE_SP_BEFORE2H,date,time,name,"minute",-1,requestservice_id);
+//                           sendCompactNotification(context,REQUEST_CODE_SP,date,time,name,"minute",-30,requestservice_id);
 
 //                            AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 //

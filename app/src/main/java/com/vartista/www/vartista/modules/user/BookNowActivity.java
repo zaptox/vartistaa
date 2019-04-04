@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
@@ -109,11 +110,15 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
                      service_id,date,time,address,city,0,service_cat_id);
 
              call.enqueue(new Callback<CreateRequest>() {
+
                  @Override
                  public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
+//                     Toast.makeText(BookNowActivity.this, "in qnque"+response.body().getResponse(), Toast.LENGTH_SHORT).show();
+                     Toast.makeText(BookNowActivity.this, ""+response.body().getResponse(), Toast.LENGTH_SHORT).show();
+
                      if (response.body().getResponse().equals("ok")) {
                          insertNotification(title,body,user_customer_id,service_provider_id,1,date);
-
+                         Toast.makeText(BookNowActivity.this, ""+response.body().getResponse(), Toast.LENGTH_SHORT).show();
                          Call<NotificationsManager> callNotification = BookNowActivity.sendNotificationApiInterface
                                  .sendPushNotification(service_provider_id,body,title);
                          callNotification.enqueue(new Callback<NotificationsManager>() {

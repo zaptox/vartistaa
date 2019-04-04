@@ -41,7 +41,6 @@ public class servicepappointmentsadapter extends RecyclerView.Adapter<servicepap
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.servicepappointmentsitems,parent,false);
         return new ViewHolder(v);
     }
-
     @Override
     public void onBindViewHolder(@NonNull servicepappointmentsadapter.ViewHolder holder, final int position) {
 
