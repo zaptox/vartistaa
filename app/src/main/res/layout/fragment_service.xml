@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/gray_client"
+    android:background="@color/white_color"
     android:orientation="vertical"
 
     tools:context=".fragments.ServiceProviderFragment">
@@ -40,7 +40,7 @@
                     android:layout_marginRight="20dp"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp"
-                    android:background="@drawable/card_background"
+                    app:cardBackgroundColor="@color/colorPrimaryDark"
                     android:layout_marginTop="5dp"
                     android:layout_weight="0.5"
                     android:layout_marginBottom="5dp"
@@ -52,6 +52,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="15dp"
+
                         android:layout_gravity="center"
                         android:orientation="vertical">
 
@@ -69,7 +70,7 @@
                             android:layout_marginTop="5dp"
                             android:textStyle="bold"
                             android:textAllCaps="true"
-                            android:textColor="@color/grey2_for_design"
+                            android:textColor="@color/white_color"
                             android:text="Create Service"
                             android:layout_gravity="center"/>
 
@@ -87,7 +88,7 @@
                     android:layout_marginRight="20dp"
                     app:cardCornerRadius="10dp"
                      app:cardElevation="10dp"
-                    android:background="@drawable/card_background"
+                    app:cardBackgroundColor="@color/colorPrimaryDark"
                     android:layout_marginTop="5dp"
                     android:layout_weight="0.5"
                     android:layout_marginBottom="5dp"
@@ -116,7 +117,7 @@
                             android:layout_marginTop="5dp"
                             android:textStyle="bold"
                             android:textAllCaps="true"
-                            android:textColor="@color/grey2_for_design"
+                            android:textColor="@color/white_color"
                             android:text="My Services"
                             android:layout_gravity="center"/>
 
@@ -144,7 +145,7 @@
                     android:layout_marginRight="20dp"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp"
-                    android:background="@drawable/card_background"
+                    app:cardBackgroundColor="@color/colorPrimaryDark"
                     android:layout_marginTop="5dp"
                     android:layout_weight="0.5"
                     android:layout_marginBottom="5dp"
@@ -170,7 +171,7 @@
                             android:layout_marginTop="5dp"
                             android:textStyle="bold"
                             android:textAllCaps="true"
-                            android:textColor="@color/grey2_for_design"
+                            android:textColor="@color/white_color"
                             android:text="Request Alert"
                             android:layout_gravity="center"/>
 
@@ -188,7 +189,7 @@
                     android:layout_marginRight="20dp"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp"
-                    android:background="@drawable/card_background"
+                    app:cardBackgroundColor="@color/colorPrimaryDark"
                     android:layout_marginTop="5dp"
                     android:layout_weight="0.5"
                     android:layout_marginBottom="5dp"
@@ -218,7 +219,7 @@
                             android:layout_marginTop="5dp"
                             android:textStyle="bold"
                             android:textAllCaps="true"
-                            android:textColor="@color/grey2_for_design"
+                            android:textColor="@color/white_color"
                             android:text="Upload Docs"
                             android:layout_gravity="center"/>
 
@@ -245,7 +246,7 @@
                     android:layout_marginRight="20dp"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp"
-                    android:background="@drawable/card_background"
+                    app:cardBackgroundColor="@color/colorPrimaryDark"
                     android:layout_marginTop="5dp"
                     android:layout_weight="0.5"
                     android:layout_marginBottom="5dp"
@@ -271,7 +272,7 @@
                             android:layout_marginTop="5dp"
                             android:textStyle="bold"
                             android:textAllCaps="true"
-                            android:textColor="@color/grey2_for_design"
+                            android:textColor="@color/white_color"
                             android:text="Earnings"
                             android:layout_gravity="center"/>
 
@@ -289,7 +290,7 @@
                     android:layout_marginRight="20dp"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="10dp"
-                    android:background="@drawable/card_background"
+                    app:cardBackgroundColor="@color/colorPrimaryDark"
                     android:layout_marginTop="5dp"
                     android:layout_weight="0.5"
                     android:layout_marginBottom="5dp"
@@ -317,7 +318,7 @@
                             android:layout_marginTop="5dp"
                             android:textStyle="bold"
                             android:textAllCaps="true"
-                            android:textColor="@color/grey2_for_design"
+                            android:textColor="@color/white_color"
                             android:text="Settings"
                             android:layout_gravity="center"/>
 
