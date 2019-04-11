@@ -128,14 +128,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                                    if(response.isSuccessful()){}
 
                                    MDToast.makeText(view.getContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
-
-                                   Intent intent=new Intent(view.getContext(),HomeActivity.class);
-                                   intent.putExtra("user", HomeActivity.user);
-                                   context.startActivity(intent);
-
 //                                   view.startActivity(intent);
-
-
                                }
 
 
@@ -143,7 +136,12 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                                public void onFailure(Call<NotificationsManager> call, Throwable t) {
 
                                }
+
+
+
                            });
+
+
 String timeformat = "hour";
 int timevalue = -2;
 //                           sendCompactNotification(context,REQUEST_CODE_SP_BEFORE2H,date,time,name,"minute",-1,requestservice_id);

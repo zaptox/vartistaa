@@ -7,7 +7,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabItem;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -54,6 +56,9 @@ public class UsersFragment extends Fragment {
     RecyclerView listViewMyCategories;
     CategoriesListAdapter categoriesListAdapter;
     List<Category> myCategoriesList;
+    ViewPager viewpager;
+    TabLayout tabLayout;
+
     @SuppressLint("ValidFragment")
     public UsersFragment(int user_id) {
         // Required
@@ -70,6 +75,11 @@ public class UsersFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_users, container, false);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
+        viewpager = (ViewPager)getActivity().findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
+
+
+
         listViewMyCategories=(RecyclerView) view.findViewById(R.id.lvCategory);
         listViewMyCategories.setHasFixedSize(true);
         listViewMyCategories.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -84,7 +94,9 @@ public class UsersFragment extends Fragment {
         new UsersFragment.Conncetion(context).execute();
 
 
-        categoriesListAdapter=new CategoriesListAdapter(context,myCategoriesList);
+//        categoriesListAdapter=new CategoriesListAdapter(context,myCategoriesList);
+//        categoriesListAdapter=new CategoriesListAdapter(context,myCategoriesList,viewpager);
+        categoriesListAdapter=new CategoriesListAdapter(context,myCategoriesList,tabLayout);
 
 
 
@@ -155,7 +167,6 @@ public class UsersFragment extends Fragment {
             try {
                 JSONObject jsonResult=new JSONObject(result);
                 int success=jsonResult.getInt("success");
-
                 listViewMyCategories.setAdapter(categoriesListAdapter);
 
 

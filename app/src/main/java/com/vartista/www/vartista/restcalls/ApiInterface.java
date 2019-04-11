@@ -68,7 +68,6 @@ public interface ApiInterface {
                                       @Query("date") String date, @Query("time") String  time
             , @Query("location") String location,@Query("city") String city, @Query("request_status") int request_status, @Query("service_cat_id") int service_cat_id);
 
-
     @GET("request_serviceupdate.php")
        Call<ServiceRequets> updateOnClickRequests(@Query("requestservice_status") int requestservice_status,@Query("requestservice_id") int requestservice_id);
 
@@ -121,9 +120,8 @@ public interface ApiInterface {
     @GET("Update_requestStatus.php")
     Call<CreateRequest> updaterequeststatus(@Query("requestservice_id") int request_id);
 
-//    @GET("fetch_doc_req.php")
+    //    @GET("fetch_doc_req.php")
 //    Call<DocUploadList> getDocUploadListByUserId(@Query("user_id") int user_id);
-
 
     @GET("insert_allnotification.php")
     Call<AllNotificationBean> Insert_Notification(@Query("title")String title,@Query("message")String message ,@Query("sender_id") int sender_id,@Query("receiver_id") int receiver_id,@Query("status")int status,@Query("created_at")String created_at);

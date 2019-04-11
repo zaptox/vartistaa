@@ -2,6 +2,8 @@ package com.vartista.www.vartista.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +23,26 @@ import java.util.List;
 public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAdapter.ViewHolder> {
     public List<Category> myCategoryList;
     public Context context;
+    ViewPager viewPager;
+    TabLayout tabLayout;
     public CategoriesListAdapter(Context context, List<Category> myCategoryList){
         this.myCategoryList = myCategoryList;
         this.context=context;
     }
+//    public CategoriesListAdapter(Context context, List<Category> myCategoryList, ViewPager viewPager){
+//        this.myCategoryList = myCategoryList;
+//        this.context=context;
+//        this.viewPager=viewPager;
+//    }
+
+    public CategoriesListAdapter(Context context, List<Category> myCategoryList, TabLayout tabLayout){
+        this.myCategoryList = myCategoryList;
+        this.context=context;
+        this.tabLayout=tabLayout;
+
+    }
+
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.categories_item,parent,false);
@@ -62,6 +80,12 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+//                viewPager.setVisibility(View.INVISIBLE);
+
+// ye hai neechy wala kaaam waaala
+
+//   tabLayout.setVisibility(View.GONE);
                 Intent intent=new Intent(view.getContext(), FindServicesInList.class);
                 intent.putExtra("cat_id",cat_id);
                 context.startActivity(intent);

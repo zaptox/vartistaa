@@ -1,6 +1,8 @@
 package com.vartista.www.vartista.modules.provider;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,8 +21,14 @@ import com.squareup.picasso.Picasso;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
+import com.vartista.www.vartista.beans.AllNotificationBean;
+import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.NotificationsManager;
 import com.vartista.www.vartista.beans.ServiceRequets;
+import com.vartista.www.vartista.modules.general.HomeActivity;
+import com.vartista.www.vartista.restcalls.ApiClient;
+import com.vartista.www.vartista.restcalls.ApiInterface;
+import com.vartista.www.vartista.restcalls.SendNotificationApiInterface;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -35,21 +43,37 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter.REQUEST_CODE_SP;
+import static com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter.REQUEST_CODE_SP_BEFORE2H;
+import static com.vartista.www.vartista.modules.general.HomeActivity.user_id;
+
 public class RequestAlertActivity extends AppCompatActivity {
 
     TextView  txtUserName, TxtUserNameAddress, txtUserReqServ;
     ImageView reqUserImage;
+    Button btnAccept, btnReject;
     TickTockView mCountDown;
+    public static ApiInterface apiInterface;
+    public static SendNotificationApiInterface sendNotificationApiInterface;
+    String name_user;
     String service_Id = "";
     String serv_provider_id = "";
     String reqUserId = "";
-    Button btn_accept;
+    String req_serv_id = "";
+    int IntService_Id ;
+    int IntServ_provider_id ;
+    int IntReqUserId ;
+    int IntReq_serv_id ;
+
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -60,12 +84,21 @@ public class RequestAlertActivity extends AppCompatActivity {
         TxtUserNameAddress = findViewById(R.id.userlocation);
         txtUserReqServ = findViewById(R.id.user_reqserv);
         reqUserImage = findViewById(R.id.reqUserIdImage);
-        btn_accept=findViewById(R.id.button_paynow);
+        btnAccept =findViewById(R.id.button_paynow);
+        btnReject = findViewById(R.id.button_reject);
         Intent I = getIntent();
         reqUserId = I.getStringExtra("reqUserId");
         serv_provider_id = I.getStringExtra("serv_prv_Id");
         service_Id = I.getStringExtra("serv_Id");
+        req_serv_id = I.getStringExtra("req_serv_id");
+        apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
+        sendNotificationApiInterface = ApiClient.getApiClient().create(SendNotificationApiInterface.class);
 
+
+        IntReq_serv_id = Integer.parseInt(req_serv_id);
+        IntReqUserId = Integer.parseInt(reqUserId);
+        IntServ_provider_id = Integer.parseInt(serv_provider_id);
+        IntService_Id = Integer.parseInt(service_Id);
         new AsyncTask<String, Void, String>() {
 
             String result = "" ;
@@ -170,37 +203,103 @@ public class RequestAlertActivity extends AppCompatActivity {
                             hasDays ? "m" : "s");
                 }
             });
-
         }
-
-        btn_accept.setOnClickListener(new View.OnClickListener() {
+        btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+                insertreviewnil(IntReqUserId,IntServ_provider_id,IntService_Id);
                 int status = 1;
-                int requestservice_id = Integer.parseInt(service_Id);
-
-                Call<ServiceRequets> call = MyRequestsServicesListAdapter.apiInterface.updateOnClickRequests(status,requestservice_id);
+                final int requestservice_id = IntReq_serv_id;
+                SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+                final int user_id = ob.getInt("user_id",0);
+                name_user= ob.getString("name","");
+                Call<ServiceRequets> call = RequestAlertActivity.apiInterface.updateOnClickRequests(status,requestservice_id);
                 call.enqueue(new Callback<ServiceRequets>() {
                     @Override
                     public void onResponse(Call<ServiceRequets> call, Response<ServiceRequets> response) {
 
-                        SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
-                        final String name_user = ob.getString("name","");
-
-
-//                            Toast.makeText(context,myReqServicesList.get(position).getService_provider_id(),Toast.LENGTH_SHORT).show();
                         if(response.body().getResponse().equals("ok")){
+                            String date = "";
+                            String time = "";
+                            final String body = name_user+ " has accepted  your request_"+date+"_"+time+"_"+requestservice_id;
+                            final String title = "Vartista-Accept";
 
-                            //notifyDataSetChanged();
-                            Call<NotificationsManager> callNotification = MyRequestsServicesListAdapter.sendNotificationApiInterface
-                                    .sendPushNotification(Integer.parseInt(reqUserId),
-                                            name_user+ " Accepted  your request","Vartista-Accept");
+                            insertNotification(title,body,user_id,IntReqUserId,1,get_Current_Date());
+                            Call<NotificationsManager> callNotification = RequestAlertActivity.sendNotificationApiInterface
+                                    .sendPushNotification(IntReqUserId,
+                                            body,title);
                             callNotification.enqueue(new Callback<NotificationsManager>() {
                                 @Override
                                 public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
-                                    if(response.isSuccessful())
-                                        MDToast.makeText(RequestAlertActivity.this,"Request Accepted", Toast.LENGTH_SHORT).show();
+                                    if(response.isSuccessful()){}
+
+                                    MDToast.makeText(RequestAlertActivity.this,"Request Accepted",Toast.LENGTH_SHORT).show();
+
+                                    Intent intent=new Intent(RequestAlertActivity.this,HomeActivity.class);
+                                    intent.putExtra("user", HomeActivity.user);
+                                    startActivity(intent);
+
+                                }
+
+
+                                @Override
+                                public void onFailure(Call<NotificationsManager> call, Throwable t) {
+
+                                }
+                            });
+                            String timeformat = "hour";
+                            int timevalue = -2;
+//                            sendCompactNotification(RequestAlertActivity.this,REQUEST_CODE_SP_BEFORE2H,date,time,name_user,"minute",-1,requestservice_id);
+//                            sendCompactNotification(RequestAlertActivity.this,REQUEST_CODE_SP,date,time,name_user,"minute",-30,requestservice_id);
+
+                        }
+
+                        else if(response.body().getResponse().equals("error")){
+
+                            MDToast.makeText(RequestAlertActivity.this,"Something went wrong....",Toast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+
+                        }
+                        else{
+                            MDToast.makeText(RequestAlertActivity.this,"Something went wrong....",Toast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ServiceRequets> call, Throwable t) {
+                        MDToast.makeText(RequestAlertActivity.this,"Something went wrong....",Toast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+                    }
+                });
+            }
+        });
+        btnReject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int status = -1;
+                int customer_id = IntReqUserId;
+                SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+                final int user_id = ob.getInt("user_id",0);
+                name_user= ob.getString("name","");
+
+                Call<ServiceRequets> call = RequestAlertActivity.apiInterface.updateOnClickRequests(status, IntReq_serv_id);
+                call.enqueue(new Callback<ServiceRequets>() {
+                    @Override
+                    public void onResponse(Call<ServiceRequets> call, Response<ServiceRequets> response) {
+                        if (response.body().getResponse().equals("ok")) {
+
+                            final String body = name_user + " has Declined your request";
+                            final String title = "Vartista- Decline";
+                            insertNotification(title, body, user_id, IntReqUserId, 1, get_Current_Date());
+                            Call<NotificationsManager> callNotification = RequestAlertActivity.sendNotificationApiInterface
+                                    .sendPushNotification(IntReqUserId,
+                                            body, title);
+                            callNotification.enqueue(new Callback<NotificationsManager>() {
+                                @Override
+                                public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
+                                    if (response.isSuccessful()) {
+                                    }
                                 }
 
 
@@ -210,44 +309,32 @@ public class RequestAlertActivity extends AppCompatActivity {
                                 }
                             });
 
-                        }
 
-                        else if(response.body().getResponse().equals("error")){
+                        } else if (response.body().getResponse().equals("error")) {
 
-//                            Toast.makeText(V.getContext(),"Something went wrong....",Toast.LENGTH_SHORT).show();
+                            MDToast.makeText(RequestAlertActivity.this, "Something went wrong....", Toast.LENGTH_SHORT, MDToast.TYPE_ERROR).show();
 
-                        }
-                        else{
-//                            Toast.makeText(V.getContext(),"Something went wrong....",Toast.LENGTH_SHORT).show();
+                        } else {
+                            MDToast.makeText(RequestAlertActivity.this, "Something went wrong....", Toast.LENGTH_SHORT, MDToast.TYPE_ERROR).show();
 
                         }
-//                        remove(position);
-
-
-
                     }
 
                     @Override
                     public void onFailure(Call<ServiceRequets> call, Throwable t) {
-//                        Toast.makeText(V.getContext(),"Update Failed",Toast.LENGTH_SHORT).show();
+                        MDToast.makeText(RequestAlertActivity.this, "Update Failed", Toast.LENGTH_SHORT, MDToast.TYPE_ERROR).show();
+
                     }
                 });
+                MDToast.makeText(RequestAlertActivity.this, "Request Declined", Toast.LENGTH_SHORT, MDToast.TYPE_WARNING).show();
+
+
             }
         });
 
+
     }
 
-    //    public void remove(int position) {
-//        myReqServicesList.remove(position);
-//        notifyItemRemoved(position);
-//    }
-    public void OnClick(final View V){
-        switch (V.getId()) {
-            case  R.id.button_paynow :
-
-                break;
-        }
-    }
 
     @Override
     protected void onStart() {
@@ -274,6 +361,115 @@ public class RequestAlertActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         mCountDown.stop();
+
+    }
+    public static void sendCompactNotification(Context context , int requestcode , String date , String time,String name,String timeformat,int timevalue,int Reqeustserviceid){
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+//              PendingIntent pendingIntent;
+        String appointmentdate = date+" "+time;
+        SimpleDateFormat showsdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        Date date1 = null;
+        try {
+            date1 = showsdf.parse(appointmentdate);
+        } catch (ParseException e) {
+            Log.d("Date Parsing",""+e.getMessage());
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date1);
+        if (timeformat.equals("hour")){
+            calendar.add(Calendar.HOUR,timevalue);
+        }
+        else{
+            calendar.add(Calendar.MINUTE,timevalue);
+
+        }
+        Intent intent = new Intent("alarm");
+        intent.putExtra("username",name);
+        intent.putExtra("requestcode",requestcode);
+        intent.putExtra("service_id",Reqeustserviceid);
+//              if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                  pendingIntent = PendingIntent.getForegroundService(context, 0, intent, 0);
+//              }else {
+//                  pendingIntent = PendingIntent.getService(context, 0, intent, 0);
+//              }
+        PendingIntent broadcast = PendingIntent.getBroadcast(context,requestcode,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),broadcast);
+
+    }
+
+    public String get_Current_Date(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String currentDate = sdf.getDateTimeInstance().format(new Date());
+        return currentDate;
+    }
+
+    public  void insertNotification(String title , String message, int sender_id , int receiver_id , int status , String created_at){
+//         setUIToWait(true);
+        Call<AllNotificationBean> call=RequestAlertActivity.apiInterface.Insert_Notification(title,message,sender_id,receiver_id,status,created_at);
+        call.enqueue(new Callback<AllNotificationBean>() {
+            @Override
+            public void onResponse(Call <AllNotificationBean> call, Response<AllNotificationBean> response) {
+
+                if(response.body().getResponse().equals("ok")){
+//                     setUIToWait(false);
+
+                }
+                else if(response.body().getResponse().equals("exist")){
+//                     setUIToWait(false);
+
+                }
+                else if(response.body().getResponse().equals("error")){
+//                     setUIToWait(false);
+
+
+                }
+
+                else{
+//                     setUIToWait(false);
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call <AllNotificationBean> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+    public void insertreviewnil(int user_id,int service_p_id,int service_id){
+        String servicetittle = "";
+        String Remarks = "";
+        String time = "";
+        String date = "";
+        Call<CreateRequest> call2 = RequestAlertActivity.apiInterface.InsertRatings(0,0.0,user_id,service_p_id,service_id,Remarks,date,time);
+
+        call2.enqueue(new Callback<CreateRequest>() {
+            @Override
+            public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
+                if (response.body().getResponse().equals("ok")) {
+
+//                    MDToast mdToast = MDToast.makeText(RequestAlertActivity.this, "Your Ratings are inserted", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+//                    mdToast.show();
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<CreateRequest> call, Throwable t) {
+                //
+                // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
 
     }
 }

@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
@@ -200,7 +201,18 @@ public class SignUpActivity extends AppCompatActivity {
     public void uploadMultipart(Uri filePath,String email,String password ) {
 
         //getting the actual path of the image
-        String path = getPath(filePath);
+
+
+//        String path = "http://vartista.com/vartista_app/images/placeholder/placeholder-man.png";
+        String path = "";
+
+        try{
+            path = getPath(filePath);
+        }
+        catch (Exception e){
+            Toast.makeText(this, "You can upload your image later!", Toast.LENGTH_SHORT).show();
+        }
+
 
         //Uploading code
         try {
@@ -215,10 +227,7 @@ public class SignUpActivity extends AppCompatActivity {
                     .startUpload(); //Starting the upload
         } catch (Exception exc) {
             MDToast.makeText(this, exc.getMessage(), MDToast.LENGTH_SHORT).show();
-
-
-
-        }
+                                }
     }
 
     public String getPath(Uri uri) {
@@ -227,7 +236,6 @@ public class SignUpActivity extends AppCompatActivity {
         String document_id = cursor.getString(0);
         document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
         cursor.close();
-
         cursor = getContentResolver().query(
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
@@ -236,6 +244,7 @@ public class SignUpActivity extends AppCompatActivity {
         cursor.close();
 
         return path;
+
     }
 
     protected void showCompletedDialog(String title,String msg) {

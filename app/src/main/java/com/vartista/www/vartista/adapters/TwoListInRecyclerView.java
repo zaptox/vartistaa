@@ -22,7 +22,6 @@ import com.kennyc.bottomsheet.BottomSheetListener;
 import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.*;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.beans.AllNotificationBean;
 import com.vartista.www.vartista.beans.usernotificationitems;
 import com.vartista.www.vartista.modules.general.MyTimeAgo;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
@@ -96,7 +95,7 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
 
     public class NotificationViewHolder extends RecyclerView.ViewHolder {
 
-         View itemView;
+        View itemView;
         public TextView username,requestdetail,timeduration,bs_name,bs_text,bs_text2;
         public ImageView imageView;
         public NotificationViewHolder(View itemView){
@@ -113,14 +112,20 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
 
         public void populate(usernotificationitems ob){
 
-          final String status = ob.getRequest_status();
-          final String name = ob.getName();
-          final String time = ob.getTime();
-          final String image = ob.getImage();
-          final String RA = "Request Accepted";
-          final String RR = "Request Rejected";
-          final String service =ob.getservice_title();
-          final double price = ob.getPrice();
+            final String status = ob.getRequest_status();
+            final String name = ob.getName();
+            final String time = ob.getTime();
+            final String image = ob.getImage();
+            final String RA = "Request Accepted";
+            final String RR = "Request Rejected";
+            final String service =ob.getservice_title();
+            final double price = ob.getPrice();
+            final String date_accepted = ob.getAccepted_date();
+            final String date_rejected= ob.getRejected_date();
+            final String date_sendat= ob.getReqeustsend_at();
+            final String date_payverify= ob.getPay_verify_date();
+            final String date_completed= ob.getCompleted_date();
+            final String date_cancelled= ob.getCancelled_date();
 
 
 
@@ -131,37 +136,42 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
 
 
             if(status.equals("1")){
+                username.setText(name);
                 requestdetail.setTextColor(Color.GREEN);
                 requestdetail.setText(RA);
-                timeduration.setText(ob.getTime());
+                timeduration.setText(TimeAgo(date_accepted));
             }
-           else if(status.equals("0")){
+            else if(status.equals("0")){
                 requestdetail.setText(Html.fromHtml(
                         "Your request has sent to "+name));
-                timeduration.setText(TimeAgo(ob.getReqeustsend_at()));
+                timeduration.setText(TimeAgo(date_sendat));
             }
             else if(status.equals("-1")){
+                username.setText(name);
                 requestdetail.setTextColor(Color.RED);
                 requestdetail.setText(RR);
-                timeduration.setText(TimeAgo(ob.getRejected_date()));
+                timeduration.setText(TimeAgo(date_rejected));
             }
             else if(status.equals("-2")){
                 //Cancelled
+                username.setText(name);
                 requestdetail.setTextColor(Color.RED);
-                requestdetail.setText("Cancelled Service");
-                timeduration.setText(TimeAgo(ob.getCancelled_date()));
+                requestdetail.setText(" Cancelled Service");
+                timeduration.setText(TimeAgo(date_cancelled));
             }
             else if(status.equals("3")){
                 //Completed
+                username.setText(name);
                 requestdetail.setTextColor(Color.RED);
                 requestdetail.setText("Completed Service");
-                timeduration.setText(TimeAgo(ob.getCompleted_date()));
+                timeduration.setText(TimeAgo(date_completed));
             }
             else if(status.equals("6")){
                 //verification of cash
+                username.setText(name);
                 requestdetail.setTextColor(Color.RED);
                 requestdetail.setText("Verification Of Cash ");
-                timeduration.setText(TimeAgo(ob.getPay_verify_date()));
+                timeduration.setText(TimeAgo(date_payverify));
             }
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +186,8 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
                                     bs_name = (TextView)bottomSheet.findViewById(R.id.name_bottomsheet);
                                     imageView = (ImageView)bottomSheet.findViewById(R.id.imageView_bottomsheet);
                                     bs_text = (TextView)bottomSheet.findViewById(R.id.text_bottomsheet);
-                                    bs_text2 = (TextView)bottomSheet.findViewById(R.id.text_bottomsheet2);
+                                    bs_text2 = (TextView)bottomSheet.findViewById(R.id.time_bottomsheet3);
+
                                     Picasso.get().load(image).fit().centerCrop()
                                             .placeholder(R.drawable.profile)
                                             .error(R.drawable.profile)
@@ -184,26 +195,30 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
                                     if(status.equals("1")){
                                         bs_name.setText(name+" Has Accepted Your Request");
                                         bs_text.setText(Html.fromHtml("Your Reqeust To "+ name +" For <b>"+service+ "</b> at "+ time +" has been Accepted."));
-
+                                        bs_text2.setText(TimeAgo(date_accepted));
                                     }
                                     else if(status.equals("0")){
                                         bs_name.setText("Your booking request has been sent");
                                         bs_text2.setText("You will be notify soon.");
                                         bs_text.setText(Html.fromHtml("Your "+ service +" for price  "+price+" booking request has been sent to "+"<b>"+name+"</b>"));
+                                        bs_text2.setText(TimeAgo(date_sendat));
                                     }
                                     else if(status.equals("-1")){
                                         bs_name.setText(name+" Has Canceled Your Request");
                                         bs_text.setText(Html.fromHtml("Your Reqeust To "+ name +" For <b>"+service+ "</b> for <b> "+ time +"</b> has been Canceled."));
+                                        bs_text2.setText(TimeAgo(date_rejected));
 
                                     }
                                     else if(status.equals("3")){
                                         bs_name.setText(" Your Service is Completed");
                                         bs_text.setText(Html.fromHtml("Service <b>" +service+"</b> By "+ name +" is Completed <br> Thank you For Using V-artista" ));
+                                        bs_text2.setText(TimeAgo(date_completed));
 
                                     }
                                     else if(status.equals("6")){
                                         bs_name.setText("Verification Of Cash");
                                         bs_text.setText(Html.fromHtml(name +" will pay You by cash <br> Did you received it or amount ?" ));
+                                        bs_text2.setText(TimeAgo(date_payverify));
 
                                     }
 
@@ -237,78 +252,76 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
             username=(TextView)itemView.findViewById(R.id.textViewname_user_noti);
             adminmsg=(TextView)itemView.findViewById(R.id.textViewrequestdetail_noti);
             timeduration=(TextView)itemView.findViewById(R.id.textViewtimeduration_noti);
-
-
-
         }
-
         public void populate(usernotificationitems ob){
-           final String msg = ob.getMsg();
+            final String msg = ob.getMsg();
             final String image = ob.getImage();
             final String title = ob.getTitle();
             final String Created_at = ob.getCreated_at();
+            final String sp_status = ob.getSp_status();
+
 
             Toast.makeText(itemView.getContext(), ""+ob.getMsg(), Toast.LENGTH_SHORT).show();
-                  username.setText(Html.fromHtml("Dear "+"<b>"+ob.getName()+"<b>"));
-                  adminmsg.setText(Html.fromHtml("<b>"+ob.getTitle()+"<b> <br> "+ob.getMsg()));
-                  timeduration.setText(TimeAgo(Created_at));
+            username.setText(Html.fromHtml("Dear "+"<b>"+ob.getName()+"<b>"));
+            adminmsg.setText(Html.fromHtml("<b>"+ob.getTitle()+"<b> <br> "+ob.getMsg()));
+            timeduration.setText(TimeAgo(Created_at));
 
             Picasso.get().load(R.drawable.profile).fit().centerCrop()
                     .placeholder(R.drawable.profile)
                     .error(R.drawable.profile)
                     .into(imageView);
 
-                  itemView.setOnClickListener(new View.OnClickListener() {
-                      @Override
-                      public void onClick(View v) {
-                          if (msg.contains("upload")){
-                           Intent intent = new Intent(itemView.getContext(),DocumentUploadActivity.class);
-                             v.getContext().startActivity(intent);
-                          }else{
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (msg.contains("upload")){
+                        Intent intent = new Intent(itemView.getContext(),DocumentUploadActivity.class);
+                        v.getContext().startActivity(intent);
+                    }else{
 
-                              new BottomSheet.Builder(v.getContext())
-                                      .setView(R.layout.bottomsheet_header)
-                                      .setListener(new BottomSheetListener() {
-                                          @Override
-                                          public void onSheetShown(@NonNull BottomSheet bottomSheet, @Nullable Object o) {
-                                              bs_name = (TextView)bottomSheet.findViewById(R.id.name_bottomsheet);
-                                              imageView = (ImageView)bottomSheet.findViewById(R.id.imageView_bottomsheet);
-                                              bs_text = (TextView)bottomSheet.findViewById(R.id.text_bottomsheet);
-                                              bs_text2 = (TextView)bottomSheet.findViewById(R.id.text_bottomsheet2);
-                                              Picasso.get().load(image).fit().centerCrop()
-                                                      .placeholder(R.drawable.profile)
-                                                      .error(R.drawable.profile)
-                                                      .into(imageView);
+                        new BottomSheet.Builder(v.getContext())
+                                .setView(R.layout.bottomsheet_header)
+                                .setListener(new BottomSheetListener() {
+                                    @Override
+                                    public void onSheetShown(@NonNull BottomSheet bottomSheet, @Nullable Object o) {
+                                        bs_name = (TextView)bottomSheet.findViewById(R.id.name_bottomsheet);
+                                        imageView = (ImageView)bottomSheet.findViewById(R.id.imageView_bottomsheet);
+                                        bs_text = (TextView)bottomSheet.findViewById(R.id.text_bottomsheet);
+                                        bs_text2 = (TextView)bottomSheet.findViewById(R.id.time_bottomsheet3);
+                                        Picasso.get().load(image).fit().centerCrop()
+                                                .placeholder(R.drawable.profile)
+                                                .error(R.drawable.profile)
+                                                .into(imageView);
 
 
-                                              bs_name.setText(title );
-                                              bs_text.setText(Html.fromHtml(""+msg));
+                                        bs_name.setText(title );
+                                        bs_text.setText(Html.fromHtml(""+msg));
+                                        bs_text2.setText(TimeAgo(Created_at));
+                                    }
 
-                                          }
+                                    @Override
+                                    public void onSheetItemSelected(@NonNull BottomSheet bottomSheet, MenuItem menuItem, @Nullable Object o) {
 
-                                          @Override
-                                          public void onSheetItemSelected(@NonNull BottomSheet bottomSheet, MenuItem menuItem, @Nullable Object o) {
+                                    }
 
-                                          }
+                                    @Override
+                                    public void onSheetDismissed(@NonNull BottomSheet bottomSheet, @Nullable Object o, int i) {
 
-                                          @Override
-                                          public void onSheetDismissed(@NonNull BottomSheet bottomSheet, @Nullable Object o, int i) {
+                                    }
+                                })
+                                .show();
+                    }
+                }
 
-                                          }
-                                      })
-                                      .show();
-                          }
-                      }
-
-                  });
-    }
+            });
+        }
     }
 
     public String TimeAgo(String PastDate){
-    SimpleDateFormat sdf = (new SimpleDateFormat("dd/MM/yyyy hh:mm:ss"));
-     String result = "";
+        SimpleDateFormat sdf = (new SimpleDateFormat("dd/MM/yyyy hh:mm:ss"));
+        String result = "";
         try{
-           Date p_date =  sdf.parse(PastDate);
+            Date p_date =  sdf.parse(PastDate);
             MyTimeAgo timeAgo = new MyTimeAgo().locale(context);
             result = timeAgo.getTimeAgo(p_date);
         } catch(ParseException e) {

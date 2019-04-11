@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
@@ -32,6 +42,10 @@ import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 import com.vartista.www.vartista.restcalls.SendNotificationApiInterface;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -47,7 +61,6 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
     ImageView imageViewDate,imageViewTime;
     public static ApiInterface apiInterface;
     public static SendNotificationApiInterface sendNotificationApiInterface;
-
     RelativeLayout layoutDate,layoutTime;
     TextView textViewReq_Date,textViewReq_Time;
     int user_customer_id,service_provider_id,service_id,service_cat_id;
@@ -101,9 +114,12 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
              final String date=textViewReq_Date.getText().toString();
 
              SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+             final int user_id = ob.getInt("user_id", 0);
 
              final String name_user = ob.getString("name","");
-             final String title = "Vartista- Request";
+//             final String title = "Vartista- Request";
+             final String title = "Vartista- Request?user-id=?" + user_id + "?servp-id=" + service_provider_id + "?serv-id=" + service_id;
+
              final String body = name_user+" sent you request";
              Call<CreateRequest> call = BookNowActivity.apiInterface.createRequest(user_customer_id,
                      service_provider_id,
@@ -117,30 +133,37 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
                      Toast.makeText(BookNowActivity.this, ""+response.body().getResponse(), Toast.LENGTH_SHORT).show();
 
                      if (response.body().getResponse().equals("ok")) {
-                         insertNotification(title,body,user_customer_id,service_provider_id,1,date);
-                         Toast.makeText(BookNowActivity.this, ""+response.body().getResponse(), Toast.LENGTH_SHORT).show();
-                         Call<NotificationsManager> callNotification = BookNowActivity.sendNotificationApiInterface
-                                 .sendPushNotification(service_provider_id,body,title);
-                         callNotification.enqueue(new Callback<NotificationsManager>() {
+//                         insertNotification(title,body,user_customer_id,service_provider_id,1,date);
+//                         Toast.makeText(BookNowActivity.this, ""+response.body().getResponse(), Toast.LENGTH_SHORT).show();
+//                         Call<NotificationsManager> callNotification = BookNowActivity.sendNotificationApiInterface
+//                                 .sendPushNotification(service_provider_id,body,title);
+//                         callNotification.enqueue(new Callback<NotificationsManager>() {
+//
+//                             @Override
+//                             public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
+//
+//                             }
+//
+//                             @Override
+//                             public void onFailure(Call<NotificationsManager> call, Throwable t) {
+//
+//                             }
+//                         });
+//
+//                         MDToast mdToast = MDToast.makeText(getApplicationContext(), "Request has been Sent succesfully.", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+//                         mdToast.show();
+//
+//                          Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+//                         intent.putExtra("user", HomeActivity.user);
+//
+//                         startActivity(intent);
+//
+//
 
-                             @Override
-                             public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
 
-                             }
+                         getRequestServId(user_customer_id,service_provider_id,service_id,title,body);
 
-                             @Override
-                             public void onFailure(Call<NotificationsManager> call, Throwable t) {
 
-                             }
-                         });
-
-                         MDToast mdToast = MDToast.makeText(getApplicationContext(), "Request has been Sent succesfully.", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                         mdToast.show();
-
-                          Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
-                         intent.putExtra("user", HomeActivity.user);
-
-                         startActivity(intent);
 
                      }
 
@@ -236,5 +259,99 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
 
 
     }
+
+    public void getRequestServId(int user_customer_id, final int service_provider_id, int service_id, final String title, final String body) {
+
+        int req_ser_id = 0;
+        new AsyncTask<String, Void, String>() {
+
+            String result = "";
+
+            @Override
+            protected String doInBackground(String... strings) {
+                try {
+                    HttpClient client = new DefaultHttpClient();
+                    HttpGet request = new HttpGet();
+
+                    String user_id = strings[0];
+                    String servprv_id = strings[1];
+                    String serv_id = strings[2];
+
+                    final String BASE_URL = "http://vartista.com/vartista_app/get_request_service_id.php?serv_prv_id="+servprv_id+"&serv_id="+serv_id+"&usr_cust_id="+user_id;
+                    request.setURI(new URI(BASE_URL));
+                    HttpResponse response = client.execute(request);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                    StringBuffer stringBuffer = new StringBuffer();
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        stringBuffer.append(line);
+                        break;
+                    }
+                    reader.close();
+                    result = stringBuffer.toString();
+
+
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                    return new String("There is exception" + e.getMessage());
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return result;
+            }
+
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+
+                int request_serv_id = 0;
+                try {
+                    JSONObject jsonResult = new JSONObject(result);
+                    int success = jsonResult.getInt("success");
+                    if (success == 1) {
+                        request_serv_id = jsonResult.getInt("req_ser_id");
+                    }
+                    String titleWithRequsetServId = title + "?req-serv-id=" + request_serv_id;
+                    Call<NotificationsManager> callNotification = BookNowActivity.sendNotificationApiInterface
+                            .sendPushNotification(service_provider_id, body,titleWithRequsetServId);
+                    callNotification.enqueue(new Callback<NotificationsManager>() {
+
+                        @Override
+                        public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<NotificationsManager> call, Throwable t) {
+
+                        }
+                    });
+
+                    MDToast mdToast = MDToast.makeText(getApplicationContext(), "Request has been Sent succesfully.", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                    mdToast.show();
+
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    intent.putExtra("user", HomeActivity.user);
+
+                    startActivity(intent);
+
+
+                } catch (JSONException e) {
+
+                }
+
+
+            }
+        }.execute(""+user_customer_id, ""+service_provider_id,""+service_id);
+    }
+
+
 
 }
