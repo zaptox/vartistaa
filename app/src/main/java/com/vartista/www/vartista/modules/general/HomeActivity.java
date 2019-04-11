@@ -7,17 +7,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -98,11 +101,11 @@ public class HomeActivity extends AppCompatActivity
     public static User user;
     ImageView imageViewProfileDrawer;
     public static TokenApiInterface tokenApiInterface;
-    private TabLayout tabLayout;
     private ViewPager viewPager;
     DrawerLayout drawer;
     DrawerLayout serviceProvider_Drawer;
     Toolbar toolbar;
+    TabLayout tabLayout=null;
     public static NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     private int[] tabIcons = {
@@ -116,11 +119,14 @@ public class HomeActivity extends AppCompatActivity
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+//            setTheme(R.style.darkthme);
+//        }
+//        else{setTheme(R.style.AppTheme);}
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.loggoo);
         tokenApiInterface = ApiClient.getApiClient().create(TokenApiInterface.class);
@@ -169,7 +175,6 @@ public class HomeActivity extends AppCompatActivity
         //device token add to server
 
         // view pager
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
 
 
         viewPager = (SlideOffViewPager) findViewById(R.id.viewpager);
@@ -182,7 +187,7 @@ public class HomeActivity extends AppCompatActivity
 
 
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+         tabLayout = (TabLayout) findViewById(R.id.tabs);
         final ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -195,7 +200,11 @@ public class HomeActivity extends AppCompatActivity
                          public void onTabSelected(TabLayout.Tab tab) {
 
                 if(tab.getPosition()==1) {
-                              NavigationDrawerUser(true);
+                    tabLayout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.color.serviceProviderActionBar));
+
+                    getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
+
+                    NavigationDrawerUser(true);
                              if (check == true) {
                                  NavigationDrawer_ServiceProvider(false);
                              check = false;
@@ -203,7 +212,11 @@ public class HomeActivity extends AppCompatActivity
 
                 }
                 else if (tab.getPosition()==0){
-                     NavigationDrawerUser(false);
+                    getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.colorPrimaryDark));
+
+                    tabLayout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.color.colorPrimaryDark));
+
+                    NavigationDrawerUser(false);
                      if (check==false){
                          NavigationDrawer_ServiceProvider(true);
                          check=true;
@@ -599,6 +612,7 @@ public class HomeActivity extends AppCompatActivity
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+
 
 
     }
