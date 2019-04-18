@@ -53,6 +53,7 @@ import com.vartista.www.vartista.beans.DeviceToken;
 import com.vartista.www.vartista.beans.GetServiceProviders;
 import com.vartista.www.vartista.beans.Service;
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.fragments.NotificationsFragment;
 import com.vartista.www.vartista.fragments.ServiceProviderFragment;
 import com.vartista.www.vartista.fragments.UserProfileFragment;
 import com.vartista.www.vartista.fragments.UsersFragment;
@@ -373,8 +374,13 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.notification) {
 
 
-            Intent intent = new Intent(HomeActivity.this, Asynctask_MultipleUrl.class);
-            startActivity(intent);
+//            Intent intent = new Intent(HomeActivity.this, Asynctask_MultipleUrl.class);
+//            startActivity(intent);
+
+
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new NotificationsFragment()).addToBackStack("TAG").commit();
+
 
         } else if (id == R.id.appointments) {
 
