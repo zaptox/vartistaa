@@ -50,7 +50,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class BookNowFragment extends Fragment implements DatePickerDialog.OnDateSetListener,TimePickerDialog.OnTimeSetListener {
+public class BookNowFragment extends Fragment  {
 
 
     EditText editTextaddress,editTextCity;
@@ -59,7 +59,7 @@ public class BookNowFragment extends Fragment implements DatePickerDialog.OnDate
     public static ApiInterface apiInterface;
     public static SendNotificationApiInterface sendNotificationApiInterface;
     private FragmentActivity myContext;
-
+    DatePickerDialog.OnDateSetListener ondate;
 
     RelativeLayout layoutDate,layoutTime;
     TextView textViewReq_Date,textViewReq_Time;
@@ -96,12 +96,6 @@ public class BookNowFragment extends Fragment implements DatePickerDialog.OnDate
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         sendNotificationApiInterface = ApiClient.getApiClient().create(SendNotificationApiInterface.class);
 
-
-//        Intent intent=getActivity().getIntent();
-//        user_customer_id=intent.getIntExtra("user_id",0);
-//        service_provider_id=intent.getIntExtra("provider_id",0);
-//        service_id=intent.getIntExtra("service_id",0);
-//        service_cat_id=intent.getIntExtra("cat_id",0);
         tabLayout.setVisibility(View.GONE);
         Calendar calendar=Calendar.getInstance();
         int day=calendar.get(Calendar.DAY_OF_MONTH);
@@ -110,8 +104,7 @@ public class BookNowFragment extends Fragment implements DatePickerDialog.OnDate
         layoutDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datePicker=new DatePickerFragment();
-                datePicker.show(myContext.getFragmentManager(),"date picker");
+                showDatePicker();
             }
         });
         layoutTime.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +135,6 @@ public class BookNowFragment extends Fragment implements DatePickerDialog.OnDate
 
                     @Override
                     public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
-//                     Toast.makeText(BookNowActivity.this, "in qnque"+response.body().getResponse(), Toast.LENGTH_SHORT).show();
                         Toast.makeText(getContext(), ""+response.body().getResponse(), Toast.LENGTH_SHORT).show();
 
                         if (response.body().getResponse().equals("ok")) {
@@ -167,18 +159,12 @@ public class BookNowFragment extends Fragment implements DatePickerDialog.OnDate
                             mdToast.show();
 
 
-//                            SharedPreferences ob = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
-//                            user_id = ob.getInt("user_id", 0);
-//
 
 
                             FragmentManager manager = myContext.getSupportFragmentManager();
                             manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout,
                             new ServiceProviderFragment(user_customer_id)).addToBackStack("TAG").commit();
 
-//                            Intent intent=new Intent(getContext(),HomeActivity.class);
-//                            intent.putExtra("user", HomeActivity.user);
-//                            startActivity(intent);
 
                         }
 
@@ -196,16 +182,25 @@ public class BookNowFragment extends Fragment implements DatePickerDialog.OnDate
                 editTextCity.setText("");
                 textViewReq_Date.setText("00-00-0000");
                 textViewReq_Time.setText("00:00");
-//             Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
-//             intent.putExtra("userId",user_customer_id);
-//             startActivity(intent);
-
-
 
 
             }
         });
 
+
+         ondate = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                        Calendar c=Calendar.getInstance();
+        c.set(Calendar.YEAR,year);
+        c.set(Calendar.MONTH,monthOfYear);
+        c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String currentDate = sdf.format(c.getTime());
+        textViewReq_Date.setText(currentDate);
+            }
+        };
 
         return view;
 
@@ -260,32 +255,35 @@ public class BookNowFragment extends Fragment implements DatePickerDialog.OnDate
         super.onAttach(activity);
     }
 
-
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Toast.makeText(myContext, "hey", Toast.LENGTH_SHORT).show();
-        Calendar c=Calendar.getInstance();
-        c.set(Calendar.YEAR,year);
-        c.set(Calendar.MONTH,month);
-        c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String currentDate = sdf.format(c.getTime());
-//        String currentDate= DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
-        textViewReq_Date.setText(currentDate);
+    private void showDatePicker() {
+        DatePickerFragment date = new DatePickerFragment();
+        /**
+         * Set Up Current Date Into dialog
+         */
+        Calendar calender = Calendar.getInstance();
+        Bundle args = new Bundle();
+        args.putInt("year", calender.get(Calendar.YEAR));
+        args.putInt("month", calender.get(Calendar.MONTH));
+        args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
+        date.setArguments(args);
+        /**
+         * Set Call back to capture selected date
+         */
+        date.setCallBack(ondate);
+        date.show(myContext.getFragmentManager(), "Date Picker");
     }
 
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        String amPm="";
-        if(hourOfDay>=12){
-            amPm="PM";
-            hourOfDay=hourOfDay-12;
-        }
-        else{
-            amPm="AM";
-        }
-        textViewReq_Time.setText(String.format("%02d:%02d",hourOfDay,minute)+" "+amPm);
-
-    }
+//    @Override
+//    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//        String amPm="";
+//        if(hourOfDay>=12){
+//            amPm="PM";
+//            hourOfDay=hourOfDay-12;
+//        }
+//        else{
+//            amPm="AM";
+//        }
+//        textViewReq_Time.setText(String.format("%02d:%02d",hourOfDay,minute)+" "+amPm);
+//
+//    }
 }
