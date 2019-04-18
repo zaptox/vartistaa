@@ -240,7 +240,6 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
                 else if(response.body().getResponse().equals("error")){
 //                     setUIToWait(false);
 
-
                 }
 
                 else{

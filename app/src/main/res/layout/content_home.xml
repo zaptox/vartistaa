@@ -8,6 +8,10 @@
     tools:context="com.vartista.www.vartista.modules.general.HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
+    <FrameLayout
+        android:id="@+id/fragment_frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <com.vartista.www.vartista.modules.general.SlideOffViewPager
         android:id="@+id/viewpager"
@@ -15,6 +19,6 @@
         android:layout_height="match_parent"
         ></com.vartista.www.vartista.modules.general.SlideOffViewPager>
 
-
+</FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

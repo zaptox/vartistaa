@@ -55,11 +55,9 @@ public class UserAppointmentDetailsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_user_appointment_details,container,false);
+        View view= inflater.inflate(R.layout.activity_user_appointment_details,container,false);
         Date currentTime = Calendar.getInstance().getTime();
-
         sendNotificationApiInterface = ApiClient.getApiClient().create(SendNotificationApiInterface.class);
-
         imageView = view.findViewById(R.id.profile_image);
         serviceprovidername=(TextView)view.findViewById(R.id.textViewname_user);
         servicecharges=(TextView)view.findViewById(R.id.servicedetail_user);

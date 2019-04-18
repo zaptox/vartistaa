@@ -1,5 +1,7 @@
 package com.vartista.www.vartista.modules.user.user_fragments;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -10,7 +12,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,6 +71,8 @@ public class FindServicesInListFragment extends Fragment {
     ServicesInListMapAdapter myServicesListAdapter;
     View view;
     List<GetServiceProviders> myservicesList;
+    private FragmentActivity myContext;
+
 
     public String filterLocation, filterGender;
 
@@ -80,11 +86,22 @@ public class FindServicesInListFragment extends Fragment {
 
     public static ApiInterface apiInterface;
     ArrayList<GetServiceProviders> splist;
+    TabLayout tabLayout;
+
+    public FindServicesInListFragment() {
+
+    }
+
+    @SuppressLint("ValidFragment")
+    public FindServicesInListFragment(int cat_id2, TabLayout tabLayout) {
+        this.cat_id2=cat_id2;
+        this.tabLayout=tabLayout;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view= inflater.inflate(R.layout.fragment_find_services_in_list,container,false);
+        view= inflater.inflate(R.layout.activity_services_in_list,container,false);
 
 
         btnFilter = view.findViewById(R.id.filter_button);
@@ -94,12 +111,19 @@ public class FindServicesInListFragment extends Fragment {
         splist=new ArrayList<GetServiceProviders>();
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
-        Intent intent=getActivity().getIntent();
-        final int cat_id=intent.getIntExtra("cat_id",0);
-        cat_id2=cat_id;
+//        Intent intent=getActivity().getIntent();
+//        final int cat_id=intent.getIntExtra("cat_id",0);
+//        cat_id2=cat_id;
 //                intent.putExtra("cat_id",cat_id);
 
         //Getting user id from HomeAcitivty
+
+
+
+        tabLayout= getActivity().findViewById(R.id.tabs);
+
+        tabLayout.setVisibility(View.GONE);
+
         SharedPreferences ob = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
         user_id = ob.getInt("user_id", 0);
 
@@ -197,12 +221,12 @@ public class FindServicesInListFragment extends Fragment {
 
                 if(filterApplied)
                 {
-                    new Connection2(getContext(),cat_id,filterLocation,filterGender,filterCost, typeOfFilter,filter_text,view).execute();
+                    new Connection2(getContext(),cat_id2,filterLocation,filterGender,filterCost, typeOfFilter,filter_text,view).execute();
                 }
 
                 else
                 {
-                    new Connection2(getContext(),cat_id, typeOfFilter,filter_text,view).execute();
+                    new Connection2(getContext(),cat_id2, typeOfFilter,filter_text,view).execute();
                     Log.d("TextField1" ,filter_text);
                 }
 
@@ -248,11 +272,11 @@ public class FindServicesInListFragment extends Fragment {
             }
         });
 
-        new Connection(getContext(), cat_id,view).execute();
+        new Connection(getContext(), cat_id2,view).execute();
 
-       return view;
+        return view;
 
-}
+    }
 
     private void sendFilterQuery(CharSequence c) {
 
@@ -412,14 +436,14 @@ public class FindServicesInListFragment extends Fragment {
 
                     }
 
-                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist);
+                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist,myContext,tabLayout);
                     listViewMyServices.setAdapter(myServicesListAdapter);
 
 
 
                 } else {
                     splist= new ArrayList<GetServiceProviders>();
-                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist);
+                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist,myContext,tabLayout);
                     listViewMyServices.setAdapter(myServicesListAdapter);
 
 
@@ -578,7 +602,7 @@ public class FindServicesInListFragment extends Fragment {
 
                     }
 //
-                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist);
+                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist, myContext,tabLayout);
                     listViewMyServices.setAdapter(myServicesListAdapter);
 
                 } else {
@@ -587,7 +611,7 @@ public class FindServicesInListFragment extends Fragment {
 
 
                     splist= new ArrayList<GetServiceProviders>();
-                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist);
+                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist,myContext,tabLayout);
                     listViewMyServices.setAdapter(myServicesListAdapter);
                 }
             } catch (JSONException e) {
@@ -596,6 +620,13 @@ public class FindServicesInListFragment extends Fragment {
             }
         }
 
+    }
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        myContext=(FragmentActivity) activity;
+        super.onAttach(activity);
     }
 
 }
