@@ -60,6 +60,7 @@ public class BookNowFragment extends Fragment  {
     public static SendNotificationApiInterface sendNotificationApiInterface;
     private FragmentActivity myContext;
     DatePickerDialog.OnDateSetListener ondate;
+    TimePickerDialog.OnTimeSetListener onTime;
 
     RelativeLayout layoutDate,layoutTime;
     TextView textViewReq_Date,textViewReq_Time;
@@ -199,6 +200,24 @@ public class BookNowFragment extends Fragment  {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String currentDate = sdf.format(c.getTime());
         textViewReq_Date.setText(currentDate);
+            }
+
+
+
+        };
+        onTime=new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                String amPm="";
+        if(hourOfDay>=12){
+            amPm="PM";
+            hourOfDay=hourOfDay-12;
+        }
+        else{
+            amPm="AM";
+        }
+        textViewReq_Time.setText(String.format("%02d:%02d",hourOfDay,minute)+" "+amPm);
+
             }
         };
 
