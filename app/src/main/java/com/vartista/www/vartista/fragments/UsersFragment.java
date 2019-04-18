@@ -2,6 +2,7 @@ package com.vartista.www.vartista.fragments;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,6 +60,8 @@ public class UsersFragment extends Fragment {
     List<Category> myCategoriesList;
     ViewPager viewpager;
     TabLayout tabLayout;
+    private FragmentActivity myContext;
+
 
     @SuppressLint("ValidFragment")
     public UsersFragment(int user_id) {
@@ -77,6 +81,7 @@ public class UsersFragment extends Fragment {
 
         viewpager = (ViewPager)getActivity().findViewById(R.id.viewpager);
         tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
+        tabLayout.setVisibility(View.VISIBLE);
 
 
 
@@ -96,7 +101,7 @@ public class UsersFragment extends Fragment {
 
 //        categoriesListAdapter=new CategoriesListAdapter(context,myCategoriesList);
 //        categoriesListAdapter=new CategoriesListAdapter(context,myCategoriesList,viewpager);
-        categoriesListAdapter=new CategoriesListAdapter(context,myCategoriesList,tabLayout);
+        categoriesListAdapter=new CategoriesListAdapter(context,myCategoriesList,tabLayout, myContext);
 
 
 
@@ -198,6 +203,15 @@ public class UsersFragment extends Fragment {
             }
         }
     }
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        myContext=(FragmentActivity) activity;
+        super.onAttach(activity);
+    }
+
+
 
 
 }

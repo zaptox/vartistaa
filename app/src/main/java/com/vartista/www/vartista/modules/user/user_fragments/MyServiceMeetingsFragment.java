@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,20 +45,32 @@ public class MyServiceMeetingsFragment extends Fragment {
     private ServiceUserAppointmentsAdapter listadapter;
     ArrayList<servicepaapointmentsitems> userAppointments;
     int user_id1;
+    TabLayout tabLayout;
+
+
+    public MyServiceMeetingsFragment() {
+
+    }
+
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_my_service_meetings,container,false);
+        View view= inflater.inflate(R.layout.activity_my_service_meetings,container,false);
         recyclerView = (RecyclerView)view.findViewById(R.id.Userappointment_recyclerView);
         userAppointments=new ArrayList<servicepaapointmentsitems>();
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
+        tabLayout= getActivity().findViewById(R.id.tabs);
+
+        tabLayout.setVisibility(View.GONE);
+
 
         SharedPreferences ob =getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
         user_id1 = ob.getInt("user_id",0);
-        new MyServiceMeetingsFragment.Conncetion(getActivity(),user_id1).execute();
+        new Conncetion(getActivity(),user_id1).execute();
         return view;
     }
 

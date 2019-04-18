@@ -55,7 +55,7 @@ public class AssignRatingFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_assign_rating,container,false);
+        View view= inflater.inflate(R.layout.activity_assign_ratings,container,false);
         profile_image=view.findViewById(R.id.profile_image);
         ScaleRatingBar ratingBar = view.findViewById(R.id.simpleRatingBar);
         ratingBar.setNumStars(5);

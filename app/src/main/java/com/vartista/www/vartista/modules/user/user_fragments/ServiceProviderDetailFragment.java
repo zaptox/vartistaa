@@ -1,5 +1,7 @@
 package com.vartista.www.vartista.modules.user.user_fragments;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +10,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,11 +56,37 @@ public class ServiceProviderDetailFragment extends Fragment {
     int cat_id;
     int user_id;
     String spname;
+    String spProfileImage;
+    String serviceTitle;
+    private FragmentActivity myContext;
+    TabLayout tabLayout;
+
+
+
+
     ImageView imageViewProfileImage;
+
+    public ServiceProviderDetailFragment() {
+
+    }
+
+    @SuppressLint("ValidFragment")
+    public ServiceProviderDetailFragment(int s_provider_id, int cat_id, int user_id, String sp_name,
+                                         String serviceTitle, String spProfileImage, TabLayout tabLayout) {
+        this.provider_id=s_provider_id;
+        this.cat_id=cat_id;
+        this.user_id=user_id;
+        this.spname=sp_name;
+        this.serviceTitle=serviceTitle;
+        this.spProfileImage=spProfileImage;
+        this.tabLayout=tabLayout;
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_service_provider_detail,container,false);
+        View view= inflater.inflate(R.layout.activity_service_provider_detail,container,false);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         listViewSpDetials=(RecyclerView) view.findViewById(R.id.services_sp);
@@ -69,14 +99,16 @@ public class ServiceProviderDetailFragment extends Fragment {
         listViewSpDetials.setItemAnimator(new DefaultItemAnimator());
 
         myservicesList=new ArrayList<>();
-        Intent intent=getActivity().getIntent();
+        tabLayout=(TabLayout) getActivity().findViewById(R.id.tabs);
+        tabLayout.setVisibility(View.GONE);
 
-        provider_id=intent.getIntExtra("s_provider_id",0);
-        cat_id=intent.getIntExtra("cat_id",0);
-        user_id=intent.getIntExtra("user_id",0);
-        spname=intent.getStringExtra("spname");
-        String spProfileImage=intent.getStringExtra("profile_photo");
-        String serviceTitle=intent.getStringExtra("service_title");
+//        Intent intent=getActivity().getIntent();
+//        provider_id=intent.getIntExtra("s_provider_id",0);
+//        cat_id=intent.getIntExtra("cat_id",0);
+//        user_id=intent.getIntExtra("user_id",0);
+//        spname=intent.getStringExtra("spname");
+//        String spProfileImage=intent.getStringExtra("profile_photo");
+//        String serviceTitle=intent.getStringExtra("service_title");
 
 
 
@@ -92,10 +124,10 @@ public class ServiceProviderDetailFragment extends Fragment {
                 .into(imageViewProfileImage);
 
 
-        new ServiceProviderDetailFragment.Conncetion(getContext(),provider_id,cat_id).execute();
+        new Conncetion(getContext(),provider_id,cat_id).execute();
 
 
-        myServicesListAdapter=new SpDetailsAdapter(getContext(),myservicesList,provider_id,cat_id,user_id);
+        myServicesListAdapter=new SpDetailsAdapter(getContext(),myservicesList,provider_id,cat_id,user_id,myContext,tabLayout);
 
         return view;
     }
@@ -126,7 +158,6 @@ public class ServiceProviderDetailFragment extends Fragment {
             try {
                 HttpClient client=new DefaultHttpClient();
                 HttpGet request=new HttpGet();
-
                 request.setURI(new URI(BASE_URL));
                 HttpResponse response=client.execute(request);
                 BufferedReader reader=new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
@@ -192,4 +223,12 @@ public class ServiceProviderDetailFragment extends Fragment {
             }
         }
     }
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        myContext=(FragmentActivity) activity;
+        super.onAttach(activity);
+    }
+
 }

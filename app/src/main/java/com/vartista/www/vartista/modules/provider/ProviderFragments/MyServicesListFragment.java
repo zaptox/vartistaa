@@ -7,11 +7,13 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import com.vartista.www.vartista.beans.Service;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
+import com.vartista.www.vartista.modules.user.MyCompletedServices;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -58,6 +61,7 @@ public class MyServicesListFragment extends Fragment {
     RecyclerView listViewMyServices;
     MyServicesListAdapter myServicesListAdapter;
     List<Service> myservicesList;
+    TabLayout tabLayout;
 
     int user_id;
 
@@ -69,10 +73,11 @@ public class MyServicesListFragment extends Fragment {
 
 
     @SuppressLint("ValidFragment")
-    public MyServicesListFragment(int user_id) {
+    public MyServicesListFragment(int user_id, TabLayout tabLayout) {
         // Required empty public constructor
         this.user_id=user_id;
-    }
+        this.tabLayout=tabLayout;
+         }
 
 //    public static MyServicesListFragment newInstance(String param1, String param2) {
 //        MyServicesListFragment fragment = new MyServicesListFragment();
@@ -107,6 +112,11 @@ public class MyServicesListFragment extends Fragment {
                 DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
         listViewMyServices.setItemAnimator(new DefaultItemAnimator());
+
+        tabLayout.setVisibility(View.GONE);
+
+
+
 
         myservicesList=new ArrayList<>();
 //          user_id=getIntent().getIntExtra("userId",10);
