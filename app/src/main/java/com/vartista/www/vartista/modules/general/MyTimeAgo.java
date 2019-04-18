@@ -41,7 +41,7 @@ public class MyTimeAgo {
 
         simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        timeFormat = new SimpleDateFormat("h:mm aa");
+        timeFormat = new SimpleDateFormat("hh:mm ");
 
 
 //        Calendar c = Calendar.getInstance();
@@ -57,7 +57,7 @@ public class MyTimeAgo {
 
 //        Date now = Calendar.getInstance().getTime();
         Date now = new Date();
-            sDateTimeNow = simpleDateFormat.format(now);
+        sDateTimeNow = simpleDateFormat.format(now);
 
 
 //        Date now = new Date();
@@ -86,10 +86,16 @@ public class MyTimeAgo {
                 return different / MINUTE_MILLIS + context.getString(com.choota.dev.ctimeago.R.string.mins_ago);
             } else if (different < 90 * MINUTE_MILLIS) {
                 return context.getString(com.choota.dev.ctimeago.R.string.a_hour_ago);
-            } else if (different < 24 * HOUR_MILLIS) {
-                timeFromData = timeFormat.format(startDate);
-                return timeFromData;
-            } else if (different < 48 * HOUR_MILLIS) {
+            }
+            else if (different < 24 * HOUR_MILLIS){
+                return different/HOUR_MILLIS + "hours ago";
+            }
+
+//            else if (different < 24 * HOUR_MILLIS) {
+//                timeFromData = timeFormat.format(startDate);
+//                return timeFromData;
+//            }
+            else if (different < 48 * HOUR_MILLIS) {
                 return context.getString(com.choota.dev.ctimeago.R.string.yesterday);
             } else if (different < 7 * DAY_MILLIS) {
                 return different / DAY_MILLIS + context.getString(com.choota.dev.ctimeago.R.string.days_ago);
@@ -110,10 +116,16 @@ public class MyTimeAgo {
                 return different / MINUTE_MILLIS + context.getString(com.choota.dev.ctimeago.R.string.mins_ago);
             } else if (different < 90 * MINUTE_MILLIS) {
                 return context.getString(com.choota.dev.ctimeago.R.string.a_hour_ago);
-            } else if (different < 24 * HOUR_MILLIS) {
-                timeFromData = timeFormat.format(startDate);
-                return timeFromData;
-            } else if (different < 48 * HOUR_MILLIS) {
+            }
+            else if (different < 24 * HOUR_MILLIS){
+                return different/HOUR_MILLIS + " hours ago";
+            }
+
+//            else if (different < 24 * HOUR_MILLIS) {
+//                timeFromData = timeFormat.format(startDate);
+//                return timeFromData;
+//            }
+            else if (different < 48 * HOUR_MILLIS) {
                 return context.getString(com.choota.dev.ctimeago.R.string.yesterday);
             } else if (different < 7 * DAY_MILLIS) {
                 return different / DAY_MILLIS + context.getString(com.choota.dev.ctimeago.R.string.days_ago);

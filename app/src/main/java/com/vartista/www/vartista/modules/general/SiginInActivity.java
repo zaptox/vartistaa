@@ -1,5 +1,6 @@
 package com.vartista.www.vartista.modules.general;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +11,10 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +22,10 @@ import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.Doument_Upload_Nil;
+import com.vartista.www.vartista.beans.NotificationsManager;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.user.AssignRatings;
+import com.vartista.www.vartista.modules.user.UserAppointmentDetails;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 
@@ -51,12 +56,14 @@ import retrofit2.Response;
 public class SiginInActivity extends AppCompatActivity {
 
     private Button signin;
-    private TextView signup;
+    private TextView signup,login_sp;
     private TextView forgotpassword;
     private EditText email;
     private EditText password;
     ArrayList<User> list;
     private ProgressDialog progressDialog;
+    Dialog signup_dialogue;
+
 
     //    public static PrefConfig prefConfig;
     public static ApiInterface apiInterface;
@@ -80,12 +87,60 @@ public class SiginInActivity extends AppCompatActivity {
         forgotpassword = findViewById(R.id.textView3);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-
+//        login_sp= findViewById(R.id.login_sp);
+//
+//        login_sp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(login_sp.getText().equals("SIGN IN AS SERVICE PROVIDER")) {
+//                    signin.setText("Sign in as Service Provider");
+//                    login_sp.setText("SIGN IN AS USER");
+//                }
+//                else{
+//                    signin.setText("Sign in as User");
+//                    login_sp.setText("SIGN IN AS SERVICE PROVIDER");
+//                }
+//
+//            }
+//        });
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 startActivity(new Intent(SiginInActivity.this, SignUpActivity.class));
+
+//                signup_dialogue = new Dialog(SiginInActivity.this);
+//                signup_dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+//                signup_dialogue.setContentView(R.layout.signup_dialogue);
+//                Button next = (Button)signup_dialogue.findViewById(R.id.next);
+//                final RadioButton user_radio=signup_dialogue.findViewById(R.id.user_radio);
+//                final RadioButton sp_radio=signup_dialogue.findViewById(R.id.sp_radio);
+//
+//                Button  cancel = (Button)signup_dialogue.findViewById(R.id.cancelbutton);
+////                d_sp_name = signup_dialogue.findViewById(R.id.sp_name);
+//
+//
+//
+//                signup_dialogue.show();
+//
+//
+//
+//
+//                cancel.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//
+//
+//                        signup_dialogue.cancel();
+//                    }
+//                });
+//
+
+
+
+
+
             }
         });
 
@@ -281,8 +336,6 @@ public class SiginInActivity extends AppCompatActivity {
         editor.putString("gender",gender);
         editor.putString("sp_status",sp_status);
         editor.putString("image",image);
-
-
         editor.apply();
         editor.commit();
         Toast.makeText(this, "Shared PReference are working "+user_id+"\n"+Password, Toast.LENGTH_SHORT).show();

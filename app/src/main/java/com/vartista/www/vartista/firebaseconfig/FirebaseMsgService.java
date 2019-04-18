@@ -127,6 +127,9 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
     private void sendNotifcation(String title,String body, String activity,String date , String time,String rservice_id) {
         SharedPreferences ob = getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
 
+
+
+
         final String name_user = ob.getString("name","");
         NotificationHelper notificationHelper;
         NotificationManagerCompat notificationManager;
@@ -159,16 +162,37 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
+//            else if(title.contains("Request")){
+//
+//                resultIntent = new Intent(getApplicationContext(), MyServiceRequests.class);
+//                resultIntent.putExtra("user", user_id);
+//                resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+////                Intent dialogIntent = new Intent(this, RequestAlertActivity.class);
+////                dialogIntent.putExtra("user",user_id);
+////                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+////                startActivity(dialogIntent);
+//            }
+
             else if(title.contains("Request")){
+
+                String requestUserId = title.substring(title.indexOf("user-id=")+new String("user-id=").length()+1,title.indexOf("?s"));
+                String service_provider_id = title.substring(title.indexOf("servp-id=")+new String("servp-id=").length(),title.indexOf("?s",title.indexOf("servp-id=")));
+                String  service_id = title.substring(title.indexOf("serv-id=")+new String("serv-id=").length(),title.indexOf("?r",title.indexOf("serv-id=")));
+                String req_serv_id = title.substring(title.indexOf("req-serv-id=")+new String("req-serv-id=").length());
 
                 resultIntent = new Intent(getApplicationContext(), MyServiceRequests.class);
                 resultIntent.putExtra("user", user_id);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                Intent dialogIntent = new Intent(this, RequestAlertActivity.class);
-//                dialogIntent.putExtra("user",user_id);
-//                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(dialogIntent);
+                Intent dialogIntent = new Intent(this, RequestAlertActivity.class);
+                dialogIntent.putExtra("user",user_id);
+                dialogIntent.putExtra("reqUserId",requestUserId);
+                dialogIntent.putExtra("serv_prv_Id",service_provider_id);
+                dialogIntent.putExtra("serv_Id",service_id);
+                dialogIntent.putExtra("req_serv_id",req_serv_id);
+                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(dialogIntent);
             }
+
 
             else if (title.contains("Congratulations")){
                 resultIntent = new Intent(getApplicationContext(), SiginInActivity.class);

@@ -78,8 +78,10 @@
         android:textColor="@android:color/white"
         android:textSize="11dp" />
 
+    <!--android:onClick="OnClick"-->
+
     <Button
-        android:id="@+id/buttonReject"
+        android:id="@+id/button_reject"
         android:layout_width="85dp"
         android:layout_height="45dp"
         android:layout_alignParentRight="true"

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
+    <TextView
+        android:id="@+id/titleLogin"
+        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:text="Sign Up"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:padding="08dp"
+        android:background="@color/colorPrimary"
+        android:typeface="sans"
+        android:textStyle="bold"
+        android:gravity="center" />
+    <TextView
+        android:id="@+id/service_name"
+        android:layout_below="@+id/titleLogin"
+        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:text="Sign up as ?"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:paddingLeft="5dp"
+        android:paddingTop="2dp"
+        android:typeface="sans" />
+
+
+    <LinearLayout
+        android:id="@+id/pay_options"
+        android:layout_below="@+id/service_name"
+        android:layout_width="wrap_content"
+        android:padding="10sp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/user_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User"
+                />
+            <RadioButton
+                android:id="@+id/sp_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Service Provider"
+                />
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayoutBtns"
+        android:layout_below="@+id/pay_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp">
+        <Button
+            android:id="@+id/next"
+            android:layout_width="125dp"
+            android:layout_height="35dp"
+            android:textSize="14dp"
+            android:text="Next"
+            android:textAllCaps="false"
+            android:typeface="sans"
+            android:background="@drawable/accept_btn_shape"
+            android:textColor="@color/textColor"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="5dp" />
+
+        <Button
+            android:id="@+id/cancelbutton"
+            android:layout_width="125dp"
+            android:layout_height="35dp"
+            android:textSize="14dp"
+            android:textAllCaps="false"
+            android:text="Cancel"
+            android:typeface="sans"
+            android:background="@drawable/reject_btn_shape"
+            android:textColor="@color/textColor"
+            android:layout_marginLeft="5dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="5dp" />
+
+    </LinearLayout>
+</RelativeLayout>

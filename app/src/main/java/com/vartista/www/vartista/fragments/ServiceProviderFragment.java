@@ -2,9 +2,12 @@ package com.vartista.www.vartista.fragments;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +24,7 @@ import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.modules.provider.EarningActivity;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
+import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServicesListFragment;
 import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
 
 
@@ -30,6 +34,8 @@ import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
 public class ServiceProviderFragment extends Fragment {
     LinearLayout btnCreateServices,btnMyServices,reqalert,btnUploadDoc,earnings;
      static int user_id;
+    private FragmentActivity myContext;
+
     @SuppressLint("ValidFragment")
     public ServiceProviderFragment(int user_id) {
       this.user_id=user_id;
@@ -78,9 +84,16 @@ public class ServiceProviderFragment extends Fragment {
         btnMyServices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),MyServicesListActivity.class);
-                intent.putExtra("userId",user_id);
-                startActivity(intent);
+
+                FragmentManager manager = myContext.getSupportFragmentManager();
+                manager.beginTransaction().replace(R.id.viewpager, new MyServicesListFragment(user_id)).addToBackStack("TAG").commit();
+
+
+//                Intent intent=new Intent(getContext(),MyServicesListActivity.class);
+//                intent.putExtra("userId",user_id);
+//                startActivity(intent);
+//
+
             }
         });
         btnCreateServices.setOnClickListener(new View.OnClickListener() {
@@ -93,5 +106,12 @@ public class ServiceProviderFragment extends Fragment {
         });
    return view;
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        myContext=(FragmentActivity) activity;
+        super.onAttach(activity);
+    }
+
 
 }
