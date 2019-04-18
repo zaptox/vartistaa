@@ -109,7 +109,7 @@ public class HomeActivity extends AppCompatActivity
     public static NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     private int[] tabIcons = {
-            R.drawable.user,
+            R.drawable.ic_asauser_24dp,
             R.drawable.myservices,
 
 
