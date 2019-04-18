@@ -72,8 +72,13 @@ String title[]=new String[]{"As a User","As a Service Provider"};
 //                }
                 else{
                     ServiceProviderFragment tab2 = new ServiceProviderFragment(user_id);
-                    return tab2;
-
+                    if(tab2.isAdded()){
+                        UsersFragment tab4 = new UsersFragment(user_id);
+                        return tab4;
+                    }
+                    else {
+                        return tab2;
+                    }
                 }
 
             default:

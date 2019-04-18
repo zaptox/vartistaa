@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -320,9 +321,17 @@ public class CreateServiceFragment extends Fragment {
                     edDescription.setText("");
                     edtTxtSerivceTitle.setText("");
                     edTxtServicePrice.setText("");
-                    Intent intent = new Intent(getContext(), MyServicesListActivity.class);
-                    intent.putExtra("userId", user_id);
-                    startActivity(intent);
+
+
+//                    Intent intent = new Intent(getContext(), MyServicesListActivity.class);
+//                    intent.putExtra("userId", user_id);
+//                    startActivity(intent);
+
+                    FragmentManager manager = getFragmentManager();
+                    manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServicesListFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
+
+
+
                 }
             }
 
