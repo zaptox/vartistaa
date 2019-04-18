@@ -3,7 +3,6 @@ package com.vartista.www.vartista.modules.user.user_fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -65,6 +64,7 @@ public class BookNowFragment extends Fragment  {
     RelativeLayout layoutDate,layoutTime;
     TextView textViewReq_Date,textViewReq_Time;
     int user_customer_id,service_provider_id,service_id,service_cat_id;
+    TimePickerDialog timePickerDialog;
 
     TabLayout tabLayout;
 
@@ -108,11 +108,31 @@ public class BookNowFragment extends Fragment  {
                 showDatePicker();
             }
         });
+
+        Calendar calendar1=Calendar.getInstance();
+        final int hour=calendar.get(Calendar.HOUR);
+        final int minute=calendar.get(Calendar.MINUTE);
+
         layoutTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment timePicker=new TimePickerFragment();
-                timePicker.show(myContext.getFragmentManager(),"time picker");
+             timePickerDialog=new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                 @Override
+                 public void onTimeSet(TimePicker timePicker, int hourOfDay, int min) {
+                     String amPm="";
+                     if(hourOfDay>=12){
+                         amPm="PM";
+                         hourOfDay=hourOfDay-12;
+                     }
+                     else{
+                         amPm="AM";
+                     }
+                     textViewReq_Time.setText(String.format("%02d:%02d",hourOfDay,min)+" "+amPm);
+
+
+                 }
+             },hour,minute,false);
+      timePickerDialog.show();
             }
         });
         buttonBook.setOnClickListener(new View.OnClickListener() {
@@ -205,21 +225,6 @@ public class BookNowFragment extends Fragment  {
 
 
         };
-        onTime=new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String amPm="";
-        if(hourOfDay>=12){
-            amPm="PM";
-            hourOfDay=hourOfDay-12;
-        }
-        else{
-            amPm="AM";
-        }
-        textViewReq_Time.setText(String.format("%02d:%02d",hourOfDay,minute)+" "+amPm);
-
-            }
-        };
 
         return view;
 
@@ -292,17 +297,46 @@ public class BookNowFragment extends Fragment  {
         date.show(myContext.getFragmentManager(), "Date Picker");
     }
 
-//    @Override
-//    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//        String amPm="";
-//        if(hourOfDay>=12){
-//            amPm="PM";
-//            hourOfDay=hourOfDay-12;
-//        }
-//        else{
-//            amPm="AM";
-//        }
-//        textViewReq_Time.setText(String.format("%02d:%02d",hourOfDay,minute)+" "+amPm);
-//
+
+    private void showTimePicker() {
+        TimePickerFragment date = new TimePickerFragment();
+        /**
+         * Set Up Current Date Into dialog
+         */
+        final Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        /**
+         * Set Call back to capture selected date
+         */
+
+        Bundle args = new Bundle();
+        args.putInt("hour", hour);
+        args.putInt("minute", minute);
+        date.setArguments(args);
+        date.setCallBack(onTime);
+
+        /**
+         * Set Call back to capture selected date
+         */
+        date.setCallBack(onTime);
+        date.show(myContext.getFragmentManager(), "Time Picker");
+    }
+
+//    private void showTmePicker() {
+//        TimePickerFragment time = new TimePickerFragment();
+//        /**
+//         * Set Up Current Date Into dialog
+//         */
+//        Calendar calender = Calendar.getInstance();
+//        Bundle args = new Bundle();
+//        args.putInt("year", calender.get(Calendar.YEAR));
+//        args.putInt("month", calender.get(Calendar.MONTH));
+//        args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
+//        /**
+//         * Set Call back to capture selected date
+//         */
+//        time.show(myContext.getFragmentManager(), "Date Picker");
 //    }
+
 }
