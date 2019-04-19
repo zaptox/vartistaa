@@ -242,34 +242,28 @@ public class SiginInActivity extends AppCompatActivity {
                     addtosharedpreference(userLoggedIn.getId(),userLoggedIn.getBusystatus(),userLoggedIn.getEmail(),userLoggedIn.getPassword(),
                             userLoggedIn.getName(),userLoggedIn.getGender(),userLoggedIn.getSp_status(),
                             userLoggedIn.getContact(),image);
-//                    upload_document(userLoggedIn.getName(),userLoggedIn.getPassword(),userLoggedIn.getContact());
-//                    Toast.makeText(SiginInActivity.this, "The User Id is :- "+userLoggedIn.getId()
-//                            +"\n"+"The Name is "+userLoggedIn.getName()
-//                            +"\n"+"The password is "+userLoggedIn.getPassword(), Toast.LENGTH_SHORT).show();
                     setUIToWait(false);
-//                    Toast.makeText(SiginInActivity.this, ""+userLoggedIn, Toast.LENGTH_SHORT).show();
                     //
                     Intent intent = new Intent(SiginInActivity.this, HomeActivity.class);
                     intent.putExtra("user", userLoggedIn);
+                    MDToast.makeText(SiginInActivity.this, "Login Sucessfully!...", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
                     startActivity(intent);
                     finish();
 //
 //
                 } else if (response.body().getResponse().equals("failed")) {
-                    //  Toast.makeText(SiginInActivity.this, "Login Failed.. Please try again", Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(SiginInActivity.this, "", Toast.LENGTH_SHORT).show();
+                      MDToast.makeText(SiginInActivity.this, "Login Failed.. Please try again", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                     setUIToWait(false);
 
                 }
 //
                 else {
                     setUIToWait(false);
-                    //  Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse(), Toast.LENGTH_SHORT).show();
+                    MDToast.makeText(SiginInActivity.this, "Login Failed.. Please try again", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
                 }
 
-//                Toast.makeText(SiginInActivity.this, "In response's last line", Toast.LENGTH_SHORT).show();
 
 
             }
@@ -277,7 +271,7 @@ public class SiginInActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
 
-                //  Toast.makeText(SiginInActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                MDToast.makeText(SiginInActivity.this, "Login Failed.. Please try again", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 setUIToWait(false);
 
             }
