@@ -87,7 +87,7 @@ public class SpDetailsAdapter extends RecyclerView.Adapter<SpDetailsAdapter.View
 
             FragmentManager manager = myContext.getSupportFragmentManager();
             manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout,
-                    new BookNowFragment(provider_id,cat_id,user_id,myServicesList.get(position).getService_id(), tabLayout)).addToBackStack("TAG").commit();
+                    new BookNowFragment(provider_id,cat_id,user_id,myServicesList.get(position).getService_id(), tabLayout),"BookNowFragment").addToBackStack("TAG").commit();
 
 
 

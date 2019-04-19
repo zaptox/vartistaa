@@ -1,6 +1,7 @@
 package com.vartista.www.vartista.modules.general;
 
 import android.annotation.SuppressLint;
+import android.app.Fragment;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -71,10 +72,12 @@ import com.vartista.www.vartista.modules.provider.ProviderFragments.My_Rating_Re
 import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.AssignRatings;
+import com.vartista.www.vartista.modules.user.FindServicesInList;
 import com.vartista.www.vartista.modules.user.MyCompletedServices;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.Service_user_cancel;
 import com.vartista.www.vartista.modules.user.StartService;
+import com.vartista.www.vartista.modules.user.user_fragments.FindServicesInListFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.MyCompletedServicesFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.MyServiceMeetingsFragment;
 import com.vartista.www.vartista.restcalls.ApiClient;
@@ -277,9 +280,23 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_frame_layout);
+
+      try{  if(currentFragment.getTag().equalsIgnoreCase("FindServicesInListFragment")&& currentFragment.getTag()!=null){
+         finish();
+         Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("user", user);
+
+            startActivity(intent);
+        }}catch (Exception e){}
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
+
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+
+        else {
             super.onBackPressed();
         }
     }
