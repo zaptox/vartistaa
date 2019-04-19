@@ -146,7 +146,7 @@ public class BookNowFragment extends Fragment  {
                 SharedPreferences ob = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
 
                 final String name_user = ob.getString("name","");
-                final String title = "Vartista- Request";
+                final String title = "Vartista-Request";
                 final String body = name_user+" sent you request";
                 Call<CreateRequest> call = BookNowFragment.apiInterface.createRequest(user_customer_id,
                         service_provider_id,
@@ -182,9 +182,14 @@ public class BookNowFragment extends Fragment  {
 
 
 
-                            FragmentManager manager = myContext.getSupportFragmentManager();
-                            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout,
-                            new ServiceProviderFragment(user_customer_id)).addToBackStack("TAG").commit();
+                            Intent intent = new Intent(getActivity(), HomeActivity.class);
+                            intent.putExtra("user", HomeActivity.user);
+                            startActivity(intent);
+
+//
+//                            FragmentManager manager = myContext.getSupportFragmentManager();
+//                            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout,
+//                            new ServiceProviderFragment(user_customer_id)).addToBackStack("TAG").commit();
 
 
                         }

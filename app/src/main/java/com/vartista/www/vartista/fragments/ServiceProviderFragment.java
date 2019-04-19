@@ -130,7 +130,6 @@ public class ServiceProviderFragment extends Fragment {
                 FragmentManager manager = myContext.getSupportFragmentManager();
                 manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new CreateServiceFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
 
-
             }
         });
    return view;

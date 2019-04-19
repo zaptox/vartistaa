@@ -268,9 +268,7 @@ public class HomeActivity extends AppCompatActivity
         //a service to make user offline
 
         startOfflineService();
-
-
-    }
+}
 
 
 
@@ -280,8 +278,8 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
-        }
+                super.onBackPressed();
+            }
     }
 
     @Override
