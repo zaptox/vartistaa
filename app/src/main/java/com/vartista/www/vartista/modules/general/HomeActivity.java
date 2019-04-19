@@ -284,10 +284,11 @@ public class HomeActivity extends AppCompatActivity
         android.support.v4.app.Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_frame_layout);
 
       try{  if(currentFragment.getTag().equalsIgnoreCase("FindServicesInListFragment")&& currentFragment.getTag()!=null){
+         finish();
+         Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("user", user);
 
-          TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-          TabLayout.Tab tab = tabLayout.getTabAt(0);
-          tab.select();
+            startActivity(intent);
         }}catch (Exception e){}
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
