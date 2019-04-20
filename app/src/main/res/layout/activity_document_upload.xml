@@ -10,7 +10,7 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
+    android:background="@color/serviceProviderActionBar"
     android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textSize="18sp"
+            android:textSize="18dp"
             android:textStyle="bold"
             android:textColor="@color/light_gray"
             android:padding="30sp"
@@ -63,6 +63,7 @@
             android:layout_marginTop="7sp"
             android:textColor="@color/colorWhite"
             android:background="@drawable/buttonshape"
+            android:backgroundTint="@color/serviceProviderActionBar"
             android:text="Set your Address (Required)"
             />
         <View
@@ -98,7 +99,8 @@
                 android:layout_height="150dp"
                 android:adjustViewBounds="true"
                 android:background="@color/light_gray"
-                android:src="@drawable/ic_add_a_photo_black_24dp" />
+
+                app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
 
             <View
                 android:layout_width="match_parent"
@@ -133,6 +135,7 @@
             android:layout_marginTop="5sp"
             android:textColor="@color/colorWhite"
             android:background="@drawable/buttonshape"
+            android:backgroundTint="@color/serviceProviderActionBar"
             android:text="Upload Bank Details"
             />
 
@@ -159,7 +162,7 @@
                 android:layout_height="150dp"
                 android:adjustViewBounds="true"
                 android:background="@color/light_gray"
-                android:src="@drawable/ic_add_a_photo_black_24dp" />
+                app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
 
             <View
                 android:layout_width="match_parent"
@@ -192,6 +195,8 @@
             android:layout_marginTop="5sp"
             android:textColor="@color/colorWhite"
             android:background="@drawable/buttonshape"
+            android:backgroundTint="@color/serviceProviderActionBar"
+
             android:text="Upload CNIC Front Image"
             />
 
@@ -217,7 +222,7 @@
                 android:layout_height="150dp"
                 android:adjustViewBounds="true"
                 android:background="@color/light_gray"
-                android:src="@drawable/ic_add_a_photo_black_24dp" />
+                app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
 
             <View
                 android:layout_width="match_parent"
@@ -255,6 +260,8 @@
         android:layout_marginBottom="30dp"
         android:textColor="@color/mdtp_white"
         android:background="@drawable/buttonshape"
+        android:backgroundTint="@color/serviceProviderActionBar"
+
         android:text="Upload CNIC Back Image"
         />
 

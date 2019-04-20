@@ -83,6 +83,7 @@ public class SpDetailsAdapter extends RecyclerView.Adapter<SpDetailsAdapter.View
 //            intent.putExtra("user_id",user_id);
 //            intent.putExtra("service_id",myServicesList.get(position).getService_id());
 //            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            context.startActivity(intent);
 
 
             FragmentManager manager = myContext.getSupportFragmentManager();
@@ -91,7 +92,6 @@ public class SpDetailsAdapter extends RecyclerView.Adapter<SpDetailsAdapter.View
 
 
 
-//            context.startActivity(intent);
         }
     });
     final int service_id= myServicesList.get(position).getService_id();

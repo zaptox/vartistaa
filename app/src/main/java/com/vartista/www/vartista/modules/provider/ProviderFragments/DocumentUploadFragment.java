@@ -1,6 +1,7 @@
 package com.vartista.www.vartista.modules.provider.ProviderFragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,8 +14,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,23 +44,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DocumentUploadFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class DocumentUploadFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class DocumentUploadFragment extends Fragment {
 
     //Activity code
     private static final String UPLOAD_URL = "http://vartista.com/vartista_app/insert_image.php";
@@ -75,40 +64,15 @@ public class DocumentUploadFragment extends Fragment {
     private ProgressDialog progressDialog;
     int user_id;
     public static ApiInterface apiInterface;
+    private FragmentActivity myContext;
+    TabLayout tabLayout;
 
 
-    private OnFragmentInteractionListener mListener;
 
     public DocumentUploadFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DocumentUploadFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DocumentUploadFragment newInstance(String param1, String param2) {
-        DocumentUploadFragment fragment = new DocumentUploadFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -124,15 +88,22 @@ public class DocumentUploadFragment extends Fragment {
         btnSetAddress= view.findViewById(R.id.set_address_required);
         user_id=ob.getInt("user_id",0);
         apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
-
+        tabLayout= getActivity().findViewById(R.id.tabs);
         btnUploadCnicBack =(Button)view.findViewById(R.id.btnUploadCNICBack);
         btnUploadBankDetails =(Button)view.findViewById(R.id.btnUploadBankDetails);
         btnUploadCNICFront =(Button)view.findViewById(R.id.btnUploadCNICFront);
 
+        tabLayout.setVisibility(View.GONE);
         btnSetAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(),AddressSetActivity.class));
+
+//                startActivity(new Intent(getContext(),AddressSetActivity.class));
+
+                FragmentManager manager = myContext.getSupportFragmentManager();
+                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new AddressSetFragment()).addToBackStack("TAG").commit();
+
+
             }
         });
 
@@ -433,44 +404,14 @@ public class DocumentUploadFragment extends Fragment {
 
 
     }
-
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    public void onAttach(Activity activity) {
+        myContext=(FragmentActivity) activity;
+        super.onAttach(activity);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
-    /**
-     * getContext() interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
+
+
 }

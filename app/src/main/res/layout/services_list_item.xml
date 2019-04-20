@@ -85,14 +85,12 @@
                 android:layout_marginBottom="70dp"
                 android:layout_marginStart="50dp"
                 android:text="Location"
+                android:gravity="center_vertical"
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="10dp"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.224"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintVertical_bias="0.656" />
+                android:layout_toRightOf="@id/loc_arrow"
+                android:layout_below="@id/tvDescription"
+                 />
 
             <TextView
                 android:id="@+id/tvDescription"
@@ -120,12 +118,10 @@
                 android:layout_alignStart="@+id/textViewCategory"
                 android:layout_marginBottom="61dp"
                 android:src="@drawable/location"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.091"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintVertical_bias="0.746" />
+                android:layout_below="@id/tvDescription"
+                android:id="@+id/loc_arrow"
+
+                />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -141,6 +137,7 @@
                 tools:layout_editor_absoluteY="133dp">
 
                 <ImageView
+
                     android:layout_width="30sp"
                     android:layout_height="30sp"
                     android:src="@drawable/home" />

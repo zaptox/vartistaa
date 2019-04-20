@@ -244,10 +244,10 @@ public class SiginInActivity extends AppCompatActivity {
                             userLoggedIn.getContact(),image);
                     setUIToWait(false);
                     //
-                    Intent intent = new Intent(SiginInActivity.this, HomeActivity.class);
-                    intent.putExtra("user", userLoggedIn);
                     MDToast.makeText(SiginInActivity.this, "Login Sucessfully!...", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
+                    Intent intent = new Intent(SiginInActivity.this, HomeActivity.class);
+                    intent.putExtra("user", userLoggedIn);
                     startActivity(intent);
                     finish();
 //
@@ -332,7 +332,7 @@ public class SiginInActivity extends AppCompatActivity {
         editor.putString("image",image);
         editor.apply();
         editor.commit();
-        Toast.makeText(this, "Shared PReference are working "+user_id+"\n"+Password, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Shared PReference are working "+user_id+"\n"+Password, Toast.LENGTH_SHORT).show();
 
 
 

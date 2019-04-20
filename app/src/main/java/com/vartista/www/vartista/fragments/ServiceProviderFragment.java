@@ -30,6 +30,7 @@ import com.vartista.www.vartista.modules.provider.ProviderFragments.CreateServic
 import com.vartista.www.vartista.modules.provider.ProviderFragments.EarningFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServiceRequestsFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServicesListFragment;
+import com.vartista.www.vartista.modules.provider.ProviderFragments.UploadDocListFragment;
 import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
 
 
@@ -68,9 +69,14 @@ public class ServiceProviderFragment extends Fragment {
         btnUploadDoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),UploadDocListActivity.class);
-                intent.putExtra("userId",user_id);
-                startActivity(intent);
+
+//                Intent intent=new Intent(getContext(),UploadDocListActivity.class);
+//                intent.putExtra("userId",user_id);
+//                startActivity(intent);
+
+                FragmentManager manager = myContext.getSupportFragmentManager();
+                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new UploadDocListFragment()).addToBackStack("TAG").commit();
+
 
 
             }

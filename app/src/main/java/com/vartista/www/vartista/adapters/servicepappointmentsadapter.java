@@ -65,6 +65,9 @@ public class servicepappointmentsadapter extends RecyclerView.Adapter<servicepap
                 intent.putExtra("object",list.get(position));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
+
+
+
             }
         });
 

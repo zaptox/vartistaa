@@ -2,6 +2,10 @@ package com.vartista.www.vartista.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +21,10 @@ import com.vartista.www.vartista.beans.Service;
 import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
 import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
+import com.vartista.www.vartista.modules.provider.ProviderFragments.CreateServiceFragment;
+import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServicesListFragment;
+import com.vartista.www.vartista.restcalls.ApiClient;
+import com.vartista.www.vartista.restcalls.ServiceApiInterface;
 import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
@@ -36,16 +44,30 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
     Gson gson;
      int service_id=0;
     Button edit ,delete;
+    FragmentActivity myContext;
+    TabLayout tabLayout;
+    public static ServiceApiInterface apiInterface;
 
 
-   public MyServicesListAdapter(Context context, List<Service> myServicesList){
+    public MyServicesListAdapter(Context context, List<Service> myServicesList, FragmentActivity myContext, TabLayout tabLayout){
        this.myServicesList = myServicesList;
        this.context=context;
+       this.myContext=myContext;
+       this.tabLayout=tabLayout;
 
    }
+
+    public MyServicesListAdapter(Context context, List<Service> myServicesList){
+        this.myServicesList = myServicesList;
+        this.context=context;
+
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.services_list_item,parent,false);
+
+
 
         return new ViewHolder(view);
     }
@@ -54,6 +76,8 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
 
 
        final int abhiwali= position;
+    apiInterface = ApiClient.getApiClient().create(ServiceApiInterface.class);
+
 
     if (myServicesList.get(position).getService_title().length()>20){
         holder.tvTitle.setText(myServicesList.get(position).getService_title().substring(0,20)+"...");
@@ -111,7 +135,7 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
                     .setPositiveButton("Yes", new View.OnClickListener() {
                         @Override
                         public void onClick(final View v) {
-                            Call<Service> call = CreateServiceActivity.apiInterface.deleteService(user_id);
+                            Call<Service> call = MyServicesListAdapter.apiInterface.deleteService(user_id);
                             call.enqueue(new Callback<Service>() {
                                 @Override
                                 public void onResponse(Call<Service> call, Response<Service> response) {
@@ -120,14 +144,18 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
 
 
 
-                                        Intent intent=new Intent(v.getContext(),MyServicesListActivity.class);
+//                                        Intent intent=new Intent(v.getContext(),MyServicesListActivity.class);
+//
+//
+//                                        intent.putExtra("edit_user_id",user_id);
 
+                                        FragmentManager manager = myContext.getSupportFragmentManager();
+                                        manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServicesListFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
 
-                                        intent.putExtra("edit_user_id",user_id);
 
 
                                         //intent.putStringArrayListExtra("myservicelist",myServicesList);
-                                        v.getContext().startActivity(intent);
+//                                        v.getContext().startActivity(intent);
                                         MDToast mdToast = MDToast.makeText(v.getContext(), "Your Service Deleted Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                                         mdToast.show();
 
@@ -158,13 +186,22 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
     edit.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent=new Intent(v.getContext(),CreateServiceActivity.class);
+//            Intent intent=new Intent(v.getContext(),CreateServiceActivity.class);
+//
+//
+//            intent.putExtra("edit_user_id",user_id);
+
+            //            v.getContext().startActivity(intent);
+
+            SharedPreferences ob = v.getContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
+            int user_s_id = ob.getInt("user_id",0);
+            int edit_service_id=user_id;
+
+            FragmentManager manager = myContext.getSupportFragmentManager();
+            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new CreateServiceFragment(user_s_id,tabLayout,edit_service_id)).addToBackStack("TAG").commit();
 
 
-            intent.putExtra("edit_user_id",user_id);
 
-
-            v.getContext().startActivity(intent);
 
 //            Toast.makeText(context,"edit ID:"+user_id,Toast.LENGTH_SHORT).show();
         }

@@ -50,11 +50,13 @@ public class UploadDoc extends AppCompatActivity {
         imageViewTitleImage=(TextView)findViewById(R.id.imageViewTitleImage);
         btnUploadDoc=(Button)findViewById(R.id.btnUploadDoc);
         imageViewDoc=(ImageView)findViewById(R.id.imageViewDocImage);
+
         Intent intent=getIntent();
 
         SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
         userId = ob.getInt("user_id", 0);        final String title=intent.getStringExtra("title");
+
         final int docId=intent.getIntExtra("docId",0);
 
         tvDocTitle.setText(title);

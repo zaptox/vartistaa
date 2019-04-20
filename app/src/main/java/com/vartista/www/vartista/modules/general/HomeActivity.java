@@ -171,6 +171,12 @@ public class HomeActivity extends AppCompatActivity
         user = (User) intent.getSerializableExtra("user");
         u = user;
         user_id = u.getId();
+
+        if(intent.getStringExtra("fragment")!=null){
+            switchNotifFragment(intent.getStringExtra("fragment"));
+        }
+
+
         name.setText(user.getName());
         email.setText(user.getEmail());
 
@@ -208,6 +214,8 @@ public class HomeActivity extends AppCompatActivity
 
          tabLayout = (TabLayout) findViewById(R.id.tabs);
         final ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
+
+//        tabLayout.setVisibility(View.VISIBLE);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),user_id,getApplicationContext());
@@ -280,23 +288,62 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        android.support.v4.app.Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_frame_layout);
 
-      try{  if(currentFragment.getTag().equalsIgnoreCase("FindServicesInListFragment")&& currentFragment.getTag()!=null){
-         finish();
-         Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
-            intent.putExtra("user", user);
+        //        FragmentManager fragmentManager = getSupportFragmentManager();
+//        android.support.v4.app.Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_frame_layout);
+//
+//      try{  if(currentFragment.getTag().equalsIgnoreCase("FindServicesInListFragment")&& currentFragment.getTag()!=null){
+//         finish();
+//
+//          Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+//          intent.putExtra("user", user);
+//          startActivity(intent);
+//
+//      }}catch (Exception e){}
 
-            startActivity(intent);
-        }}catch (Exception e){}
+
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
 
         else {
-            super.onBackPressed();
+
+            int count = getSupportFragmentManager().getBackStackEntryCount();
+
+            if (count == 0) {
+                super.onBackPressed();
+                //additional code
+            }
+
+            else if(count==1){
+                tabLayout.setVisibility(View.VISIBLE);
+                getSupportFragmentManager().popBackStack();
+
+            }
+            else if (count==2){
+                tabLayout.setVisibility(View.GONE);
+                getSupportFragmentManager().popBackStack();
+
+            }
+//            else  if (count==1  && getFragmentManager().findFragmentById(R.id.fragment_frame_layout).getTag().equals("FindServicesInListFragment")){
+//                Toast.makeText(this, "Its second find wala fragment", Toast.LENGTH_SHORT).show();
+//
+//            }
+//            else if(count==1) {
+//                tabLayout.setVisibility(View.VISIBLE);
+//                getSupportFragmentManager().popBackStack();
+//            }
+            else{
+//                tabLayout.setVisibility(View.GONE);
+
+//                getFragmentManager().findFragmentById(R.id.fragment_frame_layout).isAdded()
+
+                tabLayout.setVisibility(View.GONE);
+                getSupportFragmentManager().popBackStack();
+
+            }
+
         }
     }
 
@@ -711,6 +758,84 @@ public class HomeActivity extends AppCompatActivity
     }
     private void NavigationDrawer_ServiceProvider(Boolean boo){
         navigationView.getMenu().getItem(2).setVisible(boo);
+    }
+
+
+
+    public void switchNotifFragment(String fragment){
+
+
+        if(fragment.equals("MyServiceMeetingsFragment")){
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().add(R.id.fragment_frame_layout, new MyServiceMeetingsFragment()).addToBackStack("TAG").commit();
+//            tabLayout.setVisibility(View.GONE);
+
+        }
+        else if(fragment.equals("MyServiceRequestsFragment")){
+
+            FragmentManager manager = getSupportFragmentManager();
+//            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServiceRequestsFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
+            manager.beginTransaction().add(R.id.fragment_frame_layout, new MyServiceRequestsFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
+
+
+        }
+        else if(fragment.equals("ServiceProviderFragment")){
+
+            MDToast.makeText(this, "Login Again to Start your journey at Vartista", MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
+
+            SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+            ob.edit().clear().commit();
+
+            startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
+            finish();
+
+//            FragmentManager manager = getSupportFragmentManager();
+//            manager.beginTransaction().add(R.id.fragment_frame_layout, new ServiceProviderFragment(user_id)).addToBackStack("TAG").commit();
+
+
+        }
+
+        else if(fragment.equals("Removed")){
+
+            MDToast.makeText(this, "You are removed as Service Provider but you can still avail the Services.", MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
+
+            SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+            ob.edit().clear().commit();
+
+            startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
+            finish();
+
+//            FragmentManager manager = getSupportFragmentManager();
+//            manager.beginTransaction().add(R.id.fragment_frame_layout, new ServiceProviderFragment(user_id)).addToBackStack("TAG").commit();
+
+
+        }
+
+
+        else if(fragment.equals("NotificationsFragment")){
+
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().add(R.id.fragment_frame_layout, new NotificationsFragment()).addToBackStack("TAG").commit();
+
+        }
+        else if(fragment.equals("UploadDocListFragment")){
+
+
+
+        }
+        else if(fragment.equals("AppointmentDetailsFragment")){
+
+
+
+        }
+        else if(fragment.equals("MyCompletedServicesFragment")){
+
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().add(R.id.fragment_frame_layout, new MyCompletedServicesFragment()).addToBackStack("TAG").commit();
+
+        }
+
+
     }
 
 
