@@ -94,7 +94,7 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
 
 
                 FragmentManager manager = myContext.getSupportFragmentManager();
-                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new FindServicesInListFragment(cat_id,tabLayout)).addToBackStack("TAG").commit();
+                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new FindServicesInListFragment(cat_id,tabLayout),"FindServicesInListFragment").addToBackStack("TAG").commit();
 
 //                Intent intent=new Intent(view.getContext(), FindServicesInList.class);
 //                intent.putExtra("cat_id",cat_id);

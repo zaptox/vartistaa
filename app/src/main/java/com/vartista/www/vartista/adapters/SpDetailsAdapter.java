@@ -77,21 +77,21 @@ public class SpDetailsAdapter extends RecyclerView.Adapter<SpDetailsAdapter.View
     holder.btnBookNow.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+//            Intent intent=new Intent(v.getContext(), BookNowActivity.class);
+//            intent.putExtra("provider_id",provider_id);
+//            intent.putExtra("cat_id",cat_id);
+//            intent.putExtra("user_id",user_id);
+//            intent.putExtra("service_id",myServicesList.get(position).getService_id());
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-            Intent intent=new Intent(v.getContext(), BookNowActivity.class);
-            intent.putExtra("provider_id",provider_id);
-            intent.putExtra("cat_id",cat_id);
-            intent.putExtra("user_id",user_id);
-            intent.putExtra("service_id",myServicesList.get(position).getService_id());
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            FragmentManager manager = myContext.getSupportFragmentManager();
+            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout,
+                    new BookNowFragment(provider_id,cat_id,user_id,myServicesList.get(position).getService_id(), tabLayout),"BookNowFragment").addToBackStack("TAG").commit();
 
 
-//            FragmentManager manager = myContext.getSupportFragmentManager();
-//            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout,
-//                    new BookNowFragment(provider_id,cat_id,user_id,myServicesList.get(position).getService_id(), tabLayout)).addToBackStack("TAG").commit();
-//
 
-            context.startActivity(intent);
+//            context.startActivity(intent);
         }
     });
     final int service_id= myServicesList.get(position).getService_id();

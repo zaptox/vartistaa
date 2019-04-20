@@ -117,7 +117,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
                 manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout,
                         new ServiceProviderDetailFragment(s_provider_id,cat_id,user_id,sp_name,
                                 myServicesList.get(position).getService_title(),myServicesList.get(position).getImage(),tabLayout
-                        )).addToBackStack("TAG").commit();
+                        ),"ServiceProviderDetailFragment").addToBackStack("TAG").commit();
 
 
 //
