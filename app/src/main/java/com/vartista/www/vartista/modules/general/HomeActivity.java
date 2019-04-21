@@ -86,24 +86,16 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,DatePickerDialog.OnDateSetListener,TimePickerDialog.OnTimeSetListener {
 
     private TextView email, name;
-
     public static int user_id;
     public static User user;
     ImageView imageViewProfileDrawer;
     public static TokenApiInterface tokenApiInterface;
     private ViewPager viewPager;
-    DrawerLayout drawer;
-    DrawerLayout serviceProvider_Drawer;
-    Toolbar toolbar;
     TabLayout tabLayout=null;
     public static NavigationView navigationView;
-    ActionBarDrawerToggle toggle;
     private int[] tabIcons = {
             R.drawable.ic_asauser_24dp,
-            R.drawable.myservices,
-
-
-    };
+            R.drawable.myservices};
     Boolean check = true;
 
     @Override
@@ -119,7 +111,6 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
         int id = ob.getInt("user_id",0);
-//        getbusystatus(id);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -148,12 +139,6 @@ public class HomeActivity extends AppCompatActivity
         }
 
 
-
-
-        int flag = getIntent().getIntExtra("flag",0);
-
-
-
         name.setText(user.getName());
         email.setText(user.getEmail());
 
@@ -174,13 +159,7 @@ public class HomeActivity extends AppCompatActivity
             imageViewProfileDrawer.setImageResource(R.drawable.profile);
         }
 
-        //device token add to server
-
-        // view pager
-
-
         viewPager = (SlideOffViewPager) findViewById(R.id.viewpager);
-        //        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), user_id, getApplicationContext());
         ((SlideOffViewPager) viewPager).setPagingEnabled(false);
           setupViewPager(viewPager);
 
@@ -191,7 +170,6 @@ public class HomeActivity extends AppCompatActivity
 
         final ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
 
-//        tabLayout.setVisibility(View.VISIBLE);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),user_id,getApplicationContext());
@@ -252,7 +230,6 @@ public class HomeActivity extends AppCompatActivity
         user_id = ob.getInt("user_id", 0);
         new Connection(user_id, 1).execute();
 
-        //a service to make user offline
 
         startOfflineService();
 
@@ -279,18 +256,6 @@ public class HomeActivity extends AppCompatActivity
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        //        FragmentManager fragmentManager = getSupportFragmentManager();
-//        android.support.v4.app.Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_frame_layout);
-//
-//      try{  if(currentFragment.getTag().equalsIgnoreCase("FindServicesInListFragment")&& currentFragment.getTag()!=null){
-//         finish();
-//
-//          Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
-//          intent.putExtra("user", user);
-//          startActivity(intent);
-//
-//      }}catch (Exception e){}
-
 
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -300,36 +265,6 @@ public class HomeActivity extends AppCompatActivity
                             super.onBackPressed();
 
         }}
-//
-//        else {
-//
-//            int count = getSupportFragmentManager().getBackStackEntryCount();
-//
-//            if (count == 0) {
-//                super.onBackPressed();
-//                //additional code
-//            }
-//
-//            else if(count==1){
-//                tabLayout.setVisibility(View.VISIBLE);
-//                getSupportFragmentManager().popBackStack();
-//
-//            }
-//            else if (count==2){
-//                tabLayout.setVisibility(View.GONE);
-//                getSupportFragmentManager().popBackStack();
-//
-//            }
-////            else  if (count==1  && getFragmentManager().findFragmentById(R.id.fragment_frame_layout).getTag().equals("FindServicesInListFragment")){
-////                Toast.makeText(this, "Its second find wala fragment", Toast.LENGTH_SHORT).show();
-////
-////            }
-////            else if(count==1) {
-////                tabLayout.setVisibility(View.VISIBLE);
-////                getSupportFragmentManager().popBackStack();
-////            }
-
-
 
     @Override
     protected void onPause() {
@@ -477,9 +412,6 @@ public class HomeActivity extends AppCompatActivity
 
 
         } else if (id == R.id.Userappointments) {
-//            Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
-//            startActivity(intent);
-
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServiceMeetingsFragment()).addToBackStack("TAG").commit();
 
@@ -487,8 +419,6 @@ public class HomeActivity extends AppCompatActivity
 
         }
         else if(id==R.id.user_completed_services){
-//            Intent intent = new Intent(HomeActivity.this, MyCompletedServices.class);
-//            startActivity(intent);
 
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyCompletedServicesFragment()).addToBackStack("TAG").commit();
@@ -606,7 +536,6 @@ public class HomeActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(String result) {
-            //  MDToast.makeText(getApplicationContext(),result,MDToast.LENGTH_SHORT).show();
 
             try {
                 JSONObject jsonResult = new JSONObject(result);
@@ -629,9 +558,7 @@ public class HomeActivity extends AppCompatActivity
 
     public void getbusystatus(int user_id) {
 
-//        MDToast.makeText(this, "in perform function", MDToast.LENGTH_SHORT).show();
         Call<User> call = SiginInActivity.apiInterface.getUserById(user_id);
-//        Call<User> call = SiginInActivity.apiInterface.performUserLogin();
 
 
 
@@ -671,34 +598,20 @@ public class HomeActivity extends AppCompatActivity
                     if(busy_status==1){
                         startActivity(new Intent(HomeActivity.this,ServicestartProvider.class));
                     }
-// MDToast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse() + "--name:" + name, MDToast.LENGTH_SHORT).show();
-
-//                    upload_document(userLoggedIn.getName(),userLoggedIn.getPassword(),userLoggedIn.getContact());
-//                    MDToast.makeText(SiginInActivity.this, "The User Id is :- "+userLoggedIn.getId()
-//                            +"\n"+"The Name is "+userLoggedIn.getName()
-//                            +"\n"+"The password is "+userLoggedIn.getPassword(), MDToast.LENGTH_SHORT).show();
-
-//                    MDToast.makeText(SiginInActivity.this, ""+userLoggedIn, MDToast.LENGTH_SHORT).show();
-                    //
 
 
 
 //
 //
                 } else if (response.body().getResponse().equals("failed")) {
-                    //  Toast.makeText(SiginInActivity.this, "Login Failed.. Please try again", Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(SiginInActivity.this, "", Toast.LENGTH_SHORT).show();
-
 
                 }
 //
                 else {
 
-                    //  Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse(), Toast.LENGTH_SHORT).show();
 
                 }
 
-//                Toast.makeText(SiginInActivity.this, "In response's last line", Toast.LENGTH_SHORT).show();
 
 
             }
@@ -752,13 +665,11 @@ public class HomeActivity extends AppCompatActivity
         if(fragment.equals("MyServiceMeetingsFragment")){
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().add(R.id.fragment_frame_layout, new MyServiceMeetingsFragment()).addToBackStack("TAG").commit();
-//            tabLayout.setVisibility(View.GONE);
 
         }
         else if(fragment.equals("MyServiceRequestsFragment")){
 
             FragmentManager manager = getSupportFragmentManager();
-//            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServiceRequestsFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
             manager.beginTransaction().add(R.id.fragment_frame_layout, new MyServiceRequestsFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
 
 
@@ -773,9 +684,6 @@ public class HomeActivity extends AppCompatActivity
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
             finish();
 
-//            FragmentManager manager = getSupportFragmentManager();
-//            manager.beginTransaction().add(R.id.fragment_frame_layout, new ServiceProviderFragment(user_id)).addToBackStack("TAG").commit();
-
 
         }
 
@@ -788,10 +696,6 @@ public class HomeActivity extends AppCompatActivity
 
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
             finish();
-
-//            FragmentManager manager = getSupportFragmentManager();
-//            manager.beginTransaction().add(R.id.fragment_frame_layout, new ServiceProviderFragment(user_id)).addToBackStack("TAG").commit();
-
 
         }
 
