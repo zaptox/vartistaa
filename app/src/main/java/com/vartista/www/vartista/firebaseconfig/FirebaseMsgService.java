@@ -158,7 +158,13 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 //
 //                }
 
-                resultIntent = new Intent(getApplicationContext(), MyServiceMeetings.class);
+//                resultIntent = new Intent(getApplicationContext(), MyServiceMeetings.class);
+
+                resultIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                User user= HomeActivity.user;
+                resultIntent.putExtra("user",user);
+
+                resultIntent.putExtra("fragment","MyServiceMeetingsFragment");
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
@@ -175,12 +181,20 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
             else if(title.contains("Request")){
 
+
+
                 String requestUserId = title.substring(title.indexOf("user-id=")+new String("user-id=").length()+1,title.indexOf("?s"));
                 String service_provider_id = title.substring(title.indexOf("servp-id=")+new String("servp-id=").length(),title.indexOf("?s",title.indexOf("servp-id=")));
                 String  service_id = title.substring(title.indexOf("serv-id=")+new String("serv-id=").length(),title.indexOf("?r",title.indexOf("serv-id=")));
                 String req_serv_id = title.substring(title.indexOf("req-serv-id=")+new String("req-serv-id=").length());
 
-                resultIntent = new Intent(getApplicationContext(), MyServiceRequests.class);
+//                resultIntent = new Intent(getApplicationContext(), MyServiceRequests.class);
+
+                resultIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                User user= HomeActivity.user;
+                resultIntent.putExtra("user",user);
+
+                resultIntent.putExtra("fragment","MyServiceRequestsFragment");
                 resultIntent.putExtra("user", user_id);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Intent dialogIntent = new Intent(this, RequestAlertActivity.class);
@@ -195,23 +209,51 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
 
             else if (title.contains("Congratulations")){
-                resultIntent = new Intent(getApplicationContext(), SiginInActivity.class);
+
+//                resultIntent = new Intent(getApplicationContext(), SiginInActivity.class);
+
                 User user= HomeActivity.user;
                 user.setSp_status("1");
                 SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor=sharedPreferencespre.edit();
                 editor.putString("sp_status","1");
 //                HomeActivity.changed_from_notif="1";
+
+                resultIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                user.setSp_status("1");
+
+                resultIntent.putExtra("fragment","ServiceProviderFragment");
                 resultIntent.putExtra("user", user);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                resultIntent.putExtra("user", user_id);
 
             }
 
+            else if(title.contains("Alert")){
+                User user= HomeActivity.user;
+                user.setSp_status("0");
+                SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor=sharedPreferencespre.edit();
+                editor.putString("sp_status","1");
+//                HomeActivity.changed_from_notif="1";
+
+                resultIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                user.setSp_status("1");
+
+                resultIntent.putExtra("fragment","Removed");
+                resultIntent.putExtra("user", user);
+                resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
 
             else if(title.contains("Decline")){
 
-                resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
+//                resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
+
+                resultIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                User user= HomeActivity.user;
+                resultIntent.putExtra("user",user);
+
+                resultIntent.putExtra("fragment","NotificationsFragment");
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
@@ -219,7 +261,13 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
             else if(title.contains("Document")){
 
-                resultIntent = new Intent(getApplicationContext(), UploadDocListActivity.class);
+//                resultIntent = new Intent(getApplicationContext(), UploadDocListActivity.class);
+
+                resultIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                User user= HomeActivity.user;
+                resultIntent.putExtra("user",user);
+
+                resultIntent.putExtra("fragment","UploadDocListFragment");
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
@@ -232,26 +280,53 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
             }
             else if(title.contains("Cash")){
-                resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
+
+//                resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
+
+                resultIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                User user= HomeActivity.user;
+                resultIntent.putExtra("user",user);
+
+                resultIntent.putExtra("fragment","AppointmentDetailsFragment");
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
             else if(title.contains("rate")){
-                resultIntent = new Intent(getApplicationContext(), MyCompletedServices.class);
+
+//                resultIntent = new Intent(getApplicationContext(), MyCompletedServices.class);
+
+                resultIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                User user= HomeActivity.user;
+                resultIntent.putExtra("user",user);
+
+                resultIntent.putExtra("fragment","MyCompletedServicesFragment");
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
             else if(title.contains("cancelled")){
-                resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
+//                resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
+
+                resultIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                User user= HomeActivity.user;
+                resultIntent.putExtra("user",user);
+
+                resultIntent.putExtra("fragment","NotificationsFragment");
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             }
 
             else {
 
-                resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
+//                resultIntent = new Intent(getApplicationContext(), Asynctask_MultipleUrl.class);
+
+                resultIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                User user= HomeActivity.user;
+                resultIntent.putExtra("user",user);
+
+                resultIntent.putExtra("fragment","NotificationsFragment");
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             }
+
             PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                     0 /* Request code */, resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);

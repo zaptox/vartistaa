@@ -89,11 +89,14 @@ public class CreateServiceFragment extends Fragment {
     static String country;
 
     TabLayout tabLayout;
+    private ProgressDialog progressDialog;
+
 
     NiceSpinner niceSpinner;
 
 
     User loggedin;
+    Boolean for_edit=false;
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -106,25 +109,18 @@ public class CreateServiceFragment extends Fragment {
         // Required empty public constructor
         this.user_id=user_id;
         this.tabLayout=tabLayout;
+        for_edit=false;
     }
-    //    // TODO: Rename and change types and number of parameters
-//    public static CreateServiceFragment newInstance(String param1, String param2) {
-//        CreateServiceFragment fragment = new CreateServiceFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//    }
+    @SuppressLint("ValidFragment")
+    public CreateServiceFragment(int user_id, TabLayout tabLayout, int edit_service_id) {
+        // Required empty public constructor
+        this.user_id=user_id;
+        this.tabLayout=tabLayout;
+        this.edit_user_id=edit_service_id;
+        for_edit=true;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -154,14 +150,13 @@ public class CreateServiceFragment extends Fragment {
         tabLayout.setVisibility(View.GONE);
 
 //        edit_user_id= getActivity().getIntent().getIntExtra("edit_user_id",0);
-        edit_user_id= user_id;
+//        edit_user_id= user_id;
 
-        if (edit_user_id==0){
+        if (for_edit==false){
+
         }
         else{
             new GetServiceConncetion(getContext(),edit_user_id).execute();
-
-
 
         }
 
@@ -186,10 +181,17 @@ public class CreateServiceFragment extends Fragment {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user_id=loggedin.getId();
-                Intent intent=new Intent(getContext(),MyServicesListActivity.class);
-                intent.putExtra("userId",user_id);
-                startActivity(intent);            }
+//                user_id=loggedin.getId();
+//                Intent intent=new Intent(getContext(),MyServicesListActivity.class);
+//                intent.putExtra("userId",user_id);
+//                startActivity(intent);
+
+                FragmentManager manager = getFragmentManager();
+                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServicesListFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
+
+
+
+            }
         });
 
         btnCreateSerivce.setOnClickListener(new View.OnClickListener() {
@@ -202,6 +204,10 @@ public class CreateServiceFragment extends Fragment {
                 }
 
                 if (btnCreateSerivce.getText().equals("Edit Service")) {
+
+                    setUIToWait(true);
+                    progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
                     String title = edtTxtSerivceTitle.getText().toString();
                     String price = edTxtServicePrice.getText().toString();
                     String description = edDescription.getText().toString();
@@ -225,6 +231,7 @@ public class CreateServiceFragment extends Fragment {
 
                     }
 
+
                     Call<Service> call = CreateServiceFragment.apiInterface.updateService(title,description, location,latitude,longitude,country,category_id, Double.parseDouble(price),update_at,edit_user_id,home_avail_status);
                     call.enqueue(new Callback<Service>() {
                         @Override
@@ -232,6 +239,8 @@ public class CreateServiceFragment extends Fragment {
 
                             if (response.body().getResponse().equals("ok")) {
                                 // MDMDToast mdMDToast = MDMDToast.makeText(getApplicationContext(), "Your Service Edit Successfully", MDMDToast.LENGTH_LONG, MDMDToast.TYPE_SUCCESS);
+
+                                setUIToWait(false);
                                 MDToast mdMDToast = MDToast.makeText(getContext(), "Your Service Edit Successfully", MDToast.LENGTH_SHORT, MDToast.TYPE_SUCCESS);
                                 mdMDToast.show();
 
@@ -246,6 +255,18 @@ public class CreateServiceFragment extends Fragment {
                             }
                             if (response.isSuccessful()) {
                                 //for debugging
+
+//                                setUIToWait(false);
+//                                MDToast mdMDToast = MDToast.makeText(getContext(), "Your Service Edit Successfully", MDToast.LENGTH_SHORT, MDToast.TYPE_SUCCESS);
+//                                mdMDToast.show();
+//
+//                                edDescription.setText("");
+//                                edtTxtSerivceTitle.setText("");
+//                                edTxtServicePrice.setText("");
+//                                service_location.setText("");
+//                                btnCreateSerivce.setText("CREATE SERVICE");
+//
+
 
                             }
                         }
@@ -262,6 +283,10 @@ public class CreateServiceFragment extends Fragment {
 
 
                 } else {
+
+
+                    setUIToWait(true);
+                    progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
                     String title = edtTxtSerivceTitle.getText().toString();
                     String price = edTxtServicePrice.getText().toString();
@@ -287,6 +312,7 @@ public class CreateServiceFragment extends Fragment {
 
                     String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
+
                     Call<Service> call = CreateServiceFragment.apiInterface.
                             createService(title, user_id, description, location,latitude,longitude,country,
                                     1, Double.parseDouble(price + ""), category_id, date,
@@ -297,16 +323,21 @@ public class CreateServiceFragment extends Fragment {
                         public void onResponse(Call<Service> call, Response<Service> response) {
                             if (response.body().equals("ok")) {
 
-                                //for debugging
-
-                            }
-                            if (response.isSuccessful()) {
+                                setUIToWait(false);
                                 MDToast mdMDToast = MDToast.makeText(getContext(), "Your Service Created Successfully", MDToast.LENGTH_SHORT, MDToast.TYPE_SUCCESS);
                                 mdMDToast.show();
 
                                 SharedPreferences ob = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
                                 int sp_id = ob.getInt("user_id", 0);
+
+                                //for debugging
+
+                            }
+                            if (response.isSuccessful()) {
 //                                insertreviewnil(-1,sp_id,-1);
+
+
+                                setUIToWait(false);
 
                             }
                         }
@@ -627,5 +658,18 @@ public class CreateServiceFragment extends Fragment {
 //        mListener = null;
 //    }
 
+
+    private void setUIToWait(boolean wait) {
+
+        if (wait) {
+            progressDialog = ProgressDialog.show(getContext(), null, null, true, true);
+//            progressDialog.setContentView(new ProgressBar(this));
+            progressDialog.setContentView(R.layout.loader);
+
+        } else {
+            progressDialog.dismiss();
+        }
+
+    }
 
 }

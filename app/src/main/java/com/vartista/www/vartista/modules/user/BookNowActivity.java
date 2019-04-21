@@ -121,6 +121,7 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
              final String title = "Vartista- Request?user-id=?" + user_id + "?servp-id=" + service_provider_id + "?serv-id=" + service_id;
 
              final String body = name_user+" sent you request";
+
              Call<CreateRequest> call = BookNowActivity.apiInterface.createRequest(user_customer_id,
                      service_provider_id,
                      service_id,date,time,address,city,0,service_cat_id);

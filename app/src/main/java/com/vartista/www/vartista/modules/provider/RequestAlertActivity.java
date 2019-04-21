@@ -154,7 +154,7 @@ public class RequestAlertActivity extends AppCompatActivity {
                     if (success.equals("ok")) {
                         String username = jsonResult.getString("name");
                         if(username != null){
-                            txtUserName.setText(username);
+                            txtUserName.setText("Name: "+ username);
                         }
 
                         String I = jsonResult.getString("image");
@@ -168,9 +168,9 @@ public class RequestAlertActivity extends AppCompatActivity {
                         String city = jsonResult.getString("city");
                         String requested_serv_title = jsonResult.getString("service_title");
 
-                        TxtUserNameAddress.setText(location);
-                        txtUserReqServ.setText(city);
-                        txtUserReqServ.setText(requested_serv_title);
+                        TxtUserNameAddress.setText("Address: "+location);
+//                        txtUserReqServ.setText(city);
+                        txtUserReqServ.setText("Service :"+requested_serv_title);
                     }
 
                 }
@@ -234,11 +234,14 @@ public class RequestAlertActivity extends AppCompatActivity {
                                 public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
                                     if(response.isSuccessful()){}
 
-                                    MDToast.makeText(RequestAlertActivity.this,"Request Accepted",Toast.LENGTH_SHORT).show();
+                                    if(response.body().getResponse().equals("ok")){
+                                        MDToast.makeText(RequestAlertActivity.this, "Request Accepted", Toast.LENGTH_SHORT).show();
 
-                                    Intent intent=new Intent(RequestAlertActivity.this,HomeActivity.class);
-                                    intent.putExtra("user", HomeActivity.user);
-                                    startActivity(intent);
+                                    }
+
+//                                    Intent intent=new Intent(RequestAlertActivity.this,HomeActivity.class);
+//                                    intent.putExtra("user", HomeActivity.user);
+//                                    startActivity(intent);
 
                                 }
 
@@ -272,7 +275,10 @@ public class RequestAlertActivity extends AppCompatActivity {
                         MDToast.makeText(RequestAlertActivity.this,"Something went wrong....",Toast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                     }
                 });
+                MDToast.makeText(RequestAlertActivity.this, "Request Accepted", Toast.LENGTH_SHORT).show();
+                finish();
             }
+
         });
         btnReject.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -300,6 +306,7 @@ public class RequestAlertActivity extends AppCompatActivity {
                                 public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
                                     if (response.isSuccessful()) {
                                     }
+                                    finish();
                                 }
 
 
@@ -328,6 +335,7 @@ public class RequestAlertActivity extends AppCompatActivity {
                 });
                 MDToast.makeText(RequestAlertActivity.this, "Request Declined", Toast.LENGTH_SHORT, MDToast.TYPE_WARNING).show();
 
+                finish();
 
             }
         });

@@ -1,5 +1,6 @@
 package com.vartista.www.vartista.modules.provider.ProviderFragments;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,6 +43,8 @@ public class MyAppointmentsFragment extends Fragment {
     private servicepappointmentsadapter listadapter;
     ArrayList<servicepaapointmentsitems> myappointments;
     int service_id;
+    private FragmentActivity myContext;
+
 
 
     public MyAppointmentsFragment() {
@@ -167,6 +171,13 @@ public class MyAppointmentsFragment extends Fragment {
         }
 
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        myContext=(FragmentActivity) activity;
+        super.onAttach(activity);
+    }
+
 
 
 

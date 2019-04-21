@@ -115,7 +115,7 @@ public class SplashActivity extends AwesomeSplash {
         if(email_shared.equals("") && pass_shared.equals("")){
 
             startActivity(new Intent(SplashActivity.this,SiginInActivity.class));
-
+            finish();
         }
         else {
 //            perfromLogin(email_shared, pass_shared);

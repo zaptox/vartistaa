@@ -74,6 +74,9 @@ public class FindServicesInListFragment extends Fragment {
     private FragmentActivity myContext;
 
 
+
+
+
     public String filterLocation, filterGender;
 
     public int cat_id2;
@@ -359,6 +362,7 @@ public class FindServicesInListFragment extends Fragment {
             else {
 
                 final String BASE_URL = "http://vartista.com/vartista_app/get_service_providers.php?cat_id=" + cat_id+"&user_id="+user_id;
+
                 try {
                     HttpClient client = new DefaultHttpClient();
                     HttpGet request = new HttpGet();
