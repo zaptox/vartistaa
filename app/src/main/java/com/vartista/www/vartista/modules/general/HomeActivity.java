@@ -124,6 +124,7 @@ public class HomeActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -188,7 +189,6 @@ public class HomeActivity extends AppCompatActivity
 
 
 
-         tabLayout = (TabLayout) findViewById(R.id.tabs);
         final ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
 
 //        tabLayout.setVisibility(View.VISIBLE);
