@@ -115,6 +115,8 @@ import java.io.Serializable;
 
     }
 
+    public User() {
+    }
 
     public String getResponse() {
         return response;

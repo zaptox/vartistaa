@@ -1,20 +1,15 @@
 package com.vartista.www.vartista.modules.general;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
-import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
@@ -22,28 +17,18 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.TabHost;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
-
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
-
 import com.valdesekamdem.library.mdtoast.MDToast;
-//import com.vartista.www.vartista.Offline_user_status_service;
-
 import com.vartista.www.vartista.Offline_user_status_service;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
@@ -59,38 +44,28 @@ import com.vartista.www.vartista.fragments.ServiceProviderFragment;
 import com.vartista.www.vartista.fragments.UserProfileFragment;
 import com.vartista.www.vartista.fragments.UsersFragment;
 import com.vartista.www.vartista.modules.payment.PaymentActivity;
-import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
-import com.vartista.www.vartista.modules.provider.MyAppointments;
-import com.vartista.www.vartista.modules.provider.MyServiceRequests;
-import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
-import com.vartista.www.vartista.modules.provider.ProviderFragments.EarningFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyAppointmentsFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServiceRequestsFragment;
-import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServicesListFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.My_Rating_Reviews_Fragment;
 import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.FindServicesInList;
-import com.vartista.www.vartista.modules.user.MyCompletedServices;
-import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.Service_user_cancel;
 import com.vartista.www.vartista.modules.user.StartService;
 import com.vartista.www.vartista.modules.user.user_fragments.FindServicesInListFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.MyCompletedServicesFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.MyServiceMeetingsFragment;
 import com.vartista.www.vartista.restcalls.ApiClient;
-import com.vartista.www.vartista.modules.user.StartService;
-import com.vartista.www.vartista.restcalls.ServiceApiInterface;
 import com.vartista.www.vartista.restcalls.TokenApiInterface;
+import com.vartista.www.vartista.util.CONST;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -99,11 +74,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import android.app.DatePickerDialog;
-import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 
 import retrofit2.Call;
@@ -113,9 +85,8 @@ import retrofit2.Response;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,DatePickerDialog.OnDateSetListener,TimePickerDialog.OnTimeSetListener {
 
-//    public static String changed_from_notif="0";
     private TextView email, name;
-    User u = null;
+
     public static int user_id;
     public static User user;
     ImageView imageViewProfileDrawer;
@@ -135,13 +106,9 @@ public class HomeActivity extends AppCompatActivity
     };
     Boolean check = true;
 
-    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
-//            setTheme(R.style.darkthme);
-//        }
-//        else{setTheme(R.style.AppTheme);}
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -168,13 +135,22 @@ public class HomeActivity extends AppCompatActivity
         imageViewProfileDrawer.setImageResource(R.drawable.profile);
 
         Intent intent = getIntent();
-        user = (User) intent.getSerializableExtra("user");
-        u = user;
-        user_id = u.getId();
+        user = getUserFromSharePrefs();
+        user_id = user.getId();
+
+        if(intent.getIntExtra("fragment_Flag",0)!=0){
+            swipeFragment(intent.getIntExtra("fragment_Flag",0),intent);
+        }
 
         if(intent.getStringExtra("fragment")!=null){
             switchNotifFragment(intent.getStringExtra("fragment"));
         }
+
+
+
+
+        int flag = getIntent().getIntExtra("flag",0);
+
 
 
         name.setText(user.getName());
@@ -283,6 +259,20 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+    private void swipeFragment(int fragment_flag,Intent intent) {
+
+        switch (fragment_flag)
+        {
+            case CONST.FIND_SERVICE_IN_LIST_FRAGMENT:
+                tabLayout.setVisibility(View.GONE);
+                int catId=intent.getIntExtra("cat_id",0);
+                FindServicesInListFragment findServicesInList=new FindServicesInListFragment(catId);
+                replaceFragment(findServicesInList);
+                break;
+
+        }}
+
+
 
 
     @Override
@@ -306,46 +296,40 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+        else{
+                            super.onBackPressed();
 
-        else {
-
-            int count = getSupportFragmentManager().getBackStackEntryCount();
-
-            if (count == 0) {
-                super.onBackPressed();
-                //additional code
-            }
-
-            else if(count==1){
-                tabLayout.setVisibility(View.VISIBLE);
-                getSupportFragmentManager().popBackStack();
-
-            }
-            else if (count==2){
-                tabLayout.setVisibility(View.GONE);
-                getSupportFragmentManager().popBackStack();
-
-            }
-//            else  if (count==1  && getFragmentManager().findFragmentById(R.id.fragment_frame_layout).getTag().equals("FindServicesInListFragment")){
-//                Toast.makeText(this, "Its second find wala fragment", Toast.LENGTH_SHORT).show();
+        }}
 //
+//        else {
+//
+//            int count = getSupportFragmentManager().getBackStackEntryCount();
+//
+//            if (count == 0) {
+//                super.onBackPressed();
+//                //additional code
 //            }
-//            else if(count==1) {
+//
+//            else if(count==1){
 //                tabLayout.setVisibility(View.VISIBLE);
 //                getSupportFragmentManager().popBackStack();
+//
 //            }
-            else{
+//            else if (count==2){
 //                tabLayout.setVisibility(View.GONE);
+//                getSupportFragmentManager().popBackStack();
+//
+//            }
+////            else  if (count==1  && getFragmentManager().findFragmentById(R.id.fragment_frame_layout).getTag().equals("FindServicesInListFragment")){
+////                Toast.makeText(this, "Its second find wala fragment", Toast.LENGTH_SHORT).show();
+////
+////            }
+////            else if(count==1) {
+////                tabLayout.setVisibility(View.VISIBLE);
+////                getSupportFragmentManager().popBackStack();
+////            }
 
-//                getFragmentManager().findFragmentById(R.id.fragment_frame_layout).isAdded()
 
-                tabLayout.setVisibility(View.GONE);
-                getSupportFragmentManager().popBackStack();
-
-            }
-
-        }
-    }
 
     @Override
     protected void onPause() {
@@ -421,7 +405,7 @@ public class HomeActivity extends AppCompatActivity
 //            startActivity(intent);
 
             FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new UserProfileFragment(u)).addToBackStack("TAG").commit();
+            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new UserProfileFragment(user)).addToBackStack("TAG").commit();
 
 
 
@@ -840,5 +824,29 @@ public class HomeActivity extends AppCompatActivity
 
 
 
+
+    private void replaceFragment(Fragment newFragment) {
+        if (newFragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame_layout,newFragment).commit();
+        }
+    }
+
+
+
+    public User getUserFromSharePrefs(){
+        User user=new User();
+        SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+        user.setId(ob.getInt("user_id",0));
+        user.setBusystatus(ob.getInt("busy_status",0));
+        user.setContact(ob.getString("contact",""));
+        user.setEmail(ob.getString("Email",""));
+        user.setPassword(ob.getString("Password",""));
+        user.setName(ob.getString("name",""));
+        user.setGender(ob.getString("gender",""));
+        user.setSp_status(ob.getString("sp_status",""));
+        user.setImage(ob.getString("image",""));
+        return  user;
+    }
 
 }

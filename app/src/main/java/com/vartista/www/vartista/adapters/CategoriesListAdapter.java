@@ -17,10 +17,12 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.beans.Category;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServiceRequestsFragment;
 import com.vartista.www.vartista.modules.user.BookNowActivity;
 import com.vartista.www.vartista.modules.user.FindServicesInList;
 import com.vartista.www.vartista.modules.user.user_fragments.FindServicesInListFragment;
+import com.vartista.www.vartista.util.CONST;
 
 import java.util.List;
 
@@ -93,12 +95,20 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
 //   tabLayout.setVisibility(View.GONE);
 
 
-                FragmentManager manager = myContext.getSupportFragmentManager();
-                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new FindServicesInListFragment(cat_id,tabLayout),"FindServicesInListFragment").addToBackStack("TAG").commit();
+//                FragmentManager manager = myContext.getSupportFragmentManager();
+//                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager))
+//                        .replace(R.id.fragment_frame_layout, new FindServicesInListFragment(cat_id,tabLayout)
+//                                ,"FindServicesInListFragment").addToBackStack("TAG").commit();
 
 //                Intent intent=new Intent(view.getContext(), FindServicesInList.class);
 //                intent.putExtra("cat_id",cat_id);
 //                context.startActivity(intent);
+
+
+                Intent intent=new Intent(context, HomeActivity.class);
+                intent.putExtra("fragment_Flag", CONST.FIND_SERVICE_IN_LIST_FRAGMENT);
+                intent.putExtra("cat_id",cat_id);
+                context.startActivity(intent);
 
 
             }

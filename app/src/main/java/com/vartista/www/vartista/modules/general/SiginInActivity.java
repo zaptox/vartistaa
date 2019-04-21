@@ -248,6 +248,7 @@ public class SiginInActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(SiginInActivity.this, HomeActivity.class);
                     intent.putExtra("user", userLoggedIn);
+
                     startActivity(intent);
                     finish();
 //
@@ -332,59 +333,11 @@ public class SiginInActivity extends AppCompatActivity {
         editor.putString("image",image);
         editor.apply();
         editor.commit();
-//        Toast.makeText(this, "Shared PReference are working "+user_id+"\n"+Password, Toast.LENGTH_SHORT).show();
 
 
 
 
     }
-
-//public void upload_document(String Name,String Password,String ContactNo){
-//    setUIToWait(true);
-//    progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//    Call<Doument_Upload_Nil> call=SiginInActivity.apiInterface.document_upload_nil(Name,Password,ContactNo);
-//    call.enqueue(new Callback<Doument_Upload_Nil>() {
-//        @Override
-//        public void onResponse(Call <Doument_Upload_Nil> call, Response<Doument_Upload_Nil> response) {
-//
-//            if(response.body().getResponse().equals("ok")){
-//                setUIToWait(false);
-//
-//                Toast.makeText(SiginInActivity.this,"Updated Successfully..",Toast.LENGTH_SHORT).show();
-//
-//            }else if(response.body().getResponse().equals("exist")){
-//                setUIToWait(false);
-//
-//                Toast.makeText(SiginInActivity.this,"Same Data exists....",Toast.LENGTH_SHORT).show();
-//
-//            }
-//            else if(response.body().getResponse().equals("error")){
-//                setUIToWait(false);
-//
-//                Toast.makeText(SiginInActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//            else{
-//                setUIToWait(false);
-//
-//                Toast.makeText(SiginInActivity.this,"Something went wrong....",Toast.LENGTH_SHORT).show();
-//
-//            }
-//            Intent intent = new Intent(SiginInActivity.this, SiginInActivity.class);
-//            startActivity(intent);
-//
-//        }
-//
-//        @Override
-//        public void onFailure(Call <Doument_Upload_Nil> call, Throwable t) {
-//            setUIToWait(false);
-//            Toast.makeText(SiginInActivity.this,"Update Failed",Toast.LENGTH_SHORT).show();
-//        }
-//    });
-//
-//
-//}
 
 
 
