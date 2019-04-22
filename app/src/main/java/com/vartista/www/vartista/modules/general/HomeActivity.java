@@ -1,6 +1,5 @@
 package com.vartista.www.vartista.modules.general;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +8,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -34,13 +30,8 @@ import com.squareup.picasso.Picasso;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.Offline_user_status_service;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.adapters.PagerAdapter;
 
-import com.vartista.www.vartista.adapters.ServicesInListMapAdapter;
-import com.vartista.www.vartista.adapters.ViewPagerAdapter;
 import com.vartista.www.vartista.beans.DeviceToken;
-import com.vartista.www.vartista.beans.GetServiceProviders;
-import com.vartista.www.vartista.beans.Service;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.fragments.ConfigSettingsFragment;
 import com.vartista.www.vartista.fragments.NotificationsFragment;
@@ -61,7 +52,6 @@ import com.vartista.www.vartista.modules.provider.ProviderFragments.UploadDocLis
 import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.AssignRatings;
-import com.vartista.www.vartista.modules.user.FindServicesInList;
 import com.vartista.www.vartista.modules.user.Service_user_cancel;
 import com.vartista.www.vartista.modules.user.StartService;
 import com.vartista.www.vartista.modules.user.user_fragments.BookNowFragment;

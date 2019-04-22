@@ -52,13 +52,11 @@ public class RatingsReviewDetailsAdaptor  extends RecyclerView.Adapter<RatingsRe
 
         String oldstring = Ratingdetails.get(position).getDate();
         Username.setText(Ratingdetails.get(position).getUserName());
-//        ReviewDetail.setText(Ratingdetails.get(position).getUser_remarks());
         ratingBar.setRating(Ratingdetails.get(position).getStars());
         ratingBar.setIsIndicator(true);
         ratingBar.setFocusable(false);
         ServiceTittle.setText(Ratingdetails.get(position).getService_tittle());
         date.setText("Date: "+Ratingdetails.get(position).getDate());
-//        time.setText(Ratingdetails.get(position).getTime());
 
 
     }

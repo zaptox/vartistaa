@@ -59,14 +59,12 @@ public class SpDetailsAdapter extends RecyclerView.Adapter<SpDetailsAdapter.View
 @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-//    holder.home_avail_status.setVisibility(View.INVISIBLE);
 
     holder.tvService.setText(myServicesList.get(position).getService_title());
     holder.tvPrice.setText("Cost: "+myServicesList.get(position).getPrice()+"£");
 
     if(myServicesList.get(position).getHome_avail_status()==1){
 
-//        holder.home_avail_status.setVisibility(View.VISIBLE);
 
     }
     else{

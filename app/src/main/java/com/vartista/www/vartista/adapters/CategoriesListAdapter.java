@@ -36,11 +36,7 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
         this.myCategoryList = myCategoryList;
         this.context=context;
     }
-//    public CategoriesListAdapter(Context context, List<Category> myCategoryList, ViewPager viewPager){
-//        this.myCategoryList = myCategoryList;
-//        this.context=context;
-//        this.viewPager=viewPager;
-//    }
+
 
     public CategoriesListAdapter(Context context, List<Category> myCategoryList, TabLayout tabLayout, FragmentActivity myContext){
         this.myCategoryList = myCategoryList;
@@ -61,17 +57,6 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
 
         holder.tvCategoryName.setText(myCategoryList.get(position).getCategory_name());
 
-//        if(myCategoryList.get(position).getCategory_name().equalsIgnoreCase("Beautician")){
-//            holder.imageView.setImageResource(R.drawable.beautican);
-//
-//        }
-//        else if(myCategoryList.get(position).getCategory_name().equalsIgnoreCase("Plumber")){
-//            holder.imageView.setImageResource(R.drawable.plumber);
-//
-//        }
-//        else {
-//            holder.imageView.setImageResource(R.drawable.ele);
-//        }
 
     if(myCategoryList.get(position).getImage().equals("") || myCategoryList.get(position).getImage()==null ){
         holder.imageView.setImageResource(R.drawable.ele);

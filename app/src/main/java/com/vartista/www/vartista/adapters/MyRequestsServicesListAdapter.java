@@ -144,31 +144,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
 String timeformat = "hour";
 int timevalue = -2;
-//                           sendCompactNotification(context,REQUEST_CODE_SP_BEFORE2H,date,time,name,"minute",-1,requestservice_id);
-//                           sendCompactNotification(context,REQUEST_CODE_SP,date,time,name,"minute",-30,requestservice_id);
-
-//                            AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 //
-//                            String appointmentdate = date+" "+time;
-//                            SimpleDateFormat showsdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-//                            Date date1 = null;
-//                            try {
-//                                date1 = showsdf.parse(appointmentdate);
-//                            } catch (PaFrseException e) {
-//                                Log.d("Date Parsing",""+e.getMessage());
-//                                e.printStackTrace();
-//                            }
-//                            Calendar calendar = Calendar.getInstance();
-//                            calendar.setTime(date1);
-//                            calendar.add(Calendar.SECOND,10);
-//                            Intent intent = new Intent("alarm");
-//                            intent.putExtra("username",name);
-//                            intent.putExtra("requestcode",REQUEST_CODE_SP);
-//
-//                            PendingIntent broadcast = PendingIntent.getBroadcast(context,REQUEST_CODE_SP,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-//                            alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),broadcast);
-//
-
                         }
 
                        else if(response.body().getResponse().equals("error")){
@@ -292,24 +268,7 @@ int timevalue = -2;
         }
     }
 
-//
-//    protected void removeListItem(final View rowView, final int position) {
-//        // TODO Auto-generated method stub
-//
-//        final Animation animation = AnimationUtils.loadAnimation(rowView.getContext(), R.anim.scale_down);
-//        rowView.startAnimation(animation);
-//        Handler handle = new Handler();
-//        handle.postDelayed(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                // TODO Auto-generated method stub
-//                myReqServicesList.remove(position);
-//
-//                animation.cancel();
-//            }
-//        }, 1000);
-//    }
+
 
 
     public void remove(int position) {
