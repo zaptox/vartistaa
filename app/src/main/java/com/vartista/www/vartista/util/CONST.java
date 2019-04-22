@@ -20,6 +20,7 @@ public class CONST {
     public static final int  MY_APPOINTMENT_FRAGMENT=13;
     public static final int  MY_RATINGS_REVIEW_FRAGMENT=14;
     public static final int  MY_SERVICE_MEETNG_FRAGMENT=15;
+    public static final int  DOC_UPLOAD_FRAGMENT=16;
 
 
 

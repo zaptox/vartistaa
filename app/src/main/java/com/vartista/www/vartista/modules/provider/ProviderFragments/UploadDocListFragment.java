@@ -67,7 +67,7 @@ public class UploadDocListFragment extends Fragment {
 
         recyclerViewDocsUpload=(RecyclerView)view.findViewById(R.id.recyclerViewDocUpload);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Upload Requrired Doc");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Upload Required Doc");
         SharedPreferences ob = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
 
         userId = ob.getInt("user_id", 0);

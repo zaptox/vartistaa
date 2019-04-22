@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
@@ -20,6 +21,7 @@ import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.DocumentUploadFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.UploadDocListFragment;
 import com.vartista.www.vartista.modules.user.AssignRatings;
+import com.vartista.www.vartista.util.CONST;
 
 /**
  * Created by Dell on 2018-10-08.
@@ -52,12 +54,11 @@ public class ConfigSettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-//                Intent intent=new Intent(getContext(),DocumentUploadActivity.class);
-//                intent.putExtra("userId",user_id);
-//                startActivity(intent);
+                Intent intent=new Intent(getContext(), HomeActivity.class);
+                intent.putExtra("fragment_Flag", CONST.DOC_UPLOAD_FRAGMENT);
 
-                FragmentManager manager = myContext.getSupportFragmentManager();
-                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new DocumentUploadFragment()).addToBackStack("TAG").commit();
+                startActivity(intent);
+
 
 
 

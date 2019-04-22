@@ -132,13 +132,20 @@ public class UserAppointmentDetails extends AppCompatActivity {
                         insertNotification(title,body,Integer.parseInt(ob.getUser_customer_id()),customer_id,1,get_Current_Date());
                         payment_received_function(Integer.parseInt(ob.getRequestservice_id()));
 
+                        startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                        finish();
+
                         Call<NotificationsManager> callNotification = UserAppointmentDetails.sendNotificationApiInterface
                                 .sendPushNotification(customer_id,
                                         body,title);
                         callNotification.enqueue(new Callback<NotificationsManager>() {
                             @Override
                             public void onResponse(Call<NotificationsManager> call, Response<NotificationsManager> response) {
-                                if(response.isSuccessful()){}
+                                if(response.isSuccessful()){
+
+
+                                }
+
 
 
                             }

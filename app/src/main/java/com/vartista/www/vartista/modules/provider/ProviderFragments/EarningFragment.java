@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
@@ -49,7 +50,7 @@ public class EarningFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private EarningsListAdapter listadapter;
     ArrayList<EarningBean> earnings_list;
-
+    ImageView imageView;
 
     public EarningFragment() {
         // Required empty public constructor
@@ -77,6 +78,8 @@ public class EarningFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         SharedPreferences object = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
         serviceproviderid= object.getInt("user_id",0);
+        imageView=(ImageView)view.findViewById(R.id.imageViewNoDataFound);
+        imageView.setVisibility(View.GONE);
 
 
         try {
@@ -91,6 +94,12 @@ public class EarningFragment extends Fragment {
         catch (Exception e){
             MDToast.makeText(getContext(),"No Earnings Yet..",MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();
 
+        }
+
+        if(earnings_list.size()==0){
+            imageView.setVisibility(View.VISIBLE);
+        }else{
+            imageView.setVisibility(View.GONE);
         }
         return view;
     }

@@ -82,7 +82,6 @@ public class UserProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.activity_user_profile, container, false);
-//        become_sp=(Button)view.findViewById(R.id.become_sp);
 
         apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
         name=view.findViewById(R.id.name1);
@@ -92,9 +91,7 @@ public class UserProfileFragment extends Fragment {
         header_name=view.findViewById(R.id.header_name);
         profileimage = (ImageView)view.findViewById(R.id.profile_image);
         upload_image_update=view.findViewById(R.id.upload);
-        tabLayout= getActivity().findViewById(R.id.tabs);
 
-        tabLayout.setVisibility(View.GONE);
 
 //        Intent intent= getIntent();
         final User user= user_got;
@@ -124,7 +121,7 @@ public class UserProfileFragment extends Fragment {
                 int id1=user.getId();
                 setUIToWait(true);
                 progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                Call<User> call= UserProfile.apiInterface.updateUser(namechange,emailchange,passchange,id1);
+                Call<User> call= UserProfileFragment.apiInterface.updateUser(namechange,emailchange,passchange,id1);
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call <User> call, Response<User> response) {
@@ -157,7 +154,6 @@ public class UserProfileFragment extends Fragment {
                         user.setEmail(emailchange);
                         user.setPassword(passchange);
                         user.setImage(getPath(filePath));
-//                        user_name.setText("response ");
                         Intent intent = new Intent(getContext(), HomeActivity.class);
                         intent.putExtra("user", user);
                         startActivity(intent);
@@ -169,7 +165,6 @@ public class UserProfileFragment extends Fragment {
                         setUIToWait(false);
                         MDToast.makeText(getContext(),"Update Failed",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
-//                        create.setText(t.getMessage());
                     }
                 });
 

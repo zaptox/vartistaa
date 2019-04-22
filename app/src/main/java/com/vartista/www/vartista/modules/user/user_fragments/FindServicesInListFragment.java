@@ -97,9 +97,8 @@ public class FindServicesInListFragment extends Fragment {
     }
 
     @SuppressLint("ValidFragment")
-    public FindServicesInListFragment(int cat_id2, TabLayout tabLayout) {
+    public FindServicesInListFragment(int cat_id2) {
         this.cat_id2=cat_id2;
-        this.tabLayout=tabLayout;
     }
 
     @Nullable
@@ -107,6 +106,7 @@ public class FindServicesInListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.activity_services_in_list,container,false);
 
+        view_same=view;
 
         btnFilter = view.findViewById(R.id.filter_button);
         filter_btn_option = view.findViewById(R.id.filter_option_btn);
@@ -140,8 +140,6 @@ public class FindServicesInListFragment extends Fragment {
 
         myservicesList=new ArrayList<>();
 
-        tabLayout=(TabLayout) getActivity().findViewById(R.id.tabs);
-        tabLayout.setVisibility(View.GONE);
 
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override

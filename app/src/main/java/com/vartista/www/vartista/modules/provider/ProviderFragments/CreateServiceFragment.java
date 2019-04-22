@@ -92,7 +92,6 @@ public class CreateServiceFragment extends Fragment {
     static double longitude;
     static String country;
 
-    TabLayout tabLayout;
     private ProgressDialog progressDialog;
 
 
@@ -109,18 +108,16 @@ public class CreateServiceFragment extends Fragment {
     }
 
     @SuppressLint("ValidFragment")
-    public CreateServiceFragment(int user_id, TabLayout tabLayout) {
+    public CreateServiceFragment(int user_id) {
         // Required empty public constructor
         this.user_id=user_id;
-        this.tabLayout=tabLayout;
         for_edit=false;
     }
 
     @SuppressLint("ValidFragment")
-    public CreateServiceFragment(int user_id, TabLayout tabLayout, int edit_service_id) {
+    public CreateServiceFragment(int user_id, int edit_service_id) {
         // Required empty public constructor
         this.user_id=user_id;
-        this.tabLayout=tabLayout;
         this.edit_user_id=edit_service_id;
         for_edit=true;
     }
@@ -155,7 +152,6 @@ public class CreateServiceFragment extends Fragment {
         btnHome = (Button) view.findViewById(R.id.btnHome);
         home_avail= view.findViewById(R.id.home_avail);
 
-        tabLayout.setVisibility(View.GONE);
 
 //        edit_user_id= getActivity().getIntent().getIntExtra("edit_user_id",0);
 //        edit_user_id= user_id;
@@ -373,6 +369,7 @@ public class CreateServiceFragment extends Fragment {
                                 Intent intent=new Intent(getContext(),HomeActivity.class);
                                 intent.putExtra("fragment_Flag", CONST.MY_SERVICES_LIST_FRAGMENT);
                                 startActivity(intent);
+                                getActivity().finish();
 
 
 
