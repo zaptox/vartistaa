@@ -57,7 +57,6 @@ public class MyServicesListFragment extends Fragment {
     RecyclerView listViewMyServices;
     MyServicesListAdapter myServicesListAdapter;
     List<Service> myservicesList;
-    TabLayout tabLayout;
 //    public static ServiceApiInterface apiInterface;
 
 
@@ -71,10 +70,9 @@ public class MyServicesListFragment extends Fragment {
 
 
     @SuppressLint("ValidFragment")
-    public MyServicesListFragment(int user_id, TabLayout tabLayout) {
+    public MyServicesListFragment(int user_id) {
         // Required empty public constructor
         this.user_id=user_id;
-        this.tabLayout=tabLayout;
          }
 
     @Override
@@ -94,7 +92,6 @@ public class MyServicesListFragment extends Fragment {
         listViewMyServices.setItemAnimator(new DefaultItemAnimator());
 
 
-        tabLayout.setVisibility(View.GONE);
 
 
 
@@ -113,7 +110,7 @@ public class MyServicesListFragment extends Fragment {
         new Conncetion(getContext(),user_id).execute();
 
 
-        myServicesListAdapter=new MyServicesListAdapter(getContext(),myservicesList, myContext,tabLayout);
+        myServicesListAdapter=new MyServicesListAdapter(getContext(),myservicesList);
 
 
         return view;

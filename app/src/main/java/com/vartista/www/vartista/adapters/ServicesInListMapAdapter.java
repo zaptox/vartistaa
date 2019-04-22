@@ -22,6 +22,7 @@ import com.vartista.www.vartista.modules.user.BookNowActivity;
 import com.vartista.www.vartista.modules.user.FindServicesInList;
 import com.vartista.www.vartista.modules.user.ServiceProviderDetail;
 import com.vartista.www.vartista.modules.user.user_fragments.ServiceProviderDetailFragment;
+import com.vartista.www.vartista.util.CONST;
 import com.willy.ratingbar.ScaleRatingBar;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
     public Context context;
     FragmentActivity myContext;
     TabLayout tabLayout;
-    public ServicesInListMapAdapter(Context context, List<GetServiceProviders> myServicesList, FragmentActivity myContext, TabLayout tabLayout) {
+    public ServicesInListMapAdapter(Context context, List<GetServiceProviders> myServicesList, FragmentActivity myContext) {
         this.myServicesList = myServicesList;
         this.context = context;
         this.myContext=myContext;
@@ -113,24 +114,16 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
                 String sp_name= myServicesList.get(position).getSp_name();
 
 
-                FragmentManager manager = myContext.getSupportFragmentManager();
-                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout,
-                        new ServiceProviderDetailFragment(s_provider_id,cat_id,user_id,sp_name,
-                                myServicesList.get(position).getService_title(),myServicesList.get(position).getImage(),tabLayout
-                        ),"ServiceProviderDetailFragment").addToBackStack("TAG").commit();
+                Intent intent=new Intent(view.getContext(),HomeActivity.class);
+                intent.putExtra("fragment_Flag", CONST.SERVICE_PROVIDER_DETAIL_FRAGMENT);
+                intent.putExtra("s_provider_id",s_provider_id);
+                intent.putExtra("cat_id",cat_id);
+                intent.putExtra("user_id",user_id);
+                intent.putExtra("spname",sp_name);
+                intent.putExtra("service_title",myServicesList.get(position).getService_title());
+                intent.putExtra("profile_photo",myServicesList.get(position).getImage());
 
-
-//
-//                Intent intent=new Intent(view.getContext(),ServiceProviderDetail.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.putExtra("s_provider_id",s_provider_id);
-//                intent.putExtra("cat_id",cat_id);
-//                intent.putExtra("user_id",user_id);
-//                intent.putExtra("spname",sp_name);
-//                intent.putExtra("service_title",myServicesList.get(position).getService_title());
-//                intent.putExtra("profile_photo",myServicesList.get(position).getImage());
-//
-//                context.startActivity(intent);
+                context.startActivity(intent);
 
             }
         });

@@ -49,7 +49,6 @@ public class EarningFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private EarningsListAdapter listadapter;
     ArrayList<EarningBean> earnings_list;
-    TabLayout tabLayout;
 
 
     public EarningFragment() {
@@ -57,10 +56,10 @@ public class EarningFragment extends Fragment {
     }
 
     @SuppressLint("ValidFragment")
-    public EarningFragment(int user_id1,    TabLayout tabLayout) {
+    public EarningFragment(int user_id1
+                           ) {
         // Required empty public constructor
     this.serviceproviderid=user_id1;
-    this.tabLayout=tabLayout;
     }
 
 
@@ -79,7 +78,6 @@ public class EarningFragment extends Fragment {
         SharedPreferences object = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
         serviceproviderid= object.getInt("user_id",0);
 
-        tabLayout.setVisibility(View.GONE);
 
         try {
             new Conncetion2(getContext(), serviceproviderid).execute();

@@ -9,6 +9,7 @@
     <!--light gray-->
     <color name="colorPrimary">#262827</color>
     <color name="colorPrimaryDark">#262827</color>
+    <color name="bgColor">#FFFFFF</color>
 
     <color name="colorAccent">#a8a8a8</color>
     <color name="textColor">#FFFFFF</color>

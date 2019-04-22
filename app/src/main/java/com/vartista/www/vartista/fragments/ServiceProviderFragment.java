@@ -32,6 +32,7 @@ import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServiceReq
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServicesListFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.UploadDocListFragment;
 import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
+import com.vartista.www.vartista.util.CONST;
 
 
 /**
@@ -41,7 +42,6 @@ public class ServiceProviderFragment extends Fragment {
     LinearLayout btnCreateServices,btnMyServices,reqalert,btnUploadDoc,earnings;
      static int user_id;
     private FragmentActivity myContext;
-    TabLayout tabLayout;
 
 
     @SuppressLint("ValidFragment")
@@ -63,19 +63,15 @@ public class ServiceProviderFragment extends Fragment {
         btnMyServices=(LinearLayout)view.findViewById(R.id.btnMyServices);
         btnUploadDoc=(LinearLayout)view.findViewById(R.id.btnUploadDoc);
         earnings=(LinearLayout) view.findViewById(R.id.earnings);
-        tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
-        tabLayout.setVisibility(View.VISIBLE);
 
         btnUploadDoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-//                Intent intent=new Intent(getContext(),UploadDocListActivity.class);
-//                intent.putExtra("userId",user_id);
-//                startActivity(intent);
+                Intent intent=new Intent(getContext(),HomeActivity.class);
+                intent.putExtra("fragment_Flag", CONST.UPLOAD_DOC_LIST_FRAGMENT);
+                startActivity(intent);
 
-                FragmentManager manager = myContext.getSupportFragmentManager();
-                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new UploadDocListFragment()).addToBackStack("TAG").commit();
 
 
 
@@ -84,12 +80,9 @@ public class ServiceProviderFragment extends Fragment {
         reqalert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent=new Intent(getContext(),MyServiceRequests.class);
-//                intent.putExtra("userId",user_id);
-//                startActivity(intent);
-
-                FragmentManager manager = myContext.getSupportFragmentManager();
-                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServiceRequestsFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
+                Intent intent=new Intent(getContext(),HomeActivity.class);
+                intent.putExtra("fragment_Flag", CONST.MY_SERVICE_REQUEST_FRAGMENT);
+                startActivity(intent);
 
 
             }
@@ -97,30 +90,19 @@ public class ServiceProviderFragment extends Fragment {
         earnings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent=new Intent(getContext(),EarningActivity.class);
-//                intent.putExtra("userId",user_id);
-//                startActivity(intent);
-
-                FragmentManager manager = myContext.getSupportFragmentManager();
-                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new EarningFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
-
-
-
-
-            }
+                Intent intent=new Intent(getContext(),HomeActivity.class);
+                intent.putExtra("fragment_Flag",CONST.EARNING_FRAGMENT);
+                startActivity(intent);
+                }
         });
         btnMyServices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                FragmentManager manager = myContext.getSupportFragmentManager();
-                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServicesListFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
 
-//                FragmentTransaction ft= getChildFragmentManager().beginTransaction().replace(R.id.viewpager,new MyServicesListFragment(user_id)).addToBackStack("TA")
-
-//                Intent intent=new Intent(getContext(),MyServicesListActivity.class);
-//                intent.putExtra("userId",user_id);
-//                startActivity(intent);
+                Intent intent=new Intent(getContext(),HomeActivity.class);
+                intent.putExtra("fragment_Flag",CONST.MY_SERVICES_LIST_FRAGMENT);
+                startActivity(intent);
 //
 
             }
@@ -128,13 +110,10 @@ public class ServiceProviderFragment extends Fragment {
         btnCreateServices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent=new Intent(getContext(),CreateServiceActivity.class);
-//                intent.putExtra("userId",user_id);
-//                startActivity(intent);
+                Intent intent=new Intent(getContext(),HomeActivity.class);
+                intent.putExtra("fragment_Flag",CONST.CREATE_SERVICE_FRAGMENT);
+                startActivity(intent);
 
-
-                FragmentManager manager = myContext.getSupportFragmentManager();
-                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new CreateServiceFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
 
             }
         });

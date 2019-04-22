@@ -19,12 +19,14 @@ import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.Service;
 import com.vartista.www.vartista.beans.ServiceRequets;
+import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
 import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.CreateServiceFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServicesListFragment;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ServiceApiInterface;
+import com.vartista.www.vartista.util.CONST;
 import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
@@ -42,7 +44,7 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
    public static List<Service> myServicesList;
    public Context context;
     Gson gson;
-     int service_id=0;
+     int serviceId=0;
     Button edit ,delete;
     FragmentActivity myContext;
     TabLayout tabLayout;
@@ -109,15 +111,9 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
     else {
         holder.tvDescription.setText("" + myServicesList.get(position).getService_description());
     }
-    //Log.d("Description length",myServicesList.get(position).getService_description().length()+"");
 
 
-
-    // holder.tv.setText(""+myServicesList.get(position).getPrice());
-
-
-     service_id= myServicesList.get(position).getService_id();
-    final int user_id= myServicesList.get(position).getService_id();
+     serviceId= myServicesList.get(position).getService_id();
 
     edit= holder.mView.findViewById(R.id.edit);
     delete =holder.mView.findViewById(R.id.delete);
@@ -135,7 +131,7 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
                     .setPositiveButton("Yes", new View.OnClickListener() {
                         @Override
                         public void onClick(final View v) {
-                            Call<Service> call = MyServicesListAdapter.apiInterface.deleteService(user_id);
+                            Call<Service> call = MyServicesListAdapter.apiInterface.deleteService(serviceId);
                             call.enqueue(new Callback<Service>() {
                                 @Override
                                 public void onResponse(Call<Service> call, Response<Service> response) {
@@ -149,10 +145,10 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
 //
 //                                        intent.putExtra("edit_user_id",user_id);
 
-                                        FragmentManager manager = myContext.getSupportFragmentManager();
-                                        manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServicesListFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
 
-
+                                        Intent intent=new Intent(context,HomeActivity.class);
+                                        intent.putExtra("fragment_Flag", CONST.MY_SERVICES_LIST_FRAGMENT);
+                                        context.startActivity(intent);
 
                                         //intent.putStringArrayListExtra("myservicelist",myServicesList);
 //                                        v.getContext().startActivity(intent);
@@ -186,24 +182,15 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
     edit.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            Intent intent=new Intent(v.getContext(),CreateServiceActivity.class);
-//
-//
-//            intent.putExtra("edit_user_id",user_id);
-
-            //            v.getContext().startActivity(intent);
-
-            SharedPreferences ob = v.getContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
-            int user_s_id = ob.getInt("user_id",0);
-            int edit_service_id=user_id;
-
-            FragmentManager manager = myContext.getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new CreateServiceFragment(user_s_id,tabLayout,edit_service_id)).addToBackStack("TAG").commit();
 
 
 
+            Intent intent=new Intent(context,HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.CREATE_SERVICE_FRAGMENT);
+            intent.putExtra("edit_service_id",serviceId);
+            context.startActivity(intent);
 
-//            Toast.makeText(context,"edit ID:"+user_id,Toast.LENGTH_SHORT).show();
+
         }
     });
 

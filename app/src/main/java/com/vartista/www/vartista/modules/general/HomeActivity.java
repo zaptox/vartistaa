@@ -1,20 +1,15 @@
 package com.vartista.www.vartista.modules.general;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
-import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
@@ -22,28 +17,18 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.TabHost;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
-
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
-
 import com.valdesekamdem.library.mdtoast.MDToast;
-//import com.vartista.www.vartista.Offline_user_status_service;
-
 import com.vartista.www.vartista.Offline_user_status_service;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.PagerAdapter;
@@ -59,38 +44,35 @@ import com.vartista.www.vartista.fragments.ServiceProviderFragment;
 import com.vartista.www.vartista.fragments.UserProfileFragment;
 import com.vartista.www.vartista.fragments.UsersFragment;
 import com.vartista.www.vartista.modules.payment.PaymentActivity;
-import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
-import com.vartista.www.vartista.modules.provider.MyAppointments;
-import com.vartista.www.vartista.modules.provider.MyServiceRequests;
-import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
+import com.vartista.www.vartista.modules.provider.ProviderFragments.AddressSetFragment;
+import com.vartista.www.vartista.modules.provider.ProviderFragments.CreateServiceFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.EarningFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyAppointmentsFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServiceRequestsFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServicesListFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.My_Rating_Reviews_Fragment;
+import com.vartista.www.vartista.modules.provider.ProviderFragments.UploadDocListFragment;
 import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.FindServicesInList;
-import com.vartista.www.vartista.modules.user.MyCompletedServices;
-import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.Service_user_cancel;
 import com.vartista.www.vartista.modules.user.StartService;
+import com.vartista.www.vartista.modules.user.user_fragments.BookNowFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.FindServicesInListFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.MyCompletedServicesFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.MyServiceMeetingsFragment;
+import com.vartista.www.vartista.modules.user.user_fragments.ServiceProviderDetailFragment;
 import com.vartista.www.vartista.restcalls.ApiClient;
-import com.vartista.www.vartista.modules.user.StartService;
-import com.vartista.www.vartista.restcalls.ServiceApiInterface;
 import com.vartista.www.vartista.restcalls.TokenApiInterface;
+import com.vartista.www.vartista.util.CONST;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -99,11 +81,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import android.app.DatePickerDialog;
-import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 
 import retrofit2.Call;
@@ -113,35 +92,22 @@ import retrofit2.Response;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,DatePickerDialog.OnDateSetListener,TimePickerDialog.OnTimeSetListener {
 
-//    public static String changed_from_notif="0";
     private TextView email, name;
-    User u = null;
     public static int user_id;
     public static User user;
     ImageView imageViewProfileDrawer;
     public static TokenApiInterface tokenApiInterface;
     private ViewPager viewPager;
-    DrawerLayout drawer;
-    DrawerLayout serviceProvider_Drawer;
-    Toolbar toolbar;
     TabLayout tabLayout=null;
     public static NavigationView navigationView;
-    ActionBarDrawerToggle toggle;
     private int[] tabIcons = {
             R.drawable.ic_asauser_24dp,
-            R.drawable.myservices,
-
-
-    };
+            R.drawable.myservices};
     Boolean check = true;
 
-    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
-//            setTheme(R.style.darkthme);
-//        }
-//        else{setTheme(R.style.AppTheme);}
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -152,12 +118,11 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
         int id = ob.getInt("user_id",0);
-//        getbusystatus(id);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -168,9 +133,12 @@ public class HomeActivity extends AppCompatActivity
         imageViewProfileDrawer.setImageResource(R.drawable.profile);
 
         Intent intent = getIntent();
-        user = (User) intent.getSerializableExtra("user");
-        u = user;
-        user_id = u.getId();
+        user = getUserFromSharePrefs();
+        user_id = user.getId();
+
+        if(intent.getIntExtra("fragment_Flag",0)!=0){
+            swipeFragment(intent.getIntExtra("fragment_Flag",0),intent);
+        }
 
         if(intent.getStringExtra("fragment")!=null){
             switchNotifFragment(intent.getStringExtra("fragment"));
@@ -197,13 +165,7 @@ public class HomeActivity extends AppCompatActivity
             imageViewProfileDrawer.setImageResource(R.drawable.profile);
         }
 
-        //device token add to server
-
-        // view pager
-
-
         viewPager = (SlideOffViewPager) findViewById(R.id.viewpager);
-        //        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), user_id, getApplicationContext());
         ((SlideOffViewPager) viewPager).setPagingEnabled(false);
           setupViewPager(viewPager);
 
@@ -212,10 +174,8 @@ public class HomeActivity extends AppCompatActivity
 
 
 
-         tabLayout = (TabLayout) findViewById(R.id.tabs);
         final ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
 
-//        tabLayout.setVisibility(View.VISIBLE);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),user_id,getApplicationContext());
@@ -276,12 +236,74 @@ public class HomeActivity extends AppCompatActivity
         user_id = ob.getInt("user_id", 0);
         new Connection(user_id, 1).execute();
 
-        //a service to make user offline
 
         startOfflineService();
 
-
     }
+
+    private void swipeFragment(int fragment_flag,Intent intent) {
+
+        switch (fragment_flag)
+        {
+            case CONST.FIND_SERVICE_IN_LIST_FRAGMENT:
+
+                tabLayout= (TabLayout) findViewById(R.id.tabs);
+                tabLayout.setVisibility(View.GONE);
+                int catId=intent.getIntExtra("cat_id",0);
+                FindServicesInListFragment findServicesInList=new FindServicesInListFragment(catId);
+                replaceFragment(findServicesInList);
+                break;
+            case  CONST.SERVICE_PROVIDER_DETAIL_FRAGMENT:
+
+                tabLayout= (TabLayout) findViewById(R.id.tabs);
+                tabLayout.setVisibility(View.GONE);
+                int providerId=intent.getIntExtra("s_provider_id",0);
+                int categoryId=intent.getIntExtra("cat_id",0);
+               int  userId=intent.getIntExtra("user_id",0);
+                String spName=intent.getStringExtra("spname");
+                String spProfileImage=intent.getStringExtra("profile_photo");
+                String serviceTitle=intent.getStringExtra("service_title");
+
+                ServiceProviderDetailFragment serviceProviderDetailFragment=
+                        new ServiceProviderDetailFragment(providerId,categoryId,userId,spName,
+                        serviceTitle,spProfileImage);
+                replaceFragment(serviceProviderDetailFragment);
+                break;
+            case CONST.BOOK_NOW__FRAGMENT:
+                tabLayout.setVisibility(View.GONE);
+                    int   userCustomerId=intent.getIntExtra("user_id",0);
+                    int serviceProviderId=intent.getIntExtra("provider_id",0);
+                    int  serviceId=intent.getIntExtra("service_id",0);
+                    int serviceCatId=intent.getIntExtra("cat_id",0);
+                BookNowFragment bookNowFragment=new  BookNowFragment(serviceProviderId,serviceCatId,userCustomerId
+                    ,serviceId);
+                replaceFragment(bookNowFragment);
+                 break;
+                 case CONST.MY_SERVICE_REQUEST_FRAGMENT:
+                     replaceFragment(new MyServiceRequestsFragment(user_id));
+                     break;
+            case CONST.EARNING_FRAGMENT:
+                replaceFragment(new EarningFragment(user_id));
+                break;
+            case CONST.MY_SERVICES_LIST_FRAGMENT:
+                replaceFragment(new MyServicesListFragment(user_id));
+                break;
+                case CONST.CREATE_SERVICE_FRAGMENT:
+
+                    if(intent.getIntExtra("edit_service_id",0)!=0){
+                        int editServiceId=intent.getIntExtra("edit_service_id",0);
+                        replaceFragment(new CreateServiceFragment(user_id,editServiceId));
+                    }else{
+                    replaceFragment(new CreateServiceFragment(user_id));}
+                    break;
+            case CONST.UPLOAD_DOC_LIST_FRAGMENT:
+                replaceFragment(new UploadDocListFragment());
+                break;
+                case CONST.ADDRESS_SET_FRAGMENT:
+                    replaceFragment(new AddressSetFragment());
+                    break;
+        }}
+
 
 
 
@@ -289,63 +311,15 @@ public class HomeActivity extends AppCompatActivity
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        //        FragmentManager fragmentManager = getSupportFragmentManager();
-//        android.support.v4.app.Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_frame_layout);
-//
-//      try{  if(currentFragment.getTag().equalsIgnoreCase("FindServicesInListFragment")&& currentFragment.getTag()!=null){
-//         finish();
-//
-//          Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
-//          intent.putExtra("user", user);
-//          startActivity(intent);
-//
-//      }}catch (Exception e){}
-
 
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+        else{
+                            super.onBackPressed();
 
-        else {
-
-            int count = getSupportFragmentManager().getBackStackEntryCount();
-
-            if (count == 0) {
-                super.onBackPressed();
-                //additional code
-            }
-
-            else if(count==1){
-                tabLayout.setVisibility(View.VISIBLE);
-                getSupportFragmentManager().popBackStack();
-
-            }
-            else if (count==2){
-                tabLayout.setVisibility(View.GONE);
-                getSupportFragmentManager().popBackStack();
-
-            }
-//            else  if (count==1  && getFragmentManager().findFragmentById(R.id.fragment_frame_layout).getTag().equals("FindServicesInListFragment")){
-//                Toast.makeText(this, "Its second find wala fragment", Toast.LENGTH_SHORT).show();
-//
-//            }
-//            else if(count==1) {
-//                tabLayout.setVisibility(View.VISIBLE);
-//                getSupportFragmentManager().popBackStack();
-//            }
-            else{
-//                tabLayout.setVisibility(View.GONE);
-
-//                getFragmentManager().findFragmentById(R.id.fragment_frame_layout).isAdded()
-
-                tabLayout.setVisibility(View.GONE);
-                getSupportFragmentManager().popBackStack();
-
-            }
-
-        }
-    }
+        }}
 
     @Override
     protected void onPause() {
@@ -410,57 +384,27 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.account) {
-            // Handle the camera action
-
-//            Intent intent = new Intent(HomeActivity.this, UserProfile.class);
-//            SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
-//
-//            user_id = ob.getInt("user_id", 0);
-//
-//            intent.putExtra("user", u);
-//            startActivity(intent);
-
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new UserProfileFragment(u)).addToBackStack("TAG").commit();
+            replaceFragment(new UserProfileFragment(user));
 
 
 
         } else if (id == R.id.request) {
 
-//            Intent intent = new Intent(HomeActivity.this, MyServiceRequests.class);
-//            intent.putExtra("user", user_id);
-//            startActivity(intent);
-
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServiceRequestsFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
+             replaceFragment(new MyServiceRequestsFragment(user_id));
 
         } else if (id == R.id.notification) {
 
+            replaceFragment( new NotificationsFragment());
 
-//            Intent intent = new Intent(HomeActivity.this, Asynctask_MultipleUrl.class);
-//            startActivity(intent);
-
-
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new NotificationsFragment()).addToBackStack("TAG").commit();
 
 
         } else if (id == R.id.appointments) {
 
-            //            Intent intent = new Intent(HomeActivity.this, MyAppointments.class);
-//            startActivity(intent);
-
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyAppointmentsFragment()).addToBackStack("TAG").commit();
+             replaceFragment(new MyAppointmentsFragment());
 
         } else if (id == R.id.ratings) {
-//            Intent intent = new Intent(HomeActivity.this, My_Rating_Reviews.class);
-//            startActivity(intent);
 
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new My_Rating_Reviews_Fragment()).addToBackStack("TAG").commit();
-
-
+            replaceFragment(new My_Rating_Reviews_Fragment());
 
 
         } else if (id == R.id.logout) {
@@ -476,12 +420,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.Userappointments) {
 
 
-//            Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
-//            startActivity(intent);
-
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServiceMeetingsFragment()).addToBackStack("TAG").commit();
-
+             replaceFragment(new MyServiceMeetingsFragment());
 
 
 
@@ -493,22 +432,14 @@ public class HomeActivity extends AppCompatActivity
 
 
         } else if (id == R.id.Userappointments) {
-//            Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
-//            startActivity(intent);
-
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServiceMeetingsFragment()).addToBackStack("TAG").commit();
+            replaceFragment(new MyServiceMeetingsFragment());
 
 
 
         }
         else if(id==R.id.user_completed_services){
-//            Intent intent = new Intent(HomeActivity.this, MyCompletedServices.class);
-//            startActivity(intent);
 
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyCompletedServicesFragment()).addToBackStack("TAG").commit();
-
+             replaceFragment(new MyCompletedServicesFragment());
 
         }
 
@@ -622,7 +553,6 @@ public class HomeActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(String result) {
-            //  MDToast.makeText(getApplicationContext(),result,MDToast.LENGTH_SHORT).show();
 
             try {
                 JSONObject jsonResult = new JSONObject(result);
@@ -645,9 +575,7 @@ public class HomeActivity extends AppCompatActivity
 
     public void getbusystatus(int user_id) {
 
-//        MDToast.makeText(this, "in perform function", MDToast.LENGTH_SHORT).show();
         Call<User> call = SiginInActivity.apiInterface.getUserById(user_id);
-//        Call<User> call = SiginInActivity.apiInterface.performUserLogin();
 
 
 
@@ -687,34 +615,20 @@ public class HomeActivity extends AppCompatActivity
                     if(busy_status==1){
                         startActivity(new Intent(HomeActivity.this,ServicestartProvider.class));
                     }
-// MDToast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse() + "--name:" + name, MDToast.LENGTH_SHORT).show();
-
-//                    upload_document(userLoggedIn.getName(),userLoggedIn.getPassword(),userLoggedIn.getContact());
-//                    MDToast.makeText(SiginInActivity.this, "The User Id is :- "+userLoggedIn.getId()
-//                            +"\n"+"The Name is "+userLoggedIn.getName()
-//                            +"\n"+"The password is "+userLoggedIn.getPassword(), MDToast.LENGTH_SHORT).show();
-
-//                    MDToast.makeText(SiginInActivity.this, ""+userLoggedIn, MDToast.LENGTH_SHORT).show();
-                    //
 
 
 
 //
 //
                 } else if (response.body().getResponse().equals("failed")) {
-                    //  Toast.makeText(SiginInActivity.this, "Login Failed.. Please try again", Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(SiginInActivity.this, "", Toast.LENGTH_SHORT).show();
-
 
                 }
 //
                 else {
 
-                    //  Toast.makeText(SiginInActivity.this, "Response: " + response.body().getResponse(), Toast.LENGTH_SHORT).show();
 
                 }
 
-//                Toast.makeText(SiginInActivity.this, "In response's last line", Toast.LENGTH_SHORT).show();
 
 
             }
@@ -766,17 +680,13 @@ public class HomeActivity extends AppCompatActivity
 
 
         if(fragment.equals("MyServiceMeetingsFragment")){
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().add(R.id.fragment_frame_layout, new MyServiceMeetingsFragment()).addToBackStack("TAG").commit();
-//            tabLayout.setVisibility(View.GONE);
+
+            replaceFragment(new MyServiceMeetingsFragment());
 
         }
         else if(fragment.equals("MyServiceRequestsFragment")){
 
-            FragmentManager manager = getSupportFragmentManager();
-//            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServiceRequestsFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
-            manager.beginTransaction().add(R.id.fragment_frame_layout, new MyServiceRequestsFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
-
+            new MyServiceRequestsFragment(user_id);
 
         }
         else if(fragment.equals("ServiceProviderFragment")){
@@ -788,9 +698,6 @@ public class HomeActivity extends AppCompatActivity
 
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
             finish();
-
-//            FragmentManager manager = getSupportFragmentManager();
-//            manager.beginTransaction().add(R.id.fragment_frame_layout, new ServiceProviderFragment(user_id)).addToBackStack("TAG").commit();
 
 
         }
@@ -804,10 +711,6 @@ public class HomeActivity extends AppCompatActivity
 
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
             finish();
-
-//            FragmentManager manager = getSupportFragmentManager();
-//            manager.beginTransaction().add(R.id.fragment_frame_layout, new ServiceProviderFragment(user_id)).addToBackStack("TAG").commit();
-
 
         }
 
@@ -840,5 +743,29 @@ public class HomeActivity extends AppCompatActivity
 
 
 
+
+    private void replaceFragment(Fragment newFragment) {
+        if (newFragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame_layout,newFragment).commit();
+        }
+    }
+
+
+
+    public User getUserFromSharePrefs(){
+        User user=new User();
+        SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+        user.setId(ob.getInt("user_id",0));
+        user.setBusystatus(ob.getInt("busy_status",0));
+        user.setContact(ob.getString("contact",""));
+        user.setEmail(ob.getString("Email",""));
+        user.setPassword(ob.getString("Password",""));
+        user.setName(ob.getString("name",""));
+        user.setGender(ob.getString("gender",""));
+        user.setSp_status(ob.getString("sp_status",""));
+        user.setImage(ob.getString("image",""));
+        return  user;
+    }
 
 }
