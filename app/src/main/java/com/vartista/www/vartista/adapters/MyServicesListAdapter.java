@@ -114,7 +114,6 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
 
 
      serviceId= myServicesList.get(position).getService_id();
-    final int serviceId= myServicesList.get(position).getService_id();
 
     edit= holder.mView.findViewById(R.id.edit);
     delete =holder.mView.findViewById(R.id.delete);
@@ -146,12 +145,10 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
 //
 //                                        intent.putExtra("edit_user_id",user_id);
 
-                                        FragmentManager manager = myContext.getSupportFragmentManager();
-                                        manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager))
-                                                .replace(R.id.fragment_frame_layout,
-                                                        new MyServicesListFragment(serviceId)).addToBackStack("TAG").commit();
 
-
+                                        Intent intent=new Intent(context,HomeActivity.class);
+                                        intent.putExtra("fragment_Flag", CONST.MY_SERVICES_LIST_FRAGMENT);
+                                        context.startActivity(intent);
 
                                         //intent.putStringArrayListExtra("myservicelist",myServicesList);
 //                                        v.getContext().startActivity(intent);
@@ -187,13 +184,10 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
         public void onClick(View v) {
 
 
-            SharedPreferences ob = v.getContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
-            int user_s_id = ob.getInt("user_id",0);
-            int editServiceId=serviceId;
 
-            Intent intent=new Intent(myContext,HomeActivity.class);
+            Intent intent=new Intent(context,HomeActivity.class);
             intent.putExtra("fragment_Flag", CONST.CREATE_SERVICE_FRAGMENT);
-            intent.putExtra("edit_service_id",editServiceId);
+            intent.putExtra("edit_service_id",serviceId);
             context.startActivity(intent);
 
 

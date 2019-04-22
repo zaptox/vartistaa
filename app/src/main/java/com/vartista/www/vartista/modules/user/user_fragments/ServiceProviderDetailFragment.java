@@ -102,8 +102,8 @@ public class ServiceProviderDetailFragment extends Fragment {
 
         String spFullName[]=spname.split(" ");
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(spFullName[0]);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(serviceTitle);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(spFullName[0]);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(serviceTitle);
 
         Picasso.get().load(spProfileImage)
                 .placeholder(R.drawable.profile)
