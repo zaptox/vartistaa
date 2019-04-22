@@ -389,21 +389,21 @@ public class HomeActivity extends AppCompatActivity
 
 
         } else if (id == R.id.request) {
-
+                startActivity(new Intent(getApplicationContext(),HomeActivity.class));
              replaceFragment(new MyServiceRequestsFragment(user_id));
 
         } else if (id == R.id.notification) {
-
+            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
             replaceFragment( new NotificationsFragment());
 
 
 
         } else if (id == R.id.appointments) {
-
+            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
              replaceFragment(new MyAppointmentsFragment());
 
         } else if (id == R.id.ratings) {
-
+            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
             replaceFragment(new My_Rating_Reviews_Fragment());
 
 
@@ -418,8 +418,7 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.Userappointments) {
-
-
+            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
              replaceFragment(new MyServiceMeetingsFragment());
 
 
@@ -432,13 +431,14 @@ public class HomeActivity extends AppCompatActivity
 
 
         } else if (id == R.id.Userappointments) {
+            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
             replaceFragment(new MyServiceMeetingsFragment());
 
 
 
         }
         else if(id==R.id.user_completed_services){
-
+            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
              replaceFragment(new MyCompletedServicesFragment());
 
         }
