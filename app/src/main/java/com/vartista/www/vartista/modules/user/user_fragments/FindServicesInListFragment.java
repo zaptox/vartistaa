@@ -83,7 +83,7 @@ public class FindServicesInListFragment extends Fragment {
     public int filterCost;
     //By default search will be done on user name
     public static String typeOfFilter = "ser.service_title";
-
+   TabLayout tabLayout;
 
     public boolean filterApplied = false;
 
@@ -142,6 +142,7 @@ public class FindServicesInListFragment extends Fragment {
                 final Spinner genderEditText = dialog.findViewById(R.id.editTxt_gender);
                 final SeekBar costSeekBar = dialog.findViewById(R.id.seekBar);
                 btnApplyFilter = dialog.findViewById(R.id.applyFilterButton);
+
 
 
                 dialog.show();

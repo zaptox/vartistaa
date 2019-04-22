@@ -45,18 +45,25 @@ import com.vartista.www.vartista.fragments.UserProfileFragment;
 import com.vartista.www.vartista.fragments.UsersFragment;
 import com.vartista.www.vartista.modules.payment.PaymentActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
+import com.vartista.www.vartista.modules.provider.ProviderFragments.AddressSetFragment;
+import com.vartista.www.vartista.modules.provider.ProviderFragments.CreateServiceFragment;
+import com.vartista.www.vartista.modules.provider.ProviderFragments.EarningFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyAppointmentsFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServiceRequestsFragment;
+import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServicesListFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.My_Rating_Reviews_Fragment;
+import com.vartista.www.vartista.modules.provider.ProviderFragments.UploadDocListFragment;
 import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.FindServicesInList;
 import com.vartista.www.vartista.modules.user.Service_user_cancel;
 import com.vartista.www.vartista.modules.user.StartService;
+import com.vartista.www.vartista.modules.user.user_fragments.BookNowFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.FindServicesInListFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.MyCompletedServicesFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.MyServiceMeetingsFragment;
+import com.vartista.www.vartista.modules.user.user_fragments.ServiceProviderDetailFragment;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.TokenApiInterface;
 import com.vartista.www.vartista.util.CONST;
@@ -116,7 +123,6 @@ public class HomeActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -233,7 +239,6 @@ public class HomeActivity extends AppCompatActivity
 
         startOfflineService();
 
-
     }
 
     private void swipeFragment(int fragment_flag,Intent intent) {
@@ -241,12 +246,62 @@ public class HomeActivity extends AppCompatActivity
         switch (fragment_flag)
         {
             case CONST.FIND_SERVICE_IN_LIST_FRAGMENT:
+
+                tabLayout= (TabLayout) findViewById(R.id.tabs);
                 tabLayout.setVisibility(View.GONE);
                 int catId=intent.getIntExtra("cat_id",0);
                 FindServicesInListFragment findServicesInList=new FindServicesInListFragment(catId);
                 replaceFragment(findServicesInList);
                 break;
+            case  CONST.SERVICE_PROVIDER_DETAIL_FRAGMENT:
 
+                tabLayout= (TabLayout) findViewById(R.id.tabs);
+                tabLayout.setVisibility(View.GONE);
+                int providerId=intent.getIntExtra("s_provider_id",0);
+                int categoryId=intent.getIntExtra("cat_id",0);
+               int  userId=intent.getIntExtra("user_id",0);
+                String spName=intent.getStringExtra("spname");
+                String spProfileImage=intent.getStringExtra("profile_photo");
+                String serviceTitle=intent.getStringExtra("service_title");
+
+                ServiceProviderDetailFragment serviceProviderDetailFragment=
+                        new ServiceProviderDetailFragment(providerId,categoryId,userId,spName,
+                        serviceTitle,spProfileImage);
+                replaceFragment(serviceProviderDetailFragment);
+                break;
+            case CONST.BOOK_NOW__FRAGMENT:
+                tabLayout.setVisibility(View.GONE);
+                    int   userCustomerId=intent.getIntExtra("user_id",0);
+                    int serviceProviderId=intent.getIntExtra("provider_id",0);
+                    int  serviceId=intent.getIntExtra("service_id",0);
+                    int serviceCatId=intent.getIntExtra("cat_id",0);
+                BookNowFragment bookNowFragment=new  BookNowFragment(serviceProviderId,serviceCatId,userCustomerId
+                    ,serviceId);
+                replaceFragment(bookNowFragment);
+                 break;
+                 case CONST.MY_SERVICE_REQUEST_FRAGMENT:
+                     replaceFragment(new MyServiceRequestsFragment(user_id));
+                     break;
+            case CONST.EARNING_FRAGMENT:
+                replaceFragment(new EarningFragment(user_id));
+                break;
+            case CONST.MY_SERVICES_LIST_FRAGMENT:
+                replaceFragment(new MyServicesListFragment(user_id));
+                break;
+                case CONST.CREATE_SERVICE_FRAGMENT:
+
+                    if(intent.getIntExtra("edit_service_id",0)!=0){
+                        int editServiceId=intent.getIntExtra("edit_service_id",0);
+                        replaceFragment(new CreateServiceFragment(user_id,editServiceId));
+                    }else{
+                    replaceFragment(new CreateServiceFragment(user_id));}
+                    break;
+            case CONST.UPLOAD_DOC_LIST_FRAGMENT:
+                replaceFragment(new UploadDocListFragment());
+                break;
+                case CONST.ADDRESS_SET_FRAGMENT:
+                    replaceFragment(new AddressSetFragment());
+                    break;
         }}
 
 
@@ -329,57 +384,27 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.account) {
-            // Handle the camera action
-
-//            Intent intent = new Intent(HomeActivity.this, UserProfile.class);
-//            SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
-//
-//            user_id = ob.getInt("user_id", 0);
-//
-//            intent.putExtra("user", u);
-//            startActivity(intent);
-
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new UserProfileFragment(user)).addToBackStack("TAG").commit();
+            replaceFragment(new UserProfileFragment(user));
 
 
 
         } else if (id == R.id.request) {
 
-//            Intent intent = new Intent(HomeActivity.this, MyServiceRequests.class);
-//            intent.putExtra("user", user_id);
-//            startActivity(intent);
-
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServiceRequestsFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
+             replaceFragment(new MyServiceRequestsFragment(user_id));
 
         } else if (id == R.id.notification) {
 
+            replaceFragment( new NotificationsFragment());
 
-//            Intent intent = new Intent(HomeActivity.this, Asynctask_MultipleUrl.class);
-//            startActivity(intent);
-
-
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new NotificationsFragment()).addToBackStack("TAG").commit();
 
 
         } else if (id == R.id.appointments) {
 
-            //            Intent intent = new Intent(HomeActivity.this, MyAppointments.class);
-//            startActivity(intent);
-
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyAppointmentsFragment()).addToBackStack("TAG").commit();
+             replaceFragment(new MyAppointmentsFragment());
 
         } else if (id == R.id.ratings) {
-//            Intent intent = new Intent(HomeActivity.this, My_Rating_Reviews.class);
-//            startActivity(intent);
 
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new My_Rating_Reviews_Fragment()).addToBackStack("TAG").commit();
-
-
+            replaceFragment(new My_Rating_Reviews_Fragment());
 
 
         } else if (id == R.id.logout) {
@@ -395,12 +420,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.Userappointments) {
 
 
-//            Intent intent = new Intent(HomeActivity.this, MyServiceMeetings.class);
-//            startActivity(intent);
-
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServiceMeetingsFragment()).addToBackStack("TAG").commit();
-
+             replaceFragment(new MyServiceMeetingsFragment());
 
 
 
@@ -412,17 +432,14 @@ public class HomeActivity extends AppCompatActivity
 
 
         } else if (id == R.id.Userappointments) {
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServiceMeetingsFragment()).addToBackStack("TAG").commit();
+            replaceFragment(new MyServiceMeetingsFragment());
 
 
 
         }
         else if(id==R.id.user_completed_services){
 
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyCompletedServicesFragment()).addToBackStack("TAG").commit();
-
+             replaceFragment(new MyCompletedServicesFragment());
 
         }
 
@@ -663,15 +680,13 @@ public class HomeActivity extends AppCompatActivity
 
 
         if(fragment.equals("MyServiceMeetingsFragment")){
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().add(R.id.fragment_frame_layout, new MyServiceMeetingsFragment()).addToBackStack("TAG").commit();
+
+            replaceFragment(new MyServiceMeetingsFragment());
 
         }
         else if(fragment.equals("MyServiceRequestsFragment")){
 
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().add(R.id.fragment_frame_layout, new MyServiceRequestsFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
-
+            new MyServiceRequestsFragment(user_id);
 
         }
         else if(fragment.equals("ServiceProviderFragment")){

@@ -18,7 +18,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,10 +28,12 @@ import android.widget.ImageView;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.AddressSetActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
+import com.vartista.www.vartista.util.CONST;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
@@ -98,11 +99,9 @@ public class DocumentUploadFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-//                startActivity(new Intent(getContext(),AddressSetActivity.class));
-
-                FragmentManager manager = myContext.getSupportFragmentManager();
-                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new AddressSetFragment()).addToBackStack("TAG").commit();
-
+                Intent intent=new Intent(myContext, HomeActivity.class);
+                intent.putExtra("fragment_Flag", CONST.ADDRESS_SET_FRAGMENT);
+                startActivity(intent);
 
             }
         });

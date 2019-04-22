@@ -10,9 +10,7 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +33,7 @@ import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 import com.vartista.www.vartista.restcalls.ServiceApiInterface;
+import com.vartista.www.vartista.util.CONST;
 
 import org.angmarch.views.NiceSpinner;
 import org.apache.http.HttpResponse;
@@ -88,7 +87,6 @@ public class CreateServiceFragment extends Fragment {
     static double longitude;
     static String country;
 
-    TabLayout tabLayout;
     private ProgressDialog progressDialog;
 
 
@@ -105,18 +103,16 @@ public class CreateServiceFragment extends Fragment {
     }
 
     @SuppressLint("ValidFragment")
-    public CreateServiceFragment(int user_id, TabLayout tabLayout) {
+    public CreateServiceFragment(int user_id) {
         // Required empty public constructor
         this.user_id=user_id;
-        this.tabLayout=tabLayout;
         for_edit=false;
     }
 
     @SuppressLint("ValidFragment")
-    public CreateServiceFragment(int user_id, TabLayout tabLayout, int edit_service_id) {
+    public CreateServiceFragment(int user_id, int edit_service_id) {
         // Required empty public constructor
         this.user_id=user_id;
-        this.tabLayout=tabLayout;
         this.edit_user_id=edit_service_id;
         for_edit=true;
     }
@@ -147,10 +143,7 @@ public class CreateServiceFragment extends Fragment {
         btnHome = (Button) view.findViewById(R.id.btnHome);
         home_avail= view.findViewById(R.id.home_avail);
 
-        tabLayout.setVisibility(View.GONE);
 
-//        edit_user_id= getActivity().getIntent().getIntExtra("edit_user_id",0);
-//        edit_user_id= user_id;
 
         if (for_edit==false){
 
@@ -181,13 +174,11 @@ public class CreateServiceFragment extends Fragment {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                user_id=loggedin.getId();
-//                Intent intent=new Intent(getContext(),MyServicesListActivity.class);
-//                intent.putExtra("userId",user_id);
-//                startActivity(intent);
 
-                FragmentManager manager = getFragmentManager();
-                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServicesListFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
+
+                Intent intent=new Intent(getContext(),HomeActivity.class);
+                intent.putExtra("fragment_Flag", CONST.MY_SERVICES_LIST_FRAGMENT);
+                startActivity(intent);
 
 
 
@@ -334,7 +325,15 @@ public class CreateServiceFragment extends Fragment {
 
                             }
                             if (response.isSuccessful()) {
-//                                insertreviewnil(-1,sp_id,-1);
+
+                                edDescription.setText("");
+                                edtTxtSerivceTitle.setText("");
+                                edTxtServicePrice.setText("");
+
+
+                                Intent intent=new Intent(getContext(),HomeActivity.class);
+                                intent.putExtra("fragment_Flag", CONST.MY_SERVICES_LIST_FRAGMENT);
+                                startActivity(intent);
 
 
                                 setUIToWait(false);
@@ -348,19 +347,6 @@ public class CreateServiceFragment extends Fragment {
                         }
 
                     });
-
-                    edDescription.setText("");
-                    edtTxtSerivceTitle.setText("");
-                    edTxtServicePrice.setText("");
-
-
-//                    Intent intent = new Intent(getContext(), MyServicesListActivity.class);
-//                    intent.putExtra("userId", user_id);
-//                    startActivity(intent);
-
-                    FragmentManager manager = getFragmentManager();
-                    manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServicesListFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
-
 
 
                 }

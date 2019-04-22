@@ -80,19 +80,17 @@ public class BookNowFragment extends Fragment  {
     int user_customer_id,service_provider_id,service_id,service_cat_id;
     TimePickerDialog timePickerDialog;
 
-    TabLayout tabLayout;
 
     public BookNowFragment() {
 
     }
 
     @SuppressLint("ValidFragment")
-    public BookNowFragment(int provider_id, int cat_id, int user_id, int service_id, TabLayout tabLayout) {
+    public BookNowFragment(int provider_id, int cat_id, int user_id, int service_id) {
         this.user_customer_id=user_id;
         this.service_provider_id=provider_id;
         this.service_id=service_id;
         this.service_cat_id=cat_id;
-        this.tabLayout= tabLayout;
     }
 
     @Nullable
@@ -111,7 +109,6 @@ public class BookNowFragment extends Fragment  {
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         sendNotificationApiInterface = ApiClient.getApiClient().create(SendNotificationApiInterface.class);
 
-        tabLayout.setVisibility(View.GONE);
         Calendar calendar=Calendar.getInstance();
         int day=calendar.get(Calendar.DAY_OF_MONTH);
         int month=calendar.get(Calendar.MONTH);

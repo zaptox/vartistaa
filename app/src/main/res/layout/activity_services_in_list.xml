@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white_color"
+    android:background="@color/bgColor"
     tools:context="com.vartista.www.vartista.modules.user.FindServicesInList">
 
     <Button

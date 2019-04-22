@@ -60,8 +60,6 @@ public class MyServiceRequestsFragment extends Fragment {
     List<ServiceRequets> serviceRequestsList;
     public static SendNotificationApiInterface sendNotificationApiInterface;
 
-    TabLayout tabLayout;
-
 
     int user_id;
 
@@ -71,10 +69,9 @@ public class MyServiceRequestsFragment extends Fragment {
     }
 
     @SuppressLint("ValidFragment")
-    public MyServiceRequestsFragment(int user_id,TabLayout tabLayout) {
+    public MyServiceRequestsFragment(int user_id) {
         // Required empty public constructor
         this.user_id=user_id;
-        this.tabLayout=tabLayout;
     }
 
 
@@ -98,7 +95,6 @@ public class MyServiceRequestsFragment extends Fragment {
         animator.setInterpolator(new OvershootInterpolator());
         listViewMyReqeustServices.setItemAnimator(animator);
         listViewMyReqeustServices.getItemAnimator().setRemoveDuration(1000);
-        tabLayout.setVisibility(View.GONE);
 
         serviceRequestsList= new ArrayList<ServiceRequets>();
 

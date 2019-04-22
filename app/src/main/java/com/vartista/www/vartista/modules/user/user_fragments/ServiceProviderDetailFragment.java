@@ -59,7 +59,6 @@ public class ServiceProviderDetailFragment extends Fragment {
     String spProfileImage;
     String serviceTitle;
     private FragmentActivity myContext;
-    TabLayout tabLayout;
 
 
 
@@ -72,14 +71,13 @@ public class ServiceProviderDetailFragment extends Fragment {
 
     @SuppressLint("ValidFragment")
     public ServiceProviderDetailFragment(int s_provider_id, int cat_id, int user_id, String sp_name,
-                                         String serviceTitle, String spProfileImage, TabLayout tabLayout) {
+                                         String serviceTitle, String spProfileImage) {
         this.provider_id=s_provider_id;
         this.cat_id=cat_id;
         this.user_id=user_id;
         this.spname=sp_name;
         this.serviceTitle=serviceTitle;
         this.spProfileImage=spProfileImage;
-        this.tabLayout=tabLayout;
 
     }
 
@@ -99,17 +97,6 @@ public class ServiceProviderDetailFragment extends Fragment {
         listViewSpDetials.setItemAnimator(new DefaultItemAnimator());
 
         myservicesList=new ArrayList<>();
-        tabLayout=(TabLayout) getActivity().findViewById(R.id.tabs);
-        tabLayout.setVisibility(View.GONE);
-
-//        Intent intent=getActivity().getIntent();
-//        provider_id=intent.getIntExtra("s_provider_id",0);
-//        cat_id=intent.getIntExtra("cat_id",0);
-//        user_id=intent.getIntExtra("user_id",0);
-//        spname=intent.getStringExtra("spname");
-//        String spProfileImage=intent.getStringExtra("profile_photo");
-//        String serviceTitle=intent.getStringExtra("service_title");
-
 
 
 
@@ -127,7 +114,7 @@ public class ServiceProviderDetailFragment extends Fragment {
         new Conncetion(getContext(),provider_id,cat_id).execute();
 
 
-        myServicesListAdapter=new SpDetailsAdapter(getContext(),myservicesList,provider_id,cat_id,user_id,myContext,tabLayout);
+        myServicesListAdapter=new SpDetailsAdapter(getContext(),myservicesList,provider_id,cat_id,user_id,myContext);
 
         return view;
     }
