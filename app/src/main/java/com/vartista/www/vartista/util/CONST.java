@@ -14,6 +14,12 @@ public class CONST {
     public static final int  CREATE_SERVICE_FRAGMENT=7;
     public static final int  UPLOAD_DOC_LIST_FRAGMENT=8;
     public static final int  ADDRESS_SET_FRAGMENT=9;
+    public static final int  USER_PROFILE_FRAGMENT=10;
+    public static final int  NOTIFIATION_FRAGMENT=11;
+    public static final int  MY_COMPLETED_SERVIE_FRAGMENT=12;
+    public static final int  MY_APPOINTMENT_FRAGMENT=13;
+    public static final int  MY_RATINGS_REVIEW_FRAGMENT=14;
+    public static final int  MY_SERVICE_MEETNG_FRAGMENT=15;
 
 
 

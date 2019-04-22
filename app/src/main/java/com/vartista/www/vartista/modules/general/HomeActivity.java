@@ -302,9 +302,124 @@ public class HomeActivity extends AppCompatActivity
                 case CONST.ADDRESS_SET_FRAGMENT:
                     replaceFragment(new AddressSetFragment());
                     break;
+            case CONST.USER_PROFILE_FRAGMENT:
+                replaceFragment(new UserProfileFragment(user));
+                break;
+                case  CONST.NOTIFIATION_FRAGMENT:
+                    replaceFragment( new NotificationsFragment());
+                    break;
+
+                    case CONST.MY_COMPLETED_SERVIE_FRAGMENT:
+                        replaceFragment(new MyCompletedServicesFragment());
+                         break;
+                         case CONST.MY_APPOINTMENT_FRAGMENT:
+                             replaceFragment(new MyAppointmentsFragment());
+                             break;
+                             case CONST.MY_RATINGS_REVIEW_FRAGMENT:
+                                 replaceFragment(new My_Rating_Reviews_Fragment());
+                                 case CONST.MY_SERVICE_MEETNG_FRAGMENT:
+                                     replaceFragment(new MyServiceMeetingsFragment());
+
         }}
 
 
+
+
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.account) {
+
+
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.USER_PROFILE_FRAGMENT);
+            startActivity(intent);
+
+
+        } else if (id == R.id.request) {
+
+
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.MY_SERVICE_REQUEST_FRAGMENT);
+            startActivity(intent);
+
+        } else if (id == R.id.notification) {
+
+
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.NOTIFIATION_FRAGMENT);
+            startActivity(intent);
+
+
+
+
+        } else if (id == R.id.appointments) {
+
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.NOTIFIATION_FRAGMENT);
+            startActivity(intent);
+
+
+
+
+        } else if (id == R.id.ratings) {
+
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.MY_RATINGS_REVIEW_FRAGMENT);
+            startActivity(intent);
+
+
+        } else if (id == R.id.logout) {
+            MDToast.makeText(this, "logout", MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();
+            SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+            ob.edit().clear().commit();
+            startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
+
+        } else if (id == R.id.payment) {
+            Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.Userappointments) {
+
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.MY_SERVICE_MEETNG_FRAGMENT);
+            startActivity(intent);
+
+
+
+
+        } else if (id == R.id.provider_doc_upload) {
+
+            Intent intent = new Intent(HomeActivity.this, DocumentUploadActivity.class);
+            startActivity(intent);
+
+
+
+        } else if (id == R.id.Userappointments) {
+            replaceFragment(new MyServiceMeetingsFragment());
+
+
+
+        }
+        else if(id==R.id.user_completed_services){
+
+
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.MY_COMPLETED_SERVIE_FRAGMENT);
+            startActivity(intent);
+
+
+        }
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
 
     @Override
@@ -317,7 +432,7 @@ public class HomeActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         }
         else{
-                            super.onBackPressed();
+            super.onBackPressed();
 
         }}
 
@@ -375,78 +490,6 @@ public class HomeActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.account) {
-            replaceFragment(new UserProfileFragment(user));
-
-
-
-        } else if (id == R.id.request) {
-
-             replaceFragment(new MyServiceRequestsFragment(user_id));
-
-        } else if (id == R.id.notification) {
-
-            replaceFragment( new NotificationsFragment());
-
-
-
-        } else if (id == R.id.appointments) {
-
-             replaceFragment(new MyAppointmentsFragment());
-
-        } else if (id == R.id.ratings) {
-
-            replaceFragment(new My_Rating_Reviews_Fragment());
-
-
-        } else if (id == R.id.logout) {
-            MDToast.makeText(this, "logout", MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();
-            SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
-            ob.edit().clear().commit();
-            startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
-
-        } else if (id == R.id.payment) {
-            Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
-            startActivity(intent);
-
-        } else if (id == R.id.Userappointments) {
-
-
-             replaceFragment(new MyServiceMeetingsFragment());
-
-
-
-        } else if (id == R.id.provider_doc_upload) {
-
-            Intent intent = new Intent(HomeActivity.this, DocumentUploadActivity.class);
-            startActivity(intent);
-
-
-
-        } else if (id == R.id.Userappointments) {
-            replaceFragment(new MyServiceMeetingsFragment());
-
-
-
-        }
-        else if(id==R.id.user_completed_services){
-
-             replaceFragment(new MyCompletedServicesFragment());
-
-        }
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     public void storeDeviceToken() {
