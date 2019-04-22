@@ -83,6 +83,7 @@ public class AssignRatingFragment extends Fragment {
         Date.setText("Date :-  "+ob.getDate());
         location.setText("Location :-  "+ob.getLocation());
         Username.setText(""+ob.getUsername());
+        time.setText("Time: "+ob.getTime());
         Picasso.get().load(ob.getImage()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)

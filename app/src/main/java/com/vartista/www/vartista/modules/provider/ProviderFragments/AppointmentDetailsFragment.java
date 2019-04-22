@@ -180,7 +180,7 @@ public class AppointmentDetailsFragment extends Fragment {
                 d_servicename = cancel_service.findViewById(R.id.service_name);
 
                 d_sp_name.setText("Service Provider: "+ob.getUsername());
-                d_payment.setText("Payment: "+ob.getPrice());
+                d_payment.setText("Payment: "+ob.getPrice()+"£");
                 d_servicename.setText("Service:"+ob.getService_title());
 
                 cancel_service.show();
@@ -260,7 +260,7 @@ public class AppointmentDetailsFragment extends Fragment {
                 d_servicename = payment_received_dialogue.findViewById(R.id.service_name);
 
                 d_sp_name.setText("Service Provider: "+ob.getUsername());
-                d_payment.setText("Payment: "+ob.getPrice());
+                d_payment.setText("Payment: "+ob.getPrice()+"£");
                 d_servicename.setText("Service:"+ob.getService_title());
 
                 payment_received_dialogue.show();

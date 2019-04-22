@@ -36,6 +36,7 @@ import com.vartista.www.vartista.beans.EarningsBean;
 import com.vartista.www.vartista.beans.EarningsDuesBean;
 import com.vartista.www.vartista.beans.NotificationsManager;
 import com.vartista.www.vartista.beans.ServiceRequets;
+import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.user.MyServiceMeetings;
@@ -105,7 +106,7 @@ public class AppointmentDetails extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancelbuttonUser);
         PaymentReceivedButon = findViewById(R.id.PaymentReceivedButon);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-//        PaymentReceivedButon.setEnabled(false);
+        PaymentReceivedButon.setEnabled(false);
         Intent intent = getIntent();
         final servicepaapointmentsitems ob = (servicepaapointmentsitems) intent.getSerializableExtra("object");
 
@@ -115,7 +116,7 @@ public class AppointmentDetails extends AppCompatActivity {
                 .into(imageView);
 
         serviceprovidername.setText("Service Provider : "+ob.getUsername());
-        servicecharges.setText(ob.getService_title()+" "+ob.getPrice());
+        servicecharges.setText(ob.getService_title()+" "+ob.getPrice()+"£");
         Date.setText(ob.getDate());
         Time.setText(ob.getTime());
         serviceDesc.setText(ob.getService_description());
@@ -123,9 +124,11 @@ public class AppointmentDetails extends AppCompatActivity {
 
         final int requestservice_id = Integer.parseInt(ob.getRequestservice_id());
 
-//        if (ob.getRequest_status().equals("5")){
-//            PaymentReceivedButon.setEnabled(true);
-//        }
+        if (ob.getRequest_status().equals("6")){
+            MDToast.makeText(AppointmentDetails.this,"Please Verify the Payment..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
+
+            PaymentReceivedButon.setEnabled(true);
+        }
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +144,7 @@ public class AppointmentDetails extends AppCompatActivity {
                 d_servicename = cancel_service.findViewById(R.id.service_name);
 
                 d_sp_name.setText("Service Provider: "+ob.getUsername());
-                d_payment.setText("Payment: "+ob.getPrice());
+                d_payment.setText("Payment: "+ob.getPrice()+"£");
                 d_servicename.setText("Service:"+ob.getService_title());
 
                 cancel_service.show();
@@ -221,7 +224,7 @@ public class AppointmentDetails extends AppCompatActivity {
                 d_servicename = payment_received_dialogue.findViewById(R.id.service_name);
 
                 d_sp_name.setText("Service Provider: "+ob.getUsername());
-                d_payment.setText("Payment: "+ob.getPrice());
+                d_payment.setText("Payment: "+ob.getPrice()+"£");
                 d_servicename.setText("Service:"+ob.getService_title());
 
                 payment_received_dialogue.show();
@@ -279,6 +282,7 @@ public class AppointmentDetails extends AppCompatActivity {
 
                     payment_received_function(requestservice_id,user_id,sp_name);
                     MDToast.makeText(AppointmentDetails.this,"Earnings Added..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
+
 
                 }else if(response.body().getResponse().equals("exist")){
 
@@ -361,7 +365,13 @@ public class AppointmentDetails extends AppCompatActivity {
 
                 if(response.body().getResponse().equals("ok")){
 
-                String title="Wanna rate "+sp_name+"?";
+//                    Intent i= new Intent(AppointmentDetails.this, HomeActivity.class);
+//                    User user= HomeActivity.user;
+//                    i.putExtra("user",user);
+//                    startActivity(i);
+
+
+                    String title="Wanna rate "+sp_name+"?";
                 String body="Make sure to rate and let us know about service provider's behavior.";
 
                     MDToast.makeText(AppointmentDetails.this,"Service Completed Successfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
@@ -562,7 +572,7 @@ public class AppointmentDetails extends AppCompatActivity {
         call.enqueue(new Callback<EarningsDuesBean>() {
             @Override
             public void onResponse(Call <EarningsDuesBean> call, Response<EarningsDuesBean> response) {
-                Toast.makeText(AppointmentDetails.this, ""+response.body().getResponse(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(AppointmentDetails.this, ""+response.body().getResponse(), Toast.LENGTH_SHORT).show();
                 if(response.body().getResponse().equals("ok")){
 //                    payment_received_function(requestservice_id,user_id,sp_name);
                     MDToast.makeText(AppointmentDetails.this,"Dues Added..",MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();

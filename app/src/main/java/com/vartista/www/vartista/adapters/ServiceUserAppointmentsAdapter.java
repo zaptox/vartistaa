@@ -50,7 +50,7 @@ public class ServiceUserAppointmentsAdapter extends RecyclerView.Adapter<Service
         holder.rating_text.setVisibility(View.INVISIBLE);
 
         holder.serviceprovidername.setText(list.get(position).getUsername());
-        holder.servicecharges.setText(list.get(position).getService_title()+" "+list.get(position).getPrice());
+        holder.servicecharges.setText(list.get(position).getService_title()+" "+list.get(position).getPrice()+"£");
         holder.Date.setText(list.get(position).getDate());
         holder.Time.setText(list.get(position).getTime());
         holder.serviceCat.setText(list.get(position).getName());

@@ -282,7 +282,7 @@ public class EarningFragment extends Fragment {
                         }
                     }
 
-                    total_earning.setText("" + total_earned);
+                    total_earning.setText("" + total_earned+"£");
 
                 } else {
                     MDToast.makeText(getContext(), "no data", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
@@ -376,7 +376,7 @@ public class EarningFragment extends Fragment {
                         }
                     }
 
-                    total_dues_text.setText("" + total_dues);
+                    total_dues_text.setText("" + total_dues+"£");
 
                 } else {
                     MDToast.makeText(getContext(), "no data", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();

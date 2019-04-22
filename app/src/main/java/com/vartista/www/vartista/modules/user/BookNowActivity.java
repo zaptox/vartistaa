@@ -131,7 +131,7 @@ public class BookNowActivity extends AppCompatActivity implements DatePickerDial
                  @Override
                  public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
 //                     Toast.makeText(BookNowActivity.this, "in qnque"+response.body().getResponse(), Toast.LENGTH_SHORT).show();
-                     Toast.makeText(BookNowActivity.this, ""+response.body().getResponse(), Toast.LENGTH_SHORT).show();
+//                     Toast.makeText(BookNowActivity.this, ""+response.body().getResponse(), Toast.LENGTH_SHORT).show();
 
                      if (response.body().getResponse().equals("ok")) {
 //                         insertNotification(title,body,user_customer_id,service_provider_id,1,date);

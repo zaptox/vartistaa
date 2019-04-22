@@ -49,7 +49,7 @@ public class EarningsListAdapter  extends RecyclerView.Adapter<EarningsListAdapt
         holder.service_availer.setText("Service Availer: "+list.get(position).getService_availer());
         holder.date.setText(list.get(position).getDate());
         holder.time.setText(list.get(position).getService_time());
-        holder.earning.setText("Earning: "+list.get(position).getSp_earning()+"");
+        holder.earning.setText("Earning: "+list.get(position).getSp_earning()+"£");
         holder.service_location.setText("Location: "+list.get(position).getLocation());
         holder.admin_tax.setText("Vartista Tax: "+list.get(position).getAdmin_tax()+"%");
 

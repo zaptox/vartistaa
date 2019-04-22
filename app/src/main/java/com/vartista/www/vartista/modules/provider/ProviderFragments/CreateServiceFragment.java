@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
@@ -74,6 +75,9 @@ public class CreateServiceFragment extends Fragment {
     TextView service_category;
     Button btnHome;
     CheckBox home_avail;
+
+    private ProgressDialog dialog_create_service;
+
     public static ApiInterface apiInterface2;
 
     //Spinner spinnerService;
@@ -128,6 +132,8 @@ public class CreateServiceFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_create_service, container, false);
 
+        dialog_create_service = new ProgressDialog(getActivity());
+
         niceSpinner = niceSpinner = (NiceSpinner) view.findViewById(R.id.nice_spinner);
         // spinnerService=view.findViewById(R.id.spinnerService);
         cat=new ArrayList<>();
@@ -136,6 +142,8 @@ public class CreateServiceFragment extends Fragment {
         apiInterface = ApiClient.getApiClient().create(ServiceApiInterface.class);
         service_category=(TextView)view.findViewById(R.id.service_category);
         apiInterface2= ApiClient.getApiClient().create(ApiInterface.class);
+
+        progressDialog = new ProgressDialog(getActivity());
 
         loggedin= HomeActivity.user;
 
@@ -199,14 +207,16 @@ public class CreateServiceFragment extends Fragment {
             public void onClick(View v) {
                 //update Work here
 
+
+                setUIToWait(true);
+                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
                 if(category_id==0){
                     category_id=cat_id.get(0);
                 }
 
                 if (btnCreateSerivce.getText().equals("Edit Service")) {
 
-                    setUIToWait(true);
-                    progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
                     String title = edtTxtSerivceTitle.getText().toString();
                     String price = edTxtServicePrice.getText().toString();
@@ -256,6 +266,8 @@ public class CreateServiceFragment extends Fragment {
                             if (response.isSuccessful()) {
                                 //for debugging
 
+                                setUIToWait(false);
+
 //                                setUIToWait(false);
 //                                MDToast mdMDToast = MDToast.makeText(getContext(), "Your Service Edit Successfully", MDToast.LENGTH_SHORT, MDToast.TYPE_SUCCESS);
 //                                mdMDToast.show();
@@ -285,8 +297,10 @@ public class CreateServiceFragment extends Fragment {
                 } else {
 
 
-                    setUIToWait(true);
-                    progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//                    dialog_create_service.setMessage("Creating Service Please Wait..");
+//                    dialog_create_service.show();
+//                    setUIToWait(true);
+//                    progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
                     String title = edtTxtSerivceTitle.getText().toString();
                     String price = edTxtServicePrice.getText().toString();
@@ -312,6 +326,8 @@ public class CreateServiceFragment extends Fragment {
 
                     String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
+//                    setUIToWait(true);
+//                    progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
                     Call<Service> call = CreateServiceFragment.apiInterface.
                             createService(title, user_id, description, location,latitude,longitude,country,
@@ -321,14 +337,23 @@ public class CreateServiceFragment extends Fragment {
                     call.enqueue(new Callback<Service>() {
                         @Override
                         public void onResponse(Call<Service> call, Response<Service> response) {
-                            if (response.body().equals("ok")) {
+                            if (response.body().getResponse().equals("ok")) {
 
                                 setUIToWait(false);
+
+//                                if (dialog_create_service.isShowing()) {
+//                                    dialog_create_service.dismiss();
+//                                }
                                 MDToast mdMDToast = MDToast.makeText(getContext(), "Your Service Created Successfully", MDToast.LENGTH_SHORT, MDToast.TYPE_SUCCESS);
                                 mdMDToast.show();
 
+
+
                                 SharedPreferences ob = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
                                 int sp_id = ob.getInt("user_id", 0);
+
+                                FragmentManager manager = getFragmentManager();
+                                manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServicesListFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
 
                                 //for debugging
 
@@ -340,6 +365,7 @@ public class CreateServiceFragment extends Fragment {
                                 setUIToWait(false);
 
                             }
+
                         }
 
 
@@ -357,10 +383,6 @@ public class CreateServiceFragment extends Fragment {
 //                    Intent intent = new Intent(getContext(), MyServicesListActivity.class);
 //                    intent.putExtra("userId", user_id);
 //                    startActivity(intent);
-
-                    FragmentManager manager = getFragmentManager();
-                    manager.beginTransaction().remove(manager.findFragmentById(R.id.viewpager)).replace(R.id.fragment_frame_layout, new MyServicesListFragment(user_id,tabLayout)).addToBackStack("TAG").commit();
-
 
 
                 }
@@ -661,8 +683,10 @@ public class CreateServiceFragment extends Fragment {
 
     private void setUIToWait(boolean wait) {
 
+
         if (wait) {
-            progressDialog = ProgressDialog.show(getContext(), null, null, true, true);
+//            Toast.makeText(getContext(), "chala", Toast.LENGTH_SHORT).show();
+            progressDialog = ProgressDialog.show(getActivity(), null, null, true, true);
 //            progressDialog.setContentView(new ProgressBar(this));
             progressDialog.setContentView(R.layout.loader);
 

@@ -70,6 +70,7 @@ public class FindServicesInListFragment extends Fragment {
     EditText filter_on_text;
     ServicesInListMapAdapter myServicesListAdapter;
     View view;
+    View view_same;
     List<GetServiceProviders> myservicesList;
     private FragmentActivity myContext;
 
@@ -106,6 +107,7 @@ public class FindServicesInListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.activity_services_in_list,container,false);
 
+        view_same=view;
 
         btnFilter = view.findViewById(R.id.filter_button);
         filter_btn_option = view.findViewById(R.id.filter_option_btn);
@@ -123,9 +125,9 @@ public class FindServicesInListFragment extends Fragment {
 
 
 
-        tabLayout= getActivity().findViewById(R.id.tabs);
-
-        tabLayout.setVisibility(View.GONE);
+//        tabLayout= getActivity().findViewById(R.id.tabs);
+//
+//        tabLayout.setVisibility(View.GONE);
 
         SharedPreferences ob = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
         user_id = ob.getInt("user_id", 0);
@@ -141,6 +143,9 @@ public class FindServicesInListFragment extends Fragment {
         listViewMyServices.setItemAnimator(new DefaultItemAnimator());
 
         myservicesList=new ArrayList<>();
+
+        tabLayout=(TabLayout) getActivity().findViewById(R.id.tabs);
+        tabLayout.setVisibility(View.GONE);
 
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,7 +181,6 @@ public class FindServicesInListFragment extends Fragment {
 
                     }
                 });
-
                 btnApplyFilter.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -184,17 +188,15 @@ public class FindServicesInListFragment extends Fragment {
                         filterLocation = locationEditText.getText().toString();
                         filterGender = genderEditText.getSelectedItem().toString();
                         filterCost = costSeekBar.getProgress()*100;
-
                         filterApplied = true;
                         dialog.dismiss();
-
 //                        Toast.makeText(FindServicesInList.this, "Filter: "+filterApplied+"\nLocation: "+filterLocation+"\nGender: "+filterGender,Toast.LENGTH_SHORT).show();
 
 
                         if(filterApplied==true){
 
 
-                            new Connection(getContext(),cat_id2,filterLocation,filterGender,filterCost).execute();
+                            new Connection(getContext(),cat_id2,filterLocation,filterGender,filterCost,view_same).execute();
 
 
                         }
@@ -302,12 +304,13 @@ public class FindServicesInListFragment extends Fragment {
             this.view=view;
         }
 
-        public Connection(Context activity, int cat_id, String filter_location, String filter_gender, int filter_cost) {
+        public Connection(Context activity, int cat_id, String filter_location, String filter_gender, int filter_cost, View view) {
             dialog = new ProgressDialog(activity);
             this.cat_id = cat_id;
             this.filter_location=filter_location;
             this.filter_gender=filter_gender;
             this.filter_cost=filter_cost;
+            this.view=view;
         }
 
         @Override

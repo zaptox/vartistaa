@@ -86,7 +86,7 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
         holder.tvTitle.setText(myServicesList.get(position).getService_title());
     }
     holder.tvCategory.setText(""+myServicesList.get(position).getCategory_name());
-    holder.tvPrice.setText(""+myServicesList.get(position).getPrice());
+    holder.tvPrice.setText(""+myServicesList.get(position).getPrice()+"£");
 
     if(myServicesList.get(position).getHome_avail_status()==1){
         holder.home_avail_text.setText("Home Service Available");

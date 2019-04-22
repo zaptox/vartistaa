@@ -30,7 +30,7 @@
                 android:layout_alignBottom="@+id/textViewServiceTitle"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="110dp"
-                android:text="Rs:"
+                android:text="Cost:"
                 android:textColor="@color/price_color"
                 android:textSize="14dp"
                 card_view:layout_constraintBottom_toBottomOf="parent"

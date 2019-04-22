@@ -39,35 +39,35 @@
             android:id="@+id/textViewname_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Service-Provider : Vijay Kumar"
+            android:text="Service-Provider : ____"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/servicedetail_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Service: Hair Styling"
+            android:text="Service: ____"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textViewtime_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Time: 09:30pm"
+            android:text="Time: _____"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textViewdate_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date: 08-10-2018"
+            android:text="Date: _____"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location: Gul-center, near Alshareef Biryani"
+            android:text="Location: _____"
             android:textSize="18sp" />
 
 
@@ -80,8 +80,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/detailslayout"
         android:layout_marginTop="40px"
+        android:gravity="center_horizontal"
         android:layout_centerInParent="true"
-        android:text="Service Descrription"
+        android:text="Service Description"
         android:textSize="18sp"
         />
 
