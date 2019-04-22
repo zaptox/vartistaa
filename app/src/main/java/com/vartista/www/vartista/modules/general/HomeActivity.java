@@ -247,10 +247,11 @@ public class HomeActivity extends AppCompatActivity
         {
             case CONST.FIND_SERVICE_IN_LIST_FRAGMENT:
 
-                tabLayout= (TabLayout) findViewById(R.id.tabs);
+
                 tabLayout.setVisibility(View.GONE);
+
                 int catId=intent.getIntExtra("cat_id",0);
-                FindServicesInListFragment findServicesInList=new FindServicesInListFragment(catId);
+                FindServicesInListFragment findServicesInList=new FindServicesInListFragment(catId,tabLayout);
                 replaceFragment(findServicesInList);
                 break;
             case  CONST.SERVICE_PROVIDER_DETAIL_FRAGMENT:
@@ -292,9 +293,9 @@ public class HomeActivity extends AppCompatActivity
 
                     if(intent.getIntExtra("edit_service_id",0)!=0){
                         int editServiceId=intent.getIntExtra("edit_service_id",0);
-                        replaceFragment(new CreateServiceFragment(user_id,editServiceId));
+                        replaceFragment(new CreateServiceFragment(user_id,tabLayout,editServiceId));
                     }else{
-                    replaceFragment(new CreateServiceFragment(user_id));}
+                    replaceFragment(new CreateServiceFragment(user_id,tabLayout));}
                     break;
             case CONST.UPLOAD_DOC_LIST_FRAGMENT:
                 replaceFragment(new UploadDocListFragment());

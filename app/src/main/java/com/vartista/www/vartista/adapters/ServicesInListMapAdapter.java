@@ -43,9 +43,14 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
         this.myServicesList = myServicesList;
         this.context = context;
         this.myContext=myContext;
+//        this.tabLayout=tabLayout;
+    }
+    public ServicesInListMapAdapter(Context context, List<GetServiceProviders> myServicesList, FragmentActivity myContext, TabLayout tabLayout) {
+        this.myServicesList = myServicesList;
+        this.context = context;
+        this.myContext=myContext;
         this.tabLayout=tabLayout;
     }
-
     public ServicesInListMapAdapter(Context context, List<GetServiceProviders> myServicesList) {
         this.myServicesList = myServicesList;
         this.context = context;

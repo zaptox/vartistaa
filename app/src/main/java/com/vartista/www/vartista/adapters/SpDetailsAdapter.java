@@ -40,7 +40,7 @@ public class SpDetailsAdapter extends RecyclerView.Adapter<SpDetailsAdapter.View
        this.user_id=user_id;
    }
 
-    public SpDetailsAdapter(Context context, List<Service> myServicesList, int provider_id, int cat_id, int us0er_id, FragmentActivity myContext){
+    public SpDetailsAdapter(Context context, List<Service> myServicesList, int provider_id, int cat_id, int user_id, FragmentActivity myContext){
         this.myServicesList = myServicesList;
         this.context=context;
         this.provider_id=provider_id;
@@ -78,6 +78,7 @@ public class SpDetailsAdapter extends RecyclerView.Adapter<SpDetailsAdapter.View
     holder.btnBookNow.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
             Intent intent=new Intent(v.getContext(), HomeActivity.class);
             intent.putExtra("fragment_Flag", CONST.BOOK_NOW__FRAGMENT);
             intent.putExtra("provider_id",provider_id);

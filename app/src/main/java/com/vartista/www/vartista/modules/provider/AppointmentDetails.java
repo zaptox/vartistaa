@@ -129,6 +129,9 @@ public class AppointmentDetails extends AppCompatActivity {
 
             PaymentReceivedButon.setEnabled(true);
         }
+        else{
+//            PaymentReceivedButon.setBackground(getResources().getColor(R.color.gray));
+        }
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override

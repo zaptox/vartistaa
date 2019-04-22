@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:background="@color/bgColor"
     android:layout_height="match_parent"
-    tools:context="com.vartista.www.vartista.modules.user.UserNotification_activity">
+
+    >
 
 
     <android.support.v7.widget.RecyclerView

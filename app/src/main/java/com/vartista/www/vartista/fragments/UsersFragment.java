@@ -80,6 +80,7 @@ public class UsersFragment extends Fragment {
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         viewpager = (ViewPager)getActivity().findViewById(R.id.viewpager);
+
         tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
         tabLayout.setVisibility(View.VISIBLE);
 

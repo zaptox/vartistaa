@@ -21,7 +21,7 @@
             android:textSize="22dp"
             android:layout_marginTop="20dp"
             android:textColor="@color/textColor"
-            android:text="Documnet Title"
+            android:text="Document Title"
             android:layout_marginBottom="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                         android:layout_height="150dp"
                         android:adjustViewBounds="true"
                         android:background="@color/light_gray"
-                        android:src="@drawable/ic_add_a_photo_black_24dp" />
+                        app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
 
                     <View
                         android:layout_width="match_parent"
