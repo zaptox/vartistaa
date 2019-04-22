@@ -70,6 +70,7 @@ public class FindServicesInListFragment extends Fragment {
     EditText filter_on_text;
     ServicesInListMapAdapter myServicesListAdapter;
     View view;
+    View view_same;
     List<GetServiceProviders> myservicesList;
     private FragmentActivity myContext;
 
@@ -83,20 +84,22 @@ public class FindServicesInListFragment extends Fragment {
     public int filterCost;
     //By default search will be done on user name
     public static String typeOfFilter = "ser.service_title";
-   TabLayout tabLayout;
+
 
     public boolean filterApplied = false;
 
     public static ApiInterface apiInterface;
     ArrayList<GetServiceProviders> splist;
+    TabLayout tabLayout;
 
     public FindServicesInListFragment() {
 
     }
 
     @SuppressLint("ValidFragment")
-    public FindServicesInListFragment(int cat_id2) {
+    public FindServicesInListFragment(int cat_id2, TabLayout tabLayout) {
         this.cat_id2=cat_id2;
+        this.tabLayout=tabLayout;
     }
 
     @Nullable
@@ -111,6 +114,15 @@ public class FindServicesInListFragment extends Fragment {
 
         splist=new ArrayList<GetServiceProviders>();
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+
+//        Intent intent=getActivity().getIntent();
+//        final int cat_id=intent.getIntExtra("cat_id",0);
+//        cat_id2=cat_id;
+//                intent.putExtra("cat_id",cat_id);
+
+        //Getting user id from HomeAcitivty
+
+
 
 
         SharedPreferences ob = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
@@ -127,6 +139,9 @@ public class FindServicesInListFragment extends Fragment {
         listViewMyServices.setItemAnimator(new DefaultItemAnimator());
 
         myservicesList=new ArrayList<>();
+
+        tabLayout=(TabLayout) getActivity().findViewById(R.id.tabs);
+        tabLayout.setVisibility(View.GONE);
 
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,7 +196,7 @@ public class FindServicesInListFragment extends Fragment {
                         if(filterApplied==true){
 
 
-                            new Connection(getContext(),cat_id2,filterLocation,filterGender,filterCost).execute();
+                            new Connection(getContext(),cat_id2,filterLocation,filterGender,filterCost,view_same).execute();
 
 
                         }
@@ -289,12 +304,13 @@ public class FindServicesInListFragment extends Fragment {
             this.view=view;
         }
 
-        public Connection(Context activity, int cat_id, String filter_location, String filter_gender, int filter_cost) {
+        public Connection(Context activity, int cat_id, String filter_location, String filter_gender, int filter_cost, View view) {
             dialog = new ProgressDialog(activity);
             this.cat_id = cat_id;
             this.filter_location=filter_location;
             this.filter_gender=filter_gender;
             this.filter_cost=filter_cost;
+            this.view=view;
         }
 
         @Override
@@ -427,14 +443,14 @@ public class FindServicesInListFragment extends Fragment {
 
                     }
 
-                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist,myContext);
+                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist,myContext,tabLayout);
                     listViewMyServices.setAdapter(myServicesListAdapter);
 
 
 
                 } else {
                     splist= new ArrayList<GetServiceProviders>();
-                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist,myContext);
+                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist,myContext,tabLayout);
                     listViewMyServices.setAdapter(myServicesListAdapter);
 
 
@@ -593,7 +609,7 @@ public class FindServicesInListFragment extends Fragment {
 
                     }
 //
-                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist, myContext);
+                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist, myContext,tabLayout);
                     listViewMyServices.setAdapter(myServicesListAdapter);
 
                 } else {
@@ -602,7 +618,7 @@ public class FindServicesInListFragment extends Fragment {
 
 
                     splist= new ArrayList<GetServiceProviders>();
-                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist,myContext);
+                    myServicesListAdapter=new ServicesInListMapAdapter(getContext(),splist,myContext,tabLayout);
                     listViewMyServices.setAdapter(myServicesListAdapter);
                 }
             } catch (JSONException e) {

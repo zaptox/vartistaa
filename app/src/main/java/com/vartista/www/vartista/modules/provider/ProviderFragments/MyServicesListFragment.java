@@ -198,7 +198,7 @@ public class MyServicesListFragment extends Fragment {
 
                         myservicesList.add(new Service(service_id,user_id,category_name , service_title, service_description, location, status,  price,  category_id,  created_at,  updated_at,home_avail_status));
 
-                        Toast.makeText(getContext(), ""+myservicesList, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), ""+myservicesList, Toast.LENGTH_SHORT).show();
                     }
 
                 }

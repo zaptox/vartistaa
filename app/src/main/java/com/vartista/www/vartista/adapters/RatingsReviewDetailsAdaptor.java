@@ -52,12 +52,13 @@ public class RatingsReviewDetailsAdaptor  extends RecyclerView.Adapter<RatingsRe
 
         String oldstring = Ratingdetails.get(position).getDate();
         Username.setText(Ratingdetails.get(position).getUserName());
-        ReviewDetail.setText(Ratingdetails.get(position).getUser_remarks());
+//        ReviewDetail.setText(Ratingdetails.get(position).getUser_remarks());
         ratingBar.setRating(Ratingdetails.get(position).getStars());
         ratingBar.setIsIndicator(true);
         ratingBar.setFocusable(false);
         ServiceTittle.setText(Ratingdetails.get(position).getService_tittle());
-        time.setText(Ratingdetails.get(position).getTime());
+        date.setText("Date: "+Ratingdetails.get(position).getDate());
+//        time.setText(Ratingdetails.get(position).getTime());
 
 
     }
@@ -78,7 +79,7 @@ public class RatingsReviewDetailsAdaptor  extends RecyclerView.Adapter<RatingsRe
             Username = (TextView) mView.findViewById(R.id.UserName);
             ReviewDetail = (TextView) mView.findViewById(R.id.ReviewDetails);
             date = (TextView) mView.findViewById(R.id.Date);
-            time = (TextView) mView.findViewById(R.id.Time);
+//            time = (TextView) mView.findViewById(R.id.Time);
             ServiceTittle = (TextView) mView.findViewById(R.id.Service_Tittle);
             imageView = (ImageView) mView.findViewById(R.id.imageViewCategoryIcon);
             ratingBar = mView.findViewById(R.id.simpleRatingBar);

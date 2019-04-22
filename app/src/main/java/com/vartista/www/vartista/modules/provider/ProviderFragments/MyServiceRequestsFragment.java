@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
@@ -98,9 +99,10 @@ public class MyServiceRequestsFragment extends Fragment {
 
         serviceRequestsList= new ArrayList<ServiceRequets>();
 
-        user_id=getActivity().getIntent().getIntExtra("user",0);
+//        user_id=getActivity().getIntent().getIntExtra("user",0);
 
 
+//        Toast.makeText(getContext(), ""+user_id, Toast.LENGTH_SHORT).show();
         new Conncetion(getContext(),user_id).execute();
 
 
@@ -194,7 +196,10 @@ public class MyServiceRequestsFragment extends Fragment {
                         serviceRequestsList.add(new ServiceRequets(requestservice_id,user_name,status,date,time,location,user_customer_id,
                                 service_provider_id,service_id,service_cat_id,service_title,price,service_description,category_name,image
                         ));
+
+
                     }
+                    Toast.makeText(getContext(), ""+serviceRequestsList, Toast.LENGTH_SHORT).show();
 
 
 //                    myRequestServicesListAdapter= new MyRequestsServicesListAdapter(getContext(),serviceRequestsList);

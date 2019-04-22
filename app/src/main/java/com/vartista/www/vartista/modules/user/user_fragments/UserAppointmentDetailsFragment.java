@@ -85,7 +85,7 @@ public class UserAppointmentDetailsFragment extends Fragment {
                 .error(R.drawable.profile)
                 .into(imageView);
         serviceprovidername.setText("Service Provider : "+ob.getUsername());
-        servicecharges.setText("Service : "+ob.getService_title()+" "+ob.getPrice());
+        servicecharges.setText("Service : "+ob.getService_title()+" "+ob.getPrice()+"£");
         date_view.setText("Date : "+ob.getDate());
         Time.setText("Time : "+ob.getTime());
         serviceDesc.setText(ob.getService_description());
@@ -116,7 +116,7 @@ public class UserAppointmentDetailsFragment extends Fragment {
                 d_servicename = payment_dialogue.findViewById(R.id.service_name);
 
                 d_sp_name.setText("Service Provider: "+ob.getUsername());
-                d_payment.setText("Payment: "+ob.getPrice());
+                d_payment.setText("Payment: "+ob.getPrice()+"£");
                 d_servicename.setText("Service:"+ob.getService_title());
 
                 payment_dialogue.show();
@@ -191,13 +191,14 @@ public class UserAppointmentDetailsFragment extends Fragment {
                 d_sp_name = cancel_service.findViewById(R.id.sp_name);
                 d_payment = cancel_service.findViewById(R.id.to_pay);
                 d_servicename = cancel_service.findViewById(R.id.service_name);
-                TextView penalty_text=cancel_service.findViewById(R.id.penalty_text);
-                penalty_text.setVisibility(View.INVISIBLE);
-                if(ob.getRequest_status().equals("5")){
-                    penalty_text.setVisibility(View.VISIBLE);
-                }
+//                TextView penalty_text=cancel_service.findViewById(R.id.penalty_text);
+//                penalty_text.setVisibility(View.INVISIBLE);
+//                if(ob.getRequest_status().equals("5")){
+//                    penalty_text.setVisibility(View.VISIBLE);
+//                }
+
                 d_sp_name.setText("Service Provider: "+ob.getUsername());
-                d_payment.setText("Payment: "+ob.getPrice());
+                d_payment.setText("Payment: "+ob.getPrice()+"£");
                 d_servicename.setText("Service:"+ob.getService_title());
 
 
@@ -241,8 +242,10 @@ public class UserAppointmentDetailsFragment extends Fragment {
 
 
 
-                        Intent intent = new Intent(getContext(), MyServiceMeetings.class);
-                        startActivity(intent);
+                        
+
+//                        Intent intent = new Intent(getContext(), MyServiceMeetings.class);
+//                        startActivity(intent);
 
                     }
                 });

@@ -10,7 +10,9 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +75,9 @@ public class CreateServiceFragment extends Fragment {
     TextView service_category;
     Button btnHome;
     CheckBox home_avail;
+
+    private ProgressDialog dialog_create_service;
+
     public static ApiInterface apiInterface2;
 
     //Spinner spinnerService;
@@ -87,6 +92,7 @@ public class CreateServiceFragment extends Fragment {
     static double longitude;
     static String country;
 
+    TabLayout tabLayout;
     private ProgressDialog progressDialog;
 
 
@@ -103,16 +109,18 @@ public class CreateServiceFragment extends Fragment {
     }
 
     @SuppressLint("ValidFragment")
-    public CreateServiceFragment(int user_id) {
+    public CreateServiceFragment(int user_id, TabLayout tabLayout) {
         // Required empty public constructor
         this.user_id=user_id;
+        this.tabLayout=tabLayout;
         for_edit=false;
     }
 
     @SuppressLint("ValidFragment")
-    public CreateServiceFragment(int user_id, int edit_service_id) {
+    public CreateServiceFragment(int user_id, TabLayout tabLayout, int edit_service_id) {
         // Required empty public constructor
         this.user_id=user_id;
+        this.tabLayout=tabLayout;
         this.edit_user_id=edit_service_id;
         for_edit=true;
     }
@@ -124,6 +132,8 @@ public class CreateServiceFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_create_service, container, false);
 
+        dialog_create_service = new ProgressDialog(getActivity());
+
         niceSpinner = niceSpinner = (NiceSpinner) view.findViewById(R.id.nice_spinner);
         // spinnerService=view.findViewById(R.id.spinnerService);
         cat=new ArrayList<>();
@@ -132,6 +142,8 @@ public class CreateServiceFragment extends Fragment {
         apiInterface = ApiClient.getApiClient().create(ServiceApiInterface.class);
         service_category=(TextView)view.findViewById(R.id.service_category);
         apiInterface2= ApiClient.getApiClient().create(ApiInterface.class);
+
+        progressDialog = new ProgressDialog(getActivity());
 
         loggedin= HomeActivity.user;
 
@@ -143,7 +155,10 @@ public class CreateServiceFragment extends Fragment {
         btnHome = (Button) view.findViewById(R.id.btnHome);
         home_avail= view.findViewById(R.id.home_avail);
 
+        tabLayout.setVisibility(View.GONE);
 
+//        edit_user_id= getActivity().getIntent().getIntExtra("edit_user_id",0);
+//        edit_user_id= user_id;
 
         if (for_edit==false){
 
@@ -174,6 +189,10 @@ public class CreateServiceFragment extends Fragment {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                user_id=loggedin.getId();
+//                Intent intent=new Intent(getContext(),MyServicesListActivity.class);
+//                intent.putExtra("userId",user_id);
+//                startActivity(intent);
 
 
                 Intent intent=new Intent(getContext(),HomeActivity.class);
@@ -189,6 +208,10 @@ public class CreateServiceFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //update Work here
+
+
+                setUIToWait(true);
+                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
                 if(category_id==0){
                     category_id=cat_id.get(0);
@@ -246,6 +269,8 @@ public class CreateServiceFragment extends Fragment {
                             }
                             if (response.isSuccessful()) {
                                 //for debugging
+
+                                setUIToWait(false);
 
 //                                setUIToWait(false);
 //                                MDToast mdMDToast = MDToast.makeText(getContext(), "Your Service Edit Successfully", MDToast.LENGTH_SHORT, MDToast.TYPE_SUCCESS);
@@ -325,15 +350,7 @@ public class CreateServiceFragment extends Fragment {
 
                             }
                             if (response.isSuccessful()) {
-
-                                edDescription.setText("");
-                                edtTxtSerivceTitle.setText("");
-                                edTxtServicePrice.setText("");
-
-
-                                Intent intent=new Intent(getContext(),HomeActivity.class);
-                                intent.putExtra("fragment_Flag", CONST.MY_SERVICES_LIST_FRAGMENT);
-                                startActivity(intent);
+//                                insertreviewnil(-1,sp_id,-1);
 
 
                                 setUIToWait(false);
@@ -347,6 +364,17 @@ public class CreateServiceFragment extends Fragment {
                         }
 
                     });
+
+                                edDescription.setText("");
+                                edtTxtSerivceTitle.setText("");
+                                edTxtServicePrice.setText("");
+
+
+                                Intent intent=new Intent(getContext(),HomeActivity.class);
+                                intent.putExtra("fragment_Flag", CONST.MY_SERVICES_LIST_FRAGMENT);
+                                startActivity(intent);
+
+
 
 
                 }

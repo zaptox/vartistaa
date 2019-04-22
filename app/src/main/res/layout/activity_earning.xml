@@ -11,7 +11,7 @@
         android:id="@+id/userData"
         android:layout_width="match_parent"
         android:gravity="left"
-        android:background="@color/colorPrimary"
+        android:background="@color/serviceProviderActionBar"
         android:layout_height="120sp">
 
 
