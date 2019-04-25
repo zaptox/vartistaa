@@ -78,7 +78,7 @@ public class ProviderPhotosAdapter extends RecyclerView.Adapter<ProviderPhotosAd
                 TextView text = (TextView) dialog.findViewById(R.id.img_title);
                 text.setText(title);
                 ImageView image = (ImageView) dialog.findViewById(R.id.img_photo);
-                Toast.makeText(context, ""+URL, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, ""+URL, Toast.LENGTH_SHORT).show();
                 Picasso.get().load(URL).fit().centerCrop()
                         .placeholder(R.drawable.pictures)
                         .error(R.drawable.pictures)

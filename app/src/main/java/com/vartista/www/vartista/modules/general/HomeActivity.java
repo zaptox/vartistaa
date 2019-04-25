@@ -31,8 +31,6 @@ import com.squareup.picasso.Picasso;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.Offline_user_status_service;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.adapters.PagerAdapter;
-
 import com.vartista.www.vartista.adapters.ServicesInListMapAdapter;
 import com.vartista.www.vartista.adapters.ViewPagerAdapter;
 import com.vartista.www.vartista.beans.DeviceToken;
@@ -59,6 +57,7 @@ import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.FindServicesInList;
+import com.vartista.www.vartista.modules.user.GetDocumentActivity;
 import com.vartista.www.vartista.modules.user.Service_user_cancel;
 import com.vartista.www.vartista.modules.user.StartService;
 import com.vartista.www.vartista.modules.user.user_fragments.BookNowFragment;
@@ -256,6 +255,7 @@ public class HomeActivity extends AppCompatActivity
                     }
                     break;
             case CONST.UPLOAD_DOC_LIST_FRAGMENT:
+
                 replaceFragment(new UploadDocListFragment());
                 getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
 
@@ -372,8 +372,9 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.provider_doc_upload) {
 
-            Intent intent = new Intent(HomeActivity.this, DocumentUploadActivity.class);
+            Intent intent = new Intent(HomeActivity.this, GetDocumentActivity.class);
             startActivity(intent);
+
 
 
 
