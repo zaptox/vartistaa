@@ -57,6 +57,7 @@ import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.FindServicesInList;
+import com.vartista.www.vartista.modules.user.GetDocumentActivity;
 import com.vartista.www.vartista.modules.user.Service_user_cancel;
 import com.vartista.www.vartista.modules.user.StartService;
 import com.vartista.www.vartista.modules.user.user_fragments.BookNowFragment;
@@ -407,7 +408,6 @@ public class HomeActivity extends AppCompatActivity
 
             replaceFragment(new My_Rating_Reviews_Fragment());
 
-
         } else if (id == R.id.logout) {
             MDToast.makeText(this, "logout", MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
@@ -427,8 +427,13 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.provider_doc_upload) {
 
-            Intent intent = new Intent(HomeActivity.this, DocumentUploadActivity.class);
+//            Intent intent = new Intent(HomeActivity.this, DocumentUploadActivity.class);
+//            startActivity(intent);
+//
+
+            Intent intent = new Intent(HomeActivity.this, GetDocumentActivity.class);
             startActivity(intent);
+
 
 
 

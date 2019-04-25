@@ -124,7 +124,7 @@ public class UserProfileFragment extends Fragment {
                 int id1=user.getId();
                 setUIToWait(true);
                 progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                Call<User> call= UserProfile.apiInterface.updateUser(namechange,emailchange,passchange,id1);
+                Call<User> call= UserProfileFragment.apiInterface.updateUser(namechange,emailchange,passchange,id1);
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call <User> call, Response<User> response) {
