@@ -89,12 +89,13 @@ public class DocumentUploadFragment extends Fragment {
         btnSetAddress= view.findViewById(R.id.set_address_required);
         user_id=ob.getInt("user_id",0);
         apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
-        tabLayout= getActivity().findViewById(R.id.tabs);
         btnUploadCnicBack =(Button)view.findViewById(R.id.btnUploadCNICBack);
         btnUploadBankDetails =(Button)view.findViewById(R.id.btnUploadBankDetails);
         btnUploadCNICFront =(Button)view.findViewById(R.id.btnUploadCNICFront);
 
-        tabLayout.setVisibility(View.GONE);
+//        tabLayout.setVisibility(View.GONE);
+
+
         btnSetAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

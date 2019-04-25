@@ -43,7 +43,6 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
         this.myServicesList = myServicesList;
         this.context = context;
         this.myContext=myContext;
-//        this.tabLayout=tabLayout;
     }
     public ServicesInListMapAdapter(Context context, List<GetServiceProviders> myServicesList, FragmentActivity myContext, TabLayout tabLayout) {
         this.myServicesList = myServicesList;
@@ -78,7 +77,6 @@ public class ServicesInListMapAdapter extends RecyclerView.Adapter<ServicesInLis
             holder.ratingBar.setRating((float)myServicesList.get(position).getRatings());
 
         }
-//        Toast.makeText(context, "rating is "+myServicesList.get(position).getRatings(), Toast.LENGTH_SHORT).show();
         if(myServicesList.get(position).getUser_status() == 1){
             holder.user_status.setImageResource(R.drawable.green_circle);
         }

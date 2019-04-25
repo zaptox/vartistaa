@@ -71,21 +71,8 @@ public class NotificationsFragment extends Fragment {
         view.setHasFixedSize(true);
         view.setLayoutManager(layoutManager);
         SharedPreferences ob = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
-        tabLayout=  getActivity().findViewById(R.id.tabs);
         user_id = ob.getInt("user_id", 0);
         new NotificationsFragment.Conncetion(getContext(),user_id).execute();
-        tabLayout.setVisibility(View.GONE);
-//        become_sp.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent=new Intent(getContext(),DocumentUploadActivity.class);
-//                intent.putExtra("userId",user_id);
-//                startActivity(intent);
-//
-//
-//            }
-//        });
         return view1;
     }
 

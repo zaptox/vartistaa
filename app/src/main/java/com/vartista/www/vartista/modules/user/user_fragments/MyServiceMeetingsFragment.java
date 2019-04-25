@@ -63,9 +63,7 @@ public class MyServiceMeetingsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-        tabLayout= getActivity().findViewById(R.id.tabs);
 
-        tabLayout.setVisibility(View.GONE);
 
 
         SharedPreferences ob =getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);

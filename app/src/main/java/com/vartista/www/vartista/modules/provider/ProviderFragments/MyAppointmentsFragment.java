@@ -14,6 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.servicepappointmentsadapter;
@@ -44,7 +46,7 @@ public class MyAppointmentsFragment extends Fragment {
     ArrayList<servicepaapointmentsitems> myappointments;
     int service_id;
     private FragmentActivity myContext;
-
+    ImageView imageView;
 
 
     public MyAppointmentsFragment() {
@@ -67,8 +69,10 @@ public class MyAppointmentsFragment extends Fragment {
         SharedPreferences ob =getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
 
         service_id=ob.getInt("user_id",0);
-
+        Toast.makeText(getContext(), ""+service_id, Toast.LENGTH_SHORT).show();
         new MyAppointmentsFragment.Conncetion(getContext(),service_id).execute();
+
+
 
         return view;
     }

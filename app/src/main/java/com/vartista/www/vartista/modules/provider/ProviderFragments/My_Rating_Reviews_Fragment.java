@@ -50,7 +50,6 @@ public class My_Rating_Reviews_Fragment extends Fragment {
     int serviceproviderid;
     ScaleRatingBar ratingBar;
     Float serviceProvierRating=0.0f;
-    TabLayout tabLayout;
 
     public My_Rating_Reviews_Fragment() {
         // Required empty public constructor
@@ -71,8 +70,6 @@ public class My_Rating_Reviews_Fragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         SharedPreferences object =getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
         serviceproviderid= object.getInt("user_id",0);
-        tabLayout= getActivity().findViewById(R.id.tabs);
-        tabLayout.setVisibility(View.GONE);
 
         new My_Rating_Reviews_Fragment.Conncetion(getContext(),serviceproviderid).execute();
         ratingBar = view.findViewById(R.id.simpleRatingBar);

@@ -391,6 +391,8 @@ public class AppointmentDetails extends AppCompatActivity {
 //                            if(response.isSuccessful())
 //                                MDToast.makeText(view.getContext(), "Request Accepted",MDToast.LENGTH_SHORT).show();
 
+                            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                            finish();
                         }
 
 

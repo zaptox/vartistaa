@@ -7,11 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -39,6 +39,7 @@ import com.vartista.www.vartista.beans.DeviceToken;
 import com.vartista.www.vartista.beans.GetServiceProviders;
 import com.vartista.www.vartista.beans.Service;
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.fragments.ConfigSettingsFragment;
 import com.vartista.www.vartista.fragments.NotificationsFragment;
 import com.vartista.www.vartista.fragments.ServiceProviderFragment;
 import com.vartista.www.vartista.fragments.UserProfileFragment;
@@ -47,6 +48,7 @@ import com.vartista.www.vartista.modules.payment.PaymentActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.AddressSetFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.CreateServiceFragment;
+import com.vartista.www.vartista.modules.provider.ProviderFragments.DocumentUploadFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.EarningFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyAppointmentsFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServiceRequestsFragment;
@@ -57,7 +59,6 @@ import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.FindServicesInList;
-import com.vartista.www.vartista.modules.user.GetDocumentActivity;
 import com.vartista.www.vartista.modules.user.Service_user_cancel;
 import com.vartista.www.vartista.modules.user.StartService;
 import com.vartista.www.vartista.modules.user.user_fragments.BookNowFragment;
@@ -92,18 +93,14 @@ import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,DatePickerDialog.OnDateSetListener,TimePickerDialog.OnTimeSetListener {
-
+    BottomNavigationView bottomNav;
     private TextView email, name;
     public static int user_id;
     public static User user;
     ImageView imageViewProfileDrawer;
     public static TokenApiInterface tokenApiInterface;
-    private ViewPager viewPager;
-    TabLayout tabLayout=null;
     public static NavigationView navigationView;
-    private int[] tabIcons = {
-            R.drawable.ic_asauser_24dp,
-            R.drawable.myservices};
+
     Boolean check = true;
 
     @Override
@@ -123,9 +120,18 @@ public class HomeActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+
+
+        bottomNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        bottomNav.setVisibility(View.VISIBLE);
+
+
 
         View headerView = navigationView.getHeaderView(0);
         name = (TextView) headerView.findViewById(R.id.name);
@@ -138,7 +144,16 @@ public class HomeActivity extends AppCompatActivity
         user_id = user.getId();
 
         if(intent.getIntExtra("fragment_Flag",0)!=0){
+            bottomNav.setVisibility(View.GONE);
+            FrameLayout frameLayout=(FrameLayout)findViewById(R.id.fragment_frame_layout);
             swipeFragment(intent.getIntExtra("fragment_Flag",0),intent);
+        }
+        else{
+            // by default user fragment open
+            bottomNav.setVisibility(View.VISIBLE);
+
+            replaceFragment(new UsersFragment(user_id));
+
         }
 
         if(intent.getStringExtra("fragment")!=null){
@@ -166,71 +181,9 @@ public class HomeActivity extends AppCompatActivity
             imageViewProfileDrawer.setImageResource(R.drawable.profile);
         }
 
-        viewPager = (SlideOffViewPager) findViewById(R.id.viewpager);
-        ((SlideOffViewPager) viewPager).setPagingEnabled(false);
-          setupViewPager(viewPager);
-
-                    drawer.addDrawerListener(toggle);
-                    toggle.syncState();
 
 
 
-        final ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
-
-
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),user_id,getApplicationContext());
-         viewpager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewpager);
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-                         public void onTabSelected(TabLayout.Tab tab) {
-
-                if(tab.getPosition()==1) {
-                    tabLayout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.color.serviceProviderActionBar));
-
-                    getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
-
-                    NavigationDrawerUser(true);
-                             if (check == true) {
-                                 NavigationDrawer_ServiceProvider(false);
-                             check = false;
-                             }
-
-                }
-                else if (tab.getPosition()==0){
-                    getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.colorPrimaryDark));
-
-                    tabLayout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.color.colorPrimaryDark));
-
-                    NavigationDrawerUser(false);
-                     if (check==false){
-                         NavigationDrawer_ServiceProvider(true);
-                         check=true;
-                     }
-
-
-                }
-            }
-
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-
-
-
-        tabLayout.setupWithViewPager(viewPager);
-        setupTabIcons();
         //making user online
 
 
@@ -249,16 +202,13 @@ public class HomeActivity extends AppCompatActivity
             case CONST.FIND_SERVICE_IN_LIST_FRAGMENT:
 
 
-                tabLayout.setVisibility(View.GONE);
 
                 int catId=intent.getIntExtra("cat_id",0);
-                FindServicesInListFragment findServicesInList=new FindServicesInListFragment(catId,tabLayout);
+                FindServicesInListFragment findServicesInList=new FindServicesInListFragment(catId);
                 replaceFragment(findServicesInList);
                 break;
             case  CONST.SERVICE_PROVIDER_DETAIL_FRAGMENT:
 
-                tabLayout= (TabLayout) findViewById(R.id.tabs);
-                tabLayout.setVisibility(View.GONE);
                 int providerId=intent.getIntExtra("s_provider_id",0);
                 int categoryId=intent.getIntExtra("cat_id",0);
                int  userId=intent.getIntExtra("user_id",0);
@@ -272,7 +222,6 @@ public class HomeActivity extends AppCompatActivity
                 replaceFragment(serviceProviderDetailFragment);
                 break;
             case CONST.BOOK_NOW__FRAGMENT:
-                tabLayout.setVisibility(View.GONE);
                     int   userCustomerId=intent.getIntExtra("user_id",0);
                     int serviceProviderId=intent.getIntExtra("provider_id",0);
                     int  serviceId=intent.getIntExtra("service_id",0);
@@ -283,30 +232,172 @@ public class HomeActivity extends AppCompatActivity
                  break;
                  case CONST.MY_SERVICE_REQUEST_FRAGMENT:
                      replaceFragment(new MyServiceRequestsFragment(user_id));
+                     getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
+
                      break;
             case CONST.EARNING_FRAGMENT:
                 replaceFragment(new EarningFragment(user_id));
+                getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
+
                 break;
             case CONST.MY_SERVICES_LIST_FRAGMENT:
                 replaceFragment(new MyServicesListFragment(user_id));
+                getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
                 break;
                 case CONST.CREATE_SERVICE_FRAGMENT:
 
                     if(intent.getIntExtra("edit_service_id",0)!=0){
                         int editServiceId=intent.getIntExtra("edit_service_id",0);
-                        replaceFragment(new CreateServiceFragment(user_id,tabLayout,editServiceId));
+                        replaceFragment(new CreateServiceFragment(user_id,editServiceId));
                     }else{
-                    replaceFragment(new CreateServiceFragment(user_id,tabLayout));}
+                    replaceFragment(new CreateServiceFragment(user_id));
+                        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
+
+                    }
                     break;
             case CONST.UPLOAD_DOC_LIST_FRAGMENT:
                 replaceFragment(new UploadDocListFragment());
+                getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
+
                 break;
                 case CONST.ADDRESS_SET_FRAGMENT:
                     replaceFragment(new AddressSetFragment());
+                    getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
+
                     break;
+            case CONST.USER_PROFILE_FRAGMENT:
+                replaceFragment(new UserProfileFragment(user));
+                break;
+                case  CONST.NOTIFIATION_FRAGMENT:
+                    replaceFragment( new NotificationsFragment());
+                    break;
+
+                    case CONST.MY_COMPLETED_SERVIE_FRAGMENT:
+                        replaceFragment(new MyCompletedServicesFragment());
+                         break;
+                         case CONST.MY_APPOINTMENT_FRAGMENT:
+                             replaceFragment(new MyAppointmentsFragment());
+                             getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
+
+                             break;
+                             case CONST.MY_RATINGS_REVIEW_FRAGMENT:
+                                 replaceFragment(new My_Rating_Reviews_Fragment());
+                                 getSupportActionBar().setBackgroundDrawable(getResources().
+                                         getDrawable(R.color.serviceProviderActionBar));
+
+                                 break;
+                                case CONST.MY_SERVICE_MEETNG_FRAGMENT:
+                                     replaceFragment(new MyServiceMeetingsFragment());
+
+                                     break;
+                                     case CONST.DOC_UPLOAD_FRAGMENT:
+                                         replaceFragment(new DocumentUploadFragment());
+                                         getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
+
+                                         break;
+                                         default:
+                                             replaceFragment(new UsersFragment(user_id));
+
         }}
 
 
+
+
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.account) {
+
+
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.USER_PROFILE_FRAGMENT);
+            startActivity(intent);
+
+
+        } else if (id == R.id.request) {
+
+
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.MY_SERVICE_REQUEST_FRAGMENT);
+            startActivity(intent);
+
+        } else if (id == R.id.notification) {
+
+
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.NOTIFIATION_FRAGMENT);
+            startActivity(intent);
+
+
+
+
+        } else if (id == R.id.appointments) {
+
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.MY_APPOINTMENT_FRAGMENT);
+            startActivity(intent);
+
+
+
+
+        } else if (id == R.id.ratings) {
+
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.MY_RATINGS_REVIEW_FRAGMENT);
+            startActivity(intent);
+
+
+        } else if (id == R.id.logout) {
+            MDToast.makeText(this, "logout", MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();
+            SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+            ob.edit().clear().commit();
+            startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
+
+        } else if (id == R.id.payment) {
+            Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.Userappointments) {
+
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.MY_SERVICE_MEETNG_FRAGMENT);
+            startActivity(intent);
+
+
+
+
+        } else if (id == R.id.provider_doc_upload) {
+
+            Intent intent = new Intent(HomeActivity.this, DocumentUploadActivity.class);
+            startActivity(intent);
+
+
+
+        } else if (id == R.id.Userappointments) {
+            replaceFragment(new MyServiceMeetingsFragment());
+
+
+
+        }
+        else if(id==R.id.user_completed_services){
+
+
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.MY_COMPLETED_SERVIE_FRAGMENT);
+            startActivity(intent);
+
+
+        }
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
 
     @Override
@@ -379,82 +470,6 @@ public class HomeActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.account) {
-            replaceFragment(new UserProfileFragment(user));
-
-
-
-        } else if (id == R.id.request) {
-
-             replaceFragment(new MyServiceRequestsFragment(user_id));
-
-        } else if (id == R.id.notification) {
-
-            replaceFragment( new NotificationsFragment());
-
-
-
-        } else if (id == R.id.appointments) {
-
-             replaceFragment(new MyAppointmentsFragment());
-
-        } else if (id == R.id.ratings) {
-
-            replaceFragment(new My_Rating_Reviews_Fragment());
-
-        } else if (id == R.id.logout) {
-            MDToast.makeText(this, "logout", MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();
-            SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
-            ob.edit().clear().commit();
-            startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
-
-        } else if (id == R.id.payment) {
-            Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
-            startActivity(intent);
-
-        } else if (id == R.id.Userappointments) {
-
-
-             replaceFragment(new MyServiceMeetingsFragment());
-
-
-
-        } else if (id == R.id.provider_doc_upload) {
-
-//            Intent intent = new Intent(HomeActivity.this, DocumentUploadActivity.class);
-//            startActivity(intent);
-//
-
-            Intent intent = new Intent(HomeActivity.this, GetDocumentActivity.class);
-            startActivity(intent);
-
-
-
-
-        } else if (id == R.id.Userappointments) {
-            replaceFragment(new MyServiceMeetingsFragment());
-
-
-
-        }
-        else if(id==R.id.user_completed_services){
-
-             replaceFragment(new MyCompletedServicesFragment());
-
-        }
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
     public void storeDeviceToken() {
 
 
@@ -508,6 +523,7 @@ public class HomeActivity extends AppCompatActivity
         }
 
         private ProgressDialog dialog;
+
 
 
 
@@ -650,25 +666,42 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    Fragment selectFragment = null;
+                    switch (menuItem.getItemId()) {
+                        case R.id.nav_as_a_user:
+                            selectFragment = new UsersFragment(user_id);
+                           replaceFragment(selectFragment);
+                            getSupportActionBar().setBackgroundDrawable(getResources().getDrawable
+                                    (R.color.colorPrimary));
+
+                            break;
+                        case R.id.nav_as_a_provider:
+                            if(user.getSp_status().equals("0")|| user.getSp_status().equals("-1")){
+                                selectFragment = new ConfigSettingsFragment();
+
+                            }else{
+                                selectFragment=new ServiceProviderFragment(user_id);
+                            }
+                            replaceFragment(selectFragment);
+                            getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
+
+                            break;
+
+
+                    }
+
+
+                    return true;
+                }
+            };
 
 
 
 
-
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new UsersFragment(), "As a User");
-        adapter.addFrag(new ServiceProviderFragment(), "As a Service Provider");
-        viewPager.setAdapter(adapter);
-    }
-
-    private void setupTabIcons() {
-        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-
-
-
-    }
 
     private void NavigationDrawerUser(Boolean boo){
         navigationView.getMenu().getItem(3).setVisible(boo);

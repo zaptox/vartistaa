@@ -79,10 +79,9 @@ public class UsersFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_users, container, false);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
-        viewpager = (ViewPager)getActivity().findViewById(R.id.viewpager);
 
-        tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
-        tabLayout.setVisibility(View.VISIBLE);
+
+
 
 
 

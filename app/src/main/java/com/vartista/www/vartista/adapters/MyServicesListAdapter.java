@@ -139,26 +139,15 @@ public class MyServicesListAdapter extends RecyclerView.Adapter<MyServicesListAd
                                     if (response.body().getResponse().equals("ok")) {
 
 
-
-//                                        Intent intent=new Intent(v.getContext(),MyServicesListActivity.class);
-//
-//
-//                                        intent.putExtra("edit_user_id",user_id);
-
-
                                         Intent intent=new Intent(context,HomeActivity.class);
                                         intent.putExtra("fragment_Flag", CONST.MY_SERVICES_LIST_FRAGMENT);
                                         context.startActivity(intent);
-
-                                        //intent.putStringArrayListExtra("myservicelist",myServicesList);
-//                                        v.getContext().startActivity(intent);
                                         MDToast mdToast = MDToast.makeText(v.getContext(), "Your Service Deleted Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                                         mdToast.show();
 
 
                                     }
                                     if (response.isSuccessful()) {
-                                        //for debugging
 
                                     }
                                 }
