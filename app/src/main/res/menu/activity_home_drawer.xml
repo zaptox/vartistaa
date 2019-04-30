@@ -25,7 +25,10 @@
                     android:id="@+id/user_completed_services"
                     android:icon="@drawable/appointment"
                     android:title="Availed Services" ></item>
-
+                <item
+                    android:id="@+id/myjazz"
+                    android:icon="@drawable/jazz_account"
+                    android:title="My Account" ></item>
             </menu>
         </item>
 
