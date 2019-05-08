@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    app:cardCornerRadius="25dp"
+    android:layout_marginTop="25dp"
+    android:layout_marginBottom="25dp"
+    app:cardPreventCornerOverlap="true">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/relative1"
+            >
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="70sp"
+                android:layout_height="70sp"
+                android:src="@drawable/tom">
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <TextView
+                android:id="@+id/textView_req_name"
+                android:layout_width="110sp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15sp"
+                android:text="Mehdi Raza"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:layout_toRightOf="@id/profile_image"
+                android:layout_marginTop="20sp"
+                />
+            <TextView
+                android:id="@+id/textView_req_service"
+                android:layout_width="110sp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15sp"
+                android:text="Zaptox hair cutting"
+                android:layout_below="@id/textView_req_name"
+                android:layout_toRightOf="@id/profile_image"
+                />
+
+
+            <ImageView
+                android:layout_width="20sp"
+                android:id="@+id/clock"
+                android:layout_height="20sp"
+                android:src="@drawable/clock"
+                android:layout_marginTop="20sp"
+                android:layout_toLeftOf="@id/textViewReq_Time"
+                />
+
+            <TextView
+                android:id="@+id/textViewReq_Time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12:00 am"
+                android:layout_marginTop="20sp"
+                android:layout_alignParentEnd="true"
+                android:gravity="end"
+                />
+
+
+
+
+        </RelativeLayout>
+        <View
+            android:layout_marginTop="7sp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_marginTop="4sp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:src="@drawable/calendar"
+                />
+
+
+            <TextView
+                android:id="@+id/textViewReq_Date"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="7sp"
+                android:layout_height="wrap_content"
+                android:text="2018-06-10" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_marginTop="4sp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                />
+
+
+            <TextView
+                android:id="@+id/textview_address"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="7sp"
+                android:layout_height="wrap_content"
+                android:text="2018-06-10" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category:  "
+                android:textSize="14sp"
+
+                android:layout_marginTop="10sp"
+                />
+            <TextView
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:text="Education"
+                android:id="@+id/service_category"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_marginTop="10sp"
+                />
+
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/textView_service_description"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_height="wrap_content"
+            android:text="I am a Barber who can try his best to make you look perfectly good.." />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="end"
+
+            android:layout_height="wrap_content">
+
+
+            <Button
+                android:id="@+id/button_paynow"
+
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:background="@drawable/accept_btn_shape"
+                android:text="Accept"
+                android:layout_marginRight="15sp"
+                android:textAllCaps="false"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
+                android:textSize="11dp" />
+
+            <Button
+                android:id="@+id/buttonReject"
+
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+
+                android:background="@drawable/reject_btn_shape"
+                android:text="Reject"
+                android:layout_gravity="end"
+                android:textAllCaps="false"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
+                android:textSize="11dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</android.support.v7.widget.CardView>
+
+</LinearLayout>
+
+

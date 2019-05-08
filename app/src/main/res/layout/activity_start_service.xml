@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context="com.vartista.www.vartista.modules.user.StartService">
+
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingBottom="90dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imageView7instartserviceuser"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/profile"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="0dp" />
+
+        <TextView
+            android:id="@+id/Service_tittle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView7instartserviceuser"
+            android:layout_centerHorizontal="true"
+            android:text="Service: Hair Cutting"
+            android:textColor="#ffffff"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:text="00:00:00"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTimer"
+            android:textSize="50dp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:layout_marginTop="150dp"
+            android:paddingBottom="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:text="Start"
+            android:background="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTimer"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="41dp"
+            android:id="@+id/startbutton" />
+
+        <Button
+            android:text="Pause"
+            android:background="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btPause"
+            android:layout_alignBaseline="@+id/startbutton"
+            android:layout_alignBottom="@+id/startbutton"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:text="Reset"
+            android:background="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/btPause"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/btReset" />
+
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>
+    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--tools:context="com.vartista.www.vartista.modules.user.StartService">-->
+
+
+    <!--<Button-->
+        <!--android:id="@+id/Startservice"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_marginStart="55dp"-->
+        <!--android:layout_marginTop="299dp"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:text="Start service" />-->
+
+    <!--<Button-->
+        <!--android:id="@+id/endservice"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignTop="@+id/Startservice"-->
+        <!--android:layout_marginStart="35dp"-->
+        <!--android:layout_toEndOf="@+id/Startservice"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:text="End service" />-->
+
+    <!--<com.bcgdv.asia.lib.ticktock.TickTockView-->
+        <!--android:id="@+id/timer"-->
+        <!--android:layout_width="200dp"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:layout_marginLeft="150px"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--app:tickAutoFitText="true"-->
+        <!--app:tickMiddleColor="#333333"-->
+        <!--app:tickMoveCounterClockwise="true"-->
+        <!--app:tickTextColor="#CCCCCC"-->
+        <!--app:tickDotRadius="6dp"-->
+        <!--app:tickEmptyRingColor="@android:color/white"-->
+        <!--app:tickFillRingColor="@color/colorPrimary"-->
+        <!--app:tickRingThickness="3dp" />-->
+<!--</RelativeLayout>-->

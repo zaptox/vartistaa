@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor"
+    tools:context="com.vartista.www.vartista.modules.provider.My_Rating_Reviews">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:background="@color/serviceProviderActionBar"
+        android:orientation="vertical"
+        android:id="@+id/userData"
+        android:layout_height="160dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ele"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="0dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:id="@+id/header_name"
+            android:layout_marginTop="10sp"
+            android:textSize="24sp"
+            android:textColor="#FFFFFF"
+            />
+        <com.willy.ratingbar.ScaleRatingBar
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/simpleRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srb_numStars="5"
+            app:srb_minimumStars="1"
+            app:srb_isIndicator="true"
+            app:srb_starWidth="20dp"
+            android:clickable="false"
+            app:srb_starHeight="20dp"
+            app:srb_starPadding="5dp"
+            app:srb_stepSize="0.5">
+        </com.willy.ratingbar.ScaleRatingBar>
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/RatingsDetail"
+        android:layout_below="@+id/userData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:elevation="2dp"
+        android:scrollbars="vertical" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

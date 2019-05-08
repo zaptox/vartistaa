@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor"
+    tools:context="com.vartista.www.vartista.modules.user.UserAppointmentDetails">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
+
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/profile"
+        app:civ_border_color="#FF000000"
+        android:layout_marginBottom="20dp"
+        app:civ_border_width="0dp" />
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/detailslayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageViewuser"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="150dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewname_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Service-Provider : ____"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/servicedetail_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Service: ____"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textViewtime_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time: _____"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textViewdate_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: _____"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location: _____"
+            android:textSize="18sp" />
+
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView_service_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detailslayout"
+        android:layout_marginTop="40px"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true"
+        android:text="Service Description"
+        android:textSize="18sp"
+        />
+
+
+    <Button
+        android:id="@+id/PayButon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_service_description"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="PayNow"
+        android:background="@drawable/accept_btn_shape"
+        android:textColor="@color/textColor"
+        android:textStyle="bold"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:id="@+id/cancelbuttonUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/PayButon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Cancel This Service"
+        android:background="@drawable/reject_btn_shape"
+        android:textColor="@color/textColor"
+        android:textStyle="bold"
+        android:textAllCaps="false"/>
+
+
+
+</RelativeLayout>

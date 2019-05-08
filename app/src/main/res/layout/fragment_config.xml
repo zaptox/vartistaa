@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+
+    android:background="@color/bgColor"
+    android:gravity="center_horizontal"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+    <ImageView
+        android:layout_marginTop="40dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/config"
+        />
+    <TextView
+        android:layout_margin="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/text_color_client"
+        android:text="Wanna become a service provider?"
+        />
+
+
+    <Button
+        android:id="@+id/become_sp"
+        android:layout_width="wrap_content"
+        android:background="@drawable/buttonshape"
+        android:backgroundTint="@color/serviceProviderActionBar"
+        android:textColor="@color/textColor"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:text="Apply for Service Provider"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="@color/text_color_client"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:padding="7sp"
+        android:layout_gravity="center_horizontal"
+        android:text="By becoming Service provider you can
+provide your own services. Per service vartista tax will be only 20%. Lets join the world of Vartista and start earning through your skills."
+        />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

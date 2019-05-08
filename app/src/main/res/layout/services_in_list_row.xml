@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="25dp">
+
+
+        <!--<de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"-->
+            <!--android:id="@+id/profile_image"-->
+            <!---->
+            <!--android:src="@drawable/tom">-->
+
+        <!--</de.hdodenhof.circleimageview.CircleImageView>-->
+        <RelativeLayout
+            android:id="@+id/profile_image"
+            android:layout_width="70dp"
+            android:layout_height="88dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="5dp"
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_profile_img"
+                android:layout_width="match_parent"
+                android:layout_height="88dp" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/profile_image"
+            android:layout_marginLeft="85dp"
+            android:layout_weight="1"
+            android:text="Tom Cruise"
+            android:textColor="@android:color/background_dark"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/user_status"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_alignBottom="@+id/simpleRatingBar"
+            android:layout_toEndOf="@+id/textViewName"
+            android:background="@drawable/yellow_circle"
+            android:layout_marginLeft="7dp"
+            />
+        <TextView
+            android:id="@+id/busy_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/user_status"
+            android:layout_weight="1"
+            android:layout_alignBottom="@+id/simpleRatingBar"
+            android:text="(Busy)"
+            android:textColor="@android:color/background_dark"
+            android:textSize="10dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView_service11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textViewName"
+            android:layout_below="@+id/textViewName"
+            android:layout_weight="1"
+
+            android:text="Service:"
+            android:textSize="12dp"
+            android:layout_alignLeft="@+id/textViewName" />
+
+        <TextView
+            android:id="@+id/textViewService"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+
+
+            android:layout_below="@+id/textViewName"
+            android:layout_toEndOf="@+id/textView_service11"
+            android:layout_weight="1"
+            android:text="Hair cutt $30"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/textView_service11" />
+
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_below="@+id/textView_service11"
+            android:layout_alignBottom="@+id/profile_image"
+            android:layout_toEndOf="@+id/profile_image"
+            app:srcCompat="@drawable/location_tick"
+            android:layout_toRightOf="@+id/profile_image"
+            tools:ignore="VectorDrawableCompat" />
+
+        <TextView
+            android:id="@+id/textViewAddress"
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/profile_image"
+            android:layout_below="@+id/textView_service11"
+            android:layout_weight="1"
+            android:text="Hyderabad,Sindh"
+            android:textSize="11dp"
+            android:layout_toRightOf="@+id/imageView2"
+            />
+
+
+
+        <com.willy.ratingbar.ScaleRatingBar
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/simpleRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            app:srb_numStars="5"
+            app:srb_minimumStars="0"
+            app:srb_rating="0"
+            app:srb_starWidth="10dp"
+            app:srb_starHeight="10dp"
+            app:srb_starPadding="5dp"
+            app:srb_stepSize="0.5"
+            app:srb_isIndicator="true"
+            app:srb_clickable="false"
+            app:srb_scrollable="true"
+            app:srb_clearRatingEnabled="true"
+            app:srb_drawableEmpty="@drawable/empty"
+            app:srb_drawableFilled="@drawable/filled">
+        </com.willy.ratingbar.ScaleRatingBar>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

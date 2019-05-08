@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        card_view:cardCornerRadius="10dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+
+            android:paddingTop="25dp">
+
+            <TextView
+                android:id="@+id/tvCurrency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignBottom="@+id/textViewServiceTitle"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="110dp"
+                android:text="Cost:"
+                android:textColor="@color/price_color"
+                android:textSize="14dp"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toStartOf="@+id/tvServicePrice"
+                card_view:layout_constraintHorizontal_bias="1.0"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintVertical_bias="0.103" />
+
+            <TextView
+                android:id="@+id/tvServicePrice"
+                android:layout_width="108dp"
+                android:layout_height="38dp"
+
+                android:layout_alignBaseline="@+id/tvCurrency"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="0dp"
+
+                android:text="30$"
+                android:textColor="@color/price_color"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="1.0"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintVertical_bias="0.054" />
+
+
+            <TextView
+                android:id="@+id/textViewCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvCurrency"
+                android:layout_marginStart="24dp"
+                android:text="Category"
+                android:textSize="16dp"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.14"
+                card_view:layout_constraintStart_toStartOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tvlocation"
+                android:layout_width="wrap_content"
+                android:layout_height="21dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="70dp"
+                android:layout_marginStart="50dp"
+                android:text="Location"
+                android:gravity="center_vertical"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="10dp"
+                android:layout_toRightOf="@id/loc_arrow"
+                android:layout_below="@id/tvDescription"
+                 />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:layout_alignStart="@+id/textViewCategory"
+                android:layout_below="@+id/textViewCategory"
+                android:text="description"
+                android:textColor="@android:color/background_dark"
+                android:textSize="10dp"
+                android:textStyle="bold"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.1"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintVertical_bias="0.537" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="28dp"
+                android:layout_height="35dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/textViewCategory"
+                android:layout_marginBottom="61dp"
+                android:src="@drawable/location"
+                android:layout_below="@id/tvDescription"
+                android:id="@+id/loc_arrow"
+
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignStart="@+id/textViewCategory"
+
+                android:layout_below="@+id/tvlocation"
+                android:layout_marginTop="-70dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="26dp"
+                tools:layout_editor_absoluteY="133dp">
+
+                <ImageView
+
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:src="@drawable/home" />
+
+                <TextView
+                    android:id="@+id/home_avail_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available for Home"
+                    android:textColor="@color/green_for_design"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/edit"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/delete"
+                android:layout_marginEnd="90dp"
+                android:background="@drawable/accept_btn_shape"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:textColor="@color/textColor"
+                android:textSize="11dp"
+                android:textStyle="bold"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/reject_btn_shape"
+                android:text="Delete"
+                android:textAllCaps="false"
+                android:textColor="@color/textColor"
+                android:textSize="11dp"
+                android:textStyle="bold"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewServiceTitle"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/textViewCategory"
+                android:text="TextView blah blah  "
+                android:textColor="@color/colorPrimary"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="4dip"
+            android:layout_height="match_parent"
+            android:background="@drawable/border" />
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

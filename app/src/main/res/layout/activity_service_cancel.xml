@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor"
+    tools:context="com.vartista.www.vartista.modules.provider.ServiceCancelActivity">
+
+<LinearLayout
+    android:id="@+id/topLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/imageView7"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/profile"
+        android:layout_marginBottom="20dp"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="0dp" />
+</LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/topLayout"
+        android:layout_marginTop="40px"
+        android:id="@+id/detailslayout">
+
+        <TextView
+            android:id="@+id/SpuserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UserName : Masood Junejo"
+            android:textSize="18sp"
+            />
+        <TextView
+            android:id="@+id/SpService_tittle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Service: Hair Cutting"
+            android:textSize="18sp"
+            />
+        <TextView
+            android:id="@+id/Sptime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time: 09:30pm"
+            android:textSize="18sp"
+            />
+        <TextView
+            android:id="@+id/Spdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: 08-10-2018"
+            android:textSize="18sp"
+            />
+        <TextView
+            android:id="@+id/Splocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location: Mircolony, Tando Jam"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/textviewdetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your service is about to start in 2 hours"
+            android:textSize="18sp"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detailslayout"
+        android:layout_marginTop="40px"
+        android:layout_centerInParent="true"
+        android:text="Want to Cancel this Service....?"
+
+        android:textSize="18sp"
+        />
+
+    <Button
+        android:id="@+id/cancelbuttonServiceP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/acceptbutton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/reject_btn_shape"
+        android:text="Cancel This Service"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:id="@+id/acceptbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:background="@drawable/accept_btn_shape"
+        android:textColor="@color/textColor"
+        android:text=" Yes i want to provice service "
+        android:textAllCaps="false" />
+</ScrollView>
+
+</RelativeLayout>
