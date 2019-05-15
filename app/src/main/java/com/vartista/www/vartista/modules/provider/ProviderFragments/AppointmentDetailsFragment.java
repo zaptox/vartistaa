@@ -532,7 +532,7 @@ public class AppointmentDetailsFragment extends Fragment {
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                MDToast.makeText(getContext(), "Connection Problem!", MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
+                MDToast.makeText(getContext(), "ConnectionForEarning Problem!", MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
                 // MDToast.makeText(getApplicationContext(),e.getMessage(),MDToast.LENGTH_LONG).show();
             }
         }
