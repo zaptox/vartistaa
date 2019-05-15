@@ -494,7 +494,7 @@ public class RequestAlertActivity extends AppCompatActivity {
         String Remarks = "";
         String time = "";
         String date = "";
-        Call<CreateRequest> call2 = MyRequestsServicesListAdapter.apiInterface.InsertSpRatings(0,0.0,service_p_id,user_id,service_id,Remarks,date,time, intReq_serv_id               );
+        Call<CreateRequest> call2 = RequestAlertActivity.apiInterface.InsertSpRatings(0,0.0,service_p_id,user_id,service_id,Remarks,date,time, intReq_serv_id               );
 
         call2.enqueue(new Callback<CreateRequest>() {
             @Override

@@ -70,7 +70,8 @@ public class My_Rating_Reviews_Fragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         SharedPreferences object =getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
         serviceproviderid= object.getInt("user_id",0);
-
+        String username = object.getString("name","");
+        headername.setText(username);
         new My_Rating_Reviews_Fragment.Conncetion(getContext(),serviceproviderid).execute();
         ratingBar = view.findViewById(R.id.simpleRatingBar);
         ratingBar.setNumStars(5);
