@@ -785,8 +785,6 @@ public class HomeActivity extends AppCompatActivity
         }
         else if(fragment.equals("AppointmentDetailsFragment")){
 
-
-
         }
         else if(fragment.equals("MyCompletedServicesFragment")){
 

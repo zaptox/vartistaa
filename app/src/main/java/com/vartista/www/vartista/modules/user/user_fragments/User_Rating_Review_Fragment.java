@@ -168,7 +168,7 @@ public class User_Rating_Review_Fragment extends Fragment {
                     }
                     listadapter = new RatingsReviewDetailsAdaptor(getContext(),list);
                     recyclerView.setAdapter(listadapter);
-                    headername.setText(list.get(0).getUserName());
+                    headername.setText(list.get(0).getSpName());
                     Float finalrating = (Float)CustomerRating/list.size();
                     ratingBar.setRating(finalrating);
                     ratingBar.setIsIndicator(true);
