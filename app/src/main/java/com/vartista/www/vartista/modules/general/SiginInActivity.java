@@ -23,6 +23,7 @@ import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.Doument_Upload_Nil;
 import com.vartista.www.vartista.beans.NotificationsManager;
+import com.vartista.www.vartista.modules.provider.AssignRatingsToUser;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.UserAppointmentDetails;
@@ -244,7 +245,10 @@ public class SiginInActivity extends AppCompatActivity {
                             userLoggedIn.getContact(),image);
                     setUIToWait(false);
                     //
-                    MDToast.makeText(SiginInActivity.this, "Login Sucessfully!...", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
+
+
+
+                        MDToast.makeText(SiginInActivity.this, "Login Sucessfully!...", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
                     Intent intent = new Intent(SiginInActivity.this, HomeActivity.class);
                     intent.putExtra("user", userLoggedIn);
@@ -253,6 +257,7 @@ public class SiginInActivity extends AppCompatActivity {
                     finish();
 //
 //
+
                 } else if (response.body().getResponse().equals("failed")) {
                       MDToast.makeText(SiginInActivity.this, "Login Failed.. Please try again", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                     setUIToWait(false);

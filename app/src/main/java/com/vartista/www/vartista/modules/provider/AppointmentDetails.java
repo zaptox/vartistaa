@@ -238,7 +238,7 @@ public class AppointmentDetails extends AppCompatActivity {
 
 //                        upaterequeststatus(requestservice_id);
 
-                        insertEarnings(Integer.parseInt(ob.getService_provider_id()),Integer.parseInt(ob.getUser_customer_id()),ob.getService_id(), Integer.parseInt(ob.getRequestservice_id()),Double.parseDouble(ob.getPrice()),admin_tax,discount,0.0,ob.getName());
+                        insertEarnings(Integer.parseInt(ob.getService_provider_id()),Integer.parseInt(ob.getUser_customer_id()),ob.getService_id(), Integer.parseInt(ob.getRequestservice_id()),Double.parseDouble(ob.getPrice()),admin_tax,discount,0.0,ob.getName(), ob);
 //                        insertEarnings();
 
                         payment_received_dialogue.cancel();
@@ -267,7 +267,7 @@ public class AppointmentDetails extends AppCompatActivity {
 
 
     @TargetApi(Build.VERSION_CODES.N)
-    public void insertEarnings(final int sp_id, final int user_id, int serviceid , final int requestservice_id, double total_ammout, double admin_tax, double discount, double user_bones, final String sp_name){
+    public void insertEarnings(final int sp_id, final int user_id, int serviceid , final int requestservice_id, double total_ammout, double admin_tax, double discount, double user_bones, final String sp_name,final servicepaapointmentsitems ob){
 
         final double admin_earning=(total_ammout *admin_tax)/100;
         double sp_earning= total_ammout-admin_earning;
@@ -283,7 +283,10 @@ public class AppointmentDetails extends AppCompatActivity {
                 if(response.body().getResponse().equals("ok")){
                     updateDues(sp_id,admin_earning);
 
-                    payment_received_function(requestservice_id,user_id,sp_name);
+                    payment_received_function(requestservice_id,user_id,sp_name,ob);
+
+                    startActivity(new Intent(getApplicationContext(),AssignRatingsToUser.class).putExtra("object",ob));
+
                     MDToast.makeText(AppointmentDetails.this,"Earnings Added..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
 
@@ -360,7 +363,7 @@ public class AppointmentDetails extends AppCompatActivity {
         });
     }
 
-    public void payment_received_function(int id, final int customer_id, final String sp_name){
+    public void payment_received_function(int id, final int customer_id, final String sp_name,final servicepaapointmentsitems ob){
         Call<ServiceRequets> call= AppointmentDetails.apiInterface.updateOnClickRequests(3,id);
         call.enqueue(new Callback<ServiceRequets>() {
             @Override
@@ -372,6 +375,9 @@ public class AppointmentDetails extends AppCompatActivity {
 //                    User user= HomeActivity.user;
 //                    i.putExtra("user",user);
 //                    startActivity(i);
+                    Intent intent  = new Intent(AppointmentDetails.this,AssignRatingsToUser.class);
+                    intent.putExtra("object",ob);
+                    startActivity(intent);
 
 
                     String title="Wanna rate "+sp_name+"?";

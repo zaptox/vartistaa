@@ -1,5 +1,9 @@
 package com.vartista.www.vartista.modules.general;
 
+// menu me rating ka rakha hai yaha par user rating ke click krne se rating khulegi or fragment khulega also xml of fragment is new ,
+
+
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -65,6 +69,7 @@ import com.vartista.www.vartista.modules.user.user_fragments.FindServicesInListF
 import com.vartista.www.vartista.modules.user.user_fragments.MyCompletedServicesFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.MyServiceMeetingsFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.ServiceProviderDetailFragment;
+import com.vartista.www.vartista.modules.user.user_fragments.User_Rating_Review_Fragment;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.TokenApiInterface;
 import com.vartista.www.vartista.util.CONST;
@@ -200,8 +205,6 @@ public class HomeActivity extends AppCompatActivity
         {
             case CONST.FIND_SERVICE_IN_LIST_FRAGMENT:
 
-
-
                 int catId=intent.getIntExtra("cat_id",0);
                 FindServicesInListFragment findServicesInList=new FindServicesInListFragment(catId);
                 replaceFragment(findServicesInList);
@@ -295,7 +298,13 @@ public class HomeActivity extends AppCompatActivity
                                          getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
 
                                          break;
-                                         default:
+                                         //newcode
+                                         case CONST.USER_RATINGS_REVIEW_FRAGMENT:
+                                             replaceFragment(new User_Rating_Review_Fragment());
+                                             getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
+                                             break;
+            //newcode
+                                             default:
                                              replaceFragment(new UsersFragment(user_id));
 
         }}
@@ -370,7 +379,15 @@ public class HomeActivity extends AppCompatActivity
 
 
 
-        } else if (id == R.id.provider_doc_upload) {
+        }
+        //newcode
+//        else if (id == R.id.Userratings) {
+//            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+//            intent.putExtra("fragment_Flag", CONST.USER_RATINGS_REVIEW_FRAGMENT);
+//            startActivity(intent);
+//        }
+//newcode
+        else if (id == R.id.provider_doc_upload) {
 
             Intent intent = new Intent(HomeActivity.this, GetDocumentActivity.class);
             startActivity(intent);

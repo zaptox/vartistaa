@@ -76,11 +76,19 @@ public interface ApiInterface {
 
                             @Query("user_remarks") String user_remarks,@Query("date") String date,@Query("time") String time);
 
+    @GET("Assign_Ratings_To_User.php")
+    Call<CreateRequest> InsertSpRatings(@Query("id") int id,@Query("stars") double stars,@Query("service_p_id") int service_p_id,@Query("user_id") int user_id,@Query("service_id") int service_id,
+
+                                        @Query("sp_remarks") String user_remarks,@Query("date") String date,@Query("time") String time,@Query("requestservice_id")int requestservice_id);
+
 
     @GET("update_ratings.php")
     Call<CreateRequest> updateratings(@Query("id") int id,@Query("stars") double stars,@Query("user_remarks") String user_remarks,@Query("request_id") int request_id);
 
 
+
+    @GET("update_sp_ratings.php")
+    Call<CreateRequest> updateSpRatings(@Query("id") int id,@Query("stars") double stars,@Query("sp_remarks") String sp_remarks,@Query("request_id") int request_id);
 
     @GET("insert_user_address.php")
     Call<UserAddressBean> insertUserAddress(@Query("work_address") String work_address, @Query("permanent_address") String permanent_address,

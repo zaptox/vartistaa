@@ -105,6 +105,9 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
 
                insertreviewnil(myReqServicesList.get(position).getUser_customer_id(),myReqServicesList.get(position).getService_provider_id(),myReqServicesList.get(position).getService_id());
+               //newcode
+               insertreviewnilForSp(myReqServicesList.get(position).getUser_customer_id(),myReqServicesList.get(position).getService_provider_id(),myReqServicesList.get(position).getService_id(),myReqServicesList.get(position).getReqservice_id());
+
                int status = 1;
                 requestservice_id = myReqServicesList.get(position).getReqservice_id();
                Call<ServiceRequets> call = MyRequestsServicesListAdapter.apiInterface.updateOnClickRequests(status,requestservice_id);
@@ -311,40 +314,6 @@ int timevalue = -2;
 
 
 
-          public static void sendCompactNotification(Context context , int requestcode , String date , String time,String name,String timeformat,int timevalue,int Reqeustserviceid){
-              AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-//              PendingIntent pendingIntent;
-              String appointmentdate = date+" "+time;
-              SimpleDateFormat showsdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-              Date date1 = null;
-              try {
-                  date1 = showsdf.parse(appointmentdate);
-              } catch (ParseException e) {
-                  Log.d("Date Parsing",""+e.getMessage());
-                  e.printStackTrace();
-              }
-              Calendar calendar = Calendar.getInstance();
-              calendar.setTime(date1);
-              if (timeformat.equals("hour")){
-                  calendar.add(Calendar.HOUR,timevalue);
-              }
-              else{
-                  calendar.add(Calendar.MINUTE,timevalue);
-
-              }
-              Intent intent = new Intent("alarm");
-              intent.putExtra("username",name);
-              intent.putExtra("requestcode",requestcode);
-              intent.putExtra("service_id",Reqeustserviceid);
-//              if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                  pendingIntent = PendingIntent.getForegroundService(context, 0, intent, 0);
-//              }else {
-//                  pendingIntent = PendingIntent.getService(context, 0, intent, 0);
-//              }
-              PendingIntent broadcast = PendingIntent.getBroadcast(context,requestcode,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-              alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),broadcast);
-
-          }
 
 
      public  void insertNotification(String title , String message, int sender_id , int receiver_id , int status , String created_at){
@@ -384,6 +353,79 @@ int timevalue = -2;
 
 
 }
+    //newcode function
+    public void insertreviewnilForSp(int user_id,int service_p_id,int service_id,int requestservice_id){
+        String servicetittle = "";
+        String Remarks = "";
+        String time = "";
+        String date = "";
+        Toast.makeText(context, requestservice_id+": Ratings for User Inserted", Toast.LENGTH_SHORT).show();
+        Call<CreateRequest> call2 = MyRequestsServicesListAdapter.apiInterface.InsertSpRatings(0,0.0,service_p_id,user_id,service_id,Remarks,date,time,requestservice_id);
+
+        call2.enqueue(new Callback<CreateRequest>() {
+            @Override
+            public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
+                if (response.body().getResponse().equals("ok")) {
+
+//                    MDToast mdToast = MDToast.makeText(context, "Your Ratings are inserted", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+//                    mdToast.show();
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<CreateRequest> call, Throwable t) {
+                //
+                // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+
+    }
+
+
+
+
+
+    public static void sendCompactNotification(Context context , int requestcode , String date , String time,String name,String timeformat,int timevalue,int Reqeustserviceid){
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+//              PendingIntent pendingIntent;
+        String appointmentdate = date+" "+time;
+        SimpleDateFormat showsdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        Date date1 = null;
+        try {
+            date1 = showsdf.parse(appointmentdate);
+        } catch (ParseException e) {
+            Log.d("Date Parsing",""+e.getMessage());
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date1);
+        if (timeformat.equals("hour")){
+            calendar.add(Calendar.HOUR,timevalue);
+        }
+        else{
+            calendar.add(Calendar.MINUTE,timevalue);
+
+        }
+        Intent intent = new Intent("alarm");
+        intent.putExtra("username",name);
+        intent.putExtra("requestcode",requestcode);
+        intent.putExtra("service_id",Reqeustserviceid);
+//              if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                  pendingIntent = PendingIntent.getForegroundService(context, 0, intent, 0);
+//              }else {
+//                  pendingIntent = PendingIntent.getService(context, 0, intent, 0);
+//              }
+        PendingIntent broadcast = PendingIntent.getBroadcast(context,requestcode,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),broadcast);
+
+    }
+
 
 
 public String get_Current_Date(){

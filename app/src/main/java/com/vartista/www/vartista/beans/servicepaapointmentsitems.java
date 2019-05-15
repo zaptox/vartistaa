@@ -154,6 +154,24 @@ public class servicepaapointmentsitems implements Serializable {
         this.contact=contact;
         this.service_id=service_id;
     }
+    public servicepaapointmentsitems(String requestservice_id, String user_customer_id, String service_provider_id, String username, String service_description, String location, String request_status, String date, String service_title, String price, String name, String time, String image,String contact,int service_id,String rating_id) {
+        this.requestservice_id = requestservice_id;
+        this.user_customer_id = user_customer_id;
+        this.service_provider_id = service_provider_id;
+        this.username = username;
+        this.service_description = service_description;
+        this.location = location;
+        this.request_status = request_status;
+        this.date = date;
+        this.service_title = service_title;
+        this.price = price;
+        this.name = name;
+        this.time = time;
+        this.image = image;
+        this.contact=contact;
+        this.service_id=service_id;
+        this.rating_id=rating_id;
+    }
     public servicepaapointmentsitems(String requestservice_id, String user_customer_id, String service_provider_id, String username, String service_description, String location, String request_status, String date, String service_title, String price, String name, String time, String image,String contact,String rating_status,String rating_id) {
         this.requestservice_id = requestservice_id;
         this.user_customer_id = user_customer_id;

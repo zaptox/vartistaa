@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.UserNotificationlistadapter;
@@ -37,7 +38,7 @@ public class MyAppointments extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private servicepappointmentsadapter listadapter;
     ArrayList<servicepaapointmentsitems> myappointments;
-    int service_id;
+    int user_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,19 +52,19 @@ public class MyAppointments extends AppCompatActivity {
 
         SharedPreferences ob =getSharedPreferences("Login", Context.MODE_PRIVATE);
 
-        service_id=ob.getInt("user_id",0);
+        user_id=ob.getInt("user_id",0);
 
-        new MyAppointments.Conncetion(MyAppointments.this,service_id).execute();
+        new MyAppointments.Conncetion(MyAppointments.this,user_id).execute();
     }
 
 
     class Conncetion extends AsyncTask<String,String ,String > {
-        private int service_id;
+        private int user_id;
         private ProgressDialog dialog;
 
-        public Conncetion(Context activity, int service_id) {
+        public Conncetion(Context activity, int user_id) {
             dialog = new ProgressDialog(activity);
-            this.service_id = service_id;
+            this.user_id = user_id;
         }
 
         @Override
@@ -78,7 +79,7 @@ public class MyAppointments extends AppCompatActivity {
 
             String result = "";
 
-            final String BASE_URL = "http://vartista.com/vartista_app/servicepappointments.php?service_provider_id="+service_id;
+            final String BASE_URL = "http://vartista.com/vartista_app/servicepappointments.php?service_provider_id="+user_id;
             try {
                 HttpClient client = new DefaultHttpClient();
                 HttpGet request = new HttpGet();
@@ -135,9 +136,10 @@ public class MyAppointments extends AppCompatActivity {
                         String name = ser1.getString("name");
                         String Time = ser1.getString("time");
                         String contact= ser1.getString("contact");
+                        String ratingid = ser1.getString("ratingid");
+                        Toast.makeText(MyAppointments.this, requestservice_id+":"+ratingid, Toast.LENGTH_SHORT).show();
 //                        int rating_status=ser1.getInt("rating_status");
-
-                        myappointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time,image,contact,service_id));
+                        myappointments.add(new servicepaapointmentsitems(requestservice_id,user_customer_id,service_provider_id,username,service_description,location,request_status,date,service_title,price,name,Time,image,contact,service_id,ratingid));
                     }
 
 

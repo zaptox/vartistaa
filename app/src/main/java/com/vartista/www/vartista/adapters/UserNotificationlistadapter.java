@@ -68,7 +68,7 @@ public class  UserNotificationlistadapter extends RecyclerView.Adapter<UserNotif
                 new BottomSheet.Builder(v.getContext())
                         .setTitle("Title")
                         .setMessage("Message")
-                        .setIcon(v.getContext().getDrawable(R.drawable.ic_menu_send))
+                        .setIcon(v.getContext().getResources().getDrawable(R.drawable.ic_menu_send))
                         .show();
             }
         });

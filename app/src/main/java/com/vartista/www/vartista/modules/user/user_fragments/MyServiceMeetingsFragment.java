@@ -161,7 +161,7 @@ public class MyServiceMeetingsFragment extends Fragment {
                 }
 
                 else {
-                    MDToast.makeText(getContext(),"no data",MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
+//                    MDToast.makeText(getContext(),"no data",MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

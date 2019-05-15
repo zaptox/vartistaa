@@ -103,6 +103,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:label=""
             />
+        <activity android:name=".modules.provider.AssignRatingsToUser"
+            android:label=""
+            />
         <activity android:name=".modules.provider.DocumentUploadActivity"
 
             android:theme="@style/AppTheme.NoActionBar"

@@ -207,9 +207,10 @@ public class RequestAlertActivity extends AppCompatActivity {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                insertreviewnil(IntReqUserId,IntServ_provider_id,IntService_Id);
-                int status = 1;
                 final int requestservice_id = IntReq_serv_id;
+                insertreviewnil(IntReqUserId,IntServ_provider_id,IntService_Id);
+                insertreviewnilForSp(IntReqUserId,IntServ_provider_id,IntService_Id,IntReq_serv_id);
+                int status = 1;
                 SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
                 final int user_id = ob.getInt("user_id",0);
                 name_user= ob.getString("name","");
@@ -412,7 +413,7 @@ public class RequestAlertActivity extends AppCompatActivity {
         return currentDate;
     }
 
-    public  void insertNotification(String title , String message, int sender_id , int receiver_id , int status , String created_at){
+    protected void insertNotification(String title , String message, int sender_id , int receiver_id , int status , String created_at){
 //         setUIToWait(true);
         Call<AllNotificationBean> call=RequestAlertActivity.apiInterface.Insert_Notification(title,message,sender_id,receiver_id,status,created_at);
         call.enqueue(new Callback<AllNotificationBean>() {
@@ -463,6 +464,45 @@ public class RequestAlertActivity extends AppCompatActivity {
 
 //                    MDToast mdToast = MDToast.makeText(RequestAlertActivity.this, "Your Ratings are inserted", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
 //                    mdToast.show();
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<CreateRequest> call, Throwable t) {
+                //
+                // Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+
+    }
+
+
+
+
+
+
+
+
+    public void insertreviewnilForSp(int user_id,int service_p_id,int service_id,int intReq_serv_id){
+        String servicetittle = "";
+        String Remarks = "";
+        String time = "";
+        String date = "";
+        Call<CreateRequest> call2 = MyRequestsServicesListAdapter.apiInterface.InsertSpRatings(0,0.0,service_p_id,user_id,service_id,Remarks,date,time, intReq_serv_id               );
+
+        call2.enqueue(new Callback<CreateRequest>() {
+            @Override
+            public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
+                if (response.body().getResponse().equals("ok")) {
+
+                    MDToast mdToast = MDToast.makeText(RequestAlertActivity.this, "Your Ratings are inserted", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                    mdToast.show();
 
 
                 }

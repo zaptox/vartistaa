@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.daimajia.androidanimations.library.Techniques;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.User;
+import com.vartista.www.vartista.modules.provider.AssignRatingsToUser;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
@@ -107,7 +108,7 @@ public class SplashActivity extends AwesomeSplash {
         String sp_status_shared=ob.getString("sp_status","");
         String contact_shared=ob.getString("contact","");
         String image_shared=ob.getString("image","");
-
+        Boolean assignrating = ob.getBoolean("RatingsToUser",false);
 
 
         userLoggedIn = new User(user_id_shared, name_shared, email_shared, pass_shared, image_shared, sp_status_shared, contact_shared, "", "",gender_shared,sp_status_shared);
@@ -120,15 +121,36 @@ public class SplashActivity extends AwesomeSplash {
         else {
 //            perfromLogin(email_shared, pass_shared);
 
-
-            Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+            if (sp_status_shared.contains("1")){
+                 if(assignrating){
+                     Intent intent = new Intent(SplashActivity.this, AssignRatingsToUser.class);
+                     intent.putExtra("assignratings",1);
+                     startActivity(intent);
+                     finish();
+                 }
+                 else{
+                     Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
 //                    Intent intent = new Intent(SplashActivity.this, CheckActivity.class);
 
-            intent.putExtra("user", userLoggedIn);
+                     intent.putExtra("user", userLoggedIn);
 
 
-            startActivity(intent);
-            finish();
+                     startActivity(intent);
+                     finish();
+                 }
+
+
+
+            } else {
+                Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+//                    Intent intent = new Intent(SplashActivity.this, CheckActivity.class);
+
+                intent.putExtra("user", userLoggedIn);
+
+
+                startActivity(intent);
+                finish();
+            }
 
         }
 
