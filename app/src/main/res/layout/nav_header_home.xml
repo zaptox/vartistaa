@@ -41,4 +41,15 @@
         android:layout_height="wrap_content"
         android:text="email@gmail.com" />
 
+    <TextView
+        android:gravity="center_horizontal"
+        android:id="@+id/sp_ref_number"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        android:textColor="@color/acceptBtnColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SP-00000" />
+
 </LinearLayout>
