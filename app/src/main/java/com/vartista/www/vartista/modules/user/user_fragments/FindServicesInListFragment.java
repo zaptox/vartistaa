@@ -611,7 +611,7 @@ public class FindServicesInListFragment extends Fragment {
                     listViewMyServices.setAdapter(myServicesListAdapter);
 
                 } else {
-                    MDToast.makeText(getContext(),"no data",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+                    MDToast.makeText(myContext,"no data",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
 
 
 
