@@ -29,7 +29,6 @@ public class EarningsListAdapter  extends RecyclerView.Adapter<EarningsListAdapt
     public EarningsListAdapter(Context context, List<EarningBean> list) {
         this.context = context;
         this.list = list;
-
     }
 
 

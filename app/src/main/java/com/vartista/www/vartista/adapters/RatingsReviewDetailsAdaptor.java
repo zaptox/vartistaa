@@ -52,7 +52,7 @@ public class RatingsReviewDetailsAdaptor  extends RecyclerView.Adapter<RatingsRe
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         String oldstring = Ratingdetails.get(position).getDate();
-        Username.setText(Ratingdetails.get(position).getUserName());
+            Username.setText(Ratingdetails.get(position).getUserName());
         ratingBar.setRating(Ratingdetails.get(position).getStars());
         ratingBar.setIsIndicator(true);
         ratingBar.setFocusable(false);
