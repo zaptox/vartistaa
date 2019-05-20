@@ -2,9 +2,11 @@ package com.vartista.www.vartista.modules.user.user_fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -55,30 +57,37 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class BookNowFragment extends Fragment  {
+public class BookNowFragment extends Fragment {
 
 
-    EditText editTextaddress,editTextCity;
+    EditText editTextaddress, editTextCity;
     Button buttonBook;
-    ImageView imageViewDate,imageViewTime;
+    ImageView imageViewDate, imageViewTime;
     public static ApiInterface apiInterface;
     public static SendNotificationApiInterface sendNotificationApiInterface;
     private FragmentActivity myContext;
     DatePickerDialog.OnDateSetListener ondate;
     TimePickerDialog.OnTimeSetListener onTime;
+    Date date1 = null;
+    Date currentdate = null;
+    Calendar calendar2;
 
-    RelativeLayout layoutDate,layoutTime;
-    TextView textViewReq_Date,textViewReq_Time;
-    int user_customer_id,service_provider_id,service_id,service_cat_id;
+    RelativeLayout layoutDate, layoutTime;
+    TextView textViewReq_Date, textViewReq_Time;
+    int user_customer_id, service_provider_id, service_id, service_cat_id;
     TimePickerDialog timePickerDialog;
+
+    Boolean check;
 
 
     public BookNowFragment() {
@@ -87,95 +96,122 @@ public class BookNowFragment extends Fragment  {
 
     @SuppressLint("ValidFragment")
     public BookNowFragment(int provider_id, int cat_id, int user_id, int service_id) {
-        this.user_customer_id=user_id;
-        this.service_provider_id=provider_id;
-        this.service_id=service_id;
-        this.service_cat_id=cat_id;
+        this.user_customer_id = user_id;
+        this.service_provider_id = provider_id;
+        this.service_id = service_id;
+        this.service_cat_id = cat_id;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.activity_book_now,container,false);
-        editTextaddress=(EditText)view.findViewById(R.id.address);
-        editTextCity=(EditText)view.findViewById(R.id.editTxtcity);
-        buttonBook=(Button)view.findViewById(R.id.buttonBook);
-        imageViewDate=(ImageView)view.findViewById(R.id.imageViewDate);
-        imageViewTime=(ImageView)view.findViewById(R.id.imageViewTime);
-        layoutDate=(RelativeLayout)view.findViewById(R.id.layoutDate);
-        layoutTime=(RelativeLayout)view.findViewById(R.id.layouttime);
-        textViewReq_Date=(TextView)view.findViewById(R.id.textViewReq_Date);
-        textViewReq_Time=(TextView)view.findViewById(R.id.textViewReq_time);
+        View view = inflater.inflate(R.layout.activity_book_now, container, false);
+        editTextaddress = (EditText) view.findViewById(R.id.address);
+        editTextCity = (EditText) view.findViewById(R.id.editTxtcity);
+        buttonBook = (Button) view.findViewById(R.id.buttonBook);
+        imageViewDate = (ImageView) view.findViewById(R.id.imageViewDate);
+        imageViewTime = (ImageView) view.findViewById(R.id.imageViewTime);
+        layoutDate = (RelativeLayout) view.findViewById(R.id.layoutDate);
+        layoutTime = (RelativeLayout) view.findViewById(R.id.layouttime);
+        textViewReq_Date = (TextView) view.findViewById(R.id.textViewReq_Date);
+        textViewReq_Time = (TextView) view.findViewById(R.id.textViewReq_time);
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         sendNotificationApiInterface = ApiClient.getApiClient().create(SendNotificationApiInterface.class);
-
-        Calendar calendar=Calendar.getInstance();
-        int day=calendar.get(Calendar.DAY_OF_MONTH);
-        int month=calendar.get(Calendar.MONTH);
-        int year=calendar.get(Calendar.YEAR);
+        calendar2 = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
         layoutDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePicker();
             }
         });
+        check = false;
 
-        Calendar calendar1=Calendar.getInstance();
-        final int hour=calendar.get(Calendar.HOUR);
-        final int minute=calendar.get(Calendar.MINUTE);
+        Calendar calendar1 = Calendar.getInstance();
+        final int hour = calendar.get(Calendar.HOUR);
+        final int minute = calendar.get(Calendar.MINUTE);
 
         layoutTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             timePickerDialog=new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
-                 @Override
-                 public void onTimeSet(TimePicker timePicker, int hourOfDay, int min) {
-                     String amPm="";
-                     if(hourOfDay>=12){
-                         amPm="PM";
-                         hourOfDay=hourOfDay-12;
-                     }
-                     else{
-                         amPm="AM";
-                     }
-                     textViewReq_Time.setText(String.format("%02d:%02d",hourOfDay,min)+" "+amPm);
+                timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int min) {
+                        String amPm = "";
+                        if (hourOfDay >= 12) {
+                            amPm = "PM";
+                            hourOfDay = hourOfDay - 12;
+                        } else {
+                            amPm = "AM";
+                        }
+                        textViewReq_Time.setText(String.format("%02d:%02d", hourOfDay, min) + " " + amPm);
 
 
-                 }
-             },hour,minute,false);
-      timePickerDialog.show();
+                    }
+                }, hour, minute, false);
+                timePickerDialog.show();
             }
         });
 
         buttonBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String address = editTextaddress.getText().toString();
                 String city = editTextCity.getText().toString();
                 String time = textViewReq_Time.getText().toString();
-                final String date=textViewReq_Date.getText().toString();
+                final String date = textViewReq_Date.getText().toString();
+                if (!date.trim().contentEquals("00/00/0000") && !time.trim().contentEquals("00:00 PM")) {
+                    SimpleDateFormat showsdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+                    String dateNtime = date + " " + time;
 
-                SharedPreferences ob = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
-                final int user_id = ob.getInt("user_id", 0);
+                    try {
+                        date1 = showsdf.parse(dateNtime);
+                        String currentvalue = showsdf.format(calendar2.getTime());
+                        currentdate = showsdf.parse(currentvalue);
+                        if (date1.after(currentdate)) {
+//                            Calendar cl = Calendar.getInstance();
+//                            cl.add(Calendar.MINUTE, 30);
+//                           Date currentdate2 = cl.getTime();
+//                            if (date1.after(currentdate2)) {
+                                check = true;
+//                            } else {
+//                                onStop();
+//                                alterDialog("Please Provide at Least 30 minutes later from NOW!");
+//                            }
+                        }
 
-                final String name_user = ob.getString("name","");
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    if (check) {
+                        SharedPreferences ob = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
+                        final int user_id = ob.getInt("user_id", 0);
+
+                        final String name_user = ob.getString("name", "");
 //             final String title = "Vartista- Request";
-                final String title = "Vartista- Request?user-id=?" + user_id + "?servp-id=" + service_provider_id + "?serv-id=" + service_id;
+                        final String title = "Vartista- Request?user-id=?" + user_id + "?servp-id=" + service_provider_id + "?serv-id=" + service_id;
 
-                final String body = name_user+" sent you request";
+                        final String body = name_user + " sent you request";
 
-                Call<CreateRequest> call = BookNowFragment.apiInterface.createRequest(user_customer_id,
-                        service_provider_id,
-                        service_id,date,time,address,city,0,service_cat_id);
+                        Call<CreateRequest> call = BookNowFragment.apiInterface.createRequest(user_customer_id,
+                                service_provider_id,
+                                service_id, date, time, address, city, 0, service_cat_id);
 
-                call.enqueue(new Callback<CreateRequest>() {
+                        call.enqueue(new Callback<CreateRequest>() {
 
-                    @Override
-                    public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
+                            @Override
+                            public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
 //                     Toast.makeText(BookNowActivity.this, "in qnque"+response.body().getResponse(), Toast.LENGTH_SHORT).show();
 //                        Toast.makeText(getContext(), ""+response.body().getResponse(), Toast.LENGTH_SHORT).show();
 
-                        if (response.body().getResponse().equals("ok")) {
+                                if (response.body().getResponse().equals("ok")) {
 //                         insertNotification(title,body,user_customer_id,service_provider_id,1,date);
 //                         Toast.makeText(BookNowActivity.this, ""+response.body().getResponse(), Toast.LENGTH_SHORT).show();
 //                         Call<NotificationsManager> callNotification = BookNowActivity.sendNotificationApiInterface
@@ -204,45 +240,49 @@ public class BookNowFragment extends Fragment  {
 //
 
 
-                            getRequestServId(user_customer_id,service_provider_id,service_id,title,body);
+                                    getRequestServId(user_customer_id, service_provider_id, service_id, title, body);
 
 
+                                }
 
-                        }
 
+                            }
 
+                            @Override
+                            public void onFailure(Call<CreateRequest> call, Throwable t) {
+                                //
+                            }
+
+                        });
+
+                        editTextaddress.setText("");
+                        editTextCity.setText("");
+                        textViewReq_Date.setText("00-00-0000");
+                        textViewReq_Time.setText("00:00");
+
+                    } else {
+                        alterDialog("Your Date and Time Selection is Wrong, Please Select again!");
                     }
 
-                    @Override
-                    public void onFailure(Call<CreateRequest> call, Throwable t) {
-                        //
-                    }
-
-                });
-
-                editTextaddress.setText("");
-                editTextCity.setText("");
-                textViewReq_Date.setText("00-00-0000");
-                textViewReq_Time.setText("00:00");
-
-
+                } else {
+                    alterDialog("Date and Time is Not Selected, Please Select!");
+                }
             }
         });
 
 
-         ondate = new DatePickerDialog.OnDateSetListener() {
+        ondate = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                        Calendar c=Calendar.getInstance();
-        c.set(Calendar.YEAR,year);
-        c.set(Calendar.MONTH,monthOfYear);
-        c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String currentDate = sdf.format(c.getTime());
-        textViewReq_Date.setText(currentDate);
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.YEAR, year);
+                c.set(Calendar.MONTH, monthOfYear);
+                c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String currentDate = sdf.format(c.getTime());
+                textViewReq_Date.setText(currentDate);
             }
-
 
 
         };
@@ -252,32 +292,24 @@ public class BookNowFragment extends Fragment  {
     }
 
 
-
-
-
-
-    public void insertNotification(String title , String message, int sender_id , int receiver_id , int status , String created_at){
+    public void insertNotification(String title, String message, int sender_id, int receiver_id, int status, String created_at) {
 //         setUIToWait(true);
-        Call<AllNotificationBean> call=BookNowFragment.apiInterface.Insert_Notification(title,message,sender_id,receiver_id,status,created_at);
+        Call<AllNotificationBean> call = BookNowFragment.apiInterface.Insert_Notification(title, message, sender_id, receiver_id, status, created_at);
         call.enqueue(new Callback<AllNotificationBean>() {
             @Override
-            public void onResponse(Call <AllNotificationBean> call, Response<AllNotificationBean> response) {
+            public void onResponse(Call<AllNotificationBean> call, Response<AllNotificationBean> response) {
 
-                if(response.body().getResponse().equals("ok")){
+                if (response.body().getResponse().equals("ok")) {
 //                     setUIToWait(false);
 
-                }
-                else if(response.body().getResponse().equals("exist")){
+                } else if (response.body().getResponse().equals("exist")) {
 //                     setUIToWait(false);
 
-                }
-                else if(response.body().getResponse().equals("error")){
+                } else if (response.body().getResponse().equals("error")) {
 //                     setUIToWait(false);
 
 
-                }
-
-                else{
+                } else {
 //                     setUIToWait(false);
 
 
@@ -286,7 +318,7 @@ public class BookNowFragment extends Fragment  {
             }
 
             @Override
-            public void onFailure(Call <AllNotificationBean> call, Throwable t) {
+            public void onFailure(Call<AllNotificationBean> call, Throwable t) {
 
             }
         });
@@ -296,7 +328,7 @@ public class BookNowFragment extends Fragment  {
 
     @Override
     public void onAttach(Activity activity) {
-        myContext=(FragmentActivity) activity;
+        myContext = (FragmentActivity) activity;
         super.onAttach(activity);
     }
 
@@ -378,7 +410,7 @@ public class BookNowFragment extends Fragment  {
                     String servprv_id = strings[1];
                     String serv_id = strings[2];
 
-                    final String BASE_URL = "http://vartista.com/vartista_app/get_request_service_id.php?serv_prv_id="+servprv_id+"&serv_id="+serv_id+"&usr_cust_id="+user_id;
+                    final String BASE_URL = "http://vartista.com/vartista_app/get_request_service_id.php?serv_prv_id=" + servprv_id + "&serv_id=" + serv_id + "&usr_cust_id=" + user_id;
                     request.setURI(new URI(BASE_URL));
                     HttpResponse response = client.execute(request);
                     BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
@@ -421,7 +453,7 @@ public class BookNowFragment extends Fragment  {
                     }
                     String titleWithRequsetServId = title + "?req-serv-id=" + request_serv_id;
                     Call<NotificationsManager> callNotification = BookNowFragment.sendNotificationApiInterface
-                            .sendPushNotification(service_provider_id, body,titleWithRequsetServId);
+                            .sendPushNotification(service_provider_id, body, titleWithRequsetServId);
                     callNotification.enqueue(new Callback<NotificationsManager>() {
 
                         @Override
@@ -450,8 +482,26 @@ public class BookNowFragment extends Fragment  {
 
 
             }
-        }.execute(""+user_customer_id, ""+service_provider_id,""+service_id);
+        }.execute("" + user_customer_id, "" + service_provider_id, "" + service_id);
     }
 
 
+    public void alterDialog(final String msg) {
+
+        final AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+        builder1.setMessage(msg);
+        builder1.setCancelable(false);
+        builder1.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        builder1.setCancelable(true);
+                        dialog.cancel();
+
+
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
 }

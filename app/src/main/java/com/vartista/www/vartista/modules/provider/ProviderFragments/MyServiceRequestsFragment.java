@@ -30,6 +30,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.cookie.DateParseException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +40,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
@@ -193,6 +196,8 @@ public class MyServiceRequestsFragment extends Fragment {
                         double price = service.getDouble("price");
                         String service_description= service.getString("service_description");
                         String category_name=service.getString("catgname");
+                        String dateNtime = date+" "+time;
+
                         serviceRequestsList.add(new ServiceRequets(requestservice_id,user_name,status,date,time,location,user_customer_id,
                                 service_provider_id,service_id,service_cat_id,service_title,price,service_description,category_name,image
                         ));
@@ -267,6 +272,30 @@ public class MyServiceRequestsFragment extends Fragment {
         }
     }
 
+
+public boolean CompareDate(String Reqeust_Date){
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+            Date date = sdf.parse(Reqeust_Date);
+            Toast.makeText(getActivity(), date+":", Toast.LENGTH_SHORT).show();
+
+//            Date Current_date = sdf.parse(get_Current_Date());
+//            Toast.makeText(getActivity(), date+":"+Current_date, Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return true;
+
+
+        }
+
+
+    public String get_Current_Date(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+        String currentDate = sdf.getDateTimeInstance().format(new Date());
+        return currentDate;
+    }
 
 
 }

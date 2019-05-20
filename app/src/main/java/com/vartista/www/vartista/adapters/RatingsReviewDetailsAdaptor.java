@@ -31,9 +31,9 @@ public class RatingsReviewDetailsAdaptor  extends RecyclerView.Adapter<RatingsRe
     public List<RatingsReviewDetailBean> Ratingdetails;
     public Context context;
     public TextView Username, ReviewDetail,ServiceTittle,date,time;
+    Boolean boo;
     ImageView imageView;
     ScaleRatingBar ratingBar;
-    Boolean boo;
     public RatingsReviewDetailsAdaptor(Context context, List<RatingsReviewDetailBean> Ratingdetails){
         this.Ratingdetails = Ratingdetails;
         this.context=context;

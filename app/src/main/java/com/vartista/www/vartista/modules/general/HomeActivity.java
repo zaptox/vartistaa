@@ -98,7 +98,7 @@ import retrofit2.Response;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,DatePickerDialog.OnDateSetListener,TimePickerDialog.OnTimeSetListener {
     BottomNavigationView bottomNav;
-    private TextView email, name;
+    private TextView email, name , spRefNumber;
     public static int user_id;
     public static User user;
     ImageView imageViewProfileDrawer;
@@ -189,6 +189,7 @@ public class HomeActivity extends AppCompatActivity
 
         user_id = ob.getInt("user_id", 0);
         new Connection(user_id, 1).execute();
+        new ConnectionForSpCode(user_id).execute();
 
 
         startOfflineService();
@@ -789,6 +790,90 @@ public class HomeActivity extends AppCompatActivity
 
         }
 
+
+    }
+
+    class ConnectionForSpCode extends AsyncTask<String, String, String> {
+        private int user_id;
+
+
+
+        public ConnectionForSpCode(int user_id) {
+            this.user_id = user_id;
+        }
+
+
+
+
+        @Override
+        protected void onPreExecute() {
+
+            View headerView = navigationView.getHeaderView(0);
+//            spRefNumber = headerView.findViewById(R.id.sp_ref_number);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+
+            String result = "";
+            String BASE_URL = "";
+
+            BASE_URL = "http://vartista.com/vartista_app/get_serv_prv_sp_code.php?sp_id="+user_id;
+
+            try {
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+
+                request.setURI(new URI(BASE_URL));
+                HttpResponse response = client.execute(request);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                StringBuffer stringBuffer = new StringBuffer();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    stringBuffer.append(line);
+                    break;
+                }
+                reader.close();
+                result = stringBuffer.toString();
+
+
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+                return new String("There is exception" + e.getMessage());
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            try {
+                JSONObject jsonResult = new JSONObject(result);
+                int success = jsonResult.getInt("success");
+
+                if (success == 1) {
+                    String refCode = jsonResult.getString("ref_code");
+                    if(refCode!=null){
+                        spRefNumber.setText(refCode);
+                    }
+
+                } else {
+                    spRefNumber.setText("---");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+
+            }
+
+
+        }
 
     }
 
