@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
@@ -90,7 +91,8 @@ public class EarningFragment extends Fragment {
         imageView=(ImageView)view.findViewById(R.id.imageViewNoDataFound);
         imageView.setVisibility(View.GONE);
 
-
+        Toast.makeText(getContext(), "I have button "+btnBonus.getText(), Toast.LENGTH_SHORT).show();
+//        btnBonus.setVisibility(View.VISIBLE);
 
         try {
             new Conncetion2(getContext(), serviceproviderid).execute();
