@@ -55,7 +55,7 @@ public class DocumentUploadFragment extends Fragment {
     private static final int BANK_DETAILS_IMAGE_REQUEST_CODE = 11;
     private static final int STORAGE_PERMISSION_CODE = 123;
     private ImageView imageViewBankDetails,imageViewCnicFront,imageViewBackCinc;
-    private Button btnUploadCnicBack, btnSetAddress,btnUploadBankDetails,btnUploadCNICFront;
+    private Button btnUploadCnicBack, btnSetAddress,btnUploadBankDetails,btnUploadCNICFront,btnSendRequest;
     private Bitmap bitmapCnicFront,bitmapCnicBack,bitmapBankDetails;
     private Uri filePathCnicFront,filePathCnicBack,filePathBankDetails;
     private  static String cnic_front_document_title="cnic_front";
@@ -92,7 +92,7 @@ public class DocumentUploadFragment extends Fragment {
         btnUploadCnicBack =(Button)view.findViewById(R.id.btnUploadCNICBack);
         btnUploadBankDetails =(Button)view.findViewById(R.id.btnUploadBankDetails);
         btnUploadCNICFront =(Button)view.findViewById(R.id.btnUploadCNICFront);
-
+        btnSendRequest= (Button)view.findViewById(R.id.send_request);
 //        tabLayout.setVisibility(View.GONE);
 
 
@@ -147,13 +147,15 @@ public class DocumentUploadFragment extends Fragment {
 
                     try{
                         uploadMultipart( filePathCnicBack, cnic_back_document_title);}catch (Exception e){
+                        MDToast.makeText(getContext(), "Uploading Image... It may take few minutes.", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
+
                     }
                 }
                 else {
                     showCompletedDialog("error in uploading CNIC Back","Kindly provide required image ");
                 }
 
-                updateSPStatus();
+//                updateSPStatus();
 
 
             }
@@ -167,6 +169,7 @@ public class DocumentUploadFragment extends Fragment {
 
                     try{
                         uploadMultipart( filePathCnicFront, cnic_front_document_title);
+                        MDToast.makeText(getContext(), "Uploading Image... It may take few minutes.", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
                     }catch (Exception e){
                     }
                 }
@@ -174,7 +177,7 @@ public class DocumentUploadFragment extends Fragment {
                     showCompletedDialog("error in uploading CNIC Front","Kindly provide required image ");
                 }
 
-                updateSPStatus();
+//                updateSPStatus();
 
 
             }
@@ -186,6 +189,7 @@ public class DocumentUploadFragment extends Fragment {
 
                     try{
                         uploadMultipart( filePathBankDetails,bank_details_document_title);
+                        MDToast.makeText(getContext(), "Uploading Image... It may take few minutes.", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
                     }catch (Exception e){
                     }
                 }
@@ -193,9 +197,16 @@ public class DocumentUploadFragment extends Fragment {
                     showCompletedDialog("error in uploading Bank Details","Kindly provide required image ");
                 }
 
+//                updateSPStatus();
+
+
+            }
+        });
+
+        btnSendRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 updateSPStatus();
-
-
             }
         });
 

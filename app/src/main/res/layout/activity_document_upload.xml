@@ -74,12 +74,12 @@
             android:background="@android:color/darker_gray"/>
 
 <LinearLayout
-    android:id="@+id/linearLayoutDocBankDetail"
+    android:id="@+id/linearLayoutDocBankDetail1"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_height="wrap_content">
         <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:baselineAligned="false"
@@ -126,23 +126,37 @@
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/btnUploadBankDetails"
+        android:layout_marginTop="5sp"
+        android:textColor="@color/colorWhite"
+        android:backgroundTint="@color/serviceProviderActionBar"
+        android:text="Upload Bank Details"
+        android:textSize="10dp"
+        android:layout_marginRight="5dp"
+        />
+
 </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/btnUploadBankDetails"
-            android:layout_marginTop="5sp"
-            android:textColor="@color/colorWhite"
-            android:background="@drawable/buttonshape"
-            android:backgroundTint="@color/serviceProviderActionBar"
-            android:text="Upload Bank Details"
-            />
+        <View
+            android:layout_marginTop="7sp"
+            android:layout_width="300dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+        android:id="@+id/linearLayoutDocBankDetail2"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
 
 
     <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:baselineAligned="false"
@@ -195,14 +209,30 @@
             android:id="@+id/btnUploadCNICFront"
             android:layout_marginTop="5sp"
             android:textColor="@color/colorWhite"
-            android:background="@drawable/buttonshape"
             android:backgroundTint="@color/serviceProviderActionBar"
 
             android:text="Upload CNIC Front Image"
+            android:textSize="10dp"
+            android:layout_marginRight="5dp"
             />
+    </LinearLayout>
+
+
+        <View
+            android:layout_marginTop="7sp"
+            android:layout_width="300dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+        android:id="@+id/linearLayoutDocBankDetail"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:baselineAligned="false"
@@ -256,15 +286,30 @@
         android:id="@+id/btnUploadCNICBack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
         android:textColor="@color/mdtp_white"
-        android:background="@drawable/buttonshape"
         android:backgroundTint="@color/serviceProviderActionBar"
-
+        android:layout_marginTop="5sp"
         android:text="Upload CNIC Back Image"
+        android:textSize="10dp"
+        android:layout_gravity="center"
+
+        android:layout_marginRight="5dp"
+
         />
+    </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/send_request"
+            android:layout_marginTop="7sp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/buttonshape"
+            android:backgroundTint="@color/serviceProviderActionBar"
+            android:text="Send Request"
+            android:layout_marginBottom="7sp"
+            />
 
     </LinearLayout>
 </ScrollView>

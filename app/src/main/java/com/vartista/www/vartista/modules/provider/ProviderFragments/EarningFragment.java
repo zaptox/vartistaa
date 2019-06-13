@@ -423,7 +423,7 @@ public class EarningFragment extends Fragment {
                     }
 
                     total_dues_text.setText("" + total_dues+"£");
-                    txtRefCode.setText(refCode);
+                    txtRefCode.setText("Ref_Code: "+refCode);
 
                 } else {
                     MDToast.makeText(getContext(), "no data", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();

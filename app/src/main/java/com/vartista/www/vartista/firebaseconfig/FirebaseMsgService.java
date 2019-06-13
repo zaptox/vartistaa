@@ -9,6 +9,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
 import com.vartista.www.vartista.beans.RequestService;
@@ -25,6 +28,7 @@ import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.modules.general.Asynctask_MultipleUrl;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.general.SiginInActivity;
+import com.vartista.www.vartista.modules.general.SignUpActivity;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.UploadDoc;
 import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
@@ -164,6 +168,11 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 User user= HomeActivity.user;
                 resultIntent.putExtra("user",user);
 
+
+                String[] for_body= body.split("_");
+
+                body= for_body[0];
+
                 resultIntent.putExtra("fragment","MyServiceMeetingsFragment");
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -194,6 +203,19 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 User user= HomeActivity.user;
                 resultIntent.putExtra("user",user);
 
+                String[] for_title= title.split("\\?");
+
+                title= for_title[0];
+
+                Handler handler = new Handler(Looper.getMainLooper());
+                final String finalTitle = title;
+
+                handler.post(new Runnable() {
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),"ye hai"+ finalTitle,Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 resultIntent.putExtra("fragment","MyServiceRequestsFragment");
                 resultIntent.putExtra("user", user_id);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -205,6 +227,9 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 dialogIntent.putExtra("req_serv_id",req_serv_id);
                 dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(dialogIntent);
+
+
+
             }
 
 
@@ -217,16 +242,19 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 SharedPreferences sharedPreferencespre =getSharedPreferences("Login", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor=sharedPreferencespre.edit();
                 editor.putString("sp_status","1");
-//                HomeActivity.changed_from_notif="1";
 
                 resultIntent = new Intent(getApplicationContext(), HomeActivity.class);
-                user.setSp_status("1");
 
                 resultIntent.putExtra("fragment","ServiceProviderFragment");
                 resultIntent.putExtra("user", user);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                resultIntent.putExtra("user", user_id);
 
+                SharedPreferences ob1 = getSharedPreferences("Login", Context.MODE_PRIVATE);
+                ob1.edit().clear().commit();
+
+                MDToast.makeText(getApplicationContext(), "Login Again to Start your journey at Vartista", MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
+                Intent dialogIntent = new Intent(this, SiginInActivity.class);
+                startActivity(dialogIntent);
             }
 
             else if(title.contains("Alert")){
@@ -243,6 +271,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 resultIntent.putExtra("fragment","Removed");
                 resultIntent.putExtra("user", user);
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
             }
 
             else if(title.contains("Decline")){

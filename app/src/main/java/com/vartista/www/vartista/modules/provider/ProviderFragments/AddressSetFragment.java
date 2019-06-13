@@ -17,10 +17,12 @@ import android.widget.EditText;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.UserAddressBean;
+import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.AddressSetActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
+import com.vartista.www.vartista.util.CONST;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -107,8 +109,13 @@ public class AddressSetFragment extends Fragment {
 
 
                                 setUIToWait(false);
+                                getActivity().finish();
+//
+//                                Intent intent=new Intent(getContext(), HomeActivity.class);
+//                                intent.putExtra("fragment_Flag", CONST.DOC_UPLOAD_FRAGMENT);
+//                                startActivity(intent);
 
-                                startActivity(new Intent(getContext(), DocumentUploadActivity.class));
+//                                startActivity(new Intent(getContext(), DocumentUploadActivity.class));
 
                             } else if (response.body().getResponse().equals("exist")) {
                                 setUIToWait(false);
