@@ -869,6 +869,7 @@ public class HomeActivity extends AppCompatActivity
                     }
 
                 } else {
+
                     spRefNumber.setText("---");
                 }
             } catch (JSONException e) {

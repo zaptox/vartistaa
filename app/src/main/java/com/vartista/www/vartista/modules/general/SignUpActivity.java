@@ -1,6 +1,7 @@
 package com.vartista.www.vartista.modules.general;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -35,6 +36,7 @@ import com.vartista.www.vartista.beans.User;
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -56,6 +58,8 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String UPLOAD_URL = "http://vartista.com/vartista_app/upload_profile.php";
     private boolean select_profile=false;
     private static final int STORAGE_PERMISSION_CODE = 12443;
+    private int column_index;
+    private String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,10 +162,14 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void openGallery(){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_IMAGE);
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, PICK_IMAGE
+        );
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_IMAGE);
 
     }
 
@@ -180,6 +188,31 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == 1)
+//            if (resultCode == Activity.RESULT_OK) {
+//                Uri selectedImage = data.getData();
+//
+//                String filePath = getPath(selectedImage);
+//                String file_extn = filePath.substring(filePath.lastIndexOf(".") + 1);
+//
+//                try {
+//                    select_profile=true;
+//                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+//                    image.setImageBitmap(bitmap);
+//
+//                    if (file_extn.equals("img") || file_extn.equals("jpg") || file_extn.equals("jpeg") || file_extn.equals("gif") || file_extn.equals("png")) {
+//                        //FINE
+//                    } else {
+//                        //NOT IN REQUIRED FORMAT
+//                    }
+//                } catch (FileNotFoundException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+
     }
 
 
@@ -230,20 +263,27 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public String getPath(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+//        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+//        cursor.moveToFirst();
+//        String document_id = cursor.getString(0);
+//        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+//        cursor.close();
+//        cursor = getContentResolver().query(
+//                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+//                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+//        cursor.moveToFirst();
+//        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+//        cursor.close();
+//
+//        return path;
+        String[] projection = {MediaStore.MediaColumns.DATA};
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
         cursor.moveToFirst();
-        String document_id = cursor.getString(0);
-        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
-        cursor.close();
-        cursor = getContentResolver().query(
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
-        cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-        cursor.close();
+        imagePath = cursor.getString(column_index);
 
-        return path;
-
+        return cursor.getString(column_index);
     }
 
     protected void showCompletedDialog(String title,String msg) {
