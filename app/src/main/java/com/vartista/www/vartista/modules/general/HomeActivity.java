@@ -813,7 +813,7 @@ public class HomeActivity extends AppCompatActivity
         protected void onPreExecute() {
 
             View headerView = navigationView.getHeaderView(0);
-//            spRefNumber = headerView.findViewById(R.id.sp_ref_number);
+            spRefNumber = headerView.findViewById(R.id.sp_ref_number);
         }
 
         @Override
@@ -869,6 +869,7 @@ public class HomeActivity extends AppCompatActivity
                     }
 
                 } else {
+
                     spRefNumber.setText("---");
                 }
             } catch (JSONException e) {
