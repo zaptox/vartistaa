@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
@@ -190,7 +191,7 @@ public class UsersFragment extends Fragment {
                     }
 
 
-
+//                    Toast.makeText(context, ""+myCategoriesList, Toast.LENGTH_SHORT).show();
 
                 }
 

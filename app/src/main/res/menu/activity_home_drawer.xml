@@ -65,8 +65,8 @@
 
         <item
             android:id="@+id/provider_doc_upload"
-            android:icon="@drawable/logout"
-            android:title="Upload Document" />
+            android:icon="@drawable/mydocuments"
+            android:title="My Documents" />
 
         <item
             android:id="@+id/logout"

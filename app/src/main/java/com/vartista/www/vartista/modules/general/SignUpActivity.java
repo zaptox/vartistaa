@@ -36,10 +36,12 @@ import com.vartista.www.vartista.beans.User;
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
 
+import id.zelory.compressor.Compressor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -118,10 +120,11 @@ public class SignUpActivity extends AppCompatActivity {
 
                         if(response.body().getResponse().equals("ok")){
                             setUIToWait(false);
-                           uploadMultipart(filePath,user_email.getText().toString(),user_password.getText().toString());
-                              insertdocumentnil(user_email.getText().toString(),user_password.getText().toString(),user_contact.getText().toString());
+                            uploadMultipart(filePath,user_email.getText().toString(),user_password.getText().toString());
+
+                            insertdocumentnil(user_email.getText().toString(),user_password.getText().toString(),user_contact.getText().toString());
                            startActivity(new Intent(getApplicationContext(),SiginInActivity.class));
-                            MDToast.makeText(SignUpActivity.this,"Account created sucessfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
+//                            MDToast.makeText(SignUpActivity.this,"Account created sucessfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
                             finish();
                         }
                         else if(response.body().getResponse().equals("exist")){
@@ -237,6 +240,22 @@ public class SignUpActivity extends AppCompatActivity {
 
 //        String path = "http://vartista.com/vartista_app/images/placeholder/placeholder-man.png";
         String path = "";
+
+//        //for compression
+//        File image_file= new File (filePath.getPath());
+//        File compressedImageFile = null;
+//        try {
+//            compressedImageFile = new Compressor(this).compressToFile(image_file);
+//        } catch (IOException e) {
+////            e.printStackTrace();
+//         MDToast.makeText(SignUpActivity.this,e.getMessage(),MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+//
+//
+//        }
+//        filePath= Uri.fromFile(compressedImageFile);
+//
+//
+
 
         try{
             path = getPath(filePath);
