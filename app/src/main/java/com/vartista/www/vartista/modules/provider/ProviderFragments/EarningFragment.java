@@ -186,6 +186,7 @@ public class EarningFragment extends Fragment {
         protected void onPostExecute(String result) {
             if (dialog.isShowing()) {
                 dialog.dismiss();
+                earnings_list.clear();
             }
             try {
 
@@ -453,6 +454,7 @@ public class EarningFragment extends Fragment {
         protected void onPreExecute() {
             dialog.setMessage("Retriving data Please Wait..");
             dialog.show();
+            providerBonusBeanList.clear();
         }
 
 
