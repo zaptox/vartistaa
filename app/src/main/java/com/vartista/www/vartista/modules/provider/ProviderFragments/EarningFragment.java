@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
@@ -91,8 +90,7 @@ public class EarningFragment extends Fragment {
         imageView=(ImageView)view.findViewById(R.id.imageViewNoDataFound);
         imageView.setVisibility(View.GONE);
 
-        Toast.makeText(getContext(), "I have button "+btnBonus.getText(), Toast.LENGTH_SHORT).show();
-//        btnBonus.setVisibility(View.VISIBLE);
+
 
         try {
             new Conncetion2(getContext(), serviceproviderid).execute();
@@ -188,6 +186,7 @@ public class EarningFragment extends Fragment {
         protected void onPostExecute(String result) {
             if (dialog.isShowing()) {
                 dialog.dismiss();
+                earnings_list.clear();
             }
             try {
 
@@ -220,12 +219,16 @@ public class EarningFragment extends Fragment {
 
                     }
                     else {
+                        recyclerView.setVisibility(View.VISIBLE);
                         listadapter = new EarningsListAdapter(getContext(), earnings_list);
                         recyclerView.setAdapter(listadapter);
                     }
                 }
 
                 else {
+                    recyclerView.setVisibility(View.GONE);
+
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -423,7 +426,7 @@ public class EarningFragment extends Fragment {
                     }
 
                     total_dues_text.setText("" + total_dues+"£");
-                    txtRefCode.setText("Ref_Code: "+refCode);
+                    txtRefCode.setText(refCode);
 
                 } else {
                     MDToast.makeText(getContext(), "no data", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
@@ -455,6 +458,7 @@ public class EarningFragment extends Fragment {
         protected void onPreExecute() {
             dialog.setMessage("Retriving data Please Wait..");
             dialog.show();
+            providerBonusBeanList.clear();
         }
 
 
@@ -515,18 +519,18 @@ public class EarningFragment extends Fragment {
                         amount = ser1.getDouble("amount");
                         createdAt = ser1.getString("created_at");
                         providerBonusBeanList.add(new ProviderBonusBean(bonusType,amount,createdAt));
+
                     }
-                    if(providerBonusBeanList.size()==0){
-                        imageView.setVisibility(View.VISIBLE);
-                    }else{
-                        imageView.setVisibility(View.GONE);
-                    }
-                    BonusListAdapter rvAdapter = new BonusListAdapter(context, providerBonusBeanList);
-                    recyclerView.setAdapter(rvAdapter);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        BonusListAdapter rvAdapter = new BonusListAdapter(context, providerBonusBeanList);
+                        recyclerView.setAdapter(rvAdapter);
 
                 }
 
                 else{
+
+                    recyclerView.setVisibility(View.GONE);
+
                     MDToast.makeText(getContext(), "no data", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 }
             } catch (JSONException e) {

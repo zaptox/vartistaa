@@ -73,6 +73,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         create= findViewById(R.id.create);
         user_name= findViewById(R.id.user_name);
+
         user_email= findViewById(R.id.user_email);
         user_contact= findViewById(R.id.user_number);
         user_password= findViewById(R.id.user_password);
