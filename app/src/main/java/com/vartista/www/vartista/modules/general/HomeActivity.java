@@ -128,7 +128,11 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
+        NavigationDrawerUser(false  );
+        if (check == true) {
+            NavigationDrawer_ServiceProvider(true);
+            check = false;
+        }
 
 
         bottomNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -692,6 +696,11 @@ public class HomeActivity extends AppCompatActivity
                     Fragment selectFragment = null;
                     switch (menuItem.getItemId()) {
                         case R.id.nav_as_a_user:
+                            NavigationDrawerUser(false  );
+                            if (check == true) {
+                                NavigationDrawer_ServiceProvider(true);
+                                check = false;
+                            }
                             selectFragment = new UsersFragment(user_id);
                            replaceFragment(selectFragment);
                             getSupportActionBar().setBackgroundDrawable(getResources().getDrawable
@@ -701,6 +710,11 @@ public class HomeActivity extends AppCompatActivity
                         case R.id.nav_as_a_provider:
                             if(user.getSp_status().equals("0")|| user.getSp_status().equals("-1")){
                                 selectFragment = new ConfigSettingsFragment();
+                                NavigationDrawerUser(true);
+                                if (check==false){
+                                    NavigationDrawer_ServiceProvider(false);
+                                    check=true;
+                                }
 
                             }else{
                                 selectFragment=new ServiceProviderFragment(user_id);
@@ -813,7 +827,7 @@ public class HomeActivity extends AppCompatActivity
         protected void onPreExecute() {
 
             View headerView = navigationView.getHeaderView(0);
-//            spRefNumber = headerView.findViewById(R.id.sp_ref_number);
+            spRefNumber = headerView.findViewById(R.id.sp_ref_number);
         }
 
         @Override

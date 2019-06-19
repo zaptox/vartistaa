@@ -4,15 +4,22 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.os.ConfigurationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
@@ -36,6 +43,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,7 +71,7 @@ public class AddressSetFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_address_set, container, false);
 
-
+        String countryname = getActivity().getResources().getConfiguration().locale.getDisplayCountry();
         country= view.findViewById(R.id.country);
         province= view.findViewById(R.id.province);
         city= view.findViewById(R.id.city);
@@ -76,9 +85,13 @@ public class AddressSetFragment extends Fragment {
         user_id = ob.getInt("user_id", 0);
 
         new Conncetion(user_id).execute();
-
-
-
+  String Countryname = getCountryName();
+//        Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0);
+//        String cname = locale.getDisplayName();
+//        if (Countryname.trim().length()>0 && Countryname!=null) {
+            country.setText(Countryname);
+            country.setEnabled(false);
+//        }
 
         set_address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -281,6 +294,33 @@ public class AddressSetFragment extends Fragment {
         } else {
             progressDialog.dismiss();
         }
+
+    }
+
+    public String getCountryName(){
+        String country_name = null;
+        try {
+            LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+            Geocoder geocoder = new Geocoder(getContext());
+            for (String provider : lm.getAllProviders()) {
+                Toast.makeText(getContext(), "" + provider, Toast.LENGTH_SHORT).show();
+                @SuppressWarnings("ResourceType") Location location = lm.getLastKnownLocation(provider);
+                if (location != null) {
+                    try {
+                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                        if (addresses != null && addresses.size() > 0) {
+                            country_name = addresses.get(0).getCountryName();
+                            break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+            return country_name;
 
     }
 }

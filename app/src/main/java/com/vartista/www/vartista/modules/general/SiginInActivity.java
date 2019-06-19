@@ -23,7 +23,6 @@ import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.Doument_Upload_Nil;
 import com.vartista.www.vartista.beans.NotificationsManager;
-import com.vartista.www.vartista.modules.provider.AssignRatingsToUser;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.UserAppointmentDetails;
@@ -164,18 +163,31 @@ public class SiginInActivity extends AppCompatActivity {
                 String email1 = email.getText().toString();
                 String password1 = password.getText().toString();
 
-                try {
+
+                if(!email1.equals("") && !password1.equals("")){
+                    if(email1.contains("@") && email1.contains(".com")  ) {
+
+                        try {
 
 
-                    User usergotten = perfromLogin(email1, password1);
+                            User usergotten = perfromLogin(email1, password1);
 
 //                    Toast.makeText(SiginInActivity.this, "Yes gotten " + usergotten, Toast.LENGTH_SHORT).show();
 
 
-                } catch (Exception e) {
+                        } catch (Exception e) {
 
-                    // Toast.makeText(SiginInActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(SiginInActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }else{
+                        email.setError("invalid Email!");
+                    }
+                }else{
+                    Toast.makeText(SiginInActivity.this, "Please Enter valid Email or Password", Toast.LENGTH_SHORT).show();
                 }
+
+
 
 
             }
@@ -245,10 +257,7 @@ public class SiginInActivity extends AppCompatActivity {
                             userLoggedIn.getContact(),image);
                     setUIToWait(false);
                     //
-
-
-
-                        MDToast.makeText(SiginInActivity.this, "Login Sucessfully!...", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
+                    MDToast.makeText(SiginInActivity.this, "Login Sucessfully!...", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
                     Intent intent = new Intent(SiginInActivity.this, HomeActivity.class);
                     intent.putExtra("user", userLoggedIn);
@@ -257,9 +266,8 @@ public class SiginInActivity extends AppCompatActivity {
                     finish();
 //
 //
-
                 } else if (response.body().getResponse().equals("failed")) {
-                      MDToast.makeText(SiginInActivity.this, "Login Failed.. Please try again", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+                    MDToast.makeText(SiginInActivity.this, "Username or Password is Incorrect", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                     setUIToWait(false);
 
                 }
@@ -267,6 +275,7 @@ public class SiginInActivity extends AppCompatActivity {
                 else {
                     setUIToWait(false);
                     MDToast.makeText(SiginInActivity.this, "Login Failed.. Please try again", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+
 
                 }
 
@@ -277,7 +286,8 @@ public class SiginInActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
 
-                MDToast.makeText(SiginInActivity.this, "Login Failed.. Please try again", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+                MDToast.makeText(SiginInActivity.this, "No Internet Available", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+
                 setUIToWait(false);
 
             }
@@ -345,7 +355,11 @@ public class SiginInActivity extends AppCompatActivity {
     }
 
 
-
-
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
+        System.exit(0);
+        super.onBackPressed();
+    }
 }
 
