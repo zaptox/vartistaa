@@ -169,6 +169,7 @@ public class SignUpActivity extends AppCompatActivity {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, PICK_IMAGE
+
         );
 //        Intent intent = new Intent();
 //        intent.setType("image/*");
