@@ -29,6 +29,7 @@ import com.vartista.www.vartista.beans.NotificationsManager;
 import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.modules.general.HomeActivity;
+import com.vartista.www.vartista.modules.general.MyTimeAgo;
 import com.vartista.www.vartista.modules.general.SiginInActivity;
 import com.vartista.www.vartista.modules.general.SignUpActivity;
 import com.vartista.www.vartista.modules.user.AssignRatings;
@@ -79,11 +80,12 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
 
         holder.tv_Title.setText(myReqServicesList.get(position).getUsername());
         holder.tv_Service.setText(myReqServicesList.get(position).getService_title()+" "+myReqServicesList.get(position).getPrice());
-        holder.tv_address.setText(myReqServicesList.get(position).getLocation());
+        holder.tv_address.setText("Location: "+myReqServicesList.get(position).getLocation());
         holder.tv_date.setText(myReqServicesList.get(position).getDate());
         holder.tv_time.setText(myReqServicesList.get(position).getTime());
         holder.tv_catogery.setText(myReqServicesList.get(position).getCatgname());
         holder.tv_s_desc.setText(myReqServicesList.get(position).getService_description());
+        holder.tv_req_time.setText(TimeAgo(myReqServicesList.get(position).getReqeustsend_at()));
 
         SharedPreferences ob = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
 
@@ -95,7 +97,7 @@ public class MyRequestsServicesListAdapter extends RecyclerView.Adapter<MyReques
                 .error(R.drawable.profile)
                 .into(holder.profile_image);
 
-       holder.accept.setOnClickListener(new View.OnClickListener() {
+        holder.accept.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(final View view) {
                customer_id = myReqServicesList.get(position).getUser_customer_id();
@@ -247,7 +249,7 @@ int timevalue = -2;
     public static class ViewHolder extends RecyclerView.ViewHolder{
         View mView;
 
-        public TextView tv_Title,tv_Service,tv_date,tv_time,tv_address,tv_s_desc,tv_catogery;
+        public TextView tv_Title,tv_Service,tv_date,tv_time,tv_address,tv_s_desc,tv_catogery,tv_req_time;
         public Button accept , decline;
         public ImageView profile_image;
 
@@ -260,12 +262,16 @@ int timevalue = -2;
             tv_Service=(TextView)mView.findViewById(R.id.textView_req_service);
             tv_address=(TextView)mView.findViewById(R.id.textview_address);
             tv_date=(TextView)mView.findViewById(R .id.textViewReq_Date);
-            tv_time=(TextView)mView.findViewById(R .id.textViewReq_Time);
+//            tv_time=(TextView)mView.findViewById(R .id.textViewReq_Time);
             tv_s_desc=(TextView)mView.findViewById(R .id.textView_service_description);
             tv_catogery=(TextView)mView.findViewById(R .id.service_category);
+            tv_time= (TextView)mView.findViewById(R.id.textViewReq_time2);
+            tv_req_time= (TextView)mView.findViewById(R.id.textViewReq_Time);
             accept = mView.findViewById(R.id.button_paynow);
             decline = mView.findViewById(R.id.buttonReject);
+
             apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
+
             sendNotificationApiInterface = ApiClient.getApiClient().create(SendNotificationApiInterface.class);
 
         }
@@ -290,11 +296,8 @@ int timevalue = -2;
             @Override
             public void onResponse(Call<CreateRequest> call, Response<CreateRequest> response) {
                 if (response.body().getResponse().equals("ok")) {
-
                     MDToast mdToast = MDToast.makeText(context, "Your Ratings are inserted", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                     mdToast.show();
-
-
                 }
 
 
@@ -448,4 +451,20 @@ public String get_Current_Date(){
         progressDialog.dismiss();
         }
         }
+
+
+        public String TimeAgo(String PastDate){
+        SimpleDateFormat sdf = (new SimpleDateFormat("dd/MM/yyyy hh:mm:ss"));
+        String result = "";
+        try{
+            Date p_date =  sdf.parse(PastDate);
+            MyTimeAgo timeAgo = new MyTimeAgo().locale(context);
+            result = timeAgo.getTimeAgo(p_date);
+        } catch(ParseException e) {
+            e.printStackTrace();
+
+        }
+        return  result;
+    }
+
 }

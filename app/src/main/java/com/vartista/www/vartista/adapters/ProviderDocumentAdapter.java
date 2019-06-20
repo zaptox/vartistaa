@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.ProviderDocuments;
 
@@ -68,19 +69,26 @@ public class ProviderDocumentAdapter extends RecyclerView.Adapter<ProviderDocume
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog_view_image);
-                // set the custom dialog components - text, image and button
-                TextView text = (TextView) dialog.findViewById(R.id.img_title);
-                text.setText(title);
-                ImageView image = (ImageView) dialog.findViewById(R.id.img_photo);
-                Picasso.get().load(URL).fit().centerCrop()
-                        .placeholder(R.drawable.folder)
-                        .error(R.drawable.folder)
-                        .into(image);
 
-                dialog.show();
+                try {
 
+                    Dialog dialog = new Dialog(context);
+                    dialog.setContentView(R.layout.dialog_view_image);
+                    // set the custom dialog components - text, image and button
+                    TextView text = (TextView) dialog.findViewById(R.id.img_title);
+                    text.setText(title);
+                    ImageView image = (ImageView) dialog.findViewById(R.id.img_photo);
+                    Picasso.get().load(URL).fit().centerCrop()
+                            .placeholder(R.drawable.folder)
+                            .error(R.drawable.folder)
+                            .into(image);
+
+                    dialog.show();
+                }
+                catch(Exception e){
+                    MDToast.makeText(context, "No Document found", MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();
+
+                }
             }
         });
 

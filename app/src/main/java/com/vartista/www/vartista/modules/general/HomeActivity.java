@@ -106,7 +106,7 @@ public class HomeActivity extends AppCompatActivity
     public static NavigationView navigationView;
 
     Boolean check = true;
-
+    Boolean all_closed= false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -128,11 +128,7 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        NavigationDrawerUser(false  );
-        if (check == true) {
-            NavigationDrawer_ServiceProvider(true);
-            check = false;
-        }
+
 
 
         bottomNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -150,6 +146,8 @@ public class HomeActivity extends AppCompatActivity
         Intent intent = getIntent();
         user = getUserFromSharePrefs();
         user_id = user.getId();
+
+
 
         if(intent.getIntExtra("fragment_Flag",0)!=0){
             bottomNav.setVisibility(View.GONE);
@@ -435,7 +433,9 @@ public class HomeActivity extends AppCompatActivity
         else{
                             super.onBackPressed();
 
-        }}
+        }
+
+    }
 
     @Override
     protected void onPause() {
@@ -879,10 +879,11 @@ public class HomeActivity extends AppCompatActivity
                 if (success == 1) {
                     String refCode = jsonResult.getString("ref_code");
                     if(refCode!=null){
-                        spRefNumber.setText(refCode);
+                        spRefNumber.setText("Ref_Code: "+refCode);
                     }
 
                 } else {
+
                     spRefNumber.setText("---");
                 }
             } catch (JSONException e) {

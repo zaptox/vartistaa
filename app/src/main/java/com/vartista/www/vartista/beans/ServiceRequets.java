@@ -72,6 +72,12 @@ public class ServiceRequets {
     @Expose
     String user_image;
 
+    @SerializedName("reqeustsend_at")
+    @Expose
+    String reqeustsend_at;
+
+
+
     public ServiceRequets(int reqservice_id, String username, int requests_status, String date, String time, String location, int user_customer_id, int service_provider_id, int service_id, int service_cat_id, String service_title,double price,String service_description, String catgname) {
         this.reqservice_id = reqservice_id;
         this.username = username;
@@ -108,8 +114,35 @@ public class ServiceRequets {
         this.user_image=user_image;
     }
 
+    public ServiceRequets(int reqservice_id, String username, int requests_status, String date, String time, String location, int user_customer_id, int service_provider_id, int service_id, int service_cat_id, String service_title,double price,String service_description, String catgname,String user_image,String reqeustsend_at) {
+        this.reqservice_id = reqservice_id;
+        this.username = username;
+        this.requests_status = requests_status;
+        this.date = date;
+        this.time = time;
+        this.location = location;
+        this.user_customer_id = user_customer_id;
+        this.service_provider_id = service_provider_id;
+        this.service_id = service_id;
+        this.service_cat_id = service_cat_id;
+        this.service_title = service_title;
+        this.price = price;
+        this.service_description= service_description;
+        this.catgname = catgname;
+        this.user_image=user_image;
+        this.reqeustsend_at= reqeustsend_at;
+    }
 
-//
+    public String getReqeustsend_at() {
+        return reqeustsend_at;
+    }
+
+    public void setReqeustsend_at(String reqeustsend_at) {
+        this.reqeustsend_at = reqeustsend_at;
+    }
+
+
+    //
 //    public ServiceRequets() {
 //    }
 
