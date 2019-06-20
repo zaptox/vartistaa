@@ -154,7 +154,8 @@ public class DocumentUploadFragment extends Fragment {
         });
 //
 //
-//
+
+
         imageViewCnicFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
