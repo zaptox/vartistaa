@@ -470,12 +470,13 @@ public class BookNowFragment extends Fragment {
                     MDToast mdToast = MDToast.makeText(getContext(), "Request has been Sent succesfully.", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                     mdToast.show();
 
-                    Intent intent = new Intent(getContext(), HomeActivity.class);
-                    intent.putExtra("user", HomeActivity.user);
+//                    Intent intent = new Intent(getContext(), HomeActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    intent.putExtra("user", HomeActivity.user);
+//
+//                    startActivity(intent);
 
-                    startActivity(intent);
-
-
+                   getActivity().finish();
                 } catch (JSONException e) {
 
                 }

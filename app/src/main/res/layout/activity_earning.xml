@@ -50,7 +50,6 @@
             android:layout_marginBottom="10dp"
             android:textSize="15sp"
             android:textColor="#FFFFFF"
-
             />
 
         <Button
@@ -75,6 +74,7 @@
             android:layout_alignParentRight="true"
             android:textColor="#FFFFFF"
             />
+
         <TextView
             android:id="@+id/dues"
             android:layout_width="wrap_content"

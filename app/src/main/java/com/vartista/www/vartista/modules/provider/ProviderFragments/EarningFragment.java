@@ -219,12 +219,16 @@ public class EarningFragment extends Fragment {
 
                     }
                     else {
+                        recyclerView.setVisibility(View.VISIBLE);
                         listadapter = new EarningsListAdapter(getContext(), earnings_list);
                         recyclerView.setAdapter(listadapter);
                     }
                 }
 
                 else {
+                    recyclerView.setVisibility(View.GONE);
+
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -515,18 +519,18 @@ public class EarningFragment extends Fragment {
                         amount = ser1.getDouble("amount");
                         createdAt = ser1.getString("created_at");
                         providerBonusBeanList.add(new ProviderBonusBean(bonusType,amount,createdAt));
+
                     }
-                    if(providerBonusBeanList.size()==0){
-                        imageView.setVisibility(View.VISIBLE);
-                    }else{
-                        imageView.setVisibility(View.GONE);
-                    }
-                    BonusListAdapter rvAdapter = new BonusListAdapter(context, providerBonusBeanList);
-                    recyclerView.setAdapter(rvAdapter);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        BonusListAdapter rvAdapter = new BonusListAdapter(context, providerBonusBeanList);
+                        recyclerView.setAdapter(rvAdapter);
 
                 }
 
                 else{
+
+                    recyclerView.setVisibility(View.GONE);
+
                     MDToast.makeText(getContext(), "no data", MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
                 }
             } catch (JSONException e) {

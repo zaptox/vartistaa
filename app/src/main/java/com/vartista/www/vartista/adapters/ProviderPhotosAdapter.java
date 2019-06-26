@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.ProviderPhotos;
 import com.vartista.www.vartista.modules.user.GetDocumentActivity;
@@ -72,6 +74,8 @@ public class ProviderPhotosAdapter extends RecyclerView.Adapter<ProviderPhotosAd
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                try{
                 Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.dialog_view_image);
                 // set the custom dialog components - text, image and button
@@ -80,12 +84,21 @@ public class ProviderPhotosAdapter extends RecyclerView.Adapter<ProviderPhotosAd
                 ImageView image = (ImageView) dialog.findViewById(R.id.img_photo);
 //                Toast.makeText(context, ""+URL, Toast.LENGTH_SHORT).show();
                 Picasso.get().load(URL).fit().centerCrop()
-                        .placeholder(R.drawable.pictures)
-                        .error(R.drawable.pictures)
+                        .placeholder(R.drawable.loading)
+                        .error(R.drawable.loading)
                         .into(image);
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(dialog.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//                    d.show();
+                    dialog.getWindow().setAttributes(lp);
+                    dialog.show();
+                }
+                catch(Exception e){
+                    MDToast.makeText(context, "No Document found", MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();
 
-                dialog.show();
-
+                }
             }
         });
 

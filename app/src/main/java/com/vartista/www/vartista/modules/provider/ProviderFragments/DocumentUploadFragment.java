@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -24,13 +25,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
+import com.vartista.www.vartista.adapters.ProviderDocumentAdapter;
+import com.vartista.www.vartista.adapters.ProviderPhotosAdapter;
+import com.vartista.www.vartista.beans.ProviderDocuments;
+import com.vartista.www.vartista.beans.ProviderPhotos;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.AddressSetActivity;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
+import com.vartista.www.vartista.modules.user.GetDocumentActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 import com.vartista.www.vartista.util.CONST;
@@ -38,7 +47,22 @@ import com.vartista.www.vartista.util.CONST;
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -55,8 +79,9 @@ public class DocumentUploadFragment extends Fragment {
     private static final int BANK_DETAILS_IMAGE_REQUEST_CODE = 11;
     private static final int STORAGE_PERMISSION_CODE = 123;
     private ImageView imageViewBankDetails,imageViewCnicFront,imageViewBackCinc;
-    private Button btnUploadCnicBack, btnSetAddress,btnUploadBankDetails,btnUploadCNICFront;
+    private Button btnUploadCnicBack, btnSetAddress,btnUploadBankDetails,btnUploadCNICFront,btnSendRequest;
     private Bitmap bitmapCnicFront,bitmapCnicBack,bitmapBankDetails;
+    private TextView imageViewBankDetailsTitle,imageViewCincFrontTitle,imageViewBackCincTitle;
     private Uri filePathCnicFront,filePathCnicBack,filePathBankDetails;
     private  static String cnic_front_document_title="cnic_front";
     private  static String cnic_back_document_title="cnic_back";
@@ -67,6 +92,7 @@ public class DocumentUploadFragment extends Fragment {
     public static ApiInterface apiInterface;
     private FragmentActivity myContext;
     TabLayout tabLayout;
+    List<ProviderPhotos> providerPhotosList;
 
 
 
@@ -92,8 +118,18 @@ public class DocumentUploadFragment extends Fragment {
         btnUploadCnicBack =(Button)view.findViewById(R.id.btnUploadCNICBack);
         btnUploadBankDetails =(Button)view.findViewById(R.id.btnUploadBankDetails);
         btnUploadCNICFront =(Button)view.findViewById(R.id.btnUploadCNICFront);
+        btnSendRequest= (Button)view.findViewById(R.id.send_request);
+        imageViewBankDetailsTitle= (TextView) view.findViewById(R.id.imageViewBankDetailsTitle);
+        imageViewCincFrontTitle= (TextView) view.findViewById(R.id.imageViewCincFrontTitle);
+        imageViewBackCincTitle= (TextView) view.findViewById(R.id.imageViewBackCincTitle);
 
-//        tabLayout.setVisibility(View.GONE);
+
+        //        tabLayout.setVisibility(View.GONE);
+
+        providerPhotosList = new ArrayList<>();
+
+
+        new getPhotosAsync(getContext(), user_id).execute();
 
 
         btnSetAddress.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +154,8 @@ public class DocumentUploadFragment extends Fragment {
         });
 //
 //
-//
+
+
         imageViewCnicFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,14 +183,17 @@ public class DocumentUploadFragment extends Fragment {
                 if(cnic_back==true) {
 
                     try{
-                        uploadMultipart( filePathCnicBack, cnic_back_document_title);}catch (Exception e){
+                        uploadMultipart( filePathCnicBack, cnic_back_document_title);
+                        MDToast.makeText(getContext(), "Uploading Image... It may take few minutes.", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
+
+                    }catch (Exception e){
+
                     }
                 }
                 else {
                     showCompletedDialog("error in uploading CNIC Back","Kindly provide required image ");
                 }
 
-                updateSPStatus();
 
 
             }
@@ -167,6 +207,7 @@ public class DocumentUploadFragment extends Fragment {
 
                     try{
                         uploadMultipart( filePathCnicFront, cnic_front_document_title);
+                        MDToast.makeText(getContext(), "Uploading Image... It may take few minutes.", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
                     }catch (Exception e){
                     }
                 }
@@ -174,7 +215,6 @@ public class DocumentUploadFragment extends Fragment {
                     showCompletedDialog("error in uploading CNIC Front","Kindly provide required image ");
                 }
 
-                updateSPStatus();
 
 
             }
@@ -186,6 +226,7 @@ public class DocumentUploadFragment extends Fragment {
 
                     try{
                         uploadMultipart( filePathBankDetails,bank_details_document_title);
+                        MDToast.makeText(getContext(), "Uploading Image... It may take few minutes.", MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
                     }catch (Exception e){
                     }
                 }
@@ -193,9 +234,15 @@ public class DocumentUploadFragment extends Fragment {
                     showCompletedDialog("error in uploading Bank Details","Kindly provide required image ");
                 }
 
+
+
+            }
+        });
+
+        btnSendRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 updateSPStatus();
-
-
             }
         });
 
@@ -412,6 +459,131 @@ public class DocumentUploadFragment extends Fragment {
 
 
 
+
+
+    class getPhotosAsync extends AsyncTask<String, String, String> {
+        private ProgressDialog dialog;
+        int userId;
+
+        public getPhotosAsync(Context activity, int prov_id) {
+            dialog = new ProgressDialog(activity);
+            userId = prov_id;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage("Please Wait..");
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+
+            String result = "";
+
+            final String BASE_URL = "http://vartista.com/vartista_app/get_photos_of_srv_prov.php?prov_id="+userId;
+            try {
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+
+                request.setURI(new URI(BASE_URL));
+                HttpResponse response = client.execute(request);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                StringBuffer stringBuffer = new StringBuffer();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    stringBuffer.append(line);
+                    break;
+                }
+                reader.close();
+                result = stringBuffer.toString();
+
+
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+                return new String("There is exception" + e.getMessage());
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            try {
+                JSONObject jsonResult = new JSONObject(result);
+                int success = jsonResult.getInt("success");
+
+
+                if (success == 1) {
+                    JSONArray files = jsonResult.getJSONArray("photos");
+                    for (int i = 0; i < files.length(); i++) {
+
+                        JSONObject file = files.getJSONObject(i);
+                        String cnic_front_title = file.getString("cinc_front_title");
+                        String cnic_front_url = file.getString("cinc_front_url");
+                        String cnic_back_title = file.getString("cinc_back_title");
+                        String cnic_back_url = file.getString("cinc_back_url");
+                        String bank_doc_title = file.getString("bank_doc_title");
+                        String bank_doc_url = file.getString("bank_doc_url");
+
+
+                        if(cnic_front_url!=null){
+
+                            Picasso.get().load(cnic_front_url).fit().centerCrop()
+                                    .placeholder(R.drawable.pictures)
+                                    .error(R.drawable.pictures)
+                                    .into(imageViewCnicFront);
+                            imageViewCincFrontTitle.setText("Click to update CNIC front Image");
+
+                        }
+                        if(cnic_back_url!=null){
+
+                            Picasso.get().load(cnic_back_url).fit().centerCrop()
+                                    .placeholder(R.drawable.pictures)
+                                    .error(R.drawable.pictures)
+                                    .into(imageViewBackCinc);
+                            imageViewBackCincTitle.setText("Click to update CNIC back Image");
+
+                        }
+                        if(bank_doc_url!=null){
+
+                            Picasso.get().load(bank_doc_url).fit().centerCrop()
+                                    .placeholder(R.drawable.pictures)
+                                    .error(R.drawable.pictures)
+                                    .into(imageViewBankDetails);
+                            imageViewBankDetailsTitle.setText("Click to update Bank Details");
+
+                        }
+
+
+
+                        providerPhotosList.add(new ProviderPhotos(cnic_front_title,cnic_front_url));
+                        providerPhotosList.add(new ProviderPhotos(cnic_back_title,cnic_back_url));
+                        providerPhotosList.add(new ProviderPhotos(bank_doc_title,bank_doc_url));
+
+
+                    }
+
+
+//                    Toast.makeText(getContext(), ""+providerPhotosList, Toast.LENGTH_SHORT).show();
+
+
+
+                } else {
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 }

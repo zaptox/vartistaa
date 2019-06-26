@@ -462,6 +462,7 @@ public class FindServicesInListFragment extends Fragment {
 
     }
 
+
     class Connection2 extends AsyncTask<String,String ,String > {
         private int cat_id;
         private String filter_location;
