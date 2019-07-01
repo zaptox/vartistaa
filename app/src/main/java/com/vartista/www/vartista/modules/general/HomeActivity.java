@@ -6,11 +6,14 @@ package com.vartista.www.vartista.modules.general;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -72,6 +75,7 @@ import com.vartista.www.vartista.modules.user.user_fragments.ServiceProviderDeta
 import com.vartista.www.vartista.modules.user.user_fragments.User_Rating_Review_Fragment;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.TokenApiInterface;
+import com.vartista.www.vartista.services.UserStatusService;
 import com.vartista.www.vartista.util.CONST;
 
 import org.apache.http.HttpResponse;
@@ -107,6 +111,21 @@ public class HomeActivity extends AppCompatActivity
 
     Boolean check = true;
     Boolean all_closed= false;
+    private UserStatusService mService;
+    private boolean mBound;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Bind to LocalService
+        Intent intent = new Intent(this, UserStatusService.class);
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
+        if(mBound){
+            mService.updateUserStatus(user_id);
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -797,6 +816,7 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+
     class ConnectionForSpCode extends AsyncTask<String, String, String> {
         private int user_id;
 
@@ -908,5 +928,25 @@ public class HomeActivity extends AppCompatActivity
         user.setImage(ob.getString("image",""));
         return  user;
     }
+
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            UserStatusService.MyLocalBinder binder = (UserStatusService.MyLocalBinder) service;
+
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
+
 
 }

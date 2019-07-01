@@ -20,6 +20,11 @@
         android:roundIcon="@drawable/loggoo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".services.UserStatusService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".modules.general.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -184,7 +189,7 @@
             android:label="" />
         <activity
             android:name=".modules.general.SettingsActivity2"
-            android:label="@string/title_activity_settings2"></activity>
+            android:label="@string/title_activity_settings2" />
     </application>
 
 </manifest>
