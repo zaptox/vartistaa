@@ -54,6 +54,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -67,48 +68,59 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
        private static String TAG="notifciation";
        public static int REQEUST_CODE_FOR_USER = 101;
-    public static int REQEUST_CODE_FOR_USER_BEFORE2H = 201;
+       public static int REQEUST_CODE_FOR_USER_BEFORE2H = 201;
 
     int user_id;
        static int notification_id = -1;
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // ...
-
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
 
 
-        Map<String,String> params= remoteMessage.getData();
+        Map<String,String> params = remoteMessage.getData();
         JSONObject object= new JSONObject(params);
         Log.d("Msg Data", "onMessageReceived: "+object.toString());
-        //Toast.makeText(this, ""+object+"", Toast.LENGTH_SHORT).show();
 
-        // Check if message contains a data payload.
-//        if (remoteMessage.getData().size() > 0) {
-//            Log.d(TAG, "Message data payload: " + remoteMessage.getData().get("gcm.notification.body").toString());
-//            sendNotifcation(remoteMessage.getData().get("title"),remoteMessage.getData().get("body"),"HomeActivity");
-//
-//
-//
-//
-//
-////            sendNotifcation(object.getString("title"),remoteMessage.getData().get("gcm.notification.body").toString(),remoteMessage.getData().get("activity"));
-//
-//            if (/* Check if data needs to be processed by long running job */ true) {
-//                // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
-//            } else {
-//                // Handle message within 10 seconds
-//            }
-//
-//        }
+        if (remoteMessage.getData().size() > 0) {
+            Log.d("FBM","I m here in data msg back");
+            Log.d("FBM DATA",""+remoteMessage.getData());
 
-        // Check if message contains a notification payload.
+            Map<String,String> dataMsg=remoteMessage.getData();
+            Log.d("FBM DATA1",""+dataMsg.get("title"));
+            Log.d("FBM DATA2",""+dataMsg.get("message"));
+            String title=dataMsg.get("title");
+            String body=dataMsg.get("message");
+
+
+            if(body.contains("Accepted")){
+
+
+            String data[] = body.split("_");
+            String Msg = data[0];
+            String date = data[1];
+            String time = data[2];
+            String rservice_id= data[3];
+
+            Log.d("if not null", "Message Notification Body: " + body);
+            sendNotifcation(title,Msg,"HomeActivity",date,time,rservice_id);
+            }
+            else{
+                Log.d("if not null", "Message Notification Body: " + body);
+                sendNotifcation(title,body,"HomeActivity","","","");
+
+            }
+        }
+
+
+            // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
-        Log.d("if not null", "Message Notification Body: " + remoteMessage.getNotification().getBody());
+        Log.d("ifnot null", "Message Notification Body: " + remoteMessage.getNotification().getBody());
 //        sendNotifcation(remoteMessage.getData().get("title"),remoteMessage.getData().get("body"),"HomeActivity");
-            if (remoteMessage.getNotification().getBody().contains("Accepted")){
-                String body = remoteMessage.getNotification().getBody();
+            String title = remoteMessage.getNotification().getTitle();
+            String body = remoteMessage.getNotification().getBody();
+          if (remoteMessage.getNotification().getBody().contains("Accepted")){
                 String data[] = body.split("_");
                 String Msg = data[0];
                 String date = data[1];
@@ -132,8 +144,6 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
         SharedPreferences ob = getApplicationContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
 
 
-
-
         final String name_user = ob.getString("name","");
         NotificationHelper notificationHelper;
         NotificationManagerCompat notificationManager;
@@ -141,8 +151,9 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
         notificationManager=NotificationManagerCompat.from(this);
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) {
 
-            Notification.Builder builder=notificationHelper.getChannelNotiifcation(title,body);
-            notificationHelper.getManager().notify(new Random().nextInt(),builder.build());
+                Notification.Builder builder = notificationHelper.getChannelNotiifcation(title, body);
+                notificationHelper.getManager().notify(new Random().nextInt(), builder.build());
+
         }
 
         // other than android O
@@ -189,9 +200,6 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 //            }
 
             else if(title.contains("Request")){
-
-
-
                 String requestUserId = title.substring(title.indexOf("user-id=")+new String("user-id=").length()+1,title.indexOf("?s"));
                 String service_provider_id = title.substring(title.indexOf("servp-id=")+new String("servp-id=").length(),title.indexOf("?s",title.indexOf("servp-id=")));
                 String  service_id = title.substring(title.indexOf("serv-id=")+new String("serv-id=").length(),title.indexOf("?r",title.indexOf("serv-id=")));
@@ -205,7 +213,7 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
 
                 String[] for_title= title.split("\\?");
 
-                title= for_title[0];
+                title = for_title[0];
 
                 Handler handler = new Handler(Looper.getMainLooper());
                 final String finalTitle = title;
@@ -227,8 +235,6 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 dialogIntent.putExtra("req_serv_id",req_serv_id);
                 dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(dialogIntent);
-
-
 
             }
 
@@ -281,7 +287,6 @@ public class FirebaseMsgService   extends FirebaseMessagingService {
                 resultIntent = new Intent(getApplicationContext(), HomeActivity.class);
                 User user= HomeActivity.user;
                 resultIntent.putExtra("user",user);
-
                 resultIntent.putExtra("fragment","NotificationsFragment");
                 resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

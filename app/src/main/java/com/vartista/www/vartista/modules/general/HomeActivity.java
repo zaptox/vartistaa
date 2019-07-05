@@ -90,6 +90,7 @@ import java.net.URISyntaxException;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.widget.Toast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -128,7 +129,11 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
+        NavigationDrawerUser(false);
+        if (check == true) {
+            NavigationDrawer_ServiceProvider(true);
+            check = false;
+        }
 
 
         bottomNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -257,7 +262,6 @@ public class HomeActivity extends AppCompatActivity
                     }else{
                     replaceFragment(new CreateServiceFragment(user_id));
                         getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
-
                     }
                     break;
             case CONST.UPLOAD_DOC_LIST_FRAGMENT:
@@ -338,8 +342,6 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.notification) {
-
-
             Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
             intent.putExtra("fragment_Flag", CONST.NOTIFIATION_FRAGMENT);
             startActivity(intent);
@@ -370,6 +372,7 @@ public class HomeActivity extends AppCompatActivity
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
 
         } else if (id == R.id.payment) {
+
             Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
             startActivity(intent);
 
@@ -431,8 +434,15 @@ public class HomeActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         }
         else{
-                            super.onBackPressed();
-
+            Intent intent = getIntent();
+            if(intent.getIntExtra("fragment_Flag",0)!=0) {
+                Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+            else{
+                super.onBackPressed();
+            }
         }
 
     }
@@ -605,7 +615,7 @@ public class HomeActivity extends AppCompatActivity
 
                 if (success == 1) {
                 } else {
-
+                    MDToast.makeText(HomeActivity.this, "Check Your Internet", Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -718,6 +728,11 @@ public class HomeActivity extends AppCompatActivity
 
                             }else{
                                 selectFragment=new ServiceProviderFragment(user_id);
+                                NavigationDrawerUser(true);
+                                if (check==false){
+                                    NavigationDrawer_ServiceProvider(false);
+                                    check=true;
+                                }
                             }
                             replaceFragment(selectFragment);
                             getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
