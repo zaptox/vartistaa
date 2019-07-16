@@ -1,8 +1,10 @@
 package com.vartista.www.vartista.modules.provider.ProviderFragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Address;
@@ -296,86 +298,91 @@ public class CreateServiceFragment extends Fragment {
 
                 } else {
 
-
-                    setUIToWait(true);
-                    progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
                     String title = edtTxtSerivceTitle.getText().toString();
                     String price = edTxtServicePrice.getText().toString();
                     String description = edDescription.getText().toString();
                     String location = service_location.getText().toString();
-                    String add="";
-                    int home_avail_status=1;
-                    if(home_avail.isChecked()){
-                        home_avail_status=1;
-                    }
-                    else{
-                        home_avail_status=0;
-                    }
+                    String add = "";
 
-                    try {
-                        add = getLocationFromAddress(location);
-                    }
-                    catch(Exception e){
+                    if (!(title.equals("") || description.equals("") || location.equals(""))) {
+                        if(Double.parseDouble(price)>0) {
+                            progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                            setUIToWait(true);
+                            int home_avail_status = 1;
+                            if (home_avail.isChecked()) {
+                                home_avail_status = 1;
+                            } else {
+                                home_avail_status = 0;
+                            }
 
-                    }
-
-                    user_id=loggedin.getId();
-
-                    String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-
-
-                    Call<Service> call = CreateServiceFragment.apiInterface.
-                            createService(title, user_id, description, location,latitude,longitude,country,
-                                    1, Double.parseDouble(price + ""), category_id, date,
-                                    home_avail_status);
-
-                    call.enqueue(new Callback<Service>() {
-                        @Override
-                        public void onResponse(Call<Service> call, Response<Service> response) {
-                            if (response.body().equals("ok")) {
-
-                                setUIToWait(false);
-                                MDToast mdMDToast = MDToast.makeText(getContext(), "Your Service Created Successfully", MDToast.LENGTH_SHORT, MDToast.TYPE_SUCCESS);
-                                mdMDToast.show();
-
-                                SharedPreferences ob = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
-                                int sp_id = ob.getInt("user_id", 0);
-
-                                //for debugging
+                            try {
+                                add = getLocationFromAddress(location);
+                            } catch (Exception e) {
 
                             }
-                            if (response.isSuccessful()) {
+
+                            user_id = loggedin.getId();
+
+                            String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
+
+                            Call<Service> call = CreateServiceFragment.apiInterface.
+                                    createService(title, user_id, description, location, latitude, longitude, country,
+                                            1, Double.parseDouble(price + ""), category_id, date,
+                                            home_avail_status);
+
+                            call.enqueue(new Callback<Service>() {
+                                @Override
+                                public void onResponse(Call<Service> call, Response<Service> response) {
+                                    if (response.body().equals("ok")) {
+
+                                        setUIToWait(false);
+                                        MDToast mdMDToast = MDToast.makeText(getContext(), "Your Service Created Successfully", MDToast.LENGTH_SHORT, MDToast.TYPE_SUCCESS);
+                                        mdMDToast.show();
+
+                                        SharedPreferences ob = getActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
+                                        int sp_id = ob.getInt("user_id", 0);
+
+                                        //for debugging
+
+                                    }
+                                    if (response.isSuccessful()) {
 //                                insertreviewnil(-1,sp_id,-1);
 
 
-                                setUIToWait(false);
+                                        setUIToWait(false);
 
-                            }
+                                    }
+                                }
+
+
+                                @Override
+                                public void onFailure(Call<Service> call, Throwable t) {
+                                }
+
+                            });
+
+                            edDescription.setText("");
+                            edtTxtSerivceTitle.setText("");
+                            edTxtServicePrice.setText("");
+
+
+                            Intent intent = new Intent(getContext(), HomeActivity.class);
+                            intent.putExtra("fragment_Flag", CONST.MY_SERVICES_LIST_FRAGMENT);
+                            startActivity(intent);
+                            getActivity().finish();
+
+                        }else{
+                            alterDialog("Prince cannot be 0");
+                            edTxtServicePrice.setError("Invalid!");
+
                         }
+                    }else{
+                        alterDialog("Please fill all fields!!");
 
-
-                        @Override
-                        public void onFailure(Call<Service> call, Throwable t) {
-                        }
-
-                    });
-
-                                edDescription.setText("");
-                                edtTxtSerivceTitle.setText("");
-                                edTxtServicePrice.setText("");
-
-
-                                Intent intent=new Intent(getContext(),HomeActivity.class);
-                                intent.putExtra("fragment_Flag", CONST.MY_SERVICES_LIST_FRAGMENT);
-                                startActivity(intent);
-                                getActivity().finish();
-
-
-
-
+                    }
                 }
-            }
+                }
 
         });
 
@@ -681,6 +688,24 @@ public class CreateServiceFragment extends Fragment {
             progressDialog.dismiss();
         }
 
+    }
+
+    public void alterDialog(final String msg)  {
+       String message;
+        message = msg;
+        final AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+        builder1.setMessage(msg);
+        builder1.setCancelable(false);
+        builder1.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        builder1.setCancelable(true);
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 
 }

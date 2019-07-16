@@ -129,7 +129,6 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -918,10 +917,10 @@ public class HomeActivity extends AppCompatActivity
                     }
 
                 } else {
-
                     spRefNumber.setText("---");
                 }
             } catch (JSONException e) {
+                MDToast.makeText(HomeActivity.this, "No Internet Connectivity!!!", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
 
             }
