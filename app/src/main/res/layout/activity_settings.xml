@@ -64,49 +64,60 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:weightSum="2">
-                    <EditText
+                    <android.support.design.widget.TextInputLayout
                         android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    <EditText
                         android:id="@+id/user_name"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:hint="Name"
                         android:padding="15dp"
-                        android:background="@drawable/roundedcorners"
                         android:maxLines="1"
                         android:textSize="18sp"
                         />
+                    </android.support.design.widget.TextInputLayout>
 
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/dateofbirth"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
-                        android:layout_weight="1"
                         android:hint="Enter date of Birth"
                         android:layout_marginTop="0dp"
                         android:inputType="text"
                         android:layout_marginLeft="5dp"
                         android:maxLines="1"
                         android:padding="15dp"
-                        android:background="@drawable/roundedcorners"
                         android:textSize="18sp" />
-                </LinearLayout>
+                    </android.support.design.widget.TextInputLayout>
 
-                <EditText
+                </LinearLayout>
+                <android.support.design.widget.TextInputLayout
                     android:layout_weight="0.5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <EditText
                     android:id="@+id/CNIC"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:hint="Enter CNIC"
                     android:textSize="18sp"
                     android:layout_marginTop="08dp"
-                    android:background="@drawable/roundedcorners"
                     android:maxLines="1"
                     android:padding="15dp"
                     android:inputType="text"
                     />
-
-                <EditText
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
                     android:layout_weight="0.5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <EditText
                     android:textSize="17.5sp"
                     android:id="@+id/contactno"
                     android:hint="Contact NO#"
@@ -115,20 +126,25 @@
                     android:layout_marginTop="08dp"
                     android:maxLines="1"
                     android:padding="15dp"
-                    android:background="@drawable/roundedcorners"
                     android:inputType="text" />
-                <EditText
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
                     android:layout_weight="0.5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <EditText
                     android:textSize="17.5sp"
                     android:id="@+id/emailupdate"
                     android:hint="Enter Email"
                     android:maxLines="1"
-                    android:background="@drawable/roundedcorners"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:padding="15dp"
                     android:layout_marginTop="08dp"
                     android:inputType="textEmailAddress" />
+                </android.support.design.widget.TextInputLayout>
+
                 <Button
                     android:layout_weight="0.1"
                     android:layout_width="wrap_content"

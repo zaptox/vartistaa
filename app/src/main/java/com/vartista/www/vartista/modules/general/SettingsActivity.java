@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.User;
@@ -67,6 +69,15 @@ public class SettingsActivity extends AppCompatActivity {
         update = (Button)findViewById(R.id.updatedata);
         uploadimage = (Button)findViewById(R.id.upload);
         image= findViewById(R.id.profile_image);
+
+        SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        String images = ob.getString("image","");
+
+
+        Picasso.get().load(images).fit().centerCrop()
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.profile)
+                .into(image);
 
         uploadimage.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,10 +2,8 @@ package com.vartista.www.vartista.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,15 +16,10 @@ import com.google.gson.Gson;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.Service;
-import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.modules.general.HomeActivity;
-import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
-import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
-import com.vartista.www.vartista.modules.provider.ProviderFragments.CreateServiceFragment;
-import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServicesListFragment;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ServiceApiInterface;
-import com.vartista.www.vartista.util.CONST;
+import com.vartista.www.vartista.utilities.CONST;
 import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 

@@ -1,6 +1,4 @@
-package com.vartista.www.vartista.util;
-
-import com.vartista.www.vartista.modules.user.user_fragments.ServiceProviderDetailFragment;
+package com.vartista.www.vartista.utilities;
 
 public class CONST {
 

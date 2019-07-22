@@ -2,10 +2,8 @@ package com.vartista.www.vartista.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +13,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.GetServiceProviders;
-import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.modules.general.HomeActivity;
-import com.vartista.www.vartista.modules.provider.ProviderFragments.CreateServiceFragment;
-import com.vartista.www.vartista.modules.user.BookNowActivity;
-import com.vartista.www.vartista.modules.user.FindServicesInList;
-import com.vartista.www.vartista.modules.user.ServiceProviderDetail;
-import com.vartista.www.vartista.modules.user.user_fragments.ServiceProviderDetailFragment;
-import com.vartista.www.vartista.util.CONST;
+import com.vartista.www.vartista.utilities.CONST;
 import com.willy.ratingbar.ScaleRatingBar;
 
 import java.util.List;

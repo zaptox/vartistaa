@@ -3,36 +3,18 @@ package com.vartista.www.vartista.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.vartista.www.vartista.beans.DocUploadList;
 import com.vartista.www.vartista.modules.general.HomeActivity;
-import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.modules.provider.EarningActivity;
-import com.vartista.www.vartista.modules.provider.MyServiceRequests;
-import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
-import com.vartista.www.vartista.modules.provider.ProviderFragments.CreateServiceFragment;
-import com.vartista.www.vartista.modules.provider.ProviderFragments.EarningFragment;
-import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServiceRequestsFragment;
-import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServicesListFragment;
-import com.vartista.www.vartista.modules.provider.ProviderFragments.UploadDocListFragment;
-import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
-import com.vartista.www.vartista.util.CONST;
+import com.vartista.www.vartista.utilities.CONST;
 
 
 /**

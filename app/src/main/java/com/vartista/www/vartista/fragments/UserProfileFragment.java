@@ -32,9 +32,12 @@ import com.vartista.www.vartista.modules.general.UserProfile;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
+import com.vartista.www.vartista.utilities.Utils;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -52,7 +55,7 @@ import static android.app.Activity.RESULT_OK;
 public class UserProfileFragment extends Fragment {
 
     private TextView header_name;
-    private EditText name,email,password;
+    private TextView name,email,ServiceProvider;
     private Button update;
     private ImageView profileimage;
     private ProgressDialog progressDialog;
@@ -67,6 +70,8 @@ public class UserProfileFragment extends Fragment {
     private Button upload_image_update;
     User user_got;
     TabLayout tabLayout;
+    Utils utils;
+
 
     public UserProfileFragment() {
         // Required empty public constructor
@@ -86,8 +91,8 @@ public class UserProfileFragment extends Fragment {
         apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
         name=view.findViewById(R.id.name1);
         email= view.findViewById(R.id.email1);
-        password= view.findViewById(R.id.password1);
-        update= view.findViewById(R.id.update);
+        ServiceProvider = view.findViewById(R.id.s_provider);
+//        update= view.findViewById(R.id.update);
         header_name=view.findViewById(R.id.header_name);
         profileimage = (ImageView)view.findViewById(R.id.profile_image);
         upload_image_update=view.findViewById(R.id.upload);
@@ -96,9 +101,15 @@ public class UserProfileFragment extends Fragment {
 //        Intent intent= getIntent();
         final User user= user_got;
 
+        utils = new Utils(getActivity());
+
         name.setText(user.getName());
         email.setText(user.getEmail());
-        password.setText(user.getPassword());
+        if (Integer.parseInt(user.getSp_status()) == 0) {
+            ServiceProvider.setText("You are not a Service Provider");
+        }else{
+            ServiceProvider.setText("You are Service Provider");
+        }
         header_name.setText(user.getName());
         Picasso.get().load(user.getImage()).fit().centerCrop()
                 .placeholder(R.drawable.profile)
@@ -112,70 +123,69 @@ public class UserProfileFragment extends Fragment {
             }
         });
 
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String  namechange=name.getText().toString();
-                final String emailchange=email.getText().toString();
-                final String passchange= password.getText().toString();
-                int id1=user.getId();
-                setUIToWait(true);
-                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                Call<User> call= UserProfileFragment.apiInterface.updateUser(namechange,emailchange,passchange,id1);
-                call.enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call <User> call, Response<User> response) {
-
-                        if(response.body().getResponse().equals("ok")){
-                            uploadMultipart(filePath,emailchange,passchange);
-
-                            MDToast.makeText(getContext(),"Updated Successfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
-
-                        }else if(response.body().getResponse().equals("exist")){
-                            setUIToWait(false);
-                            MDToast.makeText(getContext(),"Same Data exists....",MDToast.LENGTH_SHORT,MDToast.TYPE_WARNING).show();
-
-                        }
-                        else if(response.body().getResponse().equals("error")){
-                            setUIToWait(false);
-
-                            MDToast.makeText(getContext(),"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
-
-                        }
-
-                        else{
-                            setUIToWait(false);
-
-                            MDToast.makeText(getContext(),"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
-
-                        }
-
-                        user.setName(namechange);
-                        user.setEmail(emailchange);
-                        user.setPassword(passchange);
-                        user.setImage(getPath(filePath));
-                        Intent intent = new Intent(getContext(), HomeActivity.class);
-                        intent.putExtra("user", user);
-                        startActivity(intent);
-
-                    }
-
-                    @Override
-                    public void onFailure(Call <User> call, Throwable t) {
-                        setUIToWait(false);
-                        MDToast.makeText(getContext(),"Update Failed",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
-
-                    }
-                });
-
-
-
-
-
-
-
-            }
-        });
+//        update.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//                final String namechange = name.getText().toString();
+//                final String emailchange = email.getText().toString();
+//                final String passchange = password.getText().toString();
+//                if(namechange.trim().length()>0 && emailchange.trim().length()>0 && passchange.trim().length()>0 ){
+//                int id1 = user.getId();
+//                setUIToWait(true);
+//                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//                Call<User> call = UserProfileFragment.apiInterface.updateUser(namechange, emailchange, passchange, id1);
+//                call.enqueue(new Callback<User>() {
+//                    @Override
+//                    public void onResponse(Call<User> call, Response<User> response) {
+//
+//                        if (response.body().getResponse().equals("ok")) {
+//                            uploadMultipart(filePath, emailchange, passchange);
+//
+//                            MDToast.makeText(getContext(), "Updated Successfully..", MDToast.LENGTH_SHORT, MDToast.TYPE_SUCCESS).show();
+//
+//                        } else if (response.body().getResponse().equals("exist")) {
+//                            setUIToWait(false);
+//                            MDToast.makeText(getContext(), "Same Data exists....", MDToast.LENGTH_SHORT, MDToast.TYPE_WARNING).show();
+//
+//                        } else if (response.body().getResponse().equals("error")) {
+//                            setUIToWait(false);
+//
+//                            MDToast.makeText(getContext(), "Something went wrong....", MDToast.LENGTH_SHORT, MDToast.TYPE_ERROR).show();
+//
+//                        } else {
+//                            setUIToWait(false);
+//
+//                            MDToast.makeText(getContext(), "Something went wrong....", MDToast.LENGTH_SHORT, MDToast.TYPE_ERROR).show();
+//
+//                        }
+//
+//                        user.setName(namechange);
+//                        user.setEmail(emailchange);
+//                        user.setPassword(passchange);
+//                        user.setImage(getPath(filePath));
+//                        Intent intent = new Intent(getContext(), HomeActivity.class);
+//                        intent.putExtra("user", user);
+//                        startActivity(intent);
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<User> call, Throwable t) {
+//                        setUIToWait(false);
+//                        MDToast.makeText(getContext(), "Update Failed", MDToast.LENGTH_SHORT, MDToast.TYPE_ERROR).show();
+//
+//                    }
+//                });
+//
+//
+//            }else{
+//                         utils.alterDialog("please fill all fields!");
+//                }
+//
+//            }
+//        });
 
 
 

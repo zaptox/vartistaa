@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.vartista.www.vartista.modules.general.HomeActivity;
-import com.vartista.www.vartista.modules.provider.ProviderFragments.EarningFragment;
-import com.vartista.www.vartista.modules.user.BookNowActivity;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.Service;
-import com.vartista.www.vartista.modules.user.user_fragments.BookNowFragment;
-import com.vartista.www.vartista.util.CONST;
+import com.vartista.www.vartista.utilities.CONST;
 
 import java.util.List;
 

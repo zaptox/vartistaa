@@ -79,7 +79,7 @@
             android:textSize="14sp"
             android:textColor="#000000"
             />
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/name1"
@@ -98,7 +98,7 @@
             android:textSize="14sp"
             android:textColor="#000000"
             />
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/email1"
@@ -111,34 +111,32 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PASSWORD"
+            android:text="Service Provider"
             android:layout_marginLeft="40sp"
             android:layout_marginTop="10sp"
             android:textSize="14sp"
             android:textColor="#000000"
             />
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/password1"
-            android:inputType="textPassword"
+            android:id="@+id/s_provider"
             android:layout_marginLeft="40sp"
             android:layout_marginRight="40sp"
             android:textSize="12sp"
             android:textColor="#000000"
-
             />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Update"
-            android:id="@+id/update"
-            android:layout_marginTop="10sp"
-            android:textColor="@color/textColor"
-            android:background="@drawable/buttonshape"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
-            />
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Update"-->
+            <!--android:id="@+id/update"-->
+            <!--android:layout_marginTop="10sp"-->
+            <!--android:textColor="@color/textColor"-->
+            <!--android:background="@drawable/buttonshape"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--/>-->
 
 
     </LinearLayout>

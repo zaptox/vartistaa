@@ -26,23 +26,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.adapters.ProviderDocumentAdapter;
-import com.vartista.www.vartista.adapters.ProviderPhotosAdapter;
-import com.vartista.www.vartista.beans.ProviderDocuments;
 import com.vartista.www.vartista.beans.ProviderPhotos;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.modules.general.HomeActivity;
-import com.vartista.www.vartista.modules.provider.AddressSetActivity;
-import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
-import com.vartista.www.vartista.modules.user.GetDocumentActivity;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
-import com.vartista.www.vartista.util.CONST;
+import com.vartista.www.vartista.utilities.CONST;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;

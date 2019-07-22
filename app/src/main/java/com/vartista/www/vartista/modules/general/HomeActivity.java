@@ -4,7 +4,6 @@ package com.vartista.www.vartista.modules.general;
 
 
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -38,11 +37,7 @@ import com.squareup.picasso.Picasso;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.Offline_user_status_service;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.adapters.ServicesInListMapAdapter;
-import com.vartista.www.vartista.adapters.ViewPagerAdapter;
 import com.vartista.www.vartista.beans.DeviceToken;
-import com.vartista.www.vartista.beans.GetServiceProviders;
-import com.vartista.www.vartista.beans.Service;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.fragments.ConfigSettingsFragment;
 import com.vartista.www.vartista.fragments.NotificationsFragment;
@@ -50,7 +45,6 @@ import com.vartista.www.vartista.fragments.ServiceProviderFragment;
 import com.vartista.www.vartista.fragments.UserProfileFragment;
 import com.vartista.www.vartista.fragments.UsersFragment;
 import com.vartista.www.vartista.modules.payment.PaymentActivity;
-import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.AddressSetFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.CreateServiceFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.DocumentUploadFragment;
@@ -63,7 +57,6 @@ import com.vartista.www.vartista.modules.provider.ProviderFragments.UploadDocLis
 import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.user.AssignRatings;
-import com.vartista.www.vartista.modules.user.FindServicesInList;
 import com.vartista.www.vartista.modules.user.GetDocumentActivity;
 import com.vartista.www.vartista.modules.user.Service_user_cancel;
 import com.vartista.www.vartista.modules.user.StartService;
@@ -76,7 +69,7 @@ import com.vartista.www.vartista.modules.user.user_fragments.User_Rating_Review_
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.TokenApiInterface;
 import com.vartista.www.vartista.services.UserStatusService;
-import com.vartista.www.vartista.util.CONST;
+import com.vartista.www.vartista.utilities.CONST;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -941,7 +934,7 @@ public class HomeActivity extends AppCompatActivity
 
 
 
-    public User getUserFromSharePrefs(){
+    public  User getUserFromSharePrefs(){
         User user=new User();
         SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
 

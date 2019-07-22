@@ -36,7 +36,7 @@ public class AppSettings extends AppCompatActivity {
         accountsetting = (TextView)findViewById(R.id.AccountSetting);
         changepassword = (TextView)findViewById(R.id.ChangePasswordappsetting);
         deleteaccount = (TextView)findViewById(R.id.DeleteAccount);
-        help = (TextView)findViewById(R.id.Help);
+//        help = (TextView)findViewById(R.id.Help);
         license = (TextView)findViewById(R.id.License);
         about = (TextView)findViewById(R.id.About);
         progressDialog = new ProgressDialog(this);
@@ -118,7 +118,7 @@ public class AppSettings extends AppCompatActivity {
 //        setUIToWait(true);
         progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 //    Call<User> call=SettingsActivity.apiInterface.updateUserSettings(id,name,email,password,user.getImage(),1,contact,0,0);
-        Call<User> call=AppSettings.apiInterface.updateUser(name, email, password, id);
+        Call<User> call = AppSettings.apiInterface.updateUser(name, email, password, id);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call <User> call, Response<User> response) {

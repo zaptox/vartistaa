@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +13,7 @@ import android.widget.Button;
 
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.modules.general.HomeActivity;
-import com.vartista.www.vartista.modules.provider.CreateServiceActivity;
-import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
-import com.vartista.www.vartista.modules.provider.MyServiceRequests;
-import com.vartista.www.vartista.modules.provider.MyServicesListActivity;
-import com.vartista.www.vartista.modules.provider.ProviderFragments.DocumentUploadFragment;
-import com.vartista.www.vartista.modules.provider.ProviderFragments.UploadDocListFragment;
-import com.vartista.www.vartista.modules.user.AssignRatings;
-import com.vartista.www.vartista.util.CONST;
+import com.vartista.www.vartista.utilities.CONST;
 
 /**
  * Created by Dell on 2018-10-08.

@@ -2,7 +2,9 @@ package com.vartista.www.vartista.modules.general;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -39,7 +41,7 @@ import retrofit2.Response;
 public class UserProfile extends AppCompatActivity {
 
     private TextView header_name;
-    private EditText name,email,password;
+    private TextView name,email,password;
     private Button update;
     private ImageView profileimage;
     private ProgressDialog progressDialog;
@@ -59,20 +61,21 @@ public class UserProfile extends AppCompatActivity {
         apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
         name=findViewById(R.id.name1);
         email= findViewById(R.id.email1);
-        password= findViewById(R.id.password1);
-        update= findViewById(R.id.update);
+//        password= findViewById(R.id.password1);
         header_name=findViewById(R.id.header_name);
         profileimage = (ImageView)findViewById(R.id.profile_image);
         upload_image_update=findViewById(R.id.upload);
 
         Intent intent= getIntent();
         final User user= (User) intent.getSerializableExtra("user");
+        SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        String image = ob.getString("image","");
 
         name.setText(user.getName());
         email.setText(user.getEmail());
         password.setText(user.getPassword());
         header_name.setText(user.getName());
-        Picasso.get().load(user.getImage()).fit().centerCrop()
+        Picasso.get().load(image).fit().centerCrop()
                 .placeholder(R.drawable.profile)
                 .error(R.drawable.profile)
                 .into(profileimage);
@@ -89,17 +92,17 @@ public class UserProfile extends AppCompatActivity {
             public void onClick(View v) {
             final String  namechange=name.getText().toString();
                 final String emailchange=email.getText().toString();
-                final String passchange= password.getText().toString();
+//                final String passchange= password.getText().toString();
                 int id1=user.getId();
                 setUIToWait(true);
                 progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                Call<User> call=UserProfile.apiInterface.updateUser(namechange,emailchange,passchange,id1);
+                Call<User> call=UserProfile.apiInterface.updateUser(namechange,emailchange,"",id1);
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call <User> call, Response<User> response) {
 
                         if(response.body().getResponse().equals("ok")){
-                            uploadMultipart(filePath,emailchange,passchange);
+//                            uploadMultipart(filePath,emailchange,passchange);
 
                             MDToast.makeText(UserProfile.this,"Updated Successfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 
@@ -124,7 +127,7 @@ public class UserProfile extends AppCompatActivity {
 
                         user.setName(namechange);
                         user.setEmail(emailchange);
-                        user.setPassword(passchange);
+                        user.setPassword("");
                         user.setImage(getPath(filePath));
 //                        user_name.setText("response ");
                         Intent intent = new Intent(UserProfile.this, HomeActivity.class);
