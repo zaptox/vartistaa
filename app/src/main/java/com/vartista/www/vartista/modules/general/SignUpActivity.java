@@ -41,7 +41,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
 
-import id.zelory.compressor.Compressor;
+//import id.zelory.compressor.Compressor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,7 +49,7 @@ import retrofit2.Response;
 public class SignUpActivity extends AppCompatActivity {
 
     private Button create,upload;
-    private EditText user_name,user_email,user_contact,user_password;
+    private EditText user_name,user_email,user_contact,user_password,confirmPassword;
     private ImageView image;
     public static ApiInterface apiInterface;
     private static final int PICK_IMAGE=100;
@@ -77,6 +77,7 @@ public class SignUpActivity extends AppCompatActivity {
         user_email= findViewById(R.id.user_email);
         user_contact= findViewById(R.id.user_number);
         user_password= findViewById(R.id.user_password);
+        confirmPassword = findViewById(R.id.user_retypepassword);
         upload= findViewById(R.id.upload);
         image= findViewById(R.id.profile_image);
         male_radio=findViewById(R.id.male);
@@ -110,14 +111,23 @@ public class SignUpActivity extends AppCompatActivity {
                     gender="female";
 
                 }
-                setUIToWait(true);
+                if(!user_name1.equals("") && user_name1.trim().length()>2){
+                    if(!user_email1.equals("") && user_email1.contains("@") && user_email1.contains(".com")){
 
 
-                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                Call<User> call=SignUpActivity.apiInterface.performRegistration(user_name1,user_email1,user_password1,"","1",user_contact1,null,null,gender);
-                call.enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call <User> call, Response<User> response) {
+                    if(male_radio.isChecked() || female_radio.isChecked()){
+                      if(user_contact1.trim().length()==11) {
+                          if(user_password1.trim().length()>5) {
+                              if(user_password1.equals(confirmPassword.getText().toString())){
+
+
+                              setUIToWait(true);
+
+                              progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                              Call<User> call = SignUpActivity.apiInterface.performRegistration(user_name1, user_email1, user_password1, "", "1", user_contact1, null, null, gender);
+                              call.enqueue(new Callback<User>(){
+                                  @Override
+                                  public void onResponse(Call<User> call, Response<User> response) {
 
                         if(response.body().getResponse().equals("ok")){
                             setUIToWait(false);
@@ -134,30 +144,64 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                         else if(response.body().getResponse().equals("error")){
                             setUIToWait(false);
+                                      if (response.body().getResponse().equals("ok")) {
+                                          setUIToWait(false);
+                                          uploadMultipart(filePath, user_email.getText().toString(), user_password.getText().toString());
+                                          insertdocumentnil(user_email.getText().toString(), user_password.getText().toString(), user_contact.getText().toString());
+                                          startActivity(new Intent(getApplicationContext(), SiginInActivity.class));
+                                          MDToast.makeText(SignUpActivity.this, "Account created sucessfully..", MDToast.LENGTH_SHORT, MDToast.TYPE_SUCCESS).show();
 
-                           MDToast.makeText(SignUpActivity.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+                                          finish();
+                                      } else if (response.body().getResponse().equals("exist")) {
+                                          setUIToWait(false);
+                                          showCompletedDialog("Error", "User Already Exist!");
+                                      } else if (response.body().getResponse().equals("error")) {
+                                          setUIToWait(false);
 
-                        }
+                                          MDToast.makeText(SignUpActivity.this, "Something went wrong....", MDToast.LENGTH_SHORT, MDToast.TYPE_ERROR).show();
 
-                        else{
-                            setUIToWait(false);
+                                      } else {
+                                          setUIToWait(false);
 
-                            MDToast.makeText(SignUpActivity.this,"Something went wrong....",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+                                          MDToast.makeText(SignUpActivity.this, "Something went wrong....", MDToast.LENGTH_SHORT, MDToast.TYPE_ERROR).show();
 
-                        }
+                                      }
 
+                                  }
+                                  }
+
+                                  @Override
+                                  public void onFailure(Call<User> call, Throwable t) {
+                                      setUIToWait(false);
+                                      MDToast.makeText(SignUpActivity.this, "No Internet Available", MDToast.LENGTH_SHORT, MDToast.TYPE_ERROR).show();
+
+                                  }
+                              });
+
+                              }else{
+                                    confirmPassword.setError("password did'nt match");
+                              }
+
+                  }else {
+                      user_password.setError("length must be 6");
+                  }
+                  }else{
+                          user_contact.setError("invalid number!");
+                      }
+              }
+                    else{
+                        female_radio.setError("check");
+                        male_radio.setError("check");
+                        Toast.makeText(SignUpActivity.this, "Check male or female", Toast.LENGTH_SHORT).show();
                     }
-
-                    @Override
-                    public void onFailure(Call <User> call, Throwable t) {
-                        setUIToWait(false);
-                        MDToast.makeText(SignUpActivity.this,"Signup Failed",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
-
-                    create.setText(t.getMessage());
+                    }else{
+                        user_email.setError("invalid email");
                     }
-                });
-
+                }else {
+                    user_name.setError("invalid username");
+                    Toast.makeText(SignUpActivity.this, "invalid username", Toast.LENGTH_SHORT).show();
                 }
+            }
 
 
         });
@@ -180,16 +224,16 @@ public class SignUpActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-                filePath = data.getData();
-                try {
-                    select_profile=true;
-                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                    image.setImageBitmap(bitmap);
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                select_profile=true;
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                image.setImageBitmap(bitmap);
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -221,7 +265,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-       private void setUIToWait(boolean wait) {
+    private void setUIToWait(boolean wait) {
 
         if (wait) {
             progressDialog = ProgressDialog.show(this, null, null, true, true);
@@ -280,7 +324,7 @@ public class SignUpActivity extends AppCompatActivity {
                     .startUpload(); //Starting the upload
         } catch (Exception exc) {
             MDToast.makeText(this, exc.getMessage(), MDToast.LENGTH_SHORT).show();
-                                }
+        }
     }
 
     public String getPath(Uri uri) {

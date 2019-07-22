@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
@@ -41,7 +42,7 @@ import retrofit2.Response;
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     EditText emaiverifyedittext,verificationcode,newpassword,confirmnewpassword;
-    Button submitemail,submitcode,savepassword;
+    Button submitemail,submitcode,savepassword,resendcode;
     TextView countdown;
     LinearLayout layoutforcode,layoutforemail,layoutforpasswords;
     public static ApiInterface apiInterface;
@@ -50,7 +51,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     String email = "";
     String usersname = "";
     String usersid = "";
-//    User userLoggedIn = null;
+    //    User userLoggedIn = null;
 //    String userinputemail2;
 //    boolean check;
     @Override
@@ -63,6 +64,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         confirmnewpassword = (EditText)findViewById(R.id.ConfirmNewPassword);
         submitemail = (Button)findViewById(R.id.submitemail);
         submitcode = (Button)findViewById(R.id.submitcode);
+        resendcode = (Button)findViewById(R.id.resendcode);
         savepassword = (Button)findViewById(R.id.SavePassword);
         layoutforcode = (LinearLayout)findViewById(R.id.layoutforcode);
         layoutforemail = (LinearLayout)findViewById(R.id.layoutforemail);
@@ -71,28 +73,50 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         layoutforcode.setVisibility(View.GONE);
         layoutforpasswords.setVisibility(View.GONE);
         countdown = (TextView)findViewById(R.id.time);
-        startTimer();
+        resendcode.setVisibility(View.GONE);
+
         submitemail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 email = emaiverifyedittext.getText().toString();
-                new ForgotPasswordActivity.Connection(getApplicationContext(),email.trim().toString()).execute();
-                layoutforemail.setVisibility(View.GONE);
-                layoutforcode.setVisibility(View.VISIBLE);
+                if(!email.equals("") && email.contains("@") && email.contains(".com")){
+                    new ForgotPasswordActivity.Connection(getApplicationContext(),email.trim().toString()).execute();
+                    startTimer();
+                    layoutforemail.setVisibility(View.GONE);
+                    layoutforcode.setVisibility(View.VISIBLE);
 
+                }
+                else {
+                    emaiverifyedittext.setError("Invalid");
+                    Toast.makeText(ForgotPasswordActivity.this, "please Enter Valid Email Address", Toast.LENGTH_SHORT).show();
+                }
             }
 
 
         });
 
+        resendcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ForgotPasswordActivity.Connection(getApplicationContext(),email.trim().toString()).execute();
+                Toast.makeText(ForgotPasswordActivity.this, "code is send again", Toast.LENGTH_SHORT).show();
+                resendcode.setVisibility(View.GONE);
+                submitcode.setVisibility(View.VISIBLE);
+            }
+        });
         submitcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String users_code = verificationcode.getText().toString();
-
-                if(users_code.equals(code)){
-                    layoutforcode.setVisibility(View.GONE);
-                    layoutforpasswords.setVisibility(View.VISIBLE);
+                if(!users_code.equals("")){
+                    if(users_code.equals(code)) {
+                        layoutforcode.setVisibility(View.GONE);
+                        layoutforpasswords.setVisibility(View.VISIBLE);
+                    }else{
+                        Toast.makeText(ForgotPasswordActivity.this, "The Code you Entered is Incorrect", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(ForgotPasswordActivity.this, "Enter Code First", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -103,8 +127,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String newpasword = newpassword.getText().toString();
                 String confirmnewpasword = confirmnewpassword.getText().toString();
-                if(newpasword.equals(confirmnewpasword)){
-                    updatedata(Integer.parseInt(usersid),usersname,email,confirmnewpasword);
+                if(!newpasword.equals("") && !confirmnewpasword.equals("")) {
+                    if (newpasword.equals(confirmnewpasword)) {
+                        updatedata(Integer.parseInt(usersid), usersname, email, confirmnewpasword);
+                    }
+                }
+                else{
+                    Toast.makeText(ForgotPasswordActivity.this, "Enter Valid password", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -119,8 +148,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         cTimer = new CountDownTimer(120000, 1000) {
             public void onTick(long millisUntilFinished) {
                 countdown.setText(""+millisUntilFinished/1000);
-                }
+            }
             public void onFinish() {
+                resendcode.setVisibility(View.VISIBLE);
+                submitcode.setVisibility(View.GONE);
+
             }
         };
         cTimer.start();
@@ -138,93 +170,93 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
 
 
-class Connection extends AsyncTask<String,String ,String > {
-    private ProgressDialog dialog;
-    String categoriesArray[]=null;
-    Context context;
-    String email=null;
+    class Connection extends AsyncTask<String,String ,String > {
+        private ProgressDialog dialog;
+        String categoriesArray[]=null;
+        Context context;
+        String email=null;
 
 
-    public  Connection(Context activity,String email) {
-        dialog = new ProgressDialog(activity);
-        context=activity;
-        this.email=email;
-    }
+        public  Connection(Context activity,String email) {
+            dialog = new ProgressDialog(activity);
+            context=activity;
+            this.email=email;
+        }
 
 
-    @Override
-    protected void onPreExecute() {
+        @Override
+        protected void onPreExecute() {
 //        dialog.setMessage("Retriving data Please Wait..");
 //        dialog.show();
-    }
-
-    @Override
-    protected String doInBackground(String... strings) {
-
-
-        String result="";
-
-        final String BASE_URL="http://vartista.com/vartista_app/forget_password.php?email="+email;
-        try {
-            HttpClient client=new DefaultHttpClient();
-            HttpGet request=new HttpGet();
-
-            request.setURI(new URI(BASE_URL));
-            HttpResponse response=client.execute(request);
-            BufferedReader reader=new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            StringBuffer stringBuffer=new StringBuffer();
-            String line="";
-            while((line=reader.readLine())!=null){
-                stringBuffer.append(line);
-                break;
-            }
-            reader.close();
-            result=stringBuffer.toString();
-
-
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            return new String("There is exception"+e.getMessage());
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return result;
-    }
 
-    @Override
-    protected void onPostExecute(String result) {
-        if (dialog.isShowing()) {
+        @Override
+        protected String doInBackground(String... strings) {
+
+
+            String result="";
+
+            final String BASE_URL="http://vartista.com/vartista_app/forget_password.php?email="+email;
+            try {
+                HttpClient client=new DefaultHttpClient();
+                HttpGet request=new HttpGet();
+
+                request.setURI(new URI(BASE_URL));
+                HttpResponse response=client.execute(request);
+                BufferedReader reader=new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                StringBuffer stringBuffer=new StringBuffer();
+                String line="";
+                while((line=reader.readLine())!=null){
+                    stringBuffer.append(line);
+                    break;
+                }
+                reader.close();
+                result=stringBuffer.toString();
+
+
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+                return new String("There is exception"+e.getMessage());
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (dialog.isShowing()) {
 //            dialog.dismiss();
-        }
-
-        try {
-            JSONObject jsonResult=new JSONObject(result);
-
-            String success=""+jsonResult;
-
-
-
-            if(success.contains("ok")){
-                JSONArray ob = jsonResult.getJSONArray("user");
-                code = jsonResult.getString("code");
-                usersname = ob.getString(1);
-                usersid = ob.getString(0);
-
-
             }
 
-            else{
-                        MDToast.makeText(getApplicationContext(),"no data",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+            try {
+                JSONObject jsonResult=new JSONObject(result);
 
+                String success=""+jsonResult;
+
+
+
+                if(success.contains("ok")){
+                    JSONArray ob = jsonResult.getJSONArray("user");
+                    code = jsonResult.getString("code");
+                    usersname = ob.getString(1);
+                    usersid = ob.getString(0);
+
+
+                }
+
+                else{
+                    MDToast.makeText(getApplicationContext(),"no data",MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
-}
 
     public void updatedata(int id,String name,String email,String password){
 //        setUIToWait(true);

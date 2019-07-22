@@ -6,11 +6,14 @@ package com.vartista.www.vartista.modules.general;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -72,6 +75,7 @@ import com.vartista.www.vartista.modules.user.user_fragments.ServiceProviderDeta
 import com.vartista.www.vartista.modules.user.user_fragments.User_Rating_Review_Fragment;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.TokenApiInterface;
+import com.vartista.www.vartista.services.UserStatusService;
 import com.vartista.www.vartista.util.CONST;
 
 import org.apache.http.HttpResponse;
@@ -90,6 +94,7 @@ import java.net.URISyntaxException;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.widget.Toast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -107,9 +112,23 @@ public class HomeActivity extends AppCompatActivity
 
     Boolean check = true;
     Boolean all_closed= false;
+    private UserStatusService mService;
+    private boolean mBound;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Bind to LocalService
+        Intent intent = new Intent(this, UserStatusService.class);
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
+        if(mBound){
+            mService.updateUserStatus(user_id);
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -126,6 +145,14 @@ public class HomeActivity extends AppCompatActivity
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        NavigationDrawerUser(false);
+        if (check == true) {
+            NavigationDrawer_ServiceProvider(true);
+            check = false;
+        }
+
 
         bottomNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -253,7 +280,6 @@ public class HomeActivity extends AppCompatActivity
                     }else{
                     replaceFragment(new CreateServiceFragment(user_id));
                         getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
-
                     }
                     break;
             case CONST.UPLOAD_DOC_LIST_FRAGMENT:
@@ -334,8 +360,6 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.notification) {
-
-
             Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
             intent.putExtra("fragment_Flag", CONST.NOTIFIATION_FRAGMENT);
             startActivity(intent);
@@ -366,6 +390,7 @@ public class HomeActivity extends AppCompatActivity
             startActivity(new Intent(HomeActivity.this, SiginInActivity.class));
 
         } else if (id == R.id.payment) {
+
             Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
             startActivity(intent);
 
@@ -379,12 +404,12 @@ public class HomeActivity extends AppCompatActivity
 
 
         }
-        //newcode
-//        else if (id == R.id.Userratings) {
-//            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
-//            intent.putExtra("fragment_Flag", CONST.USER_RATINGS_REVIEW_FRAGMENT);
-//            startActivity(intent);
-//        }
+//        newcode
+        else if (id == R.id.Userratings) {
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.USER_RATINGS_REVIEW_FRAGMENT);
+            startActivity(intent);
+        }
 //newcode
         else if (id == R.id.provider_doc_upload) {
 
@@ -427,8 +452,15 @@ public class HomeActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         }
         else{
-                            super.onBackPressed();
-
+            Intent intent = getIntent();
+            if(intent.getIntExtra("fragment_Flag",0)!=0) {
+                Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+            else{
+                super.onBackPressed();
+            }
         }
 
     }
@@ -601,7 +633,7 @@ public class HomeActivity extends AppCompatActivity
 
                 if (success == 1) {
                 } else {
-
+                    MDToast.makeText(HomeActivity.this, "Check Your Internet", Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -692,6 +724,11 @@ public class HomeActivity extends AppCompatActivity
                     Fragment selectFragment = null;
                     switch (menuItem.getItemId()) {
                         case R.id.nav_as_a_user:
+                            NavigationDrawerUser(false  );
+                            if (check == true) {
+                                NavigationDrawer_ServiceProvider(true);
+                                check = false;
+                            }
                             selectFragment = new UsersFragment(user_id);
                            replaceFragment(selectFragment);
                             getSupportActionBar().setBackgroundDrawable(getResources().getDrawable
@@ -701,9 +738,19 @@ public class HomeActivity extends AppCompatActivity
                         case R.id.nav_as_a_provider:
                             if(user.getSp_status().equals("0")|| user.getSp_status().equals("-1")){
                                 selectFragment = new ConfigSettingsFragment();
+                                NavigationDrawerUser(true);
+                                if (check==false){
+                                    NavigationDrawer_ServiceProvider(false);
+                                    check=true;
+                                }
 
                             }else{
                                 selectFragment=new ServiceProviderFragment(user_id);
+                                NavigationDrawerUser(true);
+                                if (check==false){
+                                    NavigationDrawer_ServiceProvider(false);
+                                    check=true;
+                                }
                             }
                             replaceFragment(selectFragment);
                             getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.serviceProviderActionBar));
@@ -797,6 +844,7 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+
     class ConnectionForSpCode extends AsyncTask<String, String, String> {
         private int user_id;
 
@@ -869,10 +917,10 @@ public class HomeActivity extends AppCompatActivity
                     }
 
                 } else {
-
                     spRefNumber.setText("---");
                 }
             } catch (JSONException e) {
+                MDToast.makeText(HomeActivity.this, "No Internet Connectivity!!!", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
 
             }
@@ -908,5 +956,25 @@ public class HomeActivity extends AppCompatActivity
         user.setImage(ob.getString("image",""));
         return  user;
     }
+
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            UserStatusService.MyLocalBinder binder = (UserStatusService.MyLocalBinder) service;
+
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
+
 
 }

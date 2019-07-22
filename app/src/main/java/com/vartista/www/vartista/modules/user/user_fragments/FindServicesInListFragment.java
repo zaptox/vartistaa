@@ -362,7 +362,7 @@ public class FindServicesInListFragment extends Fragment {
 
             else {
 
-                final String BASE_URL = "http://vartista.com/vartista_app/get_service_providers.php?cat_id=" + cat_id+"&user_id="+user_id;
+                    final String BASE_URL = "http://vartista.com/vartista_app/get_service_providers.php?cat_id=" + cat_id+"&user_id="+user_id;
 
                 try {
                     HttpClient client = new DefaultHttpClient();
@@ -461,6 +461,7 @@ public class FindServicesInListFragment extends Fragment {
         }
 
     }
+
 
     class Connection2 extends AsyncTask<String,String ,String > {
         private int cat_id;

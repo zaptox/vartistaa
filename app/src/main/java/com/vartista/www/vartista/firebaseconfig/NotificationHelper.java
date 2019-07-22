@@ -44,7 +44,7 @@ public class NotificationHelper extends ContextWrapper {
     private void createChannel() {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
 
-            NotificationChannel notificationChannel=new NotificationChannel(CHANNEL_ID,CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+        NotificationChannel notificationChannel=new NotificationChannel(CHANNEL_ID,CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
         notificationChannel.enableLights(true);
         notificationChannel.enableVibration(true);
         notificationChannel.setLightColor(Color.GREEN);
@@ -292,12 +292,6 @@ public class NotificationHelper extends ContextWrapper {
 
                     .setAutoCancel(true);
         }
-
-
-
-
-
-
 
    return builder;
     }
