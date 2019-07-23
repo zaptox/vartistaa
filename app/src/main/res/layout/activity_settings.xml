@@ -29,7 +29,7 @@
                 android:layout_width="90sp"
                 android:layout_height="30sp"
                 android:layout_marginTop="20sp"
-                android:layout_marginLeft="146sp"
+                android:layout_marginLeft="160sp"
                 android:background="@drawable/buttonshape"
                 android:textColor="@color/textColor"
                 android:textStyle="bold"
@@ -145,21 +145,6 @@
                     android:inputType="textEmailAddress" />
                 </android.support.design.widget.TextInputLayout>
 
-                <Button
-                    android:layout_weight="0.1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Change Password"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/textColor"
-                    android:textAllCaps="false"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:padding="10dp"
-                    android:background="@drawable/buttonshape"
-                    android:id="@+id/changepassword"
-                    />
                 <Button
                     android:layout_weight="0.1"
                     android:layout_width="wrap_content"

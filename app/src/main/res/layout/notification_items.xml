@@ -4,9 +4,10 @@
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginLeft="20dp"
         android:id="@+id/profile_image"
-        android:layout_width="70dp"
-        android:layout_height="88dp"
+        android:layout_width="40dp"
+        android:layout_height="68dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/tom">
@@ -35,7 +36,7 @@
         android:layout_below="@+id/textViewname_user_noti"
         android:layout_marginTop="4dp"
         android:paddingLeft="10dp"
-        android:layout_marginLeft="68dp"
+        android:layout_marginLeft="58dp"
         android:textColor="@color/mdtp_dark_gray"
         android:text="Message From Admin" />
 

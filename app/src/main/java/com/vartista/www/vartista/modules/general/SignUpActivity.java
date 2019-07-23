@@ -237,30 +237,30 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 1)
-//            if (resultCode == Activity.RESULT_OK) {
-//                Uri selectedImage = data.getData();
-//
-//                String filePath = getPath(selectedImage);
-//                String file_extn = filePath.substring(filePath.lastIndexOf(".") + 1);
-//
-//                try {
-//                    select_profile=true;
-//                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-//                    image.setImageBitmap(bitmap);
-//
-//                    if (file_extn.equals("img") || file_extn.equals("jpg") || file_extn.equals("jpeg") || file_extn.equals("gif") || file_extn.equals("png")) {
-//                        //FINE
-//                    } else {
-//                        //NOT IN REQUIRED FORMAT
-//                    }
-//                } catch (FileNotFoundException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
+        if (requestCode == 1)
+            if (resultCode == Activity.RESULT_OK) {
+                Uri selectedImage = data.getData();
+
+                String filePath = getPath(selectedImage);
+                String file_extn = filePath.substring(filePath.lastIndexOf(".") + 1);
+
+                try {
+                    select_profile=true;
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                    image.setImageBitmap(bitmap);
+
+                    if (file_extn.equals("img") || file_extn.equals("jpg") || file_extn.equals("jpeg") || file_extn.equals("gif") || file_extn.equals("png")) {
+                        //FINE
+                    } else {
+                        //NOT IN REQUIRED FORMAT
+                    }
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
     }
 

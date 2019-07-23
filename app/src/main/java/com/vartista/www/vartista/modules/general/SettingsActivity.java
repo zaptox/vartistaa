@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.valdesekamdem.library.mdtoast.MDToast;
@@ -22,6 +25,9 @@ import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
+
+import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.UploadNotificationConfig;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -37,6 +43,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,12 +54,17 @@ public class SettingsActivity extends AppCompatActivity {
     EditText Name, DateOfBirth, CNIC, ContactNo,Email,OldPassword,NewPassword,ConfirmNewPassword;
     Button changepassword,update,uploadimage;
     private static final int PICK_IMAGE=100;
-    Uri imageUri;
+//    Uri imageUri;
     private ImageView image;
+    private static final String UPLOAD_URL = "http://vartista.com/vartista_app/upload_profile.php";
     User user;
+    Uri filePath;
+            String imagePath;
+            Bitmap bitmap;
     private ProgressDialog progressDialog;
     int user_id = HomeActivity.user_id;
     Dialog changepassworddialog;
+    private int column_index;
     public static ApiInterface apiInterface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +77,7 @@ public class SettingsActivity extends AppCompatActivity {
         CNIC = (EditText)findViewById(R.id.CNIC);
         ContactNo = (EditText)findViewById(R.id.contactno);
         Email = (EditText)findViewById(R.id.emailupdate);
-        changepassword = (Button)findViewById(R.id.changepassword);
+//        changepassword = (Button)findViewById(R.id.changepassword);
         update = (Button)findViewById(R.id.updatedata);
         uploadimage = (Button)findViewById(R.id.upload);
         image= findViewById(R.id.profile_image);
@@ -124,30 +136,107 @@ public class SettingsActivity extends AppCompatActivity {
 //
 //            }
 //        });
-//        update.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String name = Name.getText().toString();
-//                String contact = ContactNo.getText().toString();
-//                String email = Email.getText().toString();
-//                int id = user.getId();
-//                updatedata(id,name,email,contact,user.getPassword());
-//            }
-//        });
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = Name.getText().toString();
+                String contact = ContactNo.getText().toString();
+                String email = Email.getText().toString();
+                int id = user.getId();
+                    updatedata(id,name,email,contact,user.getPassword());
+            }
+        });
 
 
 
     }
     public void openGallery(){
         Intent i= new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+
         startActivityForResult(i,PICK_IMAGE);
 
+    }
+    public void uploadMultipart(Uri filePath, String email, int id ) {
+
+        //getting the actual path of the image
+
+
+//        String path = "http://vartista.com/vartista_app/images/placeholder/placeholder-man.png";
+        String path = "";
+
+//        //for compression
+//        File image_file= new File (filePath.getPath());
+//        File compressedImageFile = null;
+//        try {
+//            compressedImageFile = new Compressor(this).compressToFile(image_file);
+//        } catch (IOException e) {
+////            e.printStackTrace();
+//         MDToast.makeText(SignUpActivity.this,e.getMessage(),MDToast.LENGTH_SHORT,MDToast.TYPE_ERROR).show();
+//
+//
+//        }
+//        filePath= Uri.fromFile(compressedImageFile);
+//
+//
+
+
+        try{
+            path = getPath(filePath);
+        }
+        catch (Exception e){
+            Toast.makeText(this, "You can upload your image later!", Toast.LENGTH_SHORT).show();
+        }
+
+
+        //Uploading code
+        try {
+            String uploadId = UUID.randomUUID().toString();
+            //Creating a multi part request
+            new MultipartUploadRequest(this, uploadId, UPLOAD_URL)
+                    .addFileToUpload(path, "image") //Adding file
+                    .addParameter("email", email)
+                    .addParameter("id",id+"")
+                    .setNotificationConfig(new UploadNotificationConfig())
+                    .setMaxRetries(3)
+                    .startUpload(); //Starting the upload
+        } catch (Exception exc) {
+            MDToast.makeText(this, exc.getMessage(), MDToast.LENGTH_SHORT).show();
+        }
+    }
+
+    public String getPath(Uri uri) {
+//        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+//        cursor.moveToFirst();
+//        String document_id = cursor.getString(0);
+//        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+//        cursor.close();
+//        cursor = getContentResolver().query(
+//                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+//                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+//        cursor.moveToFirst();
+//        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+//        cursor.close();
+//
+//        return path;
+        String[] projection = {MediaStore.MediaColumns.DATA};
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+        cursor.moveToFirst();
+        imagePath = cursor.getString(column_index);
+
+        return cursor.getString(column_index);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode==RESULT_OK && requestCode==PICK_IMAGE){
-            imageUri=data.getData();
-            image.setImageURI(imageUri);
+            filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                image.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -250,7 +339,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
-public void updatedata(int id,String name,String email,String contact,String password){
+public void updatedata(final int id, String name, final String email, String contact, final String password){
     setUIToWait(true);
     progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 //    Call<User> call=SettingsActivity.apiInterface.updateUserSettings(id,name,email,password,user.getImage(),1,contact,0,0);
@@ -261,6 +350,7 @@ public void updatedata(int id,String name,String email,String contact,String pas
 
             if(response.body().getResponse().equals("ok")){
                 setUIToWait(false);
+                uploadMultipart(filePath, email, id);
 
                 MDToast.makeText(SettingsActivity.this,"Updated Successfully..",MDToast.LENGTH_SHORT,MDToast.TYPE_SUCCESS).show();
 

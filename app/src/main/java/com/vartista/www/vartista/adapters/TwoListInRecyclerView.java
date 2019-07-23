@@ -137,13 +137,14 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
 
             if(status.equals("1")){
                 username.setText(name);
-                requestdetail.setTextColor(Color.GREEN);
+                requestdetail.setTextColor(Color.GRAY);
                 requestdetail.setText(RA);
                 timeduration.setText(TimeAgo(date_accepted));
             }
             else if(status.equals("0")){
+                requestdetail.setTextColor(Color.GRAY);
                 requestdetail.setText(Html.fromHtml(
-                        "Your request has sent to "+name));
+                        "Your request has been sent to "+name));
                 timeduration.setText(TimeAgo(date_sendat));
             }
             else if(status.equals("-1")){
@@ -261,7 +262,7 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
             final String sp_status = ob.getSp_status();
 
 
-            Toast.makeText(itemView.getContext(), ""+ob.getMsg(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(itemView.getContext(), ""+ob.getMsg(), Toast.LENGTH_SHORT).show();
             username.setText(Html.fromHtml("Dear "+"<b>"+ob.getName()+"<b>"));
             adminmsg.setText(Html.fromHtml("<b>"+ob.getTitle()+"<b> <br> "+ob.getMsg()));
             timeduration.setText(TimeAgo(Created_at));

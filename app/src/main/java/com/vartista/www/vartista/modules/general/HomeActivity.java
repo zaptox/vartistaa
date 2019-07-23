@@ -65,6 +65,7 @@ import com.vartista.www.vartista.modules.user.user_fragments.FindServicesInListF
 import com.vartista.www.vartista.modules.user.user_fragments.MyCompletedServicesFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.MyServiceMeetingsFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.ServiceProviderDetailFragment;
+import com.vartista.www.vartista.modules.user.user_fragments.UserDetailFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.User_Rating_Review_Fragment;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.TokenApiInterface;
@@ -287,7 +288,7 @@ public class HomeActivity extends AppCompatActivity
 
                     break;
             case CONST.USER_PROFILE_FRAGMENT:
-                replaceFragment(new UserProfileFragment(user));
+                replaceFragment(new UserDetailFragment(user));
                 break;
                 case  CONST.NOTIFIATION_FRAGMENT:
                     replaceFragment( new NotificationsFragment());
