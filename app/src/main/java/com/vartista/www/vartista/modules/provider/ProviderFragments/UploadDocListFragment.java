@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,7 +21,6 @@ import android.view.ViewGroup;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.DocUploadAdapter;
 import com.vartista.www.vartista.beans.DocUpload;
-import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;

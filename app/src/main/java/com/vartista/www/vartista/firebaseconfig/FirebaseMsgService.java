@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
@@ -14,31 +13,17 @@ import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
-import android.view.animation.OvershootInterpolator;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter;
-import com.vartista.www.vartista.beans.RequestService;
-import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.User;
-import com.vartista.www.vartista.modules.general.Asynctask_MultipleUrl;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.general.SiginInActivity;
-import com.vartista.www.vartista.modules.general.SignUpActivity;
-import com.vartista.www.vartista.modules.provider.MyServiceRequests;
-import com.vartista.www.vartista.modules.provider.UploadDoc;
-import com.vartista.www.vartista.modules.provider.UploadDocListActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
 import com.vartista.www.vartista.modules.provider.RequestAlertActivity;
-import com.vartista.www.vartista.modules.user.AssignRatings;
-import com.vartista.www.vartista.modules.user.MyCompletedServices;
-import com.vartista.www.vartista.modules.user.MyServiceMeetings;
-import com.vartista.www.vartista.modules.user.UserAppointmentDetails;
-import com.vartista.www.vartista.modules.user.UserNotificationOnTime;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -54,15 +39,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-
-import static com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter.REQUEST_CODE_SP;
-import static com.vartista.www.vartista.adapters.MyRequestsServicesListAdapter.sendCompactNotification;
 
 public class FirebaseMsgService   extends FirebaseMessagingService {
 

@@ -14,22 +14,15 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
-import com.vartista.www.vartista.beans.RequestService;
 import com.vartista.www.vartista.beans.User;
-import com.vartista.www.vartista.modules.general.Asynctask_MultipleUrl;
 import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.general.SiginInActivity;
-import com.vartista.www.vartista.modules.general.SignUpActivity;
-import com.vartista.www.vartista.modules.general.SplashActivity;
-import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.RequestAlertActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
-import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 
 public class NotificationHelper extends ContextWrapper {
     public static  final String CHANNEL_ID="com.zaptoxlbgfg.xffffonflppppppkp[pdfdixzvsgdsvsddsvdfss";

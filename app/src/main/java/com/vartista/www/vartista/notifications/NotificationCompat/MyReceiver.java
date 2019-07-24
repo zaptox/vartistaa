@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
-import com.vartista.www.vartista.Main2Activity;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.modules.provider.MyServiceRequests;
 import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;

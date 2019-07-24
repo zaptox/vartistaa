@@ -31,7 +31,6 @@ import com.vartista.www.vartista.beans.EarningsDuesBean;
 import com.vartista.www.vartista.beans.NotificationsManager;
 import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
-import com.vartista.www.vartista.modules.provider.AppointmentDetails;
 import com.vartista.www.vartista.modules.provider.MyAppointments;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;

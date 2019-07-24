@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.User;
@@ -46,6 +47,13 @@ public class AppSettings extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(AppSettings.this,SettingsActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        license.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AppSettings.this, OssLicensesMenuActivity.class));
             }
         });
 

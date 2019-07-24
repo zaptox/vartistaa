@@ -8,14 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.ServiceUserAppointmentsAdapter;
-import com.vartista.www.vartista.adapters.servicepappointmentsadapter;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
-import com.vartista.www.vartista.modules.provider.MyAppointments;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -32,8 +29,6 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-
-import static com.vartista.www.vartista.modules.general.HomeActivity.user_id;
 
 public class MyServiceMeetings extends AppCompatActivity {
 

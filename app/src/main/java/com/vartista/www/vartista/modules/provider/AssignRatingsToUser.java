@@ -19,7 +19,6 @@ import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.CreateRequest;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
 import com.vartista.www.vartista.modules.general.HomeActivity;
-import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 import com.willy.ratingbar.BaseRatingBar;

@@ -12,9 +12,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
-import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.user.AssignRatings;
-import com.vartista.www.vartista.modules.user.MyServiceMeetings;
 import com.vartista.www.vartista.modules.user.UserAppointmentDetails;
 
 import java.util.List;

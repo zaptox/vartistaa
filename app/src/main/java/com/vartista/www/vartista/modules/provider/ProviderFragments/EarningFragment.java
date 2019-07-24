@@ -146,7 +146,7 @@ public class EarningFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            dialog.setMessage("Retriving data Please Wait..");
+            dialog.setMessage("Retrieving data Please Wait..");
             dialog.show();
         }
 
@@ -254,7 +254,7 @@ public class EarningFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            dialog.setMessage("Retriving data Please Wait..");
+            dialog.setMessage("Retrieving data Please Wait..");
             dialog.show();
         }
 
@@ -348,7 +348,7 @@ public class EarningFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            dialog.setMessage("Retriving data Please Wait..");
+            dialog.setMessage("Retrieving data Please Wait..");
             dialog.show();
         }
 
@@ -456,7 +456,7 @@ public class EarningFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            dialog.setMessage("Retriving data Please Wait..");
+            dialog.setMessage("Retrieving data Please Wait..");
             dialog.show();
             providerBonusBeanList.clear();
         }

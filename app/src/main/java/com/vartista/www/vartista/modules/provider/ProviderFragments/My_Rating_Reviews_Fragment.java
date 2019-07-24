@@ -3,10 +3,8 @@ package com.vartista.www.vartista.modules.provider.ProviderFragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +17,6 @@ import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.RatingsReviewDetailsAdaptor;
 import com.vartista.www.vartista.beans.RatingsReviewDetailBean;
-import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
 import com.willy.ratingbar.ScaleRatingBar;
 
 import org.apache.http.HttpResponse;

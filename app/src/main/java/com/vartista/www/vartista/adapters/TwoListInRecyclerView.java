@@ -14,19 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.choota.dev.ctimeago.TimeAgo;
 import com.kennyc.bottomsheet.BottomSheet;
 import com.kennyc.bottomsheet.BottomSheetListener;
 import com.squareup.picasso.Picasso;
-import com.vartista.www.vartista.*;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.usernotificationitems;
 import com.vartista.www.vartista.modules.general.MyTimeAgo;
 import com.vartista.www.vartista.modules.provider.DocumentUploadActivity;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -276,7 +272,7 @@ public class TwoListInRecyclerView extends RecyclerView.Adapter{
                 @Override
                 public void onClick(View v) {
                     if (msg.contains("upload")){
-                        Intent intent = new Intent(itemView.getContext(),DocumentUploadActivity.class);
+                        Intent intent = new Intent(itemView.getContext(), DocumentUploadActivity.class);
                         v.getContext().startActivity(intent);
                     }else{
 

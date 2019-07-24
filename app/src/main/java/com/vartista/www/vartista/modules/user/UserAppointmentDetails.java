@@ -24,7 +24,6 @@ import com.vartista.www.vartista.beans.ServiceRequets;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
 import com.vartista.www.vartista.modules.general.AppSettings;
 import com.vartista.www.vartista.modules.general.HomeActivity;
-import com.vartista.www.vartista.modules.provider.AppointmentDetails;
 import com.vartista.www.vartista.restcalls.ApiClient;
 import com.vartista.www.vartista.restcalls.ApiInterface;
 import com.vartista.www.vartista.restcalls.SendNotificationApiInterface;

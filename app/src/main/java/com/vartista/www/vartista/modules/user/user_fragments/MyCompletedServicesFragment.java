@@ -3,7 +3,6 @@ package com.vartista.www.vartista.modules.user.user_fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +19,6 @@ import com.valdesekamdem.library.mdtoast.MDToast;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.adapters.ServiceUserAppointmentsAdapter;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
-import com.vartista.www.vartista.modules.user.MyCompletedServices;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;

@@ -2,6 +2,7 @@ package com.vartista.www.vartista.restcalls;
 
 
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.vartista.www.vartista.beans.AllNotificationBean;
 import com.vartista.www.vartista.beans.CreateRequest;
 //import com.vartista.www.vartista.beans.DocUpload;
@@ -16,7 +17,10 @@ import com.vartista.www.vartista.beans.UserAddressBean;
 import com.vartista.www.vartista.modules.user.StartService;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -39,8 +43,9 @@ public interface ApiInterface {
 
                                 );
 
-    @GET("login.php")
-    Call<User> performUserLogin(@Query("email") String email, @Query("password") String password);
+    @POST("login_post.php")
+    @FormUrlEncoded
+    Call<User> performUserLogin(@Field("email") String email, @Field("password") String password);
 //    Call<User> performUserLogin();
 
 
@@ -134,8 +139,9 @@ public interface ApiInterface {
     @GET("insert_allnotification.php")
     Call<AllNotificationBean> Insert_Notification(@Query("title")String title,@Query("message")String message ,@Query("sender_id") int sender_id,@Query("receiver_id") int receiver_id,@Query("status")int status,@Query("created_at")String created_at);
 
-    @GET("earnings_insert.php")
-    Call<EarningsBean> Insert_Earnings(@Query("sp_id")int sp_id, @Query("user_id")int user_id, @Query("service_id") int service_id, @Query("request_service_id") int request_service_id, @Query("total_amount")double total_amount, @Query("admin_tax")double admin_tax, @Query("discount")double discount, @Query("user_bonus")double user_bonus, @Query("sp_earning")double sp_earning, @Query("admin_earning")double admin_earning, @Query("date")String date);
+    @POST("earning_insert_post.php")
+    @FormUrlEncoded
+    Call<EarningsBean> Insert_Earnings(@Field("sp_id") int sp_id, @Field("user_id")int user_id, @Field("service_id") int service_id, @Field("request_service_id") int request_service_id, @Field("total_amount")double total_amount, @Field("admin_tax")double admin_tax, @Field("discount")double discount, @Field("user_bonus")double user_bonus, @Field("sp_earning")double sp_earning, @Field("admin_earning")double admin_earning, @Field("date")String date);
 
     @GET("update_dues.php")
     Call<EarningsDuesBean> UpdateDues(@Query("sp_id")int sp_id,@Query("amount_due")double amount_due);

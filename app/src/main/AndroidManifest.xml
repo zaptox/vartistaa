@@ -67,31 +67,11 @@
             android:name=".modules.general.UserProfile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".modules.provider.CreateServiceActivity"
-            android:label=""
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".modules.provider.MyServicesListActivity"
-            android:label="" />
-        <activity
-            android:name=".modules.user.BookNowActivity"
-            android:label=""
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".modules.provider.MyServiceRequests"
-            android:label="" />
-        <activity
-            android:name=".modules.user.FindServicesInList"
-            android:label="" />
-        <activity
             android:name=".modules.payment.PaymentActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".modules.user.Service_user_cancel"
-            android:label="" />
-        <activity
-            android:name=".modules.provider.MyAppointments"
             android:label="" />
         <activity
             android:name=".modules.provider.ServiceCancelActivity"
@@ -101,28 +81,7 @@
             android:name=".modules.general.SettingsActivity"
             android:label="" />
         <activity
-            android:name=".modules.user.ServiceProviderDetail"
-            android:label=""
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".modules.user.MyServiceMeetings"
-            android:label="" />
-        <activity
-            android:name=".modules.user.AssignRatings"
-            android:label=""
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".modules.provider.AssignRatingsToUser"
-            android:label="" />
-        <activity
-            android:name=".modules.provider.DocumentUploadActivity"
-            android:label=""
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".modules.provider.My_Rating_Reviews"
-            android:label="" />
-        <activity
-            android:name=".modules.provider.AddressSetActivity"
             android:label="" />
         <activity
             android:name=".modules.general.ForgotPasswordActivity"
@@ -143,23 +102,12 @@
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".modules.provider.UploadDocListActivity"
-            android:label="@string/title_activity_upload_docs"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".modules.provider.UploadDoc"
-            android:label="" />
-        <activity
             android:name=".modules.user.StartService"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".modules.provider.ServicestartProvider"
             android:label="" />
-        <activity
-            android:name=".modules.provider.EarningActivity"
-            android:label=""
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".modules.provider.RequestAlertActivity"
             android:label="" />
@@ -176,20 +124,9 @@
         </receiver>
 
         <activity
-            android:name=".modules.provider.AppointmentDetails"
-            android:label=""
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".modules.user.UserAppointmentDetails"
-            android:label=""
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".modules.user.GetDocumentActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".modules.user.MyCompletedServices"
-            android:label="" />
         <activity
             android:name=".modules.general.SettingsActivity2"
             android:label="@string/title_activity_settings2" />

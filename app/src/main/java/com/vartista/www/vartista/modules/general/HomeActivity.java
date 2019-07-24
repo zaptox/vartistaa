@@ -42,7 +42,6 @@ import com.vartista.www.vartista.beans.User;
 import com.vartista.www.vartista.fragments.ConfigSettingsFragment;
 import com.vartista.www.vartista.fragments.NotificationsFragment;
 import com.vartista.www.vartista.fragments.ServiceProviderFragment;
-import com.vartista.www.vartista.fragments.UserProfileFragment;
 import com.vartista.www.vartista.fragments.UsersFragment;
 import com.vartista.www.vartista.modules.payment.PaymentActivity;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.AddressSetFragment;
@@ -54,12 +53,8 @@ import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServiceReq
 import com.vartista.www.vartista.modules.provider.ProviderFragments.MyServicesListFragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.My_Rating_Reviews_Fragment;
 import com.vartista.www.vartista.modules.provider.ProviderFragments.UploadDocListFragment;
-import com.vartista.www.vartista.modules.provider.ServiceCancelActivity;
 import com.vartista.www.vartista.modules.provider.ServicestartProvider;
-import com.vartista.www.vartista.modules.user.AssignRatings;
 import com.vartista.www.vartista.modules.user.GetDocumentActivity;
-import com.vartista.www.vartista.modules.user.Service_user_cancel;
-import com.vartista.www.vartista.modules.user.StartService;
 import com.vartista.www.vartista.modules.user.user_fragments.BookNowFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.FindServicesInListFragment;
 import com.vartista.www.vartista.modules.user.user_fragments.MyCompletedServicesFragment;
@@ -94,6 +89,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.vartista.www.vartista.utilities.CONST.BOOK_NOW__FRAGMENT;
+import static com.vartista.www.vartista.utilities.CONST.FIND_SERVICE_IN_LIST_FRAGMENT;
+import static com.vartista.www.vartista.utilities.CONST.SERVICE_PROVIDER_DETAIL_FRAGMENT;
+
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,DatePickerDialog.OnDateSetListener,TimePickerDialog.OnTimeSetListener {
     BottomNavigationView bottomNav;
@@ -107,7 +106,7 @@ public class HomeActivity extends AppCompatActivity
     Boolean check = true;
     Boolean all_closed= false;
     private UserStatusService mService;
-    private boolean mBound;
+    private boolean mBound,book_wala;
 
     @Override
     protected void onStart() {
@@ -223,13 +222,15 @@ public class HomeActivity extends AppCompatActivity
 
         switch (fragment_flag)
         {
-            case CONST.FIND_SERVICE_IN_LIST_FRAGMENT:
+            case FIND_SERVICE_IN_LIST_FRAGMENT:
+                book_wala=true;
 
                 int catId=intent.getIntExtra("cat_id",0);
                 FindServicesInListFragment findServicesInList=new FindServicesInListFragment(catId);
                 replaceFragment(findServicesInList);
                 break;
-            case  CONST.SERVICE_PROVIDER_DETAIL_FRAGMENT:
+            case  SERVICE_PROVIDER_DETAIL_FRAGMENT:
+                book_wala=true;
 
                 int providerId=intent.getIntExtra("s_provider_id",0);
                 int categoryId=intent.getIntExtra("cat_id",0);
@@ -243,8 +244,9 @@ public class HomeActivity extends AppCompatActivity
                         serviceTitle,spProfileImage);
                 replaceFragment(serviceProviderDetailFragment);
                 break;
-            case CONST.BOOK_NOW__FRAGMENT:
-                    int   userCustomerId=intent.getIntExtra("user_id",0);
+            case BOOK_NOW__FRAGMENT:
+                book_wala=true;
+                int   userCustomerId=intent.getIntExtra("user_id",0);
                     int serviceProviderId=intent.getIntExtra("provider_id",0);
                     int  serviceId=intent.getIntExtra("service_id",0);
                     int serviceCatId=intent.getIntExtra("cat_id",0);
@@ -398,12 +400,12 @@ public class HomeActivity extends AppCompatActivity
 
 
         }
-        //newcode
-//        else if (id == R.id.Userratings) {
-//            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
-//            intent.putExtra("fragment_Flag", CONST.USER_RATINGS_REVIEW_FRAGMENT);
-//            startActivity(intent);
-//        }
+//        newcode
+        else if (id == R.id.Userratings) {
+            Intent intent=new Intent(getApplicationContext(),HomeActivity.class);
+            intent.putExtra("fragment_Flag", CONST.USER_RATINGS_REVIEW_FRAGMENT);
+            startActivity(intent);
+        }
 //newcode
         else if (id == R.id.provider_doc_upload) {
 
@@ -447,7 +449,16 @@ public class HomeActivity extends AppCompatActivity
         }
         else{
             Intent intent = getIntent();
-            if(intent.getIntExtra("fragment_Flag",0)!=0) {
+           if(intent.getIntExtra("fragment_Flag",0)==FIND_SERVICE_IN_LIST_FRAGMENT){
+                      finish();
+           }else  if(intent.getIntExtra("fragment_Flag",0)==SERVICE_PROVIDER_DETAIL_FRAGMENT){
+               finish();
+           }
+           else  if(intent.getIntExtra("fragment_Flag",0)==BOOK_NOW__FRAGMENT){
+               finish();
+           }
+
+           else if(intent.getIntExtra("fragment_Flag",0)!=0) {
                 Intent i = new Intent(getApplicationContext(), HomeActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
@@ -484,26 +495,8 @@ public class HomeActivity extends AppCompatActivity
             startActivity(new Intent(HomeActivity.this, AppSettings.class));
             return true;
         }
-        else if(id==R.id.Assign_ratings){
-            startActivity(new Intent(HomeActivity.this, AssignRatings.class));
-        }
 
-        else if(id==R.id.Start_Service){
-            startActivity(new Intent(HomeActivity.this, StartService.class));
-        }
-//        else if(id==R.id.Start_Service_Provider){
-//            startActivity(new Intent(HomeActivity.this, ServicestartProvider.class));
-//        }
-
-        else if(id==R.id.user_cancelservice){
-            startActivity(new Intent(HomeActivity.this, Service_user_cancel.class));
-        }
-
-        else if(id==R.id.cancel_service){
-            startActivity(new Intent(HomeActivity.this, ServiceCancelActivity.class));
-        }
-
-        else if (id == R.id.logout){
+          else if (id == R.id.logout){
             MDToast.makeText(this, "logout", MDToast.LENGTH_SHORT,MDToast.TYPE_INFO).show();
             SharedPreferences ob = getSharedPreferences("Login", Context.MODE_PRIVATE);
             ob.edit().clear().commit();
@@ -928,7 +921,11 @@ public class HomeActivity extends AppCompatActivity
 
 
     private void replaceFragment(Fragment newFragment) {
-        if (newFragment != null) {
+        if (newFragment != null && book_wala==true) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame_layout,newFragment).addToBackStack("booknow").commit();
+            book_wala=false;
+        }
+        else if (newFragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame_layout,newFragment).commit();
         }
     }

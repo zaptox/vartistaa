@@ -9,15 +9,11 @@ import android.view.ViewGroup;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.vartista.www.vartista.R;
 import com.vartista.www.vartista.beans.servicepaapointmentsitems;
-import com.vartista.www.vartista.modules.general.HomeActivity;
 import com.vartista.www.vartista.modules.provider.AppointmentDetails;
-import com.vartista.www.vartista.modules.provider.MyAppointments;
-import com.vartista.www.vartista.modules.provider.My_Rating_Reviews;
 
 import java.util.List;
 
